@@ -8,7 +8,7 @@
 #include <windows.h>
 #include <process.h>
 #else
-#include "compiler.h"
+//#include "compiler.h"
 #endif
 
 #include <vector>
@@ -59,6 +59,12 @@ using namespace std;
     #define STDCALL
     #define PATH_SEPARATOR ":"
     #define WINAPI
+    typedef unsigned char UCHAR;
+    typedef unsigned int DWORD;
+    typedef unsigned long ULONG;
+    typedef unsigned char BYTE;
+    typedef void * HANDLE;
+    typedef long long LONG64;
 #endif//WIN32
 
 #define READ_ERROR "error"
