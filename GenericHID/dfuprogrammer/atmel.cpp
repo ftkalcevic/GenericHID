@@ -739,11 +739,9 @@ int32_t atmel_reset( dfu_device_t *device )
         return -1;
     }
 
-    /*
     if( 0 != dfu_download(device, 0, NULL) ) {
         return -2;
     }
-    */
 
     return 0;
 }

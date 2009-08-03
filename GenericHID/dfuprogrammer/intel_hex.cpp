@@ -217,9 +217,9 @@ static int intel_parse_line( FILE *fp, struct intel_record *record )
     return 0;
 }
 
-int16_t *intel_hex_to_buffer( const char *filename, int max_size, int *usage )
+QVector<int16_t> intel_hex_to_buffer( const char *filename, int max_size, int *usage )
 {
-    int16_t *memory = NULL;
+    QVector<int16_t> memory;
     FILE *fp = NULL;
     int failure = 1;
     struct intel_record record;
@@ -242,28 +242,29 @@ int16_t *intel_hex_to_buffer( const char *filename, int max_size, int *usage )
         }
     }
 
-    memory = (int16_t *) malloc( max_size * sizeof(int16_t) );
-    if( NULL == memory ) {
-        fprintf( stderr, "Error getting the needed memory.\n" );
-        goto error;
-    }
-
-    for( i = 0; i < max_size; i++ ) {
+    memory.resize( max_size );
+    for( i = 0; i < max_size; i++ ) 
+    {
         memory[i] = -1;
     }
 
     *usage = 0;
-    do {
-        if( 0 != intel_parse_line(fp, &record) ) {
+    do 
+    {
+        if( 0 != intel_parse_line(fp, &record) ) 
+	{
             fprintf( stderr, "Error parsing the line.\n" );
             goto error;
         }
 
-        switch( record.type ) {
+        switch( record.type ) 
+	{
             case 0:
                 address = address_offset + record.address;
-                for( i = 0; i < record.count; i++ ) {
-                    if( address >= max_size ) {
+                for( i = 0; i < record.count; i++ ) 
+		{
+                    if( address >= max_size ) 
+		    {
                         fprintf( stderr, "Address error.\n" );
                         goto error;
                     }
@@ -287,8 +288,8 @@ int16_t *intel_hex_to_buffer( const char *filename, int max_size, int *usage )
                 address_offset = (0x7fffffff & record.address);
                 break;
         }
-
-    } while( (1 != record.type) );
+    } 
+    while( (1 != record.type) );
 
     failure = 0;
 
@@ -299,10 +300,8 @@ error:
         fp = NULL;
     }
 
-    if( (NULL != memory) && (0 != failure) ) {
-        free( memory );
-        memory = NULL;
-    }
+    if ( failure != 0 )
+	memory.clear();
 
     return memory;
 }

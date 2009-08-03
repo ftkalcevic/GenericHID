@@ -180,44 +180,24 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="atmel.c"
+				RelativePath=".\atmel.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						CompileAs="2"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="dfu.c"
+				RelativePath=".\dfu.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						CompileAs="2"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\dfuprogrammer.cpp"
 				>
 			</File>
 			<File
-				RelativePath="intel_hex.c"
+				RelativePath=".\intel_hex.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						CompileAs="2"
-					/>
-				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\intelhexbuffer.cpp"
+				>
 			</File>
 		</Filter>
 		<Filter
@@ -336,6 +316,10 @@
 						Outputs=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\intelhexbuffer.h"
+				>
 			</File>
 			<File
 				RelativePath=".\inttypes.h"

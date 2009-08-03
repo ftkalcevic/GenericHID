@@ -35,6 +35,6 @@
  *          values, and anything else indicates an unused memory location,
  *          NULL on anything other than a success
  */
-int16_t *intel_hex_to_buffer( const char *filename, int max_size, int *usage );
+QVector<int16_t> intel_hex_to_buffer( const char *filename, int max_size, int *usage );
 
 #endif

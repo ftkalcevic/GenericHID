@@ -1,11 +1,9 @@
 #include "stdafx.h"
 #include "programmer.h"
-//#include "flip.h"
 #include "dfuprogrammer.h"
 
 
 Programmer::Programmer()
-//: m_flip( NULL )
 : m_programmer( NULL )
 {
 
@@ -13,17 +11,10 @@ Programmer::Programmer()
 
 Programmer::~Programmer()
 {
- //   if ( m_flip != NULL )
-	//delete m_flip;
 }
 
 bool Programmer::Init()
 {
- //   m_flip = new Flip();
-
- //   if ( !m_flip->Initialise() )
-	//return false;
- //   return true;
     m_programmer = new DFUProgrammer( tar_at90usb1287 );
 
     if ( !m_programmer->GetDevice() )
@@ -34,47 +25,36 @@ bool Programmer::Init()
 
 bool Programmer::Program( const QString &sEepromPath, const QString &sFirmwarePath )
 {
- //   UpdateStatus( ProgramState::ErasingDevice );
- //   if ( !m_flip->EraseDevice() )
-	//return false;
+    if ( m_programmer == NULL )
+	return false;
 
- //   UpdateStatus( ProgramState::ProgrammingEEPROM );
- //   if ( !m_flip->StartProgramming(MemoryType::EEPROM, sEepromPath ) )
-	//return false;
+    IntelHexBuffer eeprom = m_programmer->LoadHex(MemoryType::EEPROM, sEepromPath);
+    if ( eeprom.isEmpty() )
+	return false;
 
- //   UpdateStatus( ProgramState::VerifyingEEPROM );
- //   if ( !m_flip->StartVerify() )
-	//return false;
-
- //   UpdateStatus( ProgramState::ProgrammingFlash );
- //   if ( !m_flip->StartProgramming(MemoryType::FLASH, sFirmwarePath ))
-	//return false;
-
- //   UpdateStatus( ProgramState::VerifyingFlash );
- //   if ( !m_flip->StartVerify())
-	//return false;
-
- //   UpdateStatus( ProgramState::Done );
+    IntelHexBuffer firmware = m_programmer->LoadHex(MemoryType::FLASH, sFirmwarePath);
+    if ( firmware.isEmpty() )
+	return false;
 
     UpdateStatus( ProgramState::ErasingDevice );
     if ( !m_programmer->EraseDevice() )
 	return false;
 
     UpdateStatus( ProgramState::ProgrammingEEPROM );
-    if ( !m_programmer->StartProgramming(MemoryType::EEPROM, sEepromPath ) )
+    if ( !m_programmer->StartProgramming( eeprom ) )
 	return false;
-
- //   UpdateStatus( ProgramState::VerifyingEEPROM );
- //   if ( !m_programmer->StartVerify() )
-	//return false;
 
     UpdateStatus( ProgramState::ProgrammingFlash );
-    if ( !m_programmer->StartProgramming(MemoryType::FLASH, sFirmwarePath ))
+    if ( !m_programmer->StartProgramming( firmware ))
 	return false;
 
- //   UpdateStatus( ProgramState::VerifyingFlash );
- //   if ( !m_programmer->StartVerify())
-	//return false;
+    UpdateStatus( ProgramState::VerifyingEEPROM );
+    if ( !m_programmer->StartVerify( eeprom ) )
+	return false;
+
+    UpdateStatus( ProgramState::VerifyingFlash );
+    if ( !m_programmer->StartVerify( firmware ))
+	return false;
 
     UpdateStatus( ProgramState::Done );
 
@@ -85,7 +65,7 @@ bool Programmer::RunFirmware()
 {
  //   if ( !m_flip->EnterApplicationMode(ResetMode::Hard, 0 ) )
 	//return false;
-    if ( !m_programmer->EnterApplicationMode(ResetMode::Soft, 0 ) )
+    if ( !m_programmer->EnterApplicationMode(ResetMode::Hard, 0 ) )
 	return false;
     return true;
 }
