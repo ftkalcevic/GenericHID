@@ -20,18 +20,14 @@
 
 #include <stdio.h>
 #include <stdarg.h>
-#include <stdint.h>
+#include "inttypes.h"
 #include <string.h>
 #include <stddef.h>
 #include <errno.h>
 
-#include "dfu-bool.h"
 #include "dfu-device.h"
-#include "config.h"
-#include "arguments.h"
 #include "dfu.h"
 #include "atmel.h"
-#include "util.h"
 
 
 /*
@@ -53,16 +49,16 @@
 #define ATMEL_DEBUG_THRESHOLD   50
 #define ATMEL_TRACE_THRESHOLD   55
 
-#define DEBUG(...)  dfu_debug( __FILE__, __FUNCTION__, __LINE__, \
-                               ATMEL_DEBUG_THRESHOLD, __VA_ARGS__ )
-#define TRACE(...)  dfu_debug( __FILE__, __FUNCTION__, __LINE__, \
-                               ATMEL_TRACE_THRESHOLD, __VA_ARGS__ )
+//#define DEBUG(...)  dfu_debug( __FILE__, __FUNCTION__, __LINE__, ATMEL_DEBUG_THRESHOLD, __VA_ARGS__ )
+//#define TRACE(...)  dfu_debug( __FILE__, __FUNCTION__, __LINE__, ATMEL_TRACE_THRESHOLD, __VA_ARGS__ )
+#define DEBUG(...)
+#define TRACE(...)
 
 static int32_t atmel_flash_block( dfu_device_t *device,
                                   int16_t *buffer,
                                   const uint32_t base_address,
                                   const size_t length,
-                                  const dfu_bool eeprom );
+                                  const bool eeprom );
 static int32_t atmel_select_flash( dfu_device_t *device );
 static int32_t atmel_select_user( dfu_device_t *device );
 static int32_t atmel_select_fuses( dfu_device_t *device );
@@ -72,7 +68,7 @@ static int32_t __atmel_read_page( dfu_device_t *device,
                                   const uint32_t start,
                                   const uint32_t end,
                                   uint8_t* buffer,
-                                  const dfu_bool eeprom );
+                                  const bool eeprom );
 
 /* returns 0 - 255 on success, < 0 otherwise */
 static int32_t atmel_read_command( dfu_device_t *device,
@@ -240,7 +236,7 @@ int32_t atmel_read_config( dfu_device_t *device,
             ((DM_AVR & row->device_map) && (adc_AVR == device->type)) ||
             ((DM_AVR32 & row->device_map) && (adc_AVR32 == device->type)) )
         {
-            int16_t *ptr = row->offset + (void *) info;
+            int16_t *ptr = (int16_t *)(row->offset + (uint8_t *) info);
 
             result = atmel_read_command( device, row->data0, row->data1 );
             if( result < 0 ) {
@@ -488,7 +484,7 @@ static int32_t __atmel_read_page( dfu_device_t *device,
                                   const uint32_t start,
                                   const uint32_t end,
                                   uint8_t* buffer,
-                                  const dfu_bool eeprom )
+                                  const bool eeprom )
 {
     uint8_t command[6] = { 0x03, 0x00, 0x00, 0x00, 0x00, 0x00 };
     uint32_t current_start;
@@ -557,8 +553,8 @@ int32_t atmel_read_flash( dfu_device_t *device,
                           const uint32_t end,
                           uint8_t* buffer,
                           const size_t buffer_len,
-                          const dfu_bool eeprom,
-                          const dfu_bool user )
+                          const bool eeprom,
+                          const bool user )
 {
     uint16_t page = 0;
     uint32_t current_start;
@@ -925,7 +921,7 @@ int32_t atmel_flash( dfu_device_t *device,
                      const uint32_t start,
                      const uint32_t end,
                      const size_t page_size,
-                     const dfu_bool eeprom )
+                     const bool eeprom )
 {
     uint32_t first = 0;
     int32_t sent = 0;
@@ -1096,7 +1092,7 @@ static void atmel_flash_populate_footer( uint8_t *message, uint8_t *footer,
 
 static void atmel_flash_populate_header( uint8_t *header,
                                          const uint32_t start_address,
-                                         const size_t length, const dfu_bool eeprom )
+                                         const size_t length, const bool eeprom )
 {
     uint16_t end;
 
@@ -1129,7 +1125,7 @@ static int32_t atmel_flash_block( dfu_device_t *device,
                                   int16_t *buffer,
                                   const uint32_t base_address,
                                   const size_t length,
-                                  const dfu_bool eeprom )
+                                  const bool eeprom )
                               
 {
     uint8_t message[ATMEL_MAX_FLASH_BUFFER_SIZE];

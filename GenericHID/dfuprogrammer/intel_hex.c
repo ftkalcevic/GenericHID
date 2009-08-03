@@ -32,7 +32,7 @@
 
 #define _GNU_SOURCE
 #include <stdio.h>
-#include <stdint.h>
+#include "inttypes.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -217,7 +217,7 @@ static int intel_parse_line( FILE *fp, struct intel_record *record )
     return 0;
 }
 
-int16_t *intel_hex_to_buffer( char *filename, int max_size, int *usage )
+int16_t *intel_hex_to_buffer( const char *filename, int max_size, int *usage )
 {
     int16_t *memory = NULL;
     FILE *fp = NULL;

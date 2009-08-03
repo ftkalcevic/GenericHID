@@ -22,8 +22,7 @@
 #define __ATMEL_H__
 
 #include <stdio.h>
-#include <stdint.h>
-#include "dfu-bool.h"
+#include "inttypes.h"
 #include "dfu-device.h"
 
 #define ATMEL_ERASE_BLOCK_0     0
@@ -83,8 +82,8 @@ int32_t atmel_read_flash( dfu_device_t *device,
                           const uint32_t end,
                           uint8_t* buffer,
                           const size_t buffer_len,
-                          const dfu_bool eeprom,
-                          const dfu_bool user );
+                          const bool eeprom,
+                          const bool user );
 int32_t atmel_blank_check( dfu_device_t *device,
                            const uint32_t start,
                            const uint32_t end );
@@ -94,7 +93,7 @@ int32_t atmel_flash( dfu_device_t *device,
                      const uint32_t start,
                      const uint32_t end,
                      const size_t flash_page_size,
-                     const dfu_bool eeprom );
+                     const bool eeprom );
 int32_t atmel_user( dfu_device_t *device,
                     int16_t *buffer,
                     const uint32_t end );

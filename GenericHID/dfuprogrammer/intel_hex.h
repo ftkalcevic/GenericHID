@@ -21,7 +21,7 @@
 #ifndef __INTEL_HEX_H__
 #define __INTEL_HEX_H__
 
-#include <stdint.h>
+#include "inttypes.h"
 
 /**
  *  Used to read in a file in intel hex format and return a chunck of
@@ -35,6 +35,6 @@
  *          values, and anything else indicates an unused memory location,
  *          NULL on anything other than a success
  */
-int16_t *intel_hex_to_buffer( char *filename, int max_size, int *usage );
+int16_t *intel_hex_to_buffer( const char *filename, int max_size, int *usage );
 
 #endif

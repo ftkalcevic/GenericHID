@@ -23,11 +23,12 @@ public:
     bool Init();
     bool Program( const QString &sEepromPath, const QString &sFirmwarePath );
     bool RunFirmware();
-    const QString &LastError();
+    QString LastError();
 
 protected:
     virtual void UpdateStatus( ProgramState::ProgramState status ) = 0;
-    class Flip *m_flip;
+//    class Flip *m_flip;
+    class DFUProgrammer *m_programmer;
 };
 
 #endif // PROGRAMMER_H

@@ -21,12 +21,14 @@
 #ifndef __DFU_H__
 #define __DFU_H__
 
-#include <usb.h>
-#include <stdint.h>
+#include "inttypes.h"
 #include <stddef.h>
 
-#include "dfu-bool.h"
+#include "usb.h"
+#include "dfutypes.h"
 #include "dfu-device.h"
+
+#define countof(x)  ((sizeof(x))/(sizeof((x)[0])))
 
 /* DFU states */
 #define STATE_APP_IDLE                  0x00
@@ -87,8 +89,8 @@ int32_t dfu_abort( dfu_device_t *device );
 struct usb_device *dfu_device_init( const uint32_t vendor,
                                     const uint32_t product,
                                     dfu_device_t *device,
-                                    const dfu_bool initial_abort,
-                                    const dfu_bool honor_interfaceclass );
+                                    const bool initial_abort,
+                                    const bool honor_interfaceclass );
 
 char* dfu_status_to_string( const int32_t status );
 char* dfu_state_to_string( const int32_t state );

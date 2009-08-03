@@ -20,13 +20,12 @@
 
 #include <stdio.h>
 #include <stdarg.h>
-#include <stdint.h>
+#include "inttypes.h"
 #include <stddef.h>
 #include <usb.h>
 #include <errno.h>
 #include "dfu.h"
-#include "util.h"
-#include "dfu-bool.h"
+
 
 /* DFU commands */
 #define DFU_DETACH      0
@@ -51,18 +50,18 @@
 #define DFU_TRACE_THRESHOLD         200
 #define DFU_MESSAGE_DEBUG_THRESHOLD 300
 
-#define DEBUG(...)  dfu_debug( __FILE__, __FUNCTION__, __LINE__, \
-                               DFU_DEBUG_THRESHOLD, __VA_ARGS__ )
-#define TRACE(...)  dfu_debug( __FILE__, __FUNCTION__, __LINE__, \
-                               DFU_TRACE_THRESHOLD, __VA_ARGS__ )
-#define MSG_DEBUG(...)  dfu_debug( __FILE__, __FUNCTION__, __LINE__, \
-                               DFU_MESSAGE_DEBUG_THRESHOLD, __VA_ARGS__ )
+//#define DEBUG(...)  dfu_debug( __FILE__, __FUNCTION__, __LINE__, DFU_DEBUG_THRESHOLD, __VA_ARGS__ )
+//#define TRACE(...)  dfu_debug( __FILE__, __FUNCTION__, __LINE__, DFU_TRACE_THRESHOLD, __VA_ARGS__ )
+//#define MSG_DEBUG(...)  dfu_debug( __FILE__, __FUNCTION__, __LINE__, DFU_MESSAGE_DEBUG_THRESHOLD, __VA_ARGS__ )
+#define DEBUG(...)
+#define TRACE(...)
+#define MSG_DEBUG(...)
 
 static uint16_t transaction = 0;
 
 static int32_t dfu_find_interface( const struct usb_device *device,
-                                   const dfu_bool honor_interfaceclass );
-static int32_t dfu_make_idle( dfu_device_t *device, const dfu_bool initial_abort );
+                                   const bool honor_interfaceclass );
+static int32_t dfu_make_idle( dfu_device_t *device, const bool initial_abort );
 static void dfu_msg_response_output( const char *function, const int32_t result );
 
 #if HAVE_CONFIG_H
@@ -72,7 +71,7 @@ static void dfu_msg_response_output( const char *function, const int32_t result 
      
 #include <sys/types.h>
 
-void *malloc();
+//void *malloc();
 
 /* Allocate an N-byte block of memory from the heap.
  *    If N is zero, allocate a 1-byte block.  */
@@ -403,8 +402,8 @@ int32_t dfu_abort( dfu_device_t *device )
 struct usb_device *dfu_device_init( const uint32_t vendor,
                                     const uint32_t product,
                                     dfu_device_t *dfu_device,
-                                    const dfu_bool initial_abort,
-                                    const dfu_bool honor_interfaceclass )
+                                    const bool initial_abort,
+                                    const bool honor_interfaceclass )
 {
     struct usb_bus *usb_bus;
     struct usb_device *device;
@@ -606,7 +605,7 @@ char* dfu_status_to_string( const int32_t status )
  *  returns the interface number if found, < 0 otherwise
  */
 static int32_t dfu_find_interface( const struct usb_device *device,
-                                   const dfu_bool honor_interfaceclass )
+                                   const bool honor_interfaceclass )
 {
     int32_t c, i;
     struct usb_config_descriptor *config;
@@ -649,7 +648,7 @@ static int32_t dfu_find_interface( const struct usb_device *device,
  *  returns 0 on success, 1 if device was reset, error otherwise
  */
 static int32_t dfu_make_idle( dfu_device_t *device,
-                              const dfu_bool initial_abort )
+                              const bool initial_abort )
 {
     dfu_status_t status;
     int32_t retries = 4;

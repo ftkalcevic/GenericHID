@@ -1,10 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GenericHID", "GenericHID\GenericHID.vcproj", "{6838124B-CD4B-4550-8D87-D8336D60E36F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GenericHID", "generichid\GenericHID.vcproj", "{6838124B-CD4B-4550-8D87-D8336D60E36F}"
 	ProjectSection(ProjectDependencies) = postProject
-		{333E3489-24F0-4B97-878C-996053F7DC54} = {333E3489-24F0-4B97-878C-996053F7DC54}
 		{6CBF5015-45DB-4B20-B5B8-84B98E58CB12} = {6CBF5015-45DB-4B20-B5B8-84B98E58CB12}
+		{333E3489-24F0-4B97-878C-996053F7DC54} = {333E3489-24F0-4B97-878C-996053F7DC54}
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C484ED8A-124A-4CF8-96A2-D2F927912051}"
@@ -12,18 +12,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		GenericHID.vsd = GenericHID.vsd
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Programmer", "Programmer\Programmer.vcproj", "{6CBF5015-45DB-4B20-B5B8-84B98E58CB12}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Programmer", "programmer\Programmer.vcproj", "{6CBF5015-45DB-4B20-B5B8-84B98E58CB12}"
 	ProjectSection(ProjectDependencies) = postProject
 		{333E3489-24F0-4B97-878C-996053F7DC54} = {333E3489-24F0-4B97-878C-996053F7DC54}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "utility", "utility\utility.vcproj", "{333E3489-24F0-4B97-878C-996053F7DC54}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CLProgram", "CLProgram\CLProgram.vcproj", "{46F3F38B-F609-497D-9145-E23A5C6617B4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CLProgram", "clprogram\CLProgram.vcproj", "{46F3F38B-F609-497D-9145-E23A5C6617B4}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6CBF5015-45DB-4B20-B5B8-84B98E58CB12} = {6CBF5015-45DB-4B20-B5B8-84B98E58CB12}
+		{5568EF9B-6032-35AA-8FA0-E1BD593F7930} = {5568EF9B-6032-35AA-8FA0-E1BD593F7930}
 		{333E3489-24F0-4B97-878C-996053F7DC54} = {333E3489-24F0-4B97-878C-996053F7DC54}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dfuprogrammer", "dfuprogrammer\dfuprogrammer.vcproj", "{5568EF9B-6032-35AA-8FA0-E1BD593F7930}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -51,6 +54,10 @@ Global
 		{46F3F38B-F609-497D-9145-E23A5C6617B4}.Debug|Win32.Build.0 = Debug|Win32
 		{46F3F38B-F609-497D-9145-E23A5C6617B4}.Release|Win32.ActiveCfg = Release|Win32
 		{46F3F38B-F609-497D-9145-E23A5C6617B4}.Release|Win32.Build.0 = Release|Win32
+		{5568EF9B-6032-35AA-8FA0-E1BD593F7930}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5568EF9B-6032-35AA-8FA0-E1BD593F7930}.Debug|Win32.Build.0 = Debug|Win32
+		{5568EF9B-6032-35AA-8FA0-E1BD593F7930}.Release|Win32.ActiveCfg = Release|Win32
+		{5568EF9B-6032-35AA-8FA0-E1BD593F7930}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
