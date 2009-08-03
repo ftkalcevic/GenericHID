@@ -155,7 +155,7 @@ bool DFUProgrammer::EraseDevice()
 	return false;
     }
 
-    result = atmel_blank_check( m_pDFUDevice, m_flash_address_bottom, m_flash_address_top );
+    result = atmel_blank_check( m_pDFUDevice, m_flash_address_bottom, m_flash_address_top, m_Callback, m_user_data );
 
     if ( result != 0 )
     {
@@ -165,19 +165,16 @@ bool DFUProgrammer::EraseDevice()
     return true;
 }
 
-bool DFUProgrammer::StartProgramming(MemoryType::MemoryType memory, const QString &sHexPath)
+bool DFUProgrammer::StartProgramming(IntelHexBuffer &memory)
 {
-    int16_t *hex_data = NULL;
     int32_t  usage = 0;
     int32_t  retval = -1;
     int32_t  result = 0;
-    uint8_t *buffer = NULL;
-    //int32_t  i,j;
     uint32_t memory_size;
     uint32_t top_memory_address = m_flash_address_top;
     uint32_t bottom_memory_address = m_flash_address_bottom;
     uint32_t page_size = m_pDetails->flash_page_size;
-    bool bEeprom = memory == MemoryType::EEPROM;
+    bool bEeprom = memory.memoryType() == MemoryType::EEPROM;
 
     if( bEeprom ) 
     {
@@ -187,26 +184,11 @@ bool DFUProgrammer::StartProgramming(MemoryType::MemoryType memory, const QStrin
     }
 
     memory_size = top_memory_address - bottom_memory_address;
-    buffer = (uint8_t *) malloc( memory_size );
+    QVector<byte> buffer( memory_size, 0 );
 
-    if ( buffer == NULL ) 
+    for( unsigned int i = 0; i < bottom_memory_address; i++ ) 
     {
-        fprintf( stderr, "Request for %d bytes of memory failed.\n", memory_size );
-        goto error;
-    }
-    memset( buffer, 0, memory_size );
-
-    hex_data = intel_hex_to_buffer( sHexPath.toAscii().constData(), top_memory_address, &usage );
-    if( hex_data == NULL ) 
-    {
-        DEBUG( "Something went wrong with creating the memory image.\n" );
-        fprintf( stderr, "Something went wrong with creating the memory image.\n" );
-        goto error;
-    }
-
-    for( int i = 0; i < bottom_memory_address; i++ ) 
-    {
-        if( hex_data[i] != -1 ) 
+        if( memory.data()[i] != -1 ) 
 	{
             fprintf( stderr, "Attempted to write to illegal memory address.\n" );
             goto error;
@@ -214,14 +196,14 @@ bool DFUProgrammer::StartProgramming(MemoryType::MemoryType memory, const QStrin
     }
     if( !bEeprom ) 
     {	
-        for( int i = m_bootloader_bottom; i < m_bootloader_top && i < top_memory_address; i++) 
+        for( unsigned int i = m_bootloader_bottom; i < m_bootloader_top && i < top_memory_address; i++) 
 	{
-            if( -1 != hex_data[i] ) 
+            if( -1 != memory.data()[i] ) 
 	    {
                 //if( m_pDetails->suppressbootloader ) 
 		//{
   //                  //If we're ignoring the bootloader, don't bother writing to it
-  //                  hex_data[i] = -1;
+  //                  memory.data()[i] = -1;
   //              } 
 		//else 
 		{
@@ -235,7 +217,7 @@ bool DFUProgrammer::StartProgramming(MemoryType::MemoryType memory, const QStrin
 
     DEBUG( "write %d/%d bytes\n", usage, memory_size );
 
-    result = atmel_flash( m_pDFUDevice, hex_data, bottom_memory_address, top_memory_address, page_size, bEeprom );
+    result = atmel_flash( m_pDFUDevice, memory.data().data(), bottom_memory_address, top_memory_address, page_size, bEeprom, m_Callback, m_user_data );
 
     if( result < 0 ) 
     {
@@ -244,11 +226,44 @@ bool DFUProgrammer::StartProgramming(MemoryType::MemoryType memory, const QStrin
         goto error;
     }
 
+    fprintf( stderr, "%d bytes used (%.02f%%)\n", usage,
+                     ((float)(usage*100)/(float)(top_memory_address)) );
+
+    retval = 0;
+
+error:
+
+    if ( retval == 0 )
+	return true;
+    else
+	return false;
+}
+
+bool DFUProgrammer::StartVerify(IntelHexBuffer &memory)
+{
+    int32_t  retval = -1;
+    int32_t  result = 0;
+    uint32_t memory_size;
+    uint32_t top_memory_address = m_flash_address_top;
+    uint32_t bottom_memory_address = m_flash_address_bottom;
+    uint32_t page_size = m_pDetails->flash_page_size;
+    bool bEeprom = memory.memoryType() == MemoryType::EEPROM;
+
+    if( bEeprom ) 
+    {
+        top_memory_address = m_top_eeprom_memory_address;
+        bottom_memory_address = 0;
+        page_size = m_pDetails->eeprom_page_size;
+    }
+
+    memory_size = top_memory_address - bottom_memory_address;
+    QVector<byte> buffer( memory_size, 0 );
+
     fprintf( stderr, "Validating...\n" );
 
     result = atmel_read_flash( m_pDFUDevice, bottom_memory_address,
-                               top_memory_address, buffer,
-                               memory_size, bEeprom, false );
+                               top_memory_address, buffer.data(),
+                               memory_size, bEeprom, false, m_Callback, m_user_data );
 
     if( memory_size != result ) 
     {
@@ -259,45 +274,39 @@ bool DFUProgrammer::StartProgramming(MemoryType::MemoryType memory, const QStrin
 
     for( int i = 0, j = bottom_memory_address; i < result; i++, j++ ) 
     {
-        if( (0 <= hex_data[j]) && (hex_data[j] < UINT8_MAX) ) 
+        if( (0 <= memory.data()[j]) && (memory.data()[j] < UINT8_MAX) ) 
 	{
             /* Memory should have been programmed in this location. */
-            if( ((uint8_t) hex_data[j]) != buffer[i] ) 
+            if( ((uint8_t) memory.data()[j]) != buffer[i] ) 
 	    {
                 DEBUG( "Image did not validate at location: %d (%02x != %02x)\n", i,
-                       (0xff & hex_data[j]), (0xff & buffer[i]) );
+                       (0xff & memory.data()[j]), (0xff & buffer[i]) );
                 fprintf( stderr, "Image did not validate.\n" );
                 goto error;
             }
         }
     }
 
-    fprintf( stderr, "%d bytes used (%.02f%%)\n", usage,
-                     ((float)(usage*100)/(float)(top_memory_address)) );
+    fprintf( stderr, "%d bytes used (%.02f%%)\n", memory.usage(),
+                     ((float)(memory.usage()*100)/(float)(top_memory_address)) );
 
     retval = 0;
 
 error:
-    if( buffer != NULL ) 
-        free( buffer );
-
-    if ( hex_data != NULL ) 
-        free( hex_data );
-
     if ( retval == 0 )
 	return true;
     else
 	return false;
 }
 
-    //bool StartVerify();
+
 bool DFUProgrammer::EnterApplicationMode(ResetMode::ResetMode mode, unsigned int addr)
 {
     int result;
     if ( mode == ResetMode::Hard )
 	result = atmel_reset( m_pDFUDevice ); 
     else
-	result = atmel_start_app( m_pDFUDevice );
+	result = atmel_start_app( m_pDFUDevice, addr );
 
     if ( result != 0 )
 	return false;
@@ -310,13 +319,13 @@ bool DFUProgrammer::EnterApplicationMode(ResetMode::ResetMode mode, unsigned int
 
 
 
-IntelHexBuffer DFUProgrammer::LoadHex(MemoryType::MemoryType memtype, QString &sPath)
+IntelHexBuffer DFUProgrammer::LoadHex(MemoryType::MemoryType memtype, const QString &sPath)
 {
     uint32_t memory_size;
     uint32_t top_memory_address = m_flash_address_top;
     uint32_t bottom_memory_address = m_flash_address_bottom;
     uint32_t page_size = m_pDetails->flash_page_size;
-    bool bEeprom = memory == MemoryType::EEPROM;
+    bool bEeprom = memtype == MemoryType::EEPROM;
 
     if( bEeprom ) 
     {

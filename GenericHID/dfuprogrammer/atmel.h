@@ -83,21 +83,27 @@ int32_t atmel_read_flash( dfu_device_t *device,
                           uint8_t* buffer,
                           const size_t buffer_len,
                           const bool eeprom,
-                          const bool user );
+                          const bool user,
+			  void (*callback)( void *, int ),
+			  void *user_data );
 int32_t atmel_blank_check( dfu_device_t *device,
                            const uint32_t start,
-                           const uint32_t end );
+                           const uint32_t end,
+			   void (*callback)( void *, int ),
+			   void *user_data );
 int32_t atmel_reset( dfu_device_t *device );
 int32_t atmel_flash( dfu_device_t *device,
                      int16_t *buffer,
                      const uint32_t start,
                      const uint32_t end,
                      const size_t flash_page_size,
-                     const bool eeprom );
+                     const bool eeprom,
+		     void (*callback)( void *, int ),
+		     void *user_data );
 int32_t atmel_user( dfu_device_t *device,
                     int16_t *buffer,
                     const uint32_t end );
-int32_t atmel_start_app( dfu_device_t *device );
+int32_t atmel_start_app( dfu_device_t *device, uint16_t addr );
 
 void atmel_print_device_info( FILE *stream, atmel_device_info_t *info );
 #endif

@@ -3,27 +3,8 @@
 
 #include "dfutypes.h"
 #include "inttypes.h"
+#include "intelhexbuffer.h"
 #include <QString>
-
-namespace MemoryType
-{
-    enum MemoryType
-    {
-        EEPROM,
-        FLASH,
-    };
-};
-
-
-namespace ResetMode
-{
-    enum ResetMode
-    {
-        Hard,
-        Soft
-    };
-};
-
 
 class DFUProgrammer
 {
@@ -34,15 +15,17 @@ public:
     bool HasDevice();
 
     bool EraseDevice();
-    bool StartProgramming(MemoryType::MemoryType memory, const QString &HexPath);
-    //bool StartVerify();
-    bool EnterApplicationMode(ResetMode::ResetMode mode, unsigned int addr);
+    bool StartProgramming(IntelHexBuffer &memory);
+    bool StartVerify(IntelHexBuffer &memory);
+    bool EnterApplicationMode(ResetMode::ResetMode mode, unsigned int addr = 0);
+    IntelHexBuffer LoadHex(MemoryType::MemoryType memtype, const QString &sPath);
     //const QString &LastError() { return m_sLastError; }
-    //bool Program( const QString &sEepromPath, const QString &sFirmwarePath )
-    //bool RunFirmware()
 
-protected:
-//    virtual void UpdateStatus( ProgramState::ProgramState status ) = 0;
+    void RegisterCallback( void (*callback)( void *user_data, int percent ), void *user_data )
+    {
+	m_Callback = callback;
+	m_user_data = user_data;
+    }
 
 private:
     enum targets_enum m_eTargetDevice;
@@ -55,6 +38,9 @@ private:
     uint32_t m_flash_address_bottom;
     uint32_t m_bootloader_bottom;
     uint32_t m_bootloader_top;
+
+    void (*m_Callback)( void *user_data, int percent );
+    void *m_user_data;
 };
 
 #endif

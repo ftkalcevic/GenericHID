@@ -48,4 +48,25 @@ enum setfuse_enum { set_lock, set_epfl, set_bootprot, set_bodlevel,
                     set_isp_io_cond_en, set_isp_force };
 
 
+namespace MemoryType
+{
+    enum MemoryType
+    {
+        EEPROM,
+        FLASH,
+    };
+};
+
+
+namespace ResetMode
+{
+    enum ResetMode
+    {
+        Hard,
+        Soft
+    };
+};
+
+
+
 #endif

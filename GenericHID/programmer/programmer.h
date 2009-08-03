@@ -27,7 +27,9 @@ public:
 
 protected:
     virtual void UpdateStatus( ProgramState::ProgramState status ) = 0;
-//    class Flip *m_flip;
+    virtual void CompletionStatus( int nPercentComplete ) = 0;
+    static void completion_callback( void *user_data, int percent );
+
     class DFUProgrammer *m_programmer;
 };
 

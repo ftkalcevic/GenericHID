@@ -13,9 +13,19 @@ Programmer::~Programmer()
 {
 }
 
+void Programmer::completion_callback( void *user_data, int percent )
+{
+    Programmer *that = reinterpret_cast<Programmer *>( user_data );
+    that->CompletionStatus( percent );
+}
+
 bool Programmer::Init()
 {
-    m_programmer = new DFUProgrammer( tar_at90usb1287 );
+    if ( m_programmer == NULL )
+    {
+	m_programmer = new DFUProgrammer( tar_at90usb1287 );
+	m_programmer->RegisterCallback( &completion_callback, this );
+    }
 
     if ( !m_programmer->GetDevice() )
 	return false;

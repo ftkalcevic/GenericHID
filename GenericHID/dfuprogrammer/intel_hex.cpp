@@ -55,15 +55,13 @@ struct intel_record {
  */
 static int intel_validate_checksum( struct intel_record *record )
 {
-    int i = 0;
     int checksum = 0;
 
     checksum = record->count + record->type + record->checksum +
                         (record->address >> 8) + (0xff & record->address);
 
-    for( i = 0; i < record->count; i++ ) {
+    for( unsigned i = 0; i < record->count; i++ ) 
         checksum += record->data[i];
-    }
 
     return (0xff & checksum);
 }
@@ -151,7 +149,6 @@ static void intel_process_address( struct intel_record *record )
 
 static int intel_read_data( FILE *fp, struct intel_record *record )
 {
-    int i;
     int c;
     int status;
     char buffer[10];
@@ -163,26 +160,33 @@ static int intel_read_data( FILE *fp, struct intel_record *record )
      * aaaa - the address in memory
      *   rr - record type
      */
-    if( NULL == fgets(buffer, 10, fp) ) return -1;
-    status = sscanf( buffer, ":%02x%02x%02x%02x", &(record->count),
-                     &addr_upper, &addr_lower, &(record->type) );
-    if( 4 != status ) return -2;
+    if( NULL == fgets(buffer, 10, fp) ) 
+	return -1;
+    status = sscanf( buffer, ":%02x%02x%02x%02x", &(record->count), &addr_upper, &addr_lower, &(record->type) );
+
+    if( 4 != status ) 
+	return -2;
 
     record->address = addr_upper << 8 | addr_lower;
 
     /* Read the data */
-    for( i = 0; i < record->count; i++ ) {
+    for( unsigned int i = 0; i < record->count; i++ ) 
+    {
         int data = 0;
 
-        if( NULL == fgets(buffer, 3, fp) ) return -3;
-        if( 1 != sscanf(buffer, "%02x", &data) ) return -4;
+        if( NULL == fgets(buffer, 3, fp) ) 
+	    return -3;
+        if( 1 != sscanf(buffer, "%02x", &data) ) 
+	    return -4;
 
         record->data[i] = 0xff & data;
     }
 
     /* Read the checksum */
-    if( NULL == fgets(buffer, 3, fp) ) return -5;
-    if( 1 != sscanf(buffer, "%02x", &(record->checksum)) ) return -6;
+    if( NULL == fgets(buffer, 3, fp) ) 
+	return -5;
+    if( 1 != sscanf(buffer, "%02x", &(record->checksum)) ) 
+	return -6;
 
     /* Chomp the [\r]\n */
     c = fgetc( fp );
@@ -217,7 +221,7 @@ static int intel_parse_line( FILE *fp, struct intel_record *record )
     return 0;
 }
 
-QVector<int16_t> intel_hex_to_buffer( const char *filename, int max_size, int *usage )
+QVector<int16_t> intel_hex_to_buffer( const char *filename, unsigned int max_size, unsigned int *usage )
 {
     QVector<int16_t> memory;
     FILE *fp = NULL;
@@ -225,28 +229,28 @@ QVector<int16_t> intel_hex_to_buffer( const char *filename, int max_size, int *u
     struct intel_record record;
     unsigned int address = 0;
     unsigned int address_offset = 0;
-    int i = 0;
 
-    if( (NULL == filename) || (0 >= max_size)  ) {
+    if( (NULL == filename) || (0 >= max_size)  ) 
+    {
         fprintf( stderr, "Invalid filename or max_size.\n" );
         goto error;
     }
 
-    if( 0 == strcmp("STDIN",filename) ) {
+    if( 0 == strcmp("STDIN",filename) ) 
+    {
         fp = stdin;
-    } else {
+    } 
+    else 
+    {
         fp = fopen( filename, "r" );
-        if( NULL == fp ) {
+        if( NULL == fp ) 
+	{
             fprintf( stderr, "Error opening the file.\n" );
             goto error;
         }
     }
 
-    memory.resize( max_size );
-    for( i = 0; i < max_size; i++ ) 
-    {
-        memory[i] = -1;
-    }
+    memory.fill( -1, max_size );
 
     *usage = 0;
     do 
@@ -261,7 +265,7 @@ QVector<int16_t> intel_hex_to_buffer( const char *filename, int max_size, int *u
 	{
             case 0:
                 address = address_offset + record.address;
-                for( i = 0; i < record.count; i++ ) 
+                for( unsigned int i = 0; i < record.count; i++ ) 
 		{
                     if( address >= max_size ) 
 		    {

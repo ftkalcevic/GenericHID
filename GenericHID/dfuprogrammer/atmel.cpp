@@ -554,7 +554,9 @@ int32_t atmel_read_flash( dfu_device_t *device,
                           uint8_t* buffer,
                           const size_t buffer_len,
                           const bool eeprom,
-                          const bool user )
+                          const bool user,
+			  void (*callback)( void *, int ),
+			  void *user_data )
 {
     uint16_t page = 0;
     uint32_t current_start;
@@ -562,6 +564,9 @@ int32_t atmel_read_flash( dfu_device_t *device,
 
     TRACE( "%s( %p, 0x%08x, 0x%08x, %p, %u, %s )\n", __FUNCTION__, device,
            start, end, buffer, buffer_len, ((true == eeprom) ? "true" : "false") );
+
+    if ( callback )
+	(*callback)(user_data, 0 );
 
     if( (NULL == buffer) || (start >= end) || (NULL == device) ) {
         DEBUG( "invalid arguments.\n" );
@@ -618,7 +623,12 @@ int32_t atmel_read_flash( dfu_device_t *device,
         } else {
             size = 0;
         }
+	if ( callback )
+	    (*callback)(user_data, 100 * (end - current_start) / (end - start ) );
     }
+    if ( callback )
+	(*callback)(user_data, 100 );
+
 
     return (end - start);
 }
@@ -646,7 +656,9 @@ static int32_t __atmel_blank_check_internal( dfu_device_t *device,
 
 int32_t atmel_blank_check( dfu_device_t *device,
                            const uint32_t start,
-                           const uint32_t end )
+                           const uint32_t end,
+			   void (*callback)( void *, int ),
+			   void *user_data )
 {
     int32_t rv;
     uint16_t page;
@@ -654,6 +666,9 @@ int32_t atmel_blank_check( dfu_device_t *device,
     size_t size;
 
     TRACE( "%s( %p, 0x%08x, 0x%08x )\n", __FUNCTION__, device, start, end );
+
+    if ( callback )
+	(*callback)(user_data, 0 );
 
     if( (start >= end) || (NULL == device) ) {
         DEBUG( "invalid arguments.\n" );
@@ -704,7 +719,13 @@ int32_t atmel_blank_check( dfu_device_t *device,
         } else {
             size = 0;
         }
+
+	if ( callback )
+	    (*callback)(user_data, 100 * (end - (current_start - 1)) / (end - start ) );
+
     }
+    if ( callback )
+	(*callback)(user_data, 100 );
 
 done:
     if( 0 == rv ) {
@@ -747,9 +768,9 @@ int32_t atmel_reset( dfu_device_t *device )
 }
 
 
-int32_t atmel_start_app( dfu_device_t *device )
+int32_t atmel_start_app( dfu_device_t *device, uint16_t addr )
 {
-    uint8_t command[5] = { 0x04, 0x03, 0x01, 0x00, 0x00 };
+    uint8_t command[5] = { 0x04, 0x03, 0x01, (addr >> 8) & 0xFF, addr & 0xFF };
 
     TRACE( "%s( %p )\n", __FUNCTION__, device );
 
@@ -861,7 +882,7 @@ static void atmel_flash_prepair_buffer( int16_t *buffer, const size_t size,
          &page[page_size] < &buffer[size];
          page = &page[page_size] )
     {
-        int32_t i;
+        uint32_t i;
 
         for( i = 0; i < page_size; i++ ) {
             if( (0 <= page[i]) && (page[i] <= UINT8_MAX) ) {
@@ -919,7 +940,9 @@ int32_t atmel_flash( dfu_device_t *device,
                      const uint32_t start,
                      const uint32_t end,
                      const size_t page_size,
-                     const bool eeprom )
+                     const bool eeprom,
+		     void (*callback)( void *, int ),
+		     void *user_data )
 {
     uint32_t first = 0;
     int32_t sent = 0;
@@ -929,6 +952,9 @@ int32_t atmel_flash( dfu_device_t *device,
 
     TRACE( "%s( %p, %p, %u, %u, %u, %s )\n", __FUNCTION__, device, buffer,
            start, end, page_size, ((true == eeprom) ? "true" : "false") );
+
+    if ( callback )
+	(*callback)(user_data, 0 );
 
     if( (NULL == buffer) || ((end - start) <= 0) ) {
         DEBUG( "invalid arguments.\n" );
@@ -1003,6 +1029,7 @@ recheck_page:
 
         DEBUG( "valid block length: %d, (%d - %d)\n", length, first, last );
 
+	uint32_t start = first;
         while( 0 < length ) {
             int32_t result;
 
@@ -1024,6 +1051,9 @@ recheck_page:
             DEBUG( "Next first: %d\n", first );
             length = last - first;
             DEBUG( "valid block length: %d\n", length );
+
+	    if ( callback )
+		(*callback)(user_data, 100 * (first - start) / (last - start) );
         }
         DEBUG( "sent: %d, first: %u last: %u\n", sent, first, last );
     }
@@ -1133,7 +1163,6 @@ static int32_t atmel_flash_block( dfu_device_t *device,
     size_t message_length;
     int32_t result;
     dfu_status_t status;
-    int32_t i;
     size_t control_block_size;  /* USB control block size */
     size_t alignment;
 
@@ -1165,7 +1194,7 @@ static int32_t atmel_flash_block( dfu_device_t *device,
     DEBUG( "%d bytes to MCU %06x\n", length, base_address );
 
     /* Copy the data */
-    for( i = 0; i < length; i++ ) {
+    for( unsigned i = 0; i < length; i++ ) {
         data[i] = (uint8_t) buffer[i];
     }
 

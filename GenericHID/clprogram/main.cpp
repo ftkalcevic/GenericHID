@@ -20,6 +20,12 @@ class MyProgrammer: public Programmer
 	    default:	    			    fprintf(stderr, "Unknown Status %d\n", (int)status ); break;
 	}
     }
+    virtual void CompletionStatus( int nPercentComplete )
+    {
+	fprintf( stderr, "\b\b\b\b%3d%%", nPercentComplete );
+	if ( nPercentComplete == 100 )
+	    fprintf( stderr, "\n" );
+    }
 };
 
 

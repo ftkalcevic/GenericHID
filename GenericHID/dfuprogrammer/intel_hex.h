@@ -22,6 +22,7 @@
 #define __INTEL_HEX_H__
 
 #include "inttypes.h"
+#include <QVector>
 
 /**
  *  Used to read in a file in intel hex format and return a chunck of
@@ -35,6 +36,6 @@
  *          values, and anything else indicates an unused memory location,
  *          NULL on anything other than a success
  */
-QVector<int16_t> intel_hex_to_buffer( const char *filename, int max_size, int *usage );
+QVector<int16_t> intel_hex_to_buffer( const char *filename, unsigned int max_size, unsigned int *usage );
 
 #endif
