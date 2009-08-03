@@ -184,7 +184,7 @@ bool DFUProgrammer::StartProgramming(IntelHexBuffer &memory)
     }
 
     memory_size = top_memory_address - bottom_memory_address;
-    QVector<byte> buffer( memory_size, 0 );
+    QVector<uint8_t> buffer( memory_size, 0 );
 
     for( unsigned int i = 0; i < bottom_memory_address; i++ ) 
     {
@@ -257,7 +257,7 @@ bool DFUProgrammer::StartVerify(IntelHexBuffer &memory)
     }
 
     memory_size = top_memory_address - bottom_memory_address;
-    QVector<byte> buffer( memory_size, 0 );
+    QVector<uint8_t> buffer( memory_size, 0 );
 
     fprintf( stderr, "Validating...\n" );
 

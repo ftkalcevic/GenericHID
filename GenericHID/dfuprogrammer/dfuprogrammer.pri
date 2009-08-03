@@ -8,6 +8,7 @@ HEADERS += atmel.h \
 	   dfu.h \
            dfu-device.h \
 	   intel_hex.h \
+	   intelhexbuffer.h \
 	   inttypes.h \
 	   dfutypes.h \
 	   dfuprogrammer.h
@@ -16,5 +17,6 @@ HEADERS += atmel.h \
 SOURCES += atmel.cpp \
 	   dfu.cpp \
 	   intel_hex.cpp \
+	   intelhexbuffer.cpp \
 	   dfuprogrammer.cpp
 
