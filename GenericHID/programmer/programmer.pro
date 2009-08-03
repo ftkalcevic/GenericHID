@@ -9,7 +9,8 @@ INCLUDEPATH += ./generatedfiles \
     ./generatedfiles/debug \
     . \
     ./../include \
-    ./../utility
+    ./../utility \
+    ../dfuprogrammer
 PRECOMPILED_HEADER = stdafx.h
 DEPENDPATH += .
 MOC_DIR += ./generatedfiles/Debug

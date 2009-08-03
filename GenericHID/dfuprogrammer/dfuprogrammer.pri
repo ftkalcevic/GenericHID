@@ -4,20 +4,17 @@
 
 
 #Header files
-HEADERS += arguments.h \
-	   atmel.h \
-	   commands.h \
+HEADERS += atmel.h \
 	   dfu.h \
-	   dfu-bool.h \
            dfu-device.h \
 	   intel_hex.h \
-	   util.h
+	   inttypes.h \
+	   dfutypes.h \
+	   dfuprogrammer.h
 
 #Source files
-SOURCES += arguments.c \
-	   atmel.c \
-	   commands.c \
-	   dfu.c \
-	   intel_hex.c \
-	   util.c
+SOURCES += atmel.cpp \
+	   dfu.cpp \
+	   intel_hex.cpp \
+	   dfuprogrammer.cpp
 
