@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "programdlg.h"
 #include "usb.h"
+#include "programmerthread.h"
 
 const int DEVICE_POLL_PERIOD = 500;	// ms
 
@@ -222,29 +223,41 @@ void ProgramDlg::onStartBootloader()
     }
 }
 
+// We program on a background thread so we can show a progress dialog and
+// keep the message queue going.
 void ProgramDlg::onProgram()
 {
-    if ( Programmer::Init() )
+    m_timer.stop();
+    ProgrammerThread pProgrammer(this);
+    if ( pProgrammer.Init() )
     {
-	m_pStatusDlg = new ProgrammingStatusDlg( this );
-	m_pStatusDlg->show();
+	ProgrammingStatusDlg pStatusDlg( this );
+	m_pStatusDlg = &pStatusDlg;
+
+	connect( &pProgrammer, SIGNAL(onUpdateStatus(int)), this, SLOT(onUpdateStatus(int)) );
+	connect( &pProgrammer, SIGNAL(onCompletionStatus(int)), this, SLOT(onCompletionStatus(int)) );
+
 #ifdef _WIN32
-	Programmer::Program( "D:\\Projects\\Gecko\\MyUSB\\Demos\\Joystick\\eeprom.hex", "D:\\Projects\\Gecko\\MyUSB\\Demos\\Joystick\\Joystick.hex");
+	pProgrammer.StartProgram( "D:\\Projects\\Gecko\\MyUSB\\Demos\\Joystick\\eeprom.hex", "D:\\Projects\\Gecko\\MyUSB\\Demos\\Joystick\\Joystick.hex");
 #else
-	Programmer::Program( "/home/frankt/src/eeprom.hex", "/home/frankt/src/Joystick.hex");
-#endif
-	m_pStatusDlg->close();
-	delete m_pStatusDlg;
+	pProgrammer.StartProgram( "/home/frankt/src/eeprom.hex", "/home/frankt/src/Joystick.hex");
+#endif	
+
+	pStatusDlg.exec();
+
+	disconnect( &pProgrammer, 0, 0, 0 );
 	m_pStatusDlg = NULL;
     }
-    Programmer::Terminate();
+    pProgrammer.Terminate();
+    m_timer.start( 0 );
 }
 
 void ProgramDlg::onRestartDevice()
 {
-    if ( Programmer::Init() )
-	Programmer::RunFirmware();
-    Programmer::Terminate();
+    ProgrammerThread programmer(this);
+    if ( programmer.Init() )
+	programmer.RunFirmware();
+    programmer.Terminate();
 }
 
 void ProgramDlg::onClose()
@@ -257,8 +270,9 @@ void ProgramDlg::onRefresh()
     updateDeviceStatus();
 }
 
-void ProgramDlg::UpdateStatus( ProgramState::ProgramState status )
+void ProgramDlg::onUpdateStatus( int _status )
 {
+    ProgramState::ProgramState status = (ProgramState::ProgramState)_status;
     if ( m_pStatusDlg != NULL )
     {
 	switch ( status )
@@ -268,13 +282,14 @@ void ProgramDlg::UpdateStatus( ProgramState::ProgramState status )
 	    case ProgramState::VerifyingEEPROM:	    m_pStatusDlg->setLabel( "Verifying EEPROM" ); break;
 	    case ProgramState::ProgrammingFlash:    m_pStatusDlg->setLabel( "Programming Flash" ); break;
 	    case ProgramState::VerifyingFlash:	    m_pStatusDlg->setLabel( "Verifying Flash" ); break;
-	    case ProgramState::Done:		    m_pStatusDlg->setLabel( "Done" ); break;
+	    case ProgramState::Done:		    m_pStatusDlg->setLabel( "Done" ); m_pStatusDlg->close(); break;
 	    default:	    			    m_pStatusDlg->setLabel( QString("Unknown Status %d").arg((int)status) ); break;
 	}
     }
 }
 
-void ProgramDlg::CompletionStatus( int nPercentComplete )
+void ProgramDlg::onCompletionStatus( int nPercentComplete )
 {
-    m_pStatusDlg->setPercentage( nPercentComplete );
+    if ( m_pStatusDlg != NULL )
+	m_pStatusDlg->setPercentage( nPercentComplete );
 }

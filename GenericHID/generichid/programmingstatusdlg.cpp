@@ -9,5 +9,4 @@ ProgrammingStatusDlg::ProgrammingStatusDlg(QWidget *parent)
 
 ProgrammingStatusDlg::~ProgrammingStatusDlg()
 {
-
 }

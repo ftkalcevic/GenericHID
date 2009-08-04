@@ -14,6 +14,7 @@ public:
 
     void setPercentage( int n ) { ui.progressBar->setValue( n ); update(); }
     void setLabel( const QString &s ) { ui.label->setText( s ); update(); }
+
 private:
     Ui::ProgrammingStatusDlgClass ui;
 };

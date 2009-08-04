@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "ui_programdlg.h"
 #include "programmer.h"
+#include "programmerthread.h"
 #include "programmingstatusdlg.h"
 
 struct USBDevice
@@ -13,7 +14,7 @@ struct USBDevice
     unsigned char nEndpoint;
 };
 
-class ProgramDlg : public QDialog, public Programmer
+class ProgramDlg : public QDialog
 {
     Q_OBJECT
 
@@ -28,6 +29,8 @@ public slots:
     void onRestartDevice();
     void onClose();
     void onRefresh();
+    void onUpdateStatus( int status );
+    void onCompletionStatus( int nPercentComplete );
 
 private:
     Logger m_Logger;
@@ -39,8 +42,6 @@ private:
     void SetMode( bool bDevice, bool bBootloader, bool bHID);
     bool FindDevices( int &nGenericHIDs, int &nAt90DFUs );
     USBDevice GetGenericHIDDevice();
-    virtual void UpdateStatus( ProgramState::ProgramState status );
-    virtual void CompletionStatus( int nPercentComplete );
 };
 
 #endif // PROGRAMDLG_H
