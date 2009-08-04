@@ -284,6 +284,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\dfucommon.h"
+				>
+			</File>
+			<File
 				RelativePath=".\dfuprogrammer.h"
 				>
 			</File>
