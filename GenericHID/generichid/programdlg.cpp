@@ -96,7 +96,7 @@ USBDevice ProgramDlg::GetGenericHIDDevice()
 			    if ( hDevice != NULL )
 			    {
 #ifdef _WIN32
-				if( usb_set_configuration(hDevice, 1) == 0 ) 
+				if( usb_set_configuration(hDevice, config->bConfigurationValue) == 0 ) 
 				{
 				    int nRet = usb_claim_interface(hDevice, interface->bInterfaceNumber);
 #else
@@ -108,7 +108,8 @@ USBDevice ProgramDlg::GetGenericHIDDevice()
 				}
 				if ( nRet == 0 )
 				{
-				    nRet = usb_set_configuration(hDevice, 1);
+				    nRet = usb_set_configuration(hDevice, config->bConfigurationValue);
+				    nRet = 0;
 #endif
 
 				    if ( nRet == 0 )
