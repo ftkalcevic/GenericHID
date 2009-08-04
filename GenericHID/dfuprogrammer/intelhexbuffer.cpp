@@ -6,8 +6,8 @@
 
 
 IntelHexBuffer::IntelHexBuffer(MemoryType::MemoryType memory, const QString &sHexPath, unsigned int max_size)
-: m_eMemoryType( memory )
-, m_nMaxSize( max_size )
+: m_nMaxSize( max_size )
+, m_eMemoryType( memory )
 {
     m_nUsage = 0;
     m_HexBuffer = intel_hex_to_buffer( sHexPath.toAscii().constData(), max_size, &m_nUsage );

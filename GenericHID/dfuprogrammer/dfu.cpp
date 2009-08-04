@@ -478,9 +478,9 @@ retry:
  *
  *  returns the state name or "unknown state"
  */
-char* dfu_state_to_string( const int32_t state )
+const char* dfu_state_to_string( const int32_t state )
 {
-    char *message = "unknown state";
+    const char *message = "unknown state";
 
     switch( state ) {
         case STATE_APP_IDLE:
@@ -529,9 +529,9 @@ char* dfu_state_to_string( const int32_t state )
  *
  *  returns the status name or "unknown status"
  */
-char* dfu_status_to_string( const int32_t status )
+const char* dfu_status_to_string( const int32_t status )
 {
-    char *message = "unknown status";
+    const char *message = "unknown status";
 
     switch( status ) {
         case DFU_STATUS_OK:
@@ -710,7 +710,7 @@ static int32_t dfu_make_idle( dfu_device_t *device,
  */
 static void dfu_msg_response_output( const char * function, const int32_t result )
 {
-    char *msg = NULL;
+    const char *msg = NULL;
 
     if( 0 <= result ) {
         msg = "No error.";

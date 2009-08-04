@@ -70,7 +70,7 @@ static struct target_details target_map[] = {
     { "at32uc3b1256",   tar_at32uc3b1256,   adc_AVR32, 0x2FF6, 0x03eb, 0x40000, 0x2000, false, 512, false, true,  0,   0      },
     { "at32uc3b0256es", tar_at32uc3b0256es, adc_AVR32, 0x2FF6, 0x03eb, 0x40000, 0x2000, false, 512, false, true,  0,   0      },
     { "at32uc3b1256es", tar_at32uc3b1256es, adc_AVR32, 0x2FF6, 0x03eb, 0x40000, 0x2000, false, 512, false, true,  0,   0      },
-    { NULL }
+    { NULL,             tar_none,           adc_AVR,   0,      0,      0,       0,      false, 0,   false, false, 0,   0      }
 };
 
 struct target_details *FindDetails( enum targets_enum target )

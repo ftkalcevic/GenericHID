@@ -4,11 +4,9 @@
 
 
 #Header files
-HEADERS += ./flip.h \
-    ./programmer.h \
+HEADERS += ./programmer.h \
     ./stdafx.h
 
 #Source files
-SOURCES += ./flip.cpp \
-    ./programmer.cpp \
+SOURCES += ./programmer.cpp \
     ./stdafx.cpp

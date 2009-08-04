@@ -92,6 +92,7 @@ struct usb_device *dfu_device_init( const uint32_t vendor,
                                     const bool initial_abort,
                                     const bool honor_interfaceclass );
 
-char* dfu_status_to_string( const int32_t status );
-char* dfu_state_to_string( const int32_t state );
+const char* dfu_status_to_string( const int32_t status );
+const char* dfu_state_to_string( const int32_t state );
 #endif
+

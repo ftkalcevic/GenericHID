@@ -6,16 +6,19 @@
 #Header files
 HEADERS += ./eepromdata.h \
     ./generichid.h \
+    ./programdlg.h \
     ./stdafx.h
 
 #Source files
 SOURCES += ./eepromdata.cpp \
     ./generichid.cpp \
     ./main.cpp \
+    ./programdlg.cpp \
     ./stdafx.cpp
 
 #Forms
-FORMS += ./generichid.ui
+FORMS += ./generichid.ui \
+      	 ./programdlg.ui
 
 #Resource file(s)
 RESOURCES += ./generichid.qrc

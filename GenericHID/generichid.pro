@@ -8,6 +8,8 @@ message("You are running qmake on a generated .pro file. This may not work!")
 
 
 TEMPLATE = subdirs
-SUBDIRS += GenericHID/GenericHID.pro \
-    Programmer/Programmer.pro \
-    CLProgram/CLProgram.pro
+SUBDIRS += utility/utility.pro \
+    dfuprogrammer/dfuprogrammer.pro \
+    programmer/programmer.pro \
+    clprogram/clprogram.pro \
+    generichid/generichid.pro

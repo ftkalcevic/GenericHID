@@ -30,7 +30,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
+#ifndef _GNU_SOURCE
 #define _GNU_SOURCE
+#endif
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include "inttypes.h"

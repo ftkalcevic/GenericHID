@@ -9,22 +9,20 @@ message("You are running qmake on a generated .pro file. This may not work!")
 
 TEMPLATE = app
 TARGET = GenericHID
-DESTDIR = ../debug
+DESTDIR = ./debug
 QT += xml svg xmlpatterns
 CONFIG += debug
 DEFINES += QT_XML_LIB QT_SVG_LIB
-INCLUDEPATH += ./GeneratedFiles \
-    ./GeneratedFiles/Debug \
+INCLUDEPATH += ./generatedfiles \
+    ./generatedfiles/debug \
     .
 PRECOMPILED_HEADER = stdafx.h
 DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/debug
+MOC_DIR += ./generatedfiles/debug
 OBJECTS_DIR += debug
-UI_DIR += ./GeneratedFiles
-RCC_DIR += ./GeneratedFiles
+UI_DIR += ./generatedfiles
+RCC_DIR += ./generatedfiles
 
 #Include file(s)
-include(GenericHID.pri)
+include(generichid.pri)
 
-#Windows resource file
-win32:RC_FILE = GenericHID.rc

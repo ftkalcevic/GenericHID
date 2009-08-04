@@ -220,11 +220,10 @@ int32_t atmel_read_config( dfu_device_t *device,
 
     int32_t result;
     int32_t retVal = 0;
-    int32_t i = 0;
 
     DEBUG_MSG( QString("%1( %2, %3 )\n").arg(__FUNCTION__).arg((int)device).arg((int)info) );
 
-    for( i = 0; i < sizeof(data)/sizeof(atmel_read_config_t); i++ ) {
+    for( unsigned int i = 0; i < sizeof(data)/sizeof(atmel_read_config_t); i++ ) {
         atmel_read_config_t *row = (atmel_read_config_t*) &data[i];
 
         if( ((DM_8051 & row->device_map) && (adc_8051 == device->type)) ||
