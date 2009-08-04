@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 	a.setApplicationName( "GenericHID" );
 
 	usb_init();
-	//usb_set_debug(255);
+	usb_set_debug(255);
 	GenericHID w;
 	w.show();
 	return a.exec();
