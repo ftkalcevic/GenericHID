@@ -119,6 +119,21 @@ DFUProgrammer::DFUProgrammer( enum targets_enum target )
     }
 }
 
+bool DFUProgrammer::ReleaseDevice()
+{
+    if ( m_pDevice != NULL )
+    {
+	m_pDevice = NULL;
+        if ( m_pDFUDevice->handle != NULL )
+	{
+	    usb_release_interface( m_pDFUDevice->handle, m_pDFUDevice->interface );
+	    usb_close( m_pDFUDevice->handle );
+        }
+	memset( m_pDFUDevice, 0, sizeof(dfu_device_t) );
+    }
+    return true;
+}
+
 DFUProgrammer::~DFUProgrammer()
 {
 }

@@ -15,6 +15,7 @@ ProgramDlg::ProgramDlg(QWidget *parent)
 : QDialog(parent)
 , m_Logger( QCoreApplication::applicationName(), "ProgramDlg" )
 , m_bMultipleWarning( false )
+, m_pStatusDlg( NULL )
 {
     ui.setupUi(this);
 
@@ -223,19 +224,53 @@ void ProgramDlg::onStartBootloader()
 
 void ProgramDlg::onProgram()
 {
-
+    if ( Programmer::Init() )
+    {
+	m_pStatusDlg = new ProgrammingStatusDlg( this );
+	m_pStatusDlg->show();
+	Programmer::Program( "D:\\Projects\\Gecko\\MyUSB\\Demos\\Joystick\\eeprom.hex", "D:\\Projects\\Gecko\\MyUSB\\Demos\\Joystick\\Joystick.hex");
+	m_pStatusDlg->close();
+	delete m_pStatusDlg;
+	m_pStatusDlg = NULL;
+    }
+    Programmer::Terminate();
 }
 
 void ProgramDlg::onRestartDevice()
 {
     if ( Programmer::Init() )
 	Programmer::RunFirmware();
+    Programmer::Terminate();
 }
 
 void ProgramDlg::onClose()
 {
+    close();
 }
 
 void ProgramDlg::onRefresh()
 {
+    updateDeviceStatus();
+}
+
+void ProgramDlg::UpdateStatus( ProgramState::ProgramState status )
+{
+    if ( m_pStatusDlg != NULL )
+    {
+	switch ( status )
+	{
+	    case ProgramState::ErasingDevice:	    m_pStatusDlg->setLabel( "Erasing Device" ); break;
+	    case ProgramState::ProgrammingEEPROM:   m_pStatusDlg->setLabel( "Programming EEPROM" ); break;
+	    case ProgramState::VerifyingEEPROM:	    m_pStatusDlg->setLabel( "Verifying EEPROM" ); break;
+	    case ProgramState::ProgrammingFlash:    m_pStatusDlg->setLabel( "Programming Flash" ); break;
+	    case ProgramState::VerifyingFlash:	    m_pStatusDlg->setLabel( "Verifying Flash" ); break;
+	    case ProgramState::Done:		    m_pStatusDlg->setLabel( "Done" ); break;
+	    default:	    			    m_pStatusDlg->setLabel( QString("Unknown Status %d").arg((int)status) ); break;
+	}
+    }
+}
+
+void ProgramDlg::CompletionStatus( int nPercentComplete )
+{
+    m_pStatusDlg->setPercentage( nPercentComplete );
 }

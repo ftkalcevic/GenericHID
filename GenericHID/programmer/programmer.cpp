@@ -11,6 +11,7 @@ Programmer::Programmer()
 
 Programmer::~Programmer()
 {
+    Terminate();
 }
 
 void Programmer::completion_callback( void *user_data, int percent )
@@ -32,6 +33,17 @@ bool Programmer::Init()
     return true;
 }
 
+bool Programmer::Terminate()
+{
+    if ( m_programmer != NULL )
+    {
+	m_programmer->ReleaseDevice();
+	delete m_programmer;
+	m_programmer = NULL;
+    }
+
+    return true;
+}
 
 bool Programmer::Program( const QString &sEepromPath, const QString &sFirmwarePath )
 {

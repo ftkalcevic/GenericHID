@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "ui_programdlg.h"
 #include "programmer.h"
+#include "programmingstatusdlg.h"
 
 struct USBDevice
 {
@@ -33,12 +34,13 @@ private:
     Ui::ProgramDlgClass ui;
     QTimer m_timer;
     bool m_bMultipleWarning;
+    ProgrammingStatusDlg *m_pStatusDlg;
 
     void SetMode( bool bDevice, bool bBootloader, bool bHID);
     bool FindDevices( int &nGenericHIDs, int &nAt90DFUs );
     USBDevice GetGenericHIDDevice();
-    virtual void UpdateStatus( ProgramState::ProgramState status ) {}
-    virtual void CompletionStatus( int nPercentComplete ) {}
+    virtual void UpdateStatus( ProgramState::ProgramState status );
+    virtual void CompletionStatus( int nPercentComplete );
 };
 
 #endif // PROGRAMDLG_H

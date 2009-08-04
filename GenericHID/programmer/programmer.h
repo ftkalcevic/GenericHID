@@ -21,6 +21,7 @@ public:
     ~Programmer();
 
     bool Init();
+    bool Terminate();
     bool Program( const QString &sEepromPath, const QString &sFirmwarePath );
     bool RunFirmware();
     QString LastError();

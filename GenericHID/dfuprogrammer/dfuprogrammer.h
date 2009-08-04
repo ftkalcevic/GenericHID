@@ -12,6 +12,7 @@ public:
     DFUProgrammer( enum targets_enum target );
     ~DFUProgrammer();
     bool GetDevice();
+    bool ReleaseDevice();
     bool HasDevice();
 
     bool EraseDevice();
