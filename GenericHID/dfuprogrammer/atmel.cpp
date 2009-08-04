@@ -28,6 +28,7 @@
 #include "dfu-device.h"
 #include "dfu.h"
 #include "atmel.h"
+#include "dfucommon.h"
 
 
 /*
@@ -49,10 +50,6 @@
 #define ATMEL_DEBUG_THRESHOLD   50
 #define ATMEL_TRACE_THRESHOLD   55
 
-//#define DEBUG(...)  dfu_debug( __FILE__, __FUNCTION__, __LINE__, ATMEL_DEBUG_THRESHOLD, __VA_ARGS__ )
-//#define TRACE(...)  dfu_debug( __FILE__, __FUNCTION__, __LINE__, ATMEL_TRACE_THRESHOLD, __VA_ARGS__ )
-#define DEBUG(...)
-#define TRACE(...)
 
 static int32_t atmel_flash_block( dfu_device_t *device,
                                   int16_t *buffer,
@@ -85,7 +82,7 @@ static int32_t atmel_read_command( dfu_device_t *device,
         uint8_t command[4] = { 0x06, 0x03, 0x00, data0 };
 
         if( 4 != dfu_download(device, 4, command) ) {
-            DEBUG( "dfu_download failed.\n" );
+            ERROR_MSG( "dfu_download failed.\n" );
             return -1;
         }
 
@@ -110,26 +107,25 @@ static int32_t atmel_read_command( dfu_device_t *device,
     command[1] = data0;
     command[2] = data1;
 
-    TRACE( "%s( %p, 0x%02x, 0x%02x )\n", __FUNCTION__, device, data0, data1 );
+    DEBUG_MSG( QString("%1( %2, 0x%3, 0x%4 )\n").arg(__FUNCTION__).arg((int)device).arg(data0,2,16,QChar('0')).arg(data1,2,16,QChar('0')) );
 
     if( 3 != dfu_download(device, 3, command) ) {
-        DEBUG( "dfu_download failed\n" );
+        ERROR_MSG( "dfu_download failed\n" );
         return -1;
     }
 
     if( 0 != dfu_get_status(device, &status) ) {
-        DEBUG( "dfu_get_status failed\n" );
+        ERROR_MSG( "dfu_get_status failed\n" );
         return -2;
     }
 
     if( DFU_STATUS_OK != status.bStatus ) {
-        DEBUG( "status(%s) was not OK.\n",
-               dfu_status_to_string(status.bStatus) );
+        ERROR_MSG( QString("status(%1) was not OK.\n").arg(dfu_status_to_string(status.bStatus)) );
         return -3;
     }
 
     if( 1 != dfu_upload(device, 1, data) ) {
-        DEBUG( "dfu_upload failed\n" );
+        ERROR_MSG( "dfu_upload failed\n" );
         return -4;
     }
 
@@ -141,8 +137,7 @@ int32_t atmel_read_fuses( dfu_device_t *device,
                            atmel_avr32_fuses_t *info )
 {
     if( adc_AVR32 != device->type ) {
-       DEBUG( "target does not support fuse operation.\n" );
-       fprintf( stderr, "target does not support fuse operation.\n" );
+       ERROR_MSG( "target does not support fuse operation.\n" );
        return -1;
     } 
     
@@ -227,7 +222,7 @@ int32_t atmel_read_config( dfu_device_t *device,
     int32_t retVal = 0;
     int32_t i = 0;
 
-    TRACE( "%s( %p, %p )\n", __FUNCTION__, device, info );
+    DEBUG_MSG( QString("%1( %2, %3 )\n").arg(__FUNCTION__).arg((int)device).arg((int)info) );
 
     for( i = 0; i < sizeof(data)/sizeof(atmel_read_config_t); i++ ) {
         atmel_read_config_t *row = (atmel_read_config_t*) &data[i];
@@ -269,7 +264,7 @@ int32_t atmel_erase_flash( dfu_device_t *device,
     dfu_status_t status;
     int32_t i;
 
-    TRACE( "%s( %p, %d )\n", __FUNCTION__, device, mode );
+    DEBUG_MSG( QString("%1( %2, %3 )\n").arg(__FUNCTION__).arg((int)device).arg(mode) );
 
     switch( mode ) {
         case ATMEL_ERASE_BLOCK_0:
@@ -293,7 +288,7 @@ int32_t atmel_erase_flash( dfu_device_t *device,
     }
 
     if( 3 != dfu_download(device, 3, command) ) {
-        DEBUG( "dfu_download failed\n" );
+        ERROR_MSG( "dfu_download failed\n" );
         return -2;
     }
 
@@ -320,8 +315,7 @@ int32_t atmel_set_fuse( dfu_device_t *device,
     int8_t i;
 
     if( adc_AVR32 != device->type ) {
-       DEBUG( "target does not support fuse operation.\n" );
-       fprintf( stderr, "target does not support fuse operation.\n" );
+       ERROR_MSG( "target does not support fuse operation.\n" );
        return -1;
     } 
 
@@ -360,9 +354,8 @@ int32_t atmel_set_fuse( dfu_device_t *device,
             address = 20;
             break;
 #else
-            DEBUG( "Setting BODLEVEL can break your chip. Operation not performed\n" );
-            DEBUG( "Rebuild with the SUPPORT_SET_BOD_FUSES #define enabled if you really want to do this.\n" );
-            fprintf( stderr, "Setting BODLEVEL can break your chip. Operation not performed.\n" );
+            ERROR_MSG( "Setting BODLEVEL can break your chip. Operation not performed\n"
+                   "Rebuild with the SUPPORT_SET_BOD_FUSES #define enabled if you really want to do this.\n" );
             return -1;
 #endif
         case set_bodhyst:
@@ -374,9 +367,8 @@ int32_t atmel_set_fuse( dfu_device_t *device,
             address = 26;
             break;
 #else
-            DEBUG("Setting BODHYST can break your chip. Operation not performed\n");
-            DEBUG( "Rebuild with the SUPPORT_SET_BOD_FUSES #define enabled if you really want to do this.\n" );
-            fprintf( stderr, "Setting BODHYST can break your chip. Operation not performed.\n");
+            ERROR_MSG( "Setting BODHYST can break your chip. Operation not performed\n"
+                   "Rebuild with the SUPPORT_SET_BOD_FUSES #define enabled if you really want to do this.\n" );
             return -1;
 #endif
         case set_boden:
@@ -389,9 +381,8 @@ int32_t atmel_set_fuse( dfu_device_t *device,
             address = 27;
             break;
 #else
-            DEBUG( "Setting BODEN can break your chip. Operation not performed\n" );
-            DEBUG( "Rebuild with the SUPPORT_SET_BOD_FUSES #define enabled if you really want to do this.\n" );
-            fprintf( stderr, "Setting BODEN can break your chip. Operation not performed.\n" );
+	    ERROR_MSG( "Setting BODEN can break your chip. Operation not performed\n" 
+		   "Rebuild with the SUPPORT_SET_BOD_FUSES #define enabled if you really want to do this.\n" );
             return -1;
 #endif
         case set_isp_bod_en:
@@ -403,9 +394,8 @@ int32_t atmel_set_fuse( dfu_device_t *device,
             address = 29;
             break;
 #else
-            DEBUG( "Setting ISP_BOD_EN can break your chip. Operation not performed\n" );
-            DEBUG( "Rebuild with the SUPPORT_SET_BOD_FUSES #define enabled if you really want to do this.\n" );
-            fprintf( stderr, "Setting ISP_BOD_EN can break your chip. Operation not performed.\n" );
+            ERROR_MSG( "Setting ISP_BOD_EN can break your chip. Operation not performed\n" 
+		   "Rebuild with the SUPPORT_SET_BOD_FUSES #define enabled if you really want to do this.\n" );
             return -1;
 #endif
         case set_isp_io_cond_en:
@@ -419,8 +409,7 @@ int32_t atmel_set_fuse( dfu_device_t *device,
             address = 31;
             break;
         default:
-            DEBUG( "Fuse bits unrecognized\n" );
-            fprintf( stderr, "Fuse bits unrecognized.\n" );
+            ERROR_MSG( "Fuse bits unrecognized\n" );
             return -2;
             break;
         }
@@ -440,7 +429,7 @@ int32_t atmel_set_config( dfu_device_t *device,
     uint8_t command[4] = { 0x04, 0x01, 0x00, 0x00 };
     dfu_status_t status;
 
-    TRACE( "%s( %p, %d, 0x%02x )\n", __FUNCTION__, device, property, value );
+    DEBUG_MSG( QString("%1( %2, %3, 0x%4 )\n").arg(__FUNCTION__).arg((int)device).arg(property).arg(value,2,16,QChar('0')) );
 
     switch( property ) {
         case ATMEL_SET_CONFIG_BSB:
@@ -464,17 +453,17 @@ int32_t atmel_set_config( dfu_device_t *device,
     command[3] = value;
 
     if( 4 != dfu_download(device, 4, command) ) {
-        DEBUG( "dfu_download failed\n" );
+        ERROR_MSG( "dfu_download failed\n" );
         return -2;
     }
 
     if( 0 != dfu_get_status(device, &status) ) {
-        DEBUG( "dfu_get_status failed\n" );
+        ERROR_MSG( "dfu_get_status failed\n" );
         return -3;
     }
 
     if( DFU_STATUS_ERROR_WRITE == status.bStatus ) {
-        fprintf( stderr, "Device is write protected.\n" );
+        ERROR_MSG( "Device is write protected.\n" );
     }
 
     return status.bStatus;
@@ -492,8 +481,7 @@ static int32_t __atmel_read_page( dfu_device_t *device,
     uint32_t mini_page;
     int32_t result;
 
-    TRACE( "%s( %p, %u, %u, %p, %s )\n", __FUNCTION__, device, start, end,
-           buffer, ((true == eeprom) ? "true" : "false") );
+    DEBUG_MSG( QString("%1( %2, %3, %4, %5, %6 )\n").arg(__FUNCTION__).arg((int)device).arg(start).arg(end).arg((int)buffer).arg(eeprom ? "true" : "false") );
 
     if( true == eeprom ) {
         command[1] = 0x02;
@@ -511,7 +499,7 @@ static int32_t __atmel_read_page( dfu_device_t *device,
         command[5] = 0xff & (current_start + size - 1);
 
         if( 6 != dfu_download(device, 6, command) ) {
-            DEBUG( "dfu_download failed\n" );
+            ERROR_MSG( "dfu_download failed\n" );
             return -1;
         }
 
@@ -519,16 +507,15 @@ static int32_t __atmel_read_page( dfu_device_t *device,
         if( result < 0) {
             dfu_status_t status;
 
-            DEBUG( "result: %d\n", result );
+            DEBUG_MSG( QString("result: %1\n").arg(result) );
             if( 0 == dfu_get_status(device, &status) ) {
                 if( DFU_STATUS_ERROR_FILE == status.bStatus ) {
-                    fprintf( stderr,
-                             "The device is read protected.\n" );
+                    ERROR_MSG( "The device is read protected.\n" );
                 } else {
-                    fprintf( stderr, "Unknown error.  Try enabling debug.\n" );
+                    ERROR_MSG( "Unknown error.  Try enabling debug.\n" );
                 }
             } else {
-                fprintf( stderr, "Device is unresponsive.\n" );
+                ERROR_MSG( "Device is unresponsive.\n" );
             }
 
             return result;
@@ -562,19 +549,18 @@ int32_t atmel_read_flash( dfu_device_t *device,
     uint32_t current_start;
     size_t size;
 
-    TRACE( "%s( %p, 0x%08x, 0x%08x, %p, %u, %s )\n", __FUNCTION__, device,
-           start, end, buffer, buffer_len, ((true == eeprom) ? "true" : "false") );
+    DEBUG_MSG( QString("%1( %2, 0x%3, 0x%4, %5, %6, %7 )\n").arg(__FUNCTION__).arg((int)device).arg(start,8,16,QChar('0')).arg(end,8,16,QChar('0')).arg((int)buffer).arg(buffer_len).arg(eeprom ? "true" : "false") );
 
     if ( callback )
 	(*callback)(user_data, 0 );
 
     if( (NULL == buffer) || (start >= end) || (NULL == device) ) {
-        DEBUG( "invalid arguments.\n" );
+        ERROR_MSG( "invalid arguments.\n" );
         return -1;
     }
 
     if( (end - start) > buffer_len ) {
-        DEBUG( "buffer isn't large enough - bytes needed: %d : %d.\n", (end - start), buffer_len );
+        ERROR_MSG( QString("buffer isn't large enough - bytes needed: %1 : %2.\n").arg(end - start).arg(buffer_len) );
         return -2;
     }
 
@@ -639,7 +625,7 @@ static int32_t __atmel_blank_check_internal( dfu_device_t *device,
 {
     uint8_t command[6] = { 0x03, 0x01, 0x00, 0x00, 0x00, 0x00 };
 
-    TRACE( "%s( %p, 0x%08x, 0x%08x )\n", __FUNCTION__, device, start, end );
+    DEBUG_MSG( QString("%1( %2, 0x%3, 0x%3 )\n").arg(__FUNCTION__).arg((int)device).arg(start,8,16,QChar('0')).arg(end,8,16,QChar('0')) );
 
     command[2] = 0xff & (start >> 8);
     command[3] = 0xff & start;
@@ -647,7 +633,7 @@ static int32_t __atmel_blank_check_internal( dfu_device_t *device,
     command[5] = 0xff & end;
 
     if( 6 != dfu_download(device, 6, command) ) {
-        DEBUG( "dfu_download failed.\n" );
+        ERROR_MSG( "dfu_download failed.\n" );
         return -2;
     }
 
@@ -665,13 +651,13 @@ int32_t atmel_blank_check( dfu_device_t *device,
     uint32_t current_start;
     size_t size;
 
-    TRACE( "%s( %p, 0x%08x, 0x%08x )\n", __FUNCTION__, device, start, end );
+    DEBUG_MSG( QString("%1( %2, 0x%3, 0x%4 )\n").arg(__FUNCTION__).arg((int)device).arg(start,8,16,QChar('0')).arg(end,8,16,QChar('0')) );
 
     if ( callback )
 	(*callback)(user_data, 0 );
 
     if( (start >= end) || (NULL == device) ) {
-        DEBUG( "invalid arguments.\n" );
+        ERROR_MSG( "invalid arguments.\n" );
         return -1;
     }
 
@@ -742,7 +728,7 @@ done:
         }
     }
 
-    DEBUG( "erase chip failed.\n" );
+    ERROR_MSG( "erase chip failed.\n" );
     return -3;
 }
 
@@ -753,10 +739,10 @@ int32_t atmel_reset( dfu_device_t *device )
 {
     uint8_t command[3] = { 0x04, 0x03, 0x00 };
 
-    TRACE( "%s( %p )\n", __FUNCTION__, device );
+    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((int)device) );
 
     if( 3 != dfu_download(device, 3, command) ) {
-        DEBUG( "dfu_download failed.\n" );
+        ERROR_MSG( "dfu_download failed.\n" );
         return -1;
     }
 
@@ -772,15 +758,15 @@ int32_t atmel_start_app( dfu_device_t *device, uint16_t addr )
 {
     uint8_t command[5] = { 0x04, 0x03, 0x01, (addr >> 8) & 0xFF, addr & 0xFF };
 
-    TRACE( "%s( %p )\n", __FUNCTION__, device );
+    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((int)device) );
 
     if( 5 != dfu_download(device, 5, command) ) {
-        DEBUG( "dfu_download failed.\n" );
+        ERROR_MSG( "dfu_download failed.\n" );
         return -1;
     }
 
     if( 0 != dfu_download(device, 0, NULL) ) {
-        DEBUG( "dfu_download failed.\n" );
+        ERROR_MSG( "dfu_download failed.\n" );
         return -2;
     }
 
@@ -790,16 +776,16 @@ int32_t atmel_start_app( dfu_device_t *device, uint16_t addr )
 
 static int32_t atmel_select_flash( dfu_device_t *device )
 {
-    TRACE( "%s( %p )\n", __FUNCTION__, device );
+    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((int)device) );
 
     if( (NULL != device) && (adc_AVR32 == device->type) ) {
         uint8_t command[4] = { 0x06, 0x03, 0x00, 0x00 };
 
         if( 4 != dfu_download(device, 4, command) ) {
-            DEBUG( "dfu_download failed.\n" );
+            ERROR_MSG( "dfu_download failed.\n" );
             return -1;
         }
-        DEBUG( "flash selected\n" );
+        DEBUG_MSG( "flash selected\n" );
     }
 
     return 0;
@@ -807,16 +793,16 @@ static int32_t atmel_select_flash( dfu_device_t *device )
 
 static int32_t atmel_select_fuses( dfu_device_t *device )
 {
-    TRACE( "%s( %p )\n", __FUNCTION__, device );
+    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((int)device) );
 
     if( (NULL != device) && (adc_AVR32 == device->type) ) {
         uint8_t command[4] = { 0x06, 0x03, 0x00, 0x03 };
 
         if( 4 != dfu_download(device, 4, command) ) {
-            DEBUG( "dfu_download failed.\n" );
+            ERROR_MSG( "dfu_download failed.\n" );
             return -1;
         }
-        DEBUG( "fuses selected\n" );
+        DEBUG_MSG( "fuses selected\n" );
     }
 
     return 0;
@@ -825,16 +811,16 @@ static int32_t atmel_select_fuses( dfu_device_t *device )
 
 static int32_t atmel_select_user( dfu_device_t *device )
 {
-    TRACE( "%s( %p )\n", __FUNCTION__, device );
+    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((int)device) );
 
     if( (NULL != device) && (adc_AVR32 == device->type) ) {
         uint8_t command[4] = { 0x06, 0x03, 0x00, 0x06 };
 
         if( 4 != dfu_download(device, 4, command) ) {
-            DEBUG( "dfu_download failed.\n" );
+            ERROR_MSG( "dfu_download failed.\n" );
             return -1;
         }
-        DEBUG( "flash selected\n" );
+        DEBUG_MSG( "flash selected\n" );
     }
 
     return 0;
@@ -843,7 +829,7 @@ static int32_t atmel_select_user( dfu_device_t *device )
 static int32_t atmel_select_page( dfu_device_t *device,
                                   const uint16_t mem_page )
 {
-    TRACE( "%s( %p, %u )\n", __FUNCTION__, device, mem_page );
+    DEBUG_MSG( QString("%1( %2, %3 )\n").arg(__FUNCTION__).arg((int)device).arg(mem_page) );
 
     if( NULL != device ) {
         if( adc_AVR32 == device->type ) {
@@ -852,7 +838,7 @@ static int32_t atmel_select_page( dfu_device_t *device,
             command[4] = 0xff & mem_page;
 
             if( 5 != dfu_download(device, 5, command) ) {
-                DEBUG( "dfu_download failed.\n" );
+                ERROR_MSG( "dfu_download failed.\n" );
                 return -1;
             }
         } else if( adc_AVR == device->type ) {
@@ -861,7 +847,7 @@ static int32_t atmel_select_page( dfu_device_t *device,
             command[3] = (char) mem_page;
 
             if( 4 != dfu_download(device, 4, command) ) {
-                DEBUG( "dfu_download failed.\n" );
+                ERROR_MSG( "dfu_download failed.\n" );
                 return -1;
             }
         }
@@ -876,7 +862,7 @@ static void atmel_flash_prepair_buffer( int16_t *buffer, const size_t size,
 {
     int16_t *page;
 
-    TRACE( "%s( %p, %u, %u )\n", __FUNCTION__, buffer, size, page_size );
+    DEBUG_MSG( QString("%1( %2, %3, %4 )\n").arg(__FUNCTION__).arg((int)buffer).arg(size).arg(page_size) );
 
     for( page = buffer;
          &page[page_size] < &buffer[size];
@@ -909,17 +895,17 @@ int32_t atmel_user( dfu_device_t *device,
                     const uint32_t end )
 {
     int32_t result = 0;
-    TRACE( "%s( %p, %p, %u)\n", __FUNCTION__, device, buffer,end);
+    DEBUG_MSG( QString("%1( %2, %3, %4)\n").arg(__FUNCTION__).arg((int)device).arg((int)buffer).arg(end) );
 
     if( (NULL == buffer) || (end <= 0) ) {
-        DEBUG( "invalid arguments.\n" );
+        ERROR_MSG( "invalid arguments.\n" );
         return -1;
     }
     
     /* Select USER page */
     uint8_t command[4] = { 0x06, 0x03, 0x00, 0x06 };
     if( 4 != dfu_download(device, 4, command) ) {
-        DEBUG( "dfu_download failed.\n" );
+        ERROR_MSG( "dfu_download failed.\n" );
         return -2;
     }
     
@@ -927,7 +913,7 @@ int32_t atmel_user( dfu_device_t *device,
     result = atmel_flash_block( device, buffer, 0, end, 0 );
     
     if( result < 0 ) {
-        DEBUG( "error flashing the block: %d\n", result );
+        ERROR_MSG( QString("error flashing the block: %1\n").arg(result) );
         return -4;
     }
     
@@ -950,14 +936,13 @@ int32_t atmel_flash( dfu_device_t *device,
     int32_t result = 0;
     size_t size = end - start;
 
-    TRACE( "%s( %p, %p, %u, %u, %u, %s )\n", __FUNCTION__, device, buffer,
-           start, end, page_size, ((true == eeprom) ? "true" : "false") );
+    DEBUG_MSG( QString("%1( %2, %3, %4, %5, %6, %7 )\n").arg(__FUNCTION__).arg((int)device).arg((int)buffer).arg(start).arg(end).arg(page_size).arg(eeprom ? "true" : "false") );
 
     if ( callback )
 	(*callback)(user_data, 0 );
 
     if( (NULL == buffer) || ((end - start) <= 0) ) {
-        DEBUG( "invalid arguments.\n" );
+        ERROR_MSG( "invalid arguments.\n" );
         return -1;
     }
 
@@ -965,14 +950,14 @@ int32_t atmel_flash( dfu_device_t *device,
         /* Select FLASH memory */
         uint8_t command[4] = { 0x06, 0x03, 0x00, 0x00 };
         if( 4 != dfu_download(device, 4, command) ) {
-            DEBUG( "dfu_download failed.\n" );
+            ERROR_MSG( "dfu_download failed.\n" );
             return -2;
         }
 
         /* Select Page 0 */
         result = atmel_select_page( device, mem_page );
         if( result < 0 ) {
-            DEBUG( "error selecting the page: %d\n", result );
+            ERROR_MSG( QString("error selecting the page: %1\n").arg(result) );
             return -3;
         }
 
@@ -1009,8 +994,8 @@ int32_t atmel_flash( dfu_device_t *device,
 
 recheck_page:
         /* Make sure any writes align with the memory page boudary. */
-        if( (0x10000 * (1 + mem_page)) <= last ) {
-            if( first < (0x10000 * (1 + mem_page)) ) {
+        if( (0x10000 * (uint32_t)(1 + mem_page)) <= last ) {
+            if( first < (0x10000 * (uint32_t)(1 + mem_page)) ) {
                 last = 0x10000 * (1 + mem_page);
             } else {
                 int32_t result;
@@ -1018,7 +1003,7 @@ recheck_page:
                 mem_page++;
                 result = atmel_select_page( device, mem_page );
                 if( result < 0 ) {
-                    DEBUG( "error selecting the page: %d\n", result );
+                    ERROR_MSG( QString("error selecting the page: %1\n").arg(result) );
                     return -3;
                 }
                 goto recheck_page;
@@ -1027,7 +1012,7 @@ recheck_page:
 
         length = last - first;
 
-        DEBUG( "valid block length: %d, (%d - %d)\n", length, first, last );
+        DEBUG_MSG( QString("valid block length: %1, (%2 - %3)\n").arg(length).arg(first).arg(last) );
 
 	uint32_t start = first;
         while( 0 < length ) {
@@ -1041,27 +1026,27 @@ recheck_page:
                                         (UINT16_MAX & first), length, eeprom );
 
             if( result < 0 ) {
-                DEBUG( "error flashing the block: %d\n", result );
+                ERROR_MSG( QString("error flashing the block: %1\n").arg(result) );
                 return -4;
             }
 
             first += result;
             sent += result;
 
-            DEBUG( "Next first: %d\n", first );
+            DEBUG_MSG( QString("Next first: %1\n").arg(first) );
             length = last - first;
-            DEBUG( "valid block length: %d\n", length );
+            DEBUG_MSG( QString("valid block length: %1\n").arg(length) );
 
 	    if ( callback )
 		(*callback)(user_data, 100 * (first - start) / (last - start) );
         }
-        DEBUG( "sent: %d, first: %u last: %u\n", sent, first, last );
+        DEBUG_MSG( QString("sent: %1, first: %2 last: %3\n").arg(sent).arg(first).arg(last) );
     }
 
     if( mem_page > 0 ) {
         int32_t result = atmel_select_page( device, 0 );
         if( result < 0) {
-            DEBUG( "error selecting the page: %d\n", result );
+            ERROR_MSG( QString("error selecting the page: %1\n").arg(result) );
             return -5;
         }
     }
@@ -1077,8 +1062,7 @@ static void atmel_flash_populate_footer( uint8_t *message, uint8_t *footer,
 {
     int32_t crc;
 
-    TRACE( "%s( %p, %p, %u, %u, %u )\n", __FUNCTION__, message, footer,
-           vendorId, productId, bcdFirmware );
+    DEBUG_MSG( QString("%1( %2, %3, %4, %5, %6 )\n").arg(__FUNCTION__).arg((int)message).arg((int)footer).arg(vendorId).arg(productId).arg(bcdFirmware) );
 
     if( (NULL == message) || (NULL == footer) ) {
         return;
@@ -1124,8 +1108,7 @@ static void atmel_flash_populate_header( uint8_t *header,
 {
     uint16_t end;
 
-    TRACE( "%s( %p, %u, %u, %s )\n", __FUNCTION__, header, start_address,
-           length, ((true == eeprom) ? "true" : "false") );
+    DEBUG_MSG( QString("%1( %2, %3, %4, %5 )\n").arg(__FUNCTION__).arg((int)header).arg(start_address).arg(length).arg(eeprom ? "true" : "false") );
 
     if( NULL == header ) {
         return;
@@ -1166,11 +1149,10 @@ static int32_t atmel_flash_block( dfu_device_t *device,
     size_t control_block_size;  /* USB control block size */
     size_t alignment;
 
-    TRACE( "%s( %p, %p, %u, %u, %s )\n", __FUNCTION__, device, buffer,
-           base_address, length, ((true == eeprom) ? "true" : "false") );
+    DEBUG_MSG( QString("%1( %2, %3, %4, %5, %6 )\n").arg(__FUNCTION__).arg((int)device).arg((int)buffer).arg(base_address).arg(length).arg(eeprom ? "true" : "false") );
 
     if( (NULL == buffer) || (ATMEL_MAX_TRANSFER_SIZE < length) ) {
-        DEBUG( "invalid arguments.\n" );
+        ERROR_MSG( "invalid arguments.\n" );
         return -1;
     }
 
@@ -1191,7 +1173,7 @@ static int32_t atmel_flash_block( dfu_device_t *device,
 
     atmel_flash_populate_header( header, base_address, length, eeprom );
 
-    DEBUG( "%d bytes to MCU %06x\n", length, base_address );
+    DEBUG_MSG( QString("%1 bytes to MCU %2\n").arg(length).arg(base_address,6,16,QChar('0')) );
 
     /* Copy the data */
     for( unsigned i = 0; i < length; i++ ) {
@@ -1201,7 +1183,7 @@ static int32_t atmel_flash_block( dfu_device_t *device,
     atmel_flash_populate_footer( message, footer, 0xffff, 0xffff, 0xffff );
 
     message_length = ((size_t) (footer - header)) + ATMEL_FOOTER_SIZE;
-    DEBUG( "message length: %d\n", message_length );
+    DEBUG_MSG( QString("message length: %1\n").arg(message_length) );
 
     result = dfu_download( device, message_length, message );
 
@@ -1211,24 +1193,23 @@ static int32_t atmel_flash_block( dfu_device_t *device,
              * caused by the device saying "you can't do that"
              * which means the device is write protected.
              */
-            fprintf( stderr, "Device is write protected.\n" );
+            ERROR_MSG( "Device is write protected.\n" );
 
             dfu_clear_status( device );
         } else {
-            DEBUG( "dfu_download failed. %d\n", result );
+            ERROR_MSG( QString("dfu_download failed. %1\n").arg(result) );
         }
         return -2;
     }
 
     /* check status */
     if( 0 != dfu_get_status(device, &status) ) {
-        DEBUG( "dfu_get_status failed.\n" );
+        ERROR_MSG( "dfu_get_status failed.\n" );
         return -3;
     }
 
     if( DFU_STATUS_OK != status.bStatus ) {
-        DEBUG( "status(%s) was not OK.\n",
-               dfu_status_to_string(status.bStatus) );
+        ERROR_MSG( QString("status(%1) was not OK.\n").arg(dfu_status_to_string(status.bStatus)) );
         return -4;
     }
 

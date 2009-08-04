@@ -25,7 +25,10 @@
 #include <usb.h>
 #include <errno.h>
 #include "dfu.h"
+#include "dfucommon.h"
 
+Logger g_Logger( "DFUProgrammer", "DFUProgrammer" );
+QString h_sLastError;
 
 /* DFU commands */
 #define DFU_DETACH      0
@@ -50,12 +53,6 @@
 #define DFU_TRACE_THRESHOLD         200
 #define DFU_MESSAGE_DEBUG_THRESHOLD 300
 
-//#define DEBUG(...)  dfu_debug( __FILE__, __FUNCTION__, __LINE__, DFU_DEBUG_THRESHOLD, __VA_ARGS__ )
-//#define TRACE(...)  dfu_debug( __FILE__, __FUNCTION__, __LINE__, DFU_TRACE_THRESHOLD, __VA_ARGS__ )
-//#define MSG_DEBUG(...)  dfu_debug( __FILE__, __FUNCTION__, __LINE__, DFU_MESSAGE_DEBUG_THRESHOLD, __VA_ARGS__ )
-#define DEBUG(...)
-#define TRACE(...)
-#define MSG_DEBUG(...)
 
 static uint16_t transaction = 0;
 
@@ -98,10 +95,11 @@ int32_t dfu_detach( dfu_device_t *device, const int32_t timeout )
 {
     int32_t result;
 
-    TRACE( "%s( %p, %d )\n", __FUNCTION__, device, timeout );
+    DEBUG_MSG( QString("%s( %p, %d )\n").arg(__FUNCTION__).arg((int)device).arg(timeout) );
 
-    if( (NULL == device) || (NULL == device->handle) || (timeout < 0) ) {
-        DEBUG( "Invalid parameter\n" );
+    if( (NULL == device) || (NULL == device->handle) || (timeout < 0) ) 
+    {
+        ERROR_MSG( "Invalid parameter\n" );
         return -1;
     }
 
@@ -134,21 +132,21 @@ int32_t dfu_download( dfu_device_t *device, const size_t length, uint8_t* data )
 {
     int32_t result;
 
-    TRACE( "%s( %p, %u, %p )\n", __FUNCTION__, device, length, data );
+    DEBUG_MSG( QString("%1( %2, %3, %4 )\n").arg(__FUNCTION__).arg((int)device).arg(length).arg((int)data) );
 
     /* Sanity checks */
     if( (NULL == device) || (NULL == device->handle) ) {
-        DEBUG( "Invalid parameter\n" );
+        ERROR_MSG( "Invalid parameter\n" );
         return -1;
     }
 
     if( (0 != length) && (NULL == data) ) {
-        DEBUG( "data was NULL, but length != 0\n" );
+        ERROR_MSG( "data was NULL, but length != 0\n" );
         return -2;
     }
 
     if( (0 == length) && (NULL != data) ) {
-        DEBUG( "data was not NULL, but length == 0\n" );
+        ERROR_MSG( "data was not NULL, but length == 0\n" );
         return -3;
     }
 
@@ -156,7 +154,7 @@ int32_t dfu_download( dfu_device_t *device, const size_t length, uint8_t* data )
     {
         size_t i;
         for( i = 0; i < length; i++ ) {
-            MSG_DEBUG( "Message: m[%u] = 0x%02x\n", i, data[i] );
+            DEBUG_MSG( QString("Message: m[%1] = 0x%2\n").arg(i).arg(data[i],2,16,QChar('0')) );
         }
     }
 
@@ -189,16 +187,16 @@ int32_t dfu_upload( dfu_device_t *device, const size_t length, uint8_t* data )
 {
     int32_t result;
 
-    TRACE( "%s( %p, %u, %p )\n", __FUNCTION__, device, length, data );
+    DEBUG_MSG( QString("%1( %2, %3, %4 )\n").arg(__FUNCTION__).arg((int)device).arg(length).arg((int)data) );
 
     /* Sanity checks */
     if( (NULL == device) || (NULL == device->handle) ) {
-        DEBUG( "Invalid parameter\n" );
+        ERROR_MSG( "Invalid parameter\n" );
         return -1;
     }
 
     if( (0 == length) || (NULL == data) ) {
-        DEBUG( "data was NULL, or length is 0\n" );
+        ERROR_MSG( "data was NULL, or length is 0\n" );
         return -2;
     }
 
@@ -230,10 +228,10 @@ int32_t dfu_get_status( dfu_device_t *device, dfu_status_t *status )
     char buffer[6];
     int32_t result;
 
-    TRACE( "%s( %p, %p )\n", __FUNCTION__, device, status );
+    DEBUG_MSG( QString("%1( %2, %3 )\n").arg(__FUNCTION__).arg((int)device).arg((int)status) );
 
     if( (NULL == device) || (NULL == device->handle) ) {
-        DEBUG( "Invalid parameter\n" );
+        ERROR_MSG( "Invalid parameter\n" );
         return -1;
     }
 
@@ -263,18 +261,16 @@ int32_t dfu_get_status( dfu_device_t *device, dfu_status_t *status )
         status->bState  = buffer[4];
         status->iString = buffer[5];
 
-        DEBUG( "==============================\n" );
-        DEBUG( "status->bStatus: %s (0x%02x)\n",
-               dfu_status_to_string(status->bStatus), status->bStatus );
-        DEBUG( "status->bwPollTimeout: 0x%04x\n", status->bwPollTimeout );
-        DEBUG( "status->bState: %s (0x%02x)\n",
-               dfu_state_to_string(status->bState), status->bState );
-        DEBUG( "status->iString: 0x%02x\n", status->iString );
-        DEBUG( "------------------------------\n" );
+        DEBUG_MSG( "==============================\n" );
+        DEBUG_MSG( QString("status->bStatus: %1 (0x%2)\n").arg(dfu_status_to_string(status->bStatus)).arg(status->bStatus,2,16,QChar('0')) );
+        DEBUG_MSG( QString("status->bwPollTimeout: 0x%1\n").arg(status->bwPollTimeout,4,16,QChar('0')) );
+        DEBUG_MSG( QString("status->bState: %1 (0x%2)\n").arg(dfu_state_to_string(status->bState)).arg(status->bState,8,16,QChar('0')) );
+        DEBUG_MSG( QString("status->iString: 0x%1\n").arg(status->iString,2,16,QChar('0')) );
+        DEBUG_MSG( "------------------------------\n" );
     } else {
         if( 0 < result ) {
             /* There was an error, we didn't get the entire message. */
-            DEBUG( "result: %d\n", result );
+            ERROR_MSG( QString("result: %1\n").arg(result) );
             return -2;
         }
     }
@@ -294,10 +290,10 @@ int32_t dfu_clear_status( dfu_device_t *device )
 {
     int32_t result;
 
-    TRACE( "%s( %p )\n", __FUNCTION__, device );
+    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((int)device) );
 
     if( (NULL == device) || (NULL == device->handle) ) {
-        DEBUG( "Invalid parameter\n" );
+        ERROR_MSG( "Invalid parameter\n" );
         return -1;
     }
 
@@ -328,10 +324,10 @@ int32_t dfu_get_state( dfu_device_t *device )
     int32_t result;
     char buffer[1];
 
-    TRACE( "%s( %p )\n", __FUNCTION__, device );
+    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((int)device) );
 
     if( (NULL == device) || (NULL == device->handle) ) {
-        DEBUG( "Invalid parameter\n" );
+        ERROR_MSG( "Invalid parameter\n" );
         return -1;
     }
 
@@ -367,10 +363,10 @@ int32_t dfu_abort( dfu_device_t *device )
 {
     int32_t result;
 
-    TRACE( "%s( %p )\n", __FUNCTION__, device );
+    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((int)device) );
 
     if( (NULL == device) || (NULL == device->handle) ) {
-        DEBUG( "Invalid parameter\n" );
+        ERROR_MSG( "Invalid parameter\n" );
         return -1;
     }
 
@@ -409,9 +405,7 @@ struct usb_device *dfu_device_init( const uint32_t vendor,
     struct usb_device *device;
     int32_t retries = 4;
 
-    TRACE( "%s( %u, %u, %p, %s, %s )\n", __FUNCTION__, vendor, product,
-           dfu_device, ((true == initial_abort) ? "true" : "false"),
-           ((true == honor_interfaceclass) ? "true" : "false") );
+    DEBUG_MSG( QString("%1( %2, %3, %4, %5, %6 )\n").arg(__FUNCTION__).arg(vendor).arg(product).arg((int)dfu_device).arg(initial_abort ? "true" : "false").arg(honor_interfaceclass ? "true" : "false") );
 
 retry:
 
@@ -446,24 +440,24 @@ retry:
                                             goto retry;
                                     }
 
-                                    DEBUG( "Failed to put the device in dfuIDLE mode.\n" );
+                                    ERROR_MSG( "Failed to put the device in dfuIDLE mode.\n" );
                                     usb_release_interface( dfu_device->handle, dfu_device->interface );
                                     usb_close( dfu_device->handle );
                                     retries = 4;
                                 } else {
-                                    DEBUG( "Failed to claim the DFU interface.\n" );
+                                    ERROR_MSG( "Failed to claim the DFU interface.\n" );
                                     usb_close( dfu_device->handle );
                                 }
                             } else {
-                                DEBUG( "Failed to set configuration.\n");
+                                ERROR_MSG( "Failed to set configuration.\n");
 
                                 usb_close( dfu_device->handle );
                             }
                         } else {
-                            DEBUG( "Failed to open device.\n" );
+                            ERROR_MSG( "Failed to open device.\n" );
                         }
                     } else {
-                        DEBUG( "Failed to find the DFU interface.\n" );
+                        ERROR_MSG( "Failed to find the DFU interface.\n" );
                     }
                 }
             }
@@ -624,13 +618,13 @@ static int32_t dfu_find_interface( const struct usb_device *device,
                 if(    (USB_CLASS_APP_SPECIFIC == interface->bInterfaceClass)
                     && (DFU_SUBCLASS == interface->bInterfaceSubClass) )
                 {
-                    DEBUG( "Found DFU Inteface: %d\n", interface->bInterfaceNumber );
+                    DEBUG_MSG( QString("Found DFU Inteface: %1\n").arg(interface->bInterfaceNumber) );
                     return interface->bInterfaceNumber;
                 }
             } else {
                 /* If there is a bug in the DFU firmware, return the first
                  * found interface. */
-                DEBUG( "Found DFU Inteface: %d\n", interface->bInterfaceNumber );
+                DEBUG_MSG( QString("Found DFU Inteface: %1\n").arg(interface->bInterfaceNumber) );
                 return interface->bInterfaceNumber;
             }
         }
@@ -663,7 +657,7 @@ static int32_t dfu_make_idle( dfu_device_t *device,
             continue;
         }
 
-        DEBUG( "State: %s (%d)\n", dfu_state_to_string(status.bState), status.bState );
+        DEBUG_MSG( QString("State: %1 (%2)\n").arg(dfu_state_to_string(status.bState)).arg(status.bState) );
 
         switch( status.bState ) {
             case STATE_DFU_IDLE:
@@ -694,7 +688,7 @@ static int32_t dfu_make_idle( dfu_device_t *device,
 
             case STATE_APP_DETACH:
             case STATE_DFU_MANIFEST_WAIT_RESET:
-                DEBUG( "Resetting the device\n" );
+                DEBUG_MSG( "Resetting the device\n" );
                 usb_reset( device->handle );
                 return 1;
         }
@@ -702,7 +696,7 @@ static int32_t dfu_make_idle( dfu_device_t *device,
         retries--;
     }
 
-    DEBUG( "Not able to transition the device into the dfuIDLE state.\n" );
+    ERROR_MSG( "Not able to transition the device into the dfuIDLE state.\n" );
     return -2;
 }
 
@@ -714,7 +708,7 @@ static int32_t dfu_make_idle( dfu_device_t *device,
  *  function - the calling function to output on behalf of
  *  result   - the result to interpret
  */
-static void dfu_msg_response_output( const char *function, const int32_t result )
+static void dfu_msg_response_output( const char * function, const int32_t result )
 {
     char *msg = NULL;
 
@@ -767,6 +761,6 @@ static void dfu_msg_response_output( const char *function, const int32_t result 
                 break;
         }
 
-        DEBUG( "%s 0x%08x (%d)\n", msg, result, result );
+	ERROR_MSG( QString("%1: %2 0x%3 (%4)\n").arg(function).arg(msg).arg(result,8,16,QChar('0')).arg(result) );
     }
 }

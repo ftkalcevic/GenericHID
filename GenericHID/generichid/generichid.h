@@ -6,14 +6,23 @@
 
 class GenericHID : public QMainWindow
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	GenericHID(QWidget *parent = 0, Qt::WFlags flags = 0);
-	~GenericHID();
+    GenericHID(QWidget *parent = 0, Qt::WFlags flags = 0);
+    ~GenericHID();
+
+public slots:
+    void onFileOpen();
+    void onFileSave();
+    void onFileSaveAs();
+    void onFileExit();
+    void onMicrocontrollerProgram();
+    void onMicrocontrollerExport();
+    void onMicrocontrollerImportAndProgram();
 
 private:
-	Ui::GenericHIDClass ui;
+    Ui::GenericHIDClass ui;
 };
 
 #endif // GENERICHID_H

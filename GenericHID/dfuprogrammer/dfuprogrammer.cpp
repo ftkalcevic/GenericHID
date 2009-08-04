@@ -2,8 +2,8 @@
 #include "atmel.h"
 #include "dfu.h"
 #include "intel_hex.h"
+#include "dfucommon.h"
 
-#define DEBUG(...)
 
 struct target_details
 {
@@ -167,7 +167,6 @@ bool DFUProgrammer::EraseDevice()
 
 bool DFUProgrammer::StartProgramming(IntelHexBuffer &memory)
 {
-    int32_t  usage = 0;
     int32_t  retval = -1;
     int32_t  result = 0;
     uint32_t memory_size;
@@ -190,7 +189,7 @@ bool DFUProgrammer::StartProgramming(IntelHexBuffer &memory)
     {
         if( memory.data()[i] != -1 ) 
 	{
-            fprintf( stderr, "Attempted to write to illegal memory address.\n" );
+            ERROR_MSG( "Attempted to write to illegal memory address.\n" );
             goto error;
         }
     }
@@ -207,27 +206,24 @@ bool DFUProgrammer::StartProgramming(IntelHexBuffer &memory)
   //              } 
 		//else 
 		{
-                    fprintf( stderr, "Bootloader and code overlap.\n" );
-                    fprintf( stderr, "Use --suppress-bootloader-mem to ignore\n" );
+                    ERROR_MSG( "Bootloader and code overlap.\n" );
                     goto error;
                 }
             }
         }
     }
 
-    DEBUG( "write %d/%d bytes\n", usage, memory_size );
+    DEBUG_MSG( QString("write %1/%2 bytes\n").arg(memory.usage()).arg(memory_size) );
 
     result = atmel_flash( m_pDFUDevice, memory.data().data(), bottom_memory_address, top_memory_address, page_size, bEeprom, m_Callback, m_user_data );
 
     if( result < 0 ) 
     {
-        DEBUG( "Error while flashing. (%d)\n", result );
-        fprintf( stderr, "Error while flashing.\n" );
+        ERROR_MSG( QString("Error while flashing. (%1)\n").arg(result) );
         goto error;
     }
 
-    fprintf( stderr, "%d bytes used (%.02f%%)\n", usage,
-                     ((float)(usage*100)/(float)(top_memory_address)) );
+    DEBUG_MSG( QString("%1 bytes used (%2%%)\n").arg(memory.usage()).arg(((float)(memory.usage()*100)/(float)(top_memory_address)),0,'f',2,0) );
 
     retval = 0;
 
@@ -259,7 +255,7 @@ bool DFUProgrammer::StartVerify(IntelHexBuffer &memory)
     memory_size = top_memory_address - bottom_memory_address;
     QVector<uint8_t> buffer( memory_size, 0 );
 
-    fprintf( stderr, "Validating...\n" );
+    DEBUG_MSG( "Validating...\n" );
 
     result = atmel_read_flash( m_pDFUDevice, bottom_memory_address,
                                top_memory_address, buffer.data(),
@@ -267,8 +263,7 @@ bool DFUProgrammer::StartVerify(IntelHexBuffer &memory)
 
     if( memory_size != result ) 
     {
-        DEBUG( "Error while validating.\n" );
-        fprintf( stderr, "Error while validating.\n" );
+        ERROR_MSG( "Error while validating.\n" );
         goto error;
     }
 
@@ -279,16 +274,13 @@ bool DFUProgrammer::StartVerify(IntelHexBuffer &memory)
             /* Memory should have been programmed in this location. */
             if( ((uint8_t) memory.data()[j]) != buffer[i] ) 
 	    {
-                DEBUG( "Image did not validate at location: %d (%02x != %02x)\n", i,
-                       (0xff & memory.data()[j]), (0xff & buffer[i]) );
-                fprintf( stderr, "Image did not validate.\n" );
+                ERROR_MSG( QString("Image did not validate at location: %1 (%2 != %3)\n").arg(i).arg((0xff & memory.data()[j]),2,16,QChar('0')).arg((0xff & buffer[i]),2,16,QChar('0')) );
                 goto error;
             }
         }
     }
 
-    fprintf( stderr, "%d bytes used (%.02f%%)\n", memory.usage(),
-                     ((float)(memory.usage()*100)/(float)(top_memory_address)) );
+    DEBUG_MSG( QString("%1 bytes used (%2%%)\n").arg(memory.usage()).arg(((float)(memory.usage()*100)/(float)(top_memory_address)),0,'f',2,0) );
 
     retval = 0;
 

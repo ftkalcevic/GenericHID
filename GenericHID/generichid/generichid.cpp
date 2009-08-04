@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "generichid.h"
+#include "programdlg.h"
 
 GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
 	: QMainWindow(parent, flags)
@@ -11,6 +12,37 @@ GenericHID::~GenericHID()
 {
 
 }
+
+void GenericHID::onFileOpen()
+{
+}
+
+void GenericHID::onFileSave()
+{
+}
+
+void GenericHID::onFileSaveAs()
+{
+}
+
+void GenericHID::onFileExit()
+{
+}
+
+void GenericHID::onMicrocontrollerProgram()
+{
+}
+
+void GenericHID::onMicrocontrollerExport()
+{
+}
+
+void GenericHID::onMicrocontrollerImportAndProgram()
+{
+    ProgramDlg dlg(this);
+    dlg.exec();
+}
+
 
 
 /*

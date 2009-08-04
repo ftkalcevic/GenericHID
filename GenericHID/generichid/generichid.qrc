@@ -1,4 +1,6 @@
 <RCC>
-    <qresource prefix="GenericHID">
-    </qresource>
+  <qresource prefix="GenericHID" >
+    <file alias="greenlight" >resources/GreenLight.png</file>
+    <file alias="redlight" >resources/RedLight.png</file>
+  </qresource>
 </RCC>

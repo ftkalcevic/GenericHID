@@ -31,12 +31,14 @@
  */
 
 #define _GNU_SOURCE
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include "inttypes.h"
 #include <stdlib.h>
 #include <string.h>
 
 #include "intel_hex.h"
+#include "dfucommon.h"
 
 struct intel_record {
     unsigned int count;
@@ -112,7 +114,7 @@ static int intel_validate_line( struct intel_record *record )
             break;
 
         default:
-            fprintf( stderr, "Unsupported type. %d\n", record->type );
+            ERROR_MSG( QString("Unsupported type. %1\n").arg(record->type) );
             /* Type 5 and other types are unsupported. */
             return -5;
     }
@@ -232,7 +234,7 @@ QVector<int16_t> intel_hex_to_buffer( const char *filename, unsigned int max_siz
 
     if( (NULL == filename) || (0 >= max_size)  ) 
     {
-        fprintf( stderr, "Invalid filename or max_size.\n" );
+        ERROR_MSG( "Invalid filename or max_size.\n" );
         goto error;
     }
 
@@ -245,7 +247,7 @@ QVector<int16_t> intel_hex_to_buffer( const char *filename, unsigned int max_siz
         fp = fopen( filename, "r" );
         if( NULL == fp ) 
 	{
-            fprintf( stderr, "Error opening the file.\n" );
+            ERROR_MSG( "Error opening the file.\n" );
             goto error;
         }
     }
@@ -257,7 +259,7 @@ QVector<int16_t> intel_hex_to_buffer( const char *filename, unsigned int max_siz
     {
         if( 0 != intel_parse_line(fp, &record) ) 
 	{
-            fprintf( stderr, "Error parsing the line.\n" );
+            ERROR_MSG( "Error parsing the line.\n" );
             goto error;
         }
 
@@ -269,7 +271,7 @@ QVector<int16_t> intel_hex_to_buffer( const char *filename, unsigned int max_siz
 		{
                     if( address >= max_size ) 
 		    {
-                        fprintf( stderr, "Address error.\n" );
+                        ERROR_MSG( "Address error.\n" );
                         goto error;
                     }
 

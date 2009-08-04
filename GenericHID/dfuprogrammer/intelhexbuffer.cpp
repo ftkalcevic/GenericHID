@@ -1,8 +1,8 @@
 #include <QString>
 #include "intelhexbuffer.h"
 #include "intel_hex.h"
+#include "dfucommon.h"
 
-#define DEBUG(...)
 
 
 IntelHexBuffer::IntelHexBuffer(MemoryType::MemoryType memory, const QString &sHexPath, unsigned int max_size)
@@ -13,8 +13,7 @@ IntelHexBuffer::IntelHexBuffer(MemoryType::MemoryType memory, const QString &sHe
     m_HexBuffer = intel_hex_to_buffer( sHexPath.toAscii().constData(), max_size, &m_nUsage );
     if( m_HexBuffer.isEmpty() ) 
     {
-	DEBUG( "Something went wrong with creating the memory image.\n" );
-	fprintf( stderr, "Something went wrong with creating the memory image.\n" );
+	ERROR_MSG( "Something went wrong with creating the memory image.\n" );
     }
 }
 
