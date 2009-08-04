@@ -228,7 +228,11 @@ void ProgramDlg::onProgram()
     {
 	m_pStatusDlg = new ProgrammingStatusDlg( this );
 	m_pStatusDlg->show();
+#ifdef _WIN32
 	Programmer::Program( "D:\\Projects\\Gecko\\MyUSB\\Demos\\Joystick\\eeprom.hex", "D:\\Projects\\Gecko\\MyUSB\\Demos\\Joystick\\Joystick.hex");
+#else
+	Programmer::Program( "/home/frankt/src/eeprom.hex", "/home/frankt/src/Joystick.hex");
+#endif
 	m_pStatusDlg->close();
 	delete m_pStatusDlg;
 	m_pStatusDlg = NULL;

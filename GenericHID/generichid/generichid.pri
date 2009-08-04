@@ -7,6 +7,7 @@
 HEADERS += ./eepromdata.h \
     ./generichid.h \
     ./programdlg.h \
+    ./programmingstatusdlg.h \
     ./stdafx.h
 
 #Source files
@@ -14,11 +15,13 @@ SOURCES += ./eepromdata.cpp \
     ./generichid.cpp \
     ./main.cpp \
     ./programdlg.cpp \
+    ./programmingstatusdlg.cpp \
     ./stdafx.cpp
 
 #Forms
 FORMS += ./generichid.ui \
-      	 ./programdlg.ui
+      	 ./programdlg.ui \
+	 ./programmingstatusdlg.ui
 
 #Resource file(s)
 RESOURCES += ./generichid.qrc
