@@ -425,6 +425,18 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="Resources"
+			>
+			<File
+				RelativePath=".\resources\GreenLight.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\RedLight.png"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 		<Global
