@@ -21,11 +21,13 @@ public slots:
     void onRefresh();
 
 private:
+    Logger m_Logger;
     Ui::ProgramDlgClass ui;
     QTimer m_timer;
     bool m_bMultipleWarning;
 
     void SetMode( bool bDevice, bool bBootloader, bool bHID);
+    bool FindDevices( int &nGenericHIDs, int &nAt90DFUs );
 };
 
 #endif // PROGRAMDLG_H

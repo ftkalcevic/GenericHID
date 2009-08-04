@@ -12,6 +12,7 @@ const unsigned short At90USB1287_PID = 0x2FFB;
 
 ProgramDlg::ProgramDlg(QWidget *parent)
 : QDialog(parent)
+, m_Logger( QCoreApplication::applicationName(), "ProgramDlg" )
 , m_bMultipleWarning( false )
 {
     ui.setupUi(this);
@@ -40,7 +41,7 @@ void ProgramDlg::SetMode( bool bDevice, bool bBootloader, bool bHID)
     ui.btnRestartDevice->setEnabled( bBootloader );
 }
 
-static bool FindDevices( int &nGenericHIDs, int &nAt90DFUs )
+bool ProgramDlg::FindDevices( int &nGenericHIDs, int &nAt90DFUs )
 {
     nGenericHIDs = 0;
     nAt90DFUs = 0;
@@ -53,6 +54,7 @@ static bool FindDevices( int &nGenericHIDs, int &nAt90DFUs )
     {
         for( struct usb_device *device = usb_bus->devices; NULL != device; device = device->next) 
 	{
+	    LOG_MSG( m_Logger, LogTypes::Error, QString("VID=%1 PID=%2").arg(device->descriptor.idVendor,4,16,QChar('0')).arg(device->descriptor.idProduct,4,16,QChar('0')) );
             if( device->descriptor.idVendor == GenericHID_VID && device->descriptor.idProduct == GenericHID_PID )
 		nGenericHIDs++;
             else if( device->descriptor.idVendor == At90USB1287_VID && device->descriptor.idProduct == At90USB1287_PID )
