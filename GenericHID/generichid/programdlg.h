@@ -6,14 +6,26 @@
 
 class ProgramDlg : public QDialog
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	ProgramDlg(QWidget *parent = 0);
-	~ProgramDlg();
+    ProgramDlg(QWidget *parent = 0);
+    ~ProgramDlg();
+
+public slots:
+    void updateDeviceStatus();
+    void onStartBootloader();
+    void onProgram();
+    void onRestartDevice();
+    void onClose();
+    void onRefresh();
 
 private:
-	Ui::ProgramDlgClass ui;
+    Ui::ProgramDlgClass ui;
+    QTimer m_timer;
+    bool m_bMultipleWarning;
+
+    void SetMode( bool bDevice, bool bBootloader, bool bHID);
 };
 
 #endif // PROGRAMDLG_H
