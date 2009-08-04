@@ -95,17 +95,21 @@ USBDevice ProgramDlg::GetGenericHIDDevice()
 			    usb_dev_handle *hDevice = usb_open( device );
 			    if ( hDevice != NULL )
 			    {
+#ifdef _WIN32
 				if( usb_set_configuration(hDevice, 1) == 0 ) 
 				{
 				    int nRet = usb_claim_interface(hDevice, interface->bInterfaceNumber);
-
-				    #ifdef LIBUSB_HAS_DETACH_KERNEL_DRIVER_NP
-					if ( nRet != 0 )
-					{
-					    usb_detach_kernel_driver_np(hDevice, interface->bInterfaceNumber);
-					    nRet = usb_claim_interface(hDevice, interface->bInterfaceNumber);
-					}
-				    #endif
+#else
+				int nRet = usb_claim_interface(hDevice, interface->bInterfaceNumber);
+				if ( nRet != 0 )
+				{
+				    usb_detach_kernel_driver_np(hDevice, interface->bInterfaceNumber);
+				    nRet = usb_claim_interface(hDevice, interface->bInterfaceNumber);
+				}
+				if ( nRet == 0 )
+				{
+				    nRet = usb_set_configuration(hDevice, 1);
+#endif
 
 				    if ( nRet == 0 )
 				    {
