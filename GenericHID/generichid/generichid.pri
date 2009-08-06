@@ -4,19 +4,49 @@
 
 
 #Header files
-HEADERS += ./eepromdata.h \
-    ./generichid.h \
-    ./programdlg.h \
-    ./programmingstatusdlg.h \
-    ./stdafx.h
+HEADERS += dragtoolbutton.h \
+    eepromdata.h \
+    generichid.h \
+    pin.h \
+    programdlg.h \
+    programmerthread.h \
+    programmingstatusdlg.h \
+    shapecollection.h \
+    shape.h \
+    shapemcu.h \
+    shapemimedata.h \
+    shapepropertybool.h \
+    shapepropertybrowser.h \
+    shapepropertyenum.h \
+    shapeproperty.h \
+    shapepropertyint.h \
+    shapepropertystring.h \
+    shapepropertyusage.h \
+    shapepropertyusagepage.h \
+    stdafx.h
 
 #Source files
-SOURCES += ./eepromdata.cpp \
-    ./generichid.cpp \
-    ./main.cpp \
-    ./programdlg.cpp \
-    ./programmingstatusdlg.cpp \
-    ./stdafx.cpp
+SOURCES += dragtoolbutton.cpp \
+    eepromdata.cpp \
+    generichid.cpp \
+    main.cpp \
+    pin.cpp \
+    programdlg.cpp \
+    programmerthread.cpp \
+    programmingstatusdlg.cpp \
+    shapecollection.cpp \
+    shape.cpp \
+    shapemcu.cpp \
+    shapemimedata.cpp \
+    shapepropertybool.cpp \
+    shapepropertybrowser.cpp \
+    shapeproperty.cpp \
+    shapepropertyenum.cpp \
+    shapepropertyint.cpp \
+    shapepropertystring.cpp \
+    shapepropertyusage.cpp \
+    shapepropertyusagepage.cpp \
+    stdafx.cpp 
 
 #Forms
 FORMS += ./generichid.ui \

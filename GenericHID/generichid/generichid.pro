@@ -11,8 +11,9 @@ INCLUDEPATH += ./generatedfiles \
     ../programmer \
     ../dfuprogrammer \
     ../libusb-0.1.12 \
+    ../qtpropertybrowser-2.5-opensource/src \
     .
-unix:LIBS += -L../utility/debug -lutility -L../dfuprogrammer/debug -ldfuprogrammer  -L../programmer/debug -lprogrammer -L../libusb-0.1.12/.libs -l:libusb.a -ldfuprogrammer -lutility -lprogrammer -ldfuprogrammer -lutility -l:libusb.a
+unix:LIBS += -L../utility/debug -lutility -L../dfuprogrammer/debug -ldfuprogrammer  -L../programmer/debug -lprogrammer -L../libusb-0.1.12/.libs -l:libusb.a -ldfuprogrammer -lutility -lprogrammer -ldfuprogrammer -lutility -l:libusb.a -L"../qtpropertybrowser-2.5-opensource/lib" -l:libQtSolutions_PropertyBrowser-2.5.a
 PRECOMPILED_HEADER = stdafx.h
 DEPENDPATH += .
 MOC_DIR += ./generatedfiles/debug
