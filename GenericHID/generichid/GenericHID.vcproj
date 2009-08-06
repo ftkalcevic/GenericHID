@@ -812,11 +812,27 @@
 			Name="Resources"
 			>
 			<File
+				RelativePath=".\resources\Cursor.png"
+				>
+			</File>
+			<File
 				RelativePath=".\resources\GreenLight.png"
 				>
 			</File>
 			<File
+				RelativePath=".\resources\Mirror.png"
+				>
+			</File>
+			<File
 				RelativePath=".\resources\RedLight.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\Rotate.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\Wire.png"
 				>
 			</File>
 		</Filter>
