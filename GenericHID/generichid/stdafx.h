@@ -5,9 +5,15 @@
 #include <QTimer>
 #include <QDomDocument>
 #include <QDomElement>
+#include <QMimeData>
+#include <QVariant>
+#include <QToolButton>
+#include <QtGui/QMainWindow>
+
 
 #include "common.h"
 #include "log.h"
+#include "xmlutility.h"
 
 #endif
 

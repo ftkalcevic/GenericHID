@@ -1,8 +1,8 @@
 #ifndef GENERICHID_H
 #define GENERICHID_H
 
-#include <QtGui/QMainWindow>
 #include "ui_generichid.h"
+#include "shapecollection.h"
 
 class GenericHID : public QMainWindow
 {
@@ -23,6 +23,7 @@ public slots:
 
 private:
     Ui::GenericHIDClass ui;
+    ShapeCollection *m_pShapes;
 };
 
 #endif // GENERICHID_H

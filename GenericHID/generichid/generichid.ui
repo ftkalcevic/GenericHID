@@ -109,7 +109,7 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="TreePropertyBrowser" name="listView"/>
+      <widget class="ShapePropertyBrowser" name="listView"/>
      </item>
     </layout>
    </widget>
@@ -201,9 +201,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>TreePropertyBrowser</class>
+   <class>ShapePropertyBrowser</class>
    <extends>QListView</extends>
-   <header>treepropertybrowser.h</header>
+   <header>shapepropertybrowser.h</header>
   </customwidget>
  </customwidgets>
  <resources>

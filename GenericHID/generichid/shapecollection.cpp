@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "shapecollection.h"
 #include "xmlutility.h"
+#include "shape.h"
 
 
 ShapeCollection::ShapeCollection(void)
@@ -40,10 +41,11 @@ ShapeCollection *ShapeCollection::LoadShapeCollection( const QString &sPath )
     QDomNodeList pShapes = XMLUtility::elementsByTagName( pShapesNode, "Shape" );
     for ( uint i = 0; i < pShapes.length(); i++ )
     {
-	QDomElement pShape = pShapes.item(i).toElement();
+	QDomElement pShapeNode = pShapes.item(i).toElement();
+	Shape *pShape = Shape::CreateFromXML( pShapeNode );
 
-	//HIDItem *pHIDItem = HIDItem::CreateFromXML( item );
-	//hid->items.push_back( pHIDItem );
+	if ( pShape != NULL )
+	    pCol->m_Shapes.push_back( pShape );
     }
 
     return pCol;
