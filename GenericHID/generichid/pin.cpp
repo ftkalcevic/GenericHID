@@ -32,28 +32,70 @@ namespace PinType
 	}
 	return eType;
     }
+};
 
-    QString fromString( enum PinType ePinType )
+namespace PinHAlign
+{
+    struct 
     {
-	QString s;
+	enum PinHAlign eType;
+	const char *sName;
+    } types[] = 
+    {
+	{ Centre, "Centre" },
+	{ Centre, "Center" },
+	{ Left, "left" },
+	{ Right, "Right" },
+	{ OutsideLeft, "outsideLeft" },
+	{ OutsideRight, "outsideRight" },
+    };
+
+    enum PinHAlign fromString(const QString &s)
+    {
 	for ( int i = 0; i < countof(types); i++ )
-	    if ( ePinType & types[i].eType )
-	    {
-		if ( s.length() > 0 )
-		    s += ",";
-		s += types[i].sName;
-	    }
-	return s;
+	    if ( s.compare( types[i].sName, Qt::CaseInsensitive ) == 0 )
+		return types[i].eType;
+	return Centre;
+    }
+};
+
+namespace PinVAlign
+{
+    struct 
+    {
+	enum PinVAlign eType;
+	const char *sName;
+    } types[] = 
+    {
+	{ Centre, "Centre" },
+	{ Centre, "Center" },
+	{ Top, "top" },
+	{ Bottom, "bottom" },
+	{ Above, "above" },
+	{ Below, "below" },
+    };
+
+    enum PinVAlign fromString(const QString &s)
+    {
+	for ( int i = 0; i < countof(types); i++ )
+	    if ( s.compare( types[i].sName, Qt::CaseInsensitive ) == 0 )
+		return types[i].eType;
+	return Centre;
     }
 };
 
 
-Pin::Pin( const QString &sId, PinType::PinType ePinType, const QRect &rect, const QString &sOtherUse )
+Pin::Pin( const QString &sId, PinType::PinType ePinType, const QRect &rect, const QString &sOtherUse, bool bEnabled, PinHAlign::PinHAlign eHAlign, PinVAlign::PinVAlign eVAlign, double dRotate )
 : m_sId( sId )
 , m_ePinType( ePinType )
 , m_geometry( rect )
 , m_sOtherUse( sOtherUse )
+, m_bEnabled(bEnabled)
+, m_eHAlign(eHAlign)
+, m_eVAlign(eVAlign)
+, m_dRotate(dRotate)
 {
+    m_geometry = m_geometry.normalized();
 }
 
 Pin::~Pin(void)
@@ -66,9 +108,14 @@ Pin *Pin::CreateFromXML( QDomElement node )
     QString sId = XMLUtility::getAttribute( node, "id", "" );
     QString sRect = XMLUtility::getAttribute( node, "rect", "" );
     QString sPinType = XMLUtility::getAttribute( node, "type", "" );
-    QString sOtherUse = XMLUtility::getAttribute( node, "other", "" );
-
     PinType::PinType ePinType = PinType::fromString(sPinType);
+    QString sOtherUse = XMLUtility::getAttribute( node, "other", "" );
+    bool bEnabled = XMLUtility::getAttribute( node, "enabled", true );
+    QString sHAlign = XMLUtility::getAttribute( node, "halign", "center" );
+    PinHAlign::PinHAlign eHAlign = PinHAlign::fromString(sHAlign);
+    QString sVAlign = XMLUtility::getAttribute( node, "valign", "center" );
+    PinVAlign::PinVAlign eVAlign = PinVAlign::fromString(sVAlign);
+    double dRotate = XMLUtility::getAttribute( node, "rotate", 0.0 );
 
     QStringList sCoords = sRect.split( QChar(','), QString::SkipEmptyParts );
     int x1 = 0, x2 = 0, y1 = 0, y2 = 0;
@@ -80,6 +127,6 @@ Pin *Pin::CreateFromXML( QDomElement node )
         y2 = sCoords[3].toInt();
     }
 
-    return new Pin( sId, ePinType, QRect(QPoint(x1,y1),QPoint(x2,y2)), sOtherUse );
+    return new Pin( sId, ePinType, QRect(QPoint(x1,y1),QPoint(x2,y2)), sOtherUse, bEnabled, eHAlign, eVAlign, dRotate );
 }
 

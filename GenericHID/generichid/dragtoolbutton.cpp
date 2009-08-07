@@ -23,7 +23,11 @@ void DragToolButton::mousePressEvent(QMouseEvent *event)
 	ShapeMimeData *mimeData = new ShapeMimeData( m_pShape );
 
 	drag->setMimeData(mimeData);
-	drag->setPixmap(QPixmap(m_pShape->shapeFile()));
+	QPixmap shape(m_pShape->shapeFile());
+	// todo get current view scale
+	double dScale = 1.0;
+	QPixmap scaledShape = shape.scaled( (double)shape.width() * dScale, (double)shape.height() * dScale, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+	drag->setPixmap( scaledShape );
 
 	Qt::DropAction dropAction = drag->exec();
     }

@@ -10,7 +10,7 @@ class ShapeMimeData : public QMimeData
 public:
     ShapeMimeData( const Shape *);
     ~ShapeMimeData();
-    const Shape *shape() { return m_pShape; }
+    const Shape *shape() const { return m_pShape; }
 
     virtual bool hasFormat( const QString & mimeType ) const { return false; }
     virtual QStringList formats () const { return QStringList(); }

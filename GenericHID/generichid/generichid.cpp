@@ -8,6 +8,7 @@ const char * const CONFIGDATA_FILE = "config.xml";
 GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
 : QMainWindow(parent, flags)
 , m_pShapes( NULL )
+, m_pScene( NULL )
 {
     ui.setupUi(this);
 
@@ -21,6 +22,20 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
 	pButton->setToolTip( pShape->description() );
 	ui.toolToolBar->addWidget(  pButton );
     }
+
+    // Create graphics scene
+    m_pScene = new QGraphicsScene( -1000, -1000, 2000, 2000, this );
+    ui.graphicsView->setScene( m_pScene );
+    ui.graphicsView->setCacheMode(QGraphicsView::CacheBackground);
+    ui.graphicsView->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+    ui.graphicsView->setRenderHint(QPainter::Antialiasing);
+    ui.graphicsView->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+    ui.graphicsView->setResizeAnchor(QGraphicsView::AnchorUnderMouse);
+    ui.graphicsView->setDragMode( QGraphicsView::RubberBandDrag );
+    ui.graphicsView->setBackgroundBrush( QBrush(QColor(255,255,236)) );
+
+
+    connect( ui.graphicsView, SIGNAL(dropShapeEvent( const ::Shape *, QPointF) ), this, SLOT(onDropShapeEvent( const ::Shape *, QPointF) ) );
 }
 
 GenericHID::~GenericHID()
@@ -58,6 +73,23 @@ void GenericHID::onMicrocontrollerImportAndProgram()
     dlg.exec();
 }
 
+void GenericHID::onDropShapeEvent( const ::Shape *pShape, QPointF pos )
+{
+    // Create a new shape
+    QString sError;
+    if ( !m_pShapeInstances.CanAdd(pShape,sError) )
+    {
+	QMessageBox::critical( this, "Can't add", sError );
+	return;
+    }
+
+    ShapeInstance *pInstance = m_pShapeInstances.CreateNewShape( pShape );
+    if ( pInstance != NULL )
+    {
+	pInstance->item()->setPos( pos );
+	m_pScene->addItem( pInstance->item() );
+    }
+}
 
 
 /*

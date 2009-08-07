@@ -5,7 +5,7 @@
 #include "shapepropertyint.h"
 #include "shapepropertystring.h"
 #include "shapepropertyusage.h"
-#include "shapepropertyusagepage.h"
+
 
 namespace  PropertyType
 {
@@ -19,7 +19,6 @@ namespace  PropertyType
         { Enum, "Enum" },
         { Bool, "Bool" },
         { Int, "Int" },
-        { UsagePage, "UsagePage" },
 	{ Usage, "Usage" },
     };
 
@@ -55,7 +54,6 @@ ShapeProperty *ShapeProperty::CreateShapeProperty( QDomElement &node, const QStr
         case PropertyType::Enum:	pProp = new ShapePropertyEnum( sName, sDescription ); break;
         case PropertyType::Bool:	pProp = new ShapePropertyBool( sName, sDescription ); break;
         case PropertyType::Int:		pProp = new ShapePropertyInt( sName, sDescription ); break;
-        case PropertyType::UsagePage:	pProp = new ShapePropertyUsagePage( sName, sDescription ); break;
         case PropertyType::Usage:	pProp = new ShapePropertyUsage( sName, sDescription ); break;
 	default:
 	    // problem

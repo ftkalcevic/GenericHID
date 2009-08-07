@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>759</width>
-    <height>548</height>
+    <width>1155</width>
+    <height>798</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QGraphicsView" name="graphicsView">
+     <widget class="ShapeGraphicsView" name="graphicsView">
       <property name="rubberBandSelectionMode">
        <enum>Qt::ContainsItemShape</enum>
       </property>
@@ -35,7 +35,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>759</width>
+     <width>1155</width>
      <height>21</height>
     </rect>
    </property>
@@ -204,6 +204,11 @@
    <class>ShapePropertyBrowser</class>
    <extends>QListView</extends>
    <header>shapepropertybrowser.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ShapeGraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header>shapegraphicsview.h</header>
   </customwidget>
  </customwidgets>
  <resources>

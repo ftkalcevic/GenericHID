@@ -3,6 +3,7 @@
 
 #include "ui_generichid.h"
 #include "shapecollection.h"
+#include "shapeinstancecollection.h"
 
 class GenericHID : public QMainWindow
 {
@@ -20,10 +21,13 @@ public slots:
     void onMicrocontrollerProgram();
     void onMicrocontrollerExport();
     void onMicrocontrollerImportAndProgram();
+    void onDropShapeEvent( const ::Shape *pShape, QPointF pos );
 
 private:
     Ui::GenericHIDClass ui;
     ShapeCollection *m_pShapes;
+    ShapeInstanceCollection m_pShapeInstances;
+    QGraphicsScene *m_pScene;
 };
 
 #endif // GENERICHID_H

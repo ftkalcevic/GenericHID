@@ -1,6 +1,10 @@
 #ifndef _STDAFX_H_
 #define _STDAFX_H_
 
+#ifdef _WIN32
+#include <atlbase.h>
+#endif
+
 #include <QtGui>
 #include <QTimer>
 #include <QDomDocument>
@@ -9,6 +13,7 @@
 #include <QVariant>
 #include <QToolButton>
 #include <QtGui/QMainWindow>
+#include <QGraphicsView>
 
 
 #include "common.h"

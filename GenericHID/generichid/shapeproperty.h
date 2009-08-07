@@ -10,7 +10,6 @@ namespace  PropertyType
         Enum,
         Bool,
         Int,
-        UsagePage,
         Usage,
 	None
     };

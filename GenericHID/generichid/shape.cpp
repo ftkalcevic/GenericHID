@@ -42,8 +42,9 @@ namespace ShapeType
     }
 }
 
-Shape::Shape(QDomElement &shapeNode, const QString &sShapeId, bool bSource, const QString &sImageFile, int nImageWidth, int nImageHeight, const QString &sIconFile, int nMaxInstances, const QString &sDescription)
-: m_sShapeId(sShapeId)
+Shape::Shape(QDomElement &shapeNode, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, int nImageWidth, int nImageHeight, const QString &sIconFile, int nMaxInstances, const QString &sDescription)
+: m_eShapeType(eShapeType)
+, m_sShapeId(sShapeId)
 , m_bSource(bSource)
 , m_sImageFile(sImageFile)
 , m_nImageWidth(nImageWidth)
@@ -78,7 +79,7 @@ Shape *Shape::CreateFromXML( QDomElement &node )
     Shape *pShape = NULL;
     switch ( eShapeType )
     {
-	case ShapeType::AT90USB128:	    pShape = new ShapeMCU(node, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::AT90USB128:	    pShape = new ShapeMCU(node, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
 	case ShapeType::Pot:		    
 	case ShapeType::DigitalEncoder:
 	case ShapeType::Switch:
@@ -89,7 +90,7 @@ Shape *Shape::CreateFromXML( QDomElement &node )
 	case ShapeType::LED:
 	case ShapeType::BiColourLED:
 	case ShapeType::TriColourLED:
-	case ShapeType::DirSwitch:	    pShape = new Shape(node, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::DirSwitch:	    pShape = new Shape(node, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
 	default:
 	    // Problem
 	    break;
@@ -124,8 +125,14 @@ Shape *Shape::CreateFromXML( QDomElement &node )
 	    if ( pShapeProperty != NULL )
 		pShape->m_Properties.push_back( pShapeProperty );
 	}
-
     }
-
     return pShape;
 }
+
+QPixmap Shape::pixmap()
+{
+    if ( m_pixmap.isNull() )
+	m_pixmap.load( m_sImageFile );
+    return m_pixmap;
+}
+

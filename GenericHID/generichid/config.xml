@@ -1,201 +1,233 @@
 ﻿<Config>
-  <Shapes>
-    <Shape Id="stockusbkey" Type="at90usb128" Source="false" Image="resources\AVRUSBKey.png" Icon="resources\AVRUSBKeyIcon.png" width="411" height="453" maxInstances="1" description="Stock AT90USB Key Demo board">
-      <!--<pin rect="2,69,32,93" id="PF7" type="io,adc" />
-      <pin rect="33,69,63,93" id="PF6" type="io,adc" />
-      <pin rect="2,94,32,118" id="PF5" type="io,adc" />
-      <pin rect="32,94,63,118" id="PF4" type="io,adc" /> -->
-    <pin rect="33,119,63,143" id="PF2" type="io,adc" />
-    <pin rect="1,144,32,168" id="PF1" type="io,adc" />
-    <pin rect="2,210,32,234" id="PE7" type="io,int" />
-    <pin rect="33,210,63,234" id="PE6" type="io,int" />
-    <pin rect="33,261,63,284" id="PE2" type="io" />
-    <pin rect="32,377,64,401" id="PB4" type="io,int,pwm" />
-    <pin rect="32,427,63,452" id="PB0" type="io,int" />
-    <pin rect="379,402,408,426" id="PD2" type="io,int" />
-    <pin rect="379,428,408,451" id="PD0" type="io,int" />
-    <pin rect="348,428,377,451" id="PD1" type="io,int,pwm" />
-    <pin rect="348,402,377,426" id="PD3" type="io,int" />
-    <pin rect="379,286,409,309" id="PC0" type="io" />
-    <pin rect="348,286,377,309" id="PC1" type="io" />
-    <pin rect="348,261,377,285" id="PC3" type="io" />
-    <pin rect="379,261,409,285" id="PC2" type="io" />
-    <pin rect="379,236,409,259" id="PC4" type="io,pwm" />
-    <pin rect="348,236,377,259" id="PC5" type="io,pwm" />
-    <pin rect="379,211,409,234" id="PC6" type="io,pwm" />
-    <pin rect="348,211,377,234" id="PC7" type="io" />
-    <pin rect="348,144,377,167" id="PA1" type="io" />
-    <pin rect="379,144,408,167" id="PA0" type="io" />
-    <pin rect="348,119,377,142" id="PA3" type="io" />
-    <pin rect="379,119,408,142" id="PA2" type="io" />
-    <pin rect="379,94,408,117" id="PA4" type="io" />
-    <pin rect="348,94,377,117" id="PA5" type="io" />
-    <pin rect="379,69,408,92" id="PA6" type="io" />
-    <pin rect="348,69,377,92" id="PA7" type="io" />
-    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-    <property name="UsagePage" description="HID category of the usage of the control." type="usagepage" default="1"/>
-    <property name="Usage" description="HID usage of the control." type="usage" default="3" />
-    <property name="Voltage" description="Is the microcontroller 5v or 3.3v." type="enum" default="3.3">
-	<enum name="5"/>
-	<enum name="3.3"/>
-    </property>
-    <property name="Power-Source" description="Is the USB device powered via the USB Bus or does it use an external supply." type="enum" default="Bus-Powered">
-	<enum name="Self-Powered"/>
-	<enum name="Bus-Powered"/>
-    </property>
-    <property name="Serial-Debug" description="Are pins PD2/PD3 as serial RXD/TXD pins for debug output (38400, 8, none, 1)" type="bool" default="false"/>
-    <property name="HID-Debug" description="Is debug through the HID interface enabled." type="bool" default="false"/>
-    <property name="Current" description="Current usage of the microcontroller.  Used to estimate the USB power draw." type="int" min="0" max="500" default="100"/>
-    <property name="UseUsbKeyLEDs" description="Use the default AT90USBKey LEDs as indicators of the USB status." type="enum" default="LED1">
-	<enum name="LED1"/>
-	<enum name="LED2"/>
-	<enum name="Both"/>
-	<enum name="None"/>
-    </property>
-    <property name="SerialNo" description="Required unique serial number of the device.  This must be unique between all GenericHID devices or MS-Windows will Blue-Screen if two duplicate devices are plugged in!" type="string" default="1"/>
-</Shape>
-<Shape Id="strippedusbkey" Type="at90usb128" Source="false" Image="resources\AVRUSBKeyStripped.png" Icon="resources\AVRUSBKeyIcon.png" width="411" height="453" maxInstances="1" description="Stripped AT90USB Key Demo board">
-    <!--<pin rect="2,69,32,93" id="PF7" type="io,adc" />
+    <Shapes>
+	<Shape Id="stockusbkey" Type="at90usb128" Source="false" Image="resources/AVRUSBKey.png" Icon="resources/AVRUSBKeyIcon.png" width="411" height="453" maxInstances="1" description="Stock AT90USB Key Demo board">
+	    <pin rect="  1, 44, 31, 68" id="Vcc" type="" enabled="false" />
+	    <pin rect=" 32, 44, 62, 68" id="GND" type="io,adc" enabled="false" />
+	    <pin rect="  1, 69, 31, 93" id="PF7" type="io,adc" enabled="false" />
+	    <pin rect=" 32, 69, 62, 93" id="PF6" type="io,adc" enabled="false" />
+	    <pin rect="  1, 94, 31,118" id="PF5" type="io,adc" enabled="false" />
+	    <pin rect=" 32, 94, 62,118" id="PF4" type="io,adc" enabled="false"/>
+	    <pin rect="  1,119, 31,143" id="PF3" type="io,adc" enabled="false"/>
+	    <pin rect=" 32,119, 62,143" id="PF2" type="io,adc" />
+	    <pin rect="  1,144, 31,168" id="PF1" type="io,adc" />
+	    <pin rect=" 32,144, 62,168" id="PF0" type="io,adc" enabled="false"/>
+
+	    <pin rect="  1,185, 31,209" id="Vcc" type="" enabled="false" />
+	    <pin rect=" 32,185, 62,209" id="GND" type="io,adc" enabled="false" />
+	    <pin rect="  1,210, 31,234" id="PE7" type="io,int" />
+	    <pin rect=" 32,210, 62,234" id="PE6" type="io,int" />
+	    <pin rect="  1,235, 31,259" id="PE5" type="io,int" enabled="false"/>
+	    <pin rect=" 32,235, 62,259" id="PE4" type="io,int" enabled="false"/>
+	    <pin rect="  1,260, 31,284" id="PE3" type="io" other="UID" enabled="false"/>
+	    <pin rect=" 32,260, 62,284" id="PE2" type="io" />
+	    <pin rect="  1,285, 31,309" id="PE1" type="io" enabled="false"/>
+	    <pin rect=" 32,285, 62,309" id="PE0" type="io" enabled="false"/>
+
+	    <pin rect="  1,327, 31,351" id="Vcc" type="" enabled="false" />
+	    <pin rect=" 32,327, 62,351" id="GND" type="io,adc" enabled="false" />
+	    <pin rect="  1,352, 31,376" id="PB7" type="io,int,pwm" enabled="false"/>
+	    <pin rect=" 32,352, 62,376" id="PB6" type="io,int,pwm" enabled="false"/>
+	    <pin rect="  1,377, 31,401" id="PB5" type="io,int,pwm" enabled="false"/>
+	    <pin rect=" 32,377, 62,401" id="PB4" type="io,int,pwm" />
+	    <pin rect="  1,402, 31,426" id="PB3" type="io,int" enabled="false"/>
+	    <pin rect=" 32,402, 62,426" id="PB2" type="io,int" enabled="false"/>
+	    <pin rect="  1,427, 31,451" id="PB1" type="io,int" enabled="false"/>
+	    <pin rect=" 32,427, 62,451" id="PB0" type="io,int" />
+
+	    <pin rect="379,327,409,351" id="GND" type="io,adc" enabled="false" />
+	    <pin rect="348,327,378,351" id="Vcc" type="" enabled="false" />
+	    <pin rect="379,352,409,376" id="PD6" type="io" enabled="false"/>
+	    <pin rect="348,352,378,376" id="PD7" type="io" enabled="false"/>
+	    <pin rect="379,377,409,401" id="PD4" type="io" enabled="false"/>
+	    <pin rect="348,377,378,401" id="PD5" type="io" enabled="false"/>
+	    <pin rect="379,402,409,426" id="PD2" type="io,int" />
+	    <pin rect="348,402,378,426" id="PD3" type="io,int" />
+	    <pin rect="379,427,409,451" id="PD0" type="io,int" />
+	    <pin rect="348,427,378,451" id="PD1" type="io,int,pwm" />
+
+	    <pin rect="379,285,409,309" id="PC0" type="io" />
+	    <pin rect="348,285,378,309" id="PC1" type="io" />
+	    <pin rect="348,260,378,284" id="PC3" type="io" />
+	    <pin rect="379,260,409,284" id="PC2" type="io" />
+	    <pin rect="379,235,409,259" id="PC4" type="io,pwm" />
+	    <pin rect="348,235,378,259" id="PC5" type="io,pwm" />
+	    <pin rect="379,210,409,234" id="PC6" type="io,pwm" />
+	    <pin rect="348,210,378,234" id="PC7" type="io" />
+	    <pin rect="379,185,409,209" id="GND" type="io,adc" enabled="false" />
+	    <pin rect="348,185,378,209" id="Vcc" type="" enabled="false" />
+
+	    <pin rect="348,144,378,168" id="PA1" type="io" />
+	    <pin rect="379,144,409,168" id="PA0" type="io" />
+	    <pin rect="348,119,378,143" id="PA3" type="io" />
+	    <pin rect="379,119,409,143" id="PA2" type="io" />
+	    <pin rect="379, 94,409,118" id="PA4" type="io" />
+	    <pin rect="348, 94,378,118" id="PA5" type="io" />
+	    <pin rect="379, 69,409, 93" id="PA6" type="io" />
+	    <pin rect="348, 69,378, 93" id="PA7" type="io" />
+	    <pin rect="379, 44,409, 68" id="GND" type="io,adc" enabled="false" />
+	    <pin rect="348, 44,378, 68" id="Vcc" type="" enabled="false" />
+
+	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	    <property name="Usage" description="HID usage of the control." type="usage" default="1:3" />
+	    <property name="Voltage" description="Is the microcontroller 5v or 3.3v." type="enum" default="3.3">
+		<enum name="5"/>
+		<enum name="3.3"/>
+	    </property>
+	    <property name="Power-Source" description="Is the USB device powered via the USB Bus or does it use an external supply." type="enum" default="Bus-Powered">
+		<enum name="Self-Powered"/>
+		<enum name="Bus-Powered"/>
+	    </property>
+	    <property name="Serial-Debug" description="Are pins PD2/PD3 as serial RXD/TXD pins for debug output (38400, 8, none, 1)" type="bool" default="false"/>
+	    <property name="HID-Debug" description="Is debug through the HID interface enabled." type="bool" default="false"/>
+	    <property name="Current" description="Current usage of the microcontroller.  Used to estimate the USB power draw." type="int" min="0" max="500" default="100"/>
+	    <property name="UseUsbKeyLEDs" description="Use the default AT90USBKey LEDs as indicators of the USB status." type="enum" default="LED1">
+		<enum name="LED1"/>
+		<enum name="LED2"/>
+		<enum name="Both"/>
+		<enum name="None"/>
+	    </property>
+	    <property name="SerialNo" description="Required unique serial number of the device.  This must be unique between all GenericHID devices or MS-Windows will Blue-Screen if two duplicate devices are plugged in!" type="string" default="1"/>
+	</Shape>
+	<Shape Id="strippedusbkey" Type="at90usb128" Source="false" Image="resources/AVRUSBKeyStripped.png" Icon="resources/AVRUSBKeyIcon.png" width="411" height="453" maxInstances="1" description="Stripped AT90USB Key Demo board">
+	    <!--<pin rect="2,69,32,93" id="PF7" type="io,adc" />
       <pin rect="33,69,63,93" id="PF6" type="io,adc" />
       <pin rect="2,94,32,118" id="PF5" type="io,adc" />
       <pin rect="32,94,63,118" id="PF4" type="io,adc" />-->
-      <pin rect="1,119,32,143" id="PF3" type="io,adc" />
-      <pin rect="33,119,63,143" id="PF2" type="io,adc" />
-      <pin rect="1,144,32,168" id="PF1" type="io,adc" />
-      <pin rect="33,144,63,168" id="PF0" type="io,adc" />
-      <pin rect="2,210,32,234" id="PE7" type="io,int" />
-      <pin rect="33,210,63,234" id="PE6" type="io,int" />
-      <pin rect="2,236,32,259" id="PE5" type="io,int" />
-      <pin rect="33,236,63,259" id="PE4" type="io,int" />
-      <pin rect="33,261,63,284" id="PE2" type="io" />
-      <pin rect="2,286,32,309" id="PE1" type="io" />
-      <pin rect="33,286,63,309" id="PE0" type="io" />
-      <pin rect="1,352,33,376" id="PB7" type="io,int,pwm" />
-      <pin rect="32,352,63,376" id="PB6" type="io,int,pwm" />
-      <pin rect="1,376,33,401" id="PB5" type="io,int,pwm" />
-      <pin rect="32,377,64,401" id="PB4" type="io,int,pwm" />
-      <pin rect="1,402,32,427" id="PB3" type="io,int" />
-      <pin rect="32,402,63,427" id="PB2" type="io,int" />
-      <pin rect="1,427,32,452" id="PB1" type="io,int" />
-      <pin rect="32,427,63,452" id="PB0" type="io,int" />
-      <pin rect="379,352,408,376" id="PD6" type="io" />
-      <pin rect="379,377,408,401" id="PD4" type="io" />
-      <pin rect="379,402,408,426" id="PD2" type="io,int" />
-      <pin rect="379,428,408,451" id="PD0" type="io,int" />
-      <pin rect="348,428,377,451" id="PD1" type="io,int,pwm" />
-      <pin rect="348,402,377,426" id="PD3" type="io,int" />
-      <pin rect="348,377,377,400" id="PD5" type="io" />
-      <pin rect="348,352,377,376" id="PD7" type="io" />
-      <pin rect="379,286,409,309" id="PC0" type="io" />
-      <pin rect="348,286,377,309" id="PC1" type="io" />
-      <pin rect="348,261,377,285" id="PC3" type="io" />
-      <pin rect="379,261,409,285" id="PC2" type="io" />
-      <pin rect="379,236,409,259" id="PC4" type="io,pwm" />
-      <pin rect="348,236,377,259" id="PC5" type="io,pwm" />
-      <pin rect="379,211,409,234" id="PC6" type="io,pwm" />
-      <pin rect="348,211,377,234" id="PC7" type="io" />
-      <pin rect="348,144,377,167" id="PA1" type="io" />
-      <pin rect="379,144,408,167" id="PA0" type="io" />
-      <pin rect="348,119,377,142" id="PA3" type="io" />
-      <pin rect="379,119,408,142" id="PA2" type="io" />
-      <pin rect="379,94,408,117" id="PA4" type="io" />
-      <pin rect="348,94,377,117" id="PA5" type="io" />
-      <pin rect="379,69,408,92" id="PA6" type="io" />
-      <pin rect="348,69,377,92" id="PA7" type="io" />
-      <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-      <property name="UsagePage" description="HID category of the usage of the control." type="usagepage" default="1"/>
-      <property name="Usage" description="HID usage of the control." type="usage" default="3"/>
-      <property name="Voltage" description="Is the microcontroller 5v or 3.3v." type="enum" default="3.3">
-        <enum name="5"/>
-        <enum name="3.3"/>
-      </property>
-      <property name="Power-Source" description="Is the USB device powered via the USB Bus or does it use an external supply." type="enum" default="Bus-Powered">
-        <enum name="Self-Powered"/>
-        <enum name="Bus-Powered"/>
-      </property>
-      <property name="Serial-Debug" description="Are pins PD2/PD3 as serial RXD/TXD pins for debug output (38400, 8, none, 1)" type="bool" default="false"/>
-      <property name="HID-Debug" description="Is debug through the HID interface enabled." type="bool" default="false"/>
-      <property name="Current" description="Current usage of the microcontroller in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="100"/>
-      <property name="UseUsbKeyLEDs" description="Use the default AT90USBKey LEDs as indicators of the USB status." type="enum" default="LED1">
-        <enum name="LED1"/>
-        <enum name="LED2"/>
-        <enum name="Both"/>
-        <enum name="None"/>
-      </property>
-      <property name="SerialNo" description="Required unique serial number of the device.  This must be unique between all GenericHID devices or MS-Windows will Blue-Screen if two duplicate devices are plugged in!" type="string" default="1"/>
-    </Shape>
-    <Shape Id="usbkeywithwings" Type="at90usb128" Source="false" Image="resources\AVRUSBKey - Wings and labels.png" Icon="resources\AVRUSBKeyIcon.png" width="658" height="377" maxInstances="1" description="AT90USB Key Demo board with WizBang wings">
-      <pin rect="1,158,22,185" id="PF0" type="io,adc" other="Temperature Sensor"/>
-      <pin rect="1,131,22,157" id="PF1" type="io,adc" />
-      <pin rect="23,158,44,185" id="PF2" type="io,adc" />
-      <pin rect="23,131,44,157" id="PF3" type="io,adc" other="Battery voltage monitor" />
-      <pin rect="45,158,66,185" id="PF4" type="io,adc" other="JTAG" />
-      <pin rect="45,131,66,157" id="PF5" type="io,adc" other="JTAG" />
-      <pin rect="67,158,87,185" id="PF6" type="io,adc" other="JTAG" />
-      <pin rect="67,131,87,157" id="PF7" type="io,adc" other="JTAG" />
-      <pin rect="1,231,22,257" id="PE0" type="io" other="Flash" />
-      <pin rect="1,204,22,230" id="PE1" type="io" other="Flash" />
-      <pin rect="23,231,44,257" id="PE2" type="io" other="HWB" />
-      <pin rect="23,204,44,230" id="PE3" type="io" other="UID"/>
-      <pin rect="45,231,65,257" id="PE4" type="io,int" />
-      <pin rect="45,204,65,230" id="PE5" type="io,int" other="Joystick" />
-      <pin rect="67,231,87,257" id="PE6" type="io,int" other="Joystick" />
-      <pin rect="67,204,87,230" id="PE7" type="io,int" other="UVCON" />
-      <pin rect="1,304,22,330" id="PB0" type="io,int" />
-      <pin rect="1,276,22,302" id="PB1" type="io,int" other="Flash" />
-      <pin rect="23,304,44,330" id="PB2" type="io,int" other="Flash" />
-      <pin rect="23,276,44,303" id="PB3" type="io,int" other="Flash" />
-      <pin rect="45,304,65,330" id="PB4" type="io,int,pwm" />
-      <pin rect="45,276,65,302" id="PB5" type="io,int,pwm" other="Joystick" />
-      <pin rect="67,304,88,330" id="PB6" type="io,int,pwm" other="Joystick" />
-      <pin rect="67,276,87,302" id="PB7" type="io,int,pwm" other="Joystick" />
-      <pin rect="548,159,569,185" id="PA0" type="io" />
-      <pin rect="548,131,569,156" id="PA1" type="io" />
-      <pin rect="570,159,590,185" id="PA2" type="io" />
-      <pin rect="570,131,590,157" id="PA3" type="io" />
-      <pin rect="592,159,612,185" id="PA4" type="io" />
-      <pin rect="592,131,612,157" id="PA5" type="io" />
-      <pin rect="613,159,635,185" id="PA6" type="io" />
-      <pin rect="614,131,634,157" id="PA7" type="io" />
-      <pin rect="548,232,569,258" id="PC0" type="io" />
-      <pin rect="548,204,569,231" id="PC1" type="io" />
-      <pin rect="570,232,591,258" id="PC2" type="io" />
-      <pin rect="570,204,591,231" id="PC3" type="io" />
-      <pin rect="592,232,612,258" id="PC4" type="io,pwm" />
-      <pin rect="592,204,612,231" id="PC5" type="io,pwm" />
-      <pin rect="614,232,634,258" id="PC6" type="io,pwm" />
-      <pin rect="614,204,634,231" id="PC7" type="io" />
-      <pin rect="548,304,569,330" id="PD0" type="io,int" />
-      <pin rect="548,276,569,303" id="PD1" type="io,int,pwm" />
-      <pin rect="570,304,591,330" id="PD2" type="io,int" other="RX"/>
-      <pin rect="570,276,591,303" id="PD3" type="io,int" other="TX"/>
-      <pin rect="592,304,613,330" id="PD4" type="io" other="LED1, D2" />
-      <pin rect="592,276,612,303" id="PD5" type="io" other="LED1, D2" />
-      <pin rect="614,304,634,330" id="PD6" type="io" other="LED2, D5" />
-      <pin rect="613,276,634,303" id="PD7" type="io" other="LED2, D5" />
-      
-      <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-      <property name="UsagePage" description="HID category of the usage of the control." type="usagepage" default="1"/>
-      <property name="Usage" description="HID usage of the control." type="usage" default="3"/>
-      <property name="Voltage" description="Is the microcontroller 5v or 3.3v." type="enum" default="3.3">
-        <enum name="5"/>
-        <enum name="3.3"/>
-      </property>
-      <property name="Power-Source" description="Is the USB device powered via the USB Bus or does it use an external supply." type="enum" default="Bus-Powered">
-        <enum name="Self-Powered"/>
-        <enum name="Bus-Powered"/>
-      </property>
-      <property name="Serial-Debug" description="Are pins PD2/PD3 as serial RXD/TXD pins for debug output (38400, 8, none, 1)" type="bool" default="false"/>
-      <property name="HID-Debug" description="Is debug through the HID interface enabled." type="bool" default="false"/>
-      <property name="Current" description="Current usage of the microcontroller in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="100"/>
-      <property name="UseUsbKeyLEDs" description="Use the default AT90USBKey LEDs as indicators of the USB status." type="enum" default="LED1">
-        <enum name="LED1"/>
-        <enum name="LED2"/>
-        <enum name="Both"/>
-        <enum name="None"/>
-      </property>
-      <property name="SerialNo" description="Required unique serial number of the device.  This must be unique between all GenericHID devices or MS-Windows will Blue-Screen if two duplicate devices are plugged in!" type="string" default="1"/>
-    </Shape>
+	    <pin rect="1,119,32,143" id="PF3" type="io,adc" />
+	    <pin rect="33,119,63,143" id="PF2" type="io,adc" />
+	    <pin rect="1,144,32,168" id="PF1" type="io,adc" />
+	    <pin rect="33,144,63,168" id="PF0" type="io,adc" />
+	    <pin rect="2,210,32,234" id="PE7" type="io,int" />
+	    <pin rect="33,210,63,234" id="PE6" type="io,int" />
+	    <pin rect="2,236,32,259" id="PE5" type="io,int" />
+	    <pin rect="33,236,63,259" id="PE4" type="io,int" />
+	    <pin rect="33,261,63,284" id="PE2" type="io" />
+	    <pin rect="2,286,32,309" id="PE1" type="io" />
+	    <pin rect="33,286,63,309" id="PE0" type="io" />
+	    <pin rect="1,352,33,376" id="PB7" type="io,int,pwm" />
+	    <pin rect="32,352,63,376" id="PB6" type="io,int,pwm" />
+	    <pin rect="1,376,33,401" id="PB5" type="io,int,pwm" />
+	    <pin rect="32,377,64,401" id="PB4" type="io,int,pwm" />
+	    <pin rect="1,402,32,427" id="PB3" type="io,int" />
+	    <pin rect="32,402,63,427" id="PB2" type="io,int" />
+	    <pin rect="1,427,32,452" id="PB1" type="io,int" />
+	    <pin rect="32,427,63,452" id="PB0" type="io,int" />
+	    <pin rect="379,352,408,376" id="PD6" type="io" />
+	    <pin rect="379,377,408,401" id="PD4" type="io" />
+	    <pin rect="379,402,408,426" id="PD2" type="io,int" />
+	    <pin rect="379,428,408,451" id="PD0" type="io,int" />
+	    <pin rect="348,428,377,451" id="PD1" type="io,int,pwm" />
+	    <pin rect="348,402,377,426" id="PD3" type="io,int" />
+	    <pin rect="348,377,377,400" id="PD5" type="io" />
+	    <pin rect="348,352,377,376" id="PD7" type="io" />
+	    <pin rect="379,286,409,309" id="PC0" type="io" />
+	    <pin rect="348,286,377,309" id="PC1" type="io" />
+	    <pin rect="348,261,377,285" id="PC3" type="io" />
+	    <pin rect="379,261,409,285" id="PC2" type="io" />
+	    <pin rect="379,236,409,259" id="PC4" type="io,pwm" />
+	    <pin rect="348,236,377,259" id="PC5" type="io,pwm" />
+	    <pin rect="379,211,409,234" id="PC6" type="io,pwm" />
+	    <pin rect="348,211,377,234" id="PC7" type="io" />
+	    <pin rect="348,144,377,167" id="PA1" type="io" />
+	    <pin rect="379,144,408,167" id="PA0" type="io" />
+	    <pin rect="348,119,377,142" id="PA3" type="io" />
+	    <pin rect="379,119,408,142" id="PA2" type="io" />
+	    <pin rect="379,94,408,117" id="PA4" type="io" />
+	    <pin rect="348,94,377,117" id="PA5" type="io" />
+	    <pin rect="379,69,408,92" id="PA6" type="io" />
+	    <pin rect="348,69,377,92" id="PA7" type="io" />
+	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	    <property name="Usage" description="HID usage of the control." type="usage" default="1:3"/>
+	    <property name="Voltage" description="Is the microcontroller 5v or 3.3v." type="enum" default="3.3">
+		<enum name="5"/>
+		<enum name="3.3"/>
+	    </property>
+	    <property name="Power-Source" description="Is the USB device powered via the USB Bus or does it use an external supply." type="enum" default="Bus-Powered">
+		<enum name="Self-Powered"/>
+		<enum name="Bus-Powered"/>
+	    </property>
+	    <property name="Serial-Debug" description="Are pins PD2/PD3 as serial RXD/TXD pins for debug output (38400, 8, none, 1)" type="bool" default="false"/>
+	    <property name="HID-Debug" description="Is debug through the HID interface enabled." type="bool" default="false"/>
+	    <property name="Current" description="Current usage of the microcontroller in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="100"/>
+	    <property name="UseUsbKeyLEDs" description="Use the default AT90USBKey LEDs as indicators of the USB status." type="enum" default="LED1">
+		<enum name="LED1"/>
+		<enum name="LED2"/>
+		<enum name="Both"/>
+		<enum name="None"/>
+	    </property>
+	    <property name="SerialNo" description="Required unique serial number of the device.  This must be unique between all GenericHID devices or MS-Windows will Blue-Screen if two duplicate devices are plugged in!" type="string" default="1"/>
+	</Shape>
+	<Shape Id="usbkeywithwings" Type="at90usb128" Source="false" Image="resources/AVRUSBKey - Wings and labels.png" Icon="resources/AVRUSBKeyIcon.png" width="658" height="377" maxInstances="1" description="AT90USB Key Demo board with WizBang wings">
+	    <pin rect="1,158,22,185" id="PF0" type="io,adc" other="Temperature Sensor"/>
+	    <pin rect="1,131,22,157" id="PF1" type="io,adc" />
+	    <pin rect="23,158,44,185" id="PF2" type="io,adc" />
+	    <pin rect="23,131,44,157" id="PF3" type="io,adc" other="Battery voltage monitor" />
+	    <pin rect="45,158,66,185" id="PF4" type="io,adc" other="JTAG" />
+	    <pin rect="45,131,66,157" id="PF5" type="io,adc" other="JTAG" />
+	    <pin rect="67,158,87,185" id="PF6" type="io,adc" other="JTAG" />
+	    <pin rect="67,131,87,157" id="PF7" type="io,adc" other="JTAG" />
+	    <pin rect="1,231,22,257" id="PE0" type="io" other="Flash" />
+	    <pin rect="1,204,22,230" id="PE1" type="io" other="Flash" />
+	    <pin rect="23,231,44,257" id="PE2" type="io" other="HWB" />
+	    <pin rect="23,204,44,230" id="PE3" type="io" other="UID"/>
+	    <pin rect="45,231,65,257" id="PE4" type="io,int" />
+	    <pin rect="45,204,65,230" id="PE5" type="io,int" other="Joystick" />
+	    <pin rect="67,231,87,257" id="PE6" type="io,int" other="Joystick" />
+	    <pin rect="67,204,87,230" id="PE7" type="io,int" other="UVCON" />
+	    <pin rect="1,304,22,330" id="PB0" type="io,int" />
+	    <pin rect="1,276,22,302" id="PB1" type="io,int" other="Flash" />
+	    <pin rect="23,304,44,330" id="PB2" type="io,int" other="Flash" />
+	    <pin rect="23,276,44,303" id="PB3" type="io,int" other="Flash" />
+	    <pin rect="45,304,65,330" id="PB4" type="io,int,pwm" />
+	    <pin rect="45,276,65,302" id="PB5" type="io,int,pwm" other="Joystick" />
+	    <pin rect="67,304,88,330" id="PB6" type="io,int,pwm" other="Joystick" />
+	    <pin rect="67,276,87,302" id="PB7" type="io,int,pwm" other="Joystick" />
+	    <pin rect="548,159,569,185" id="PA0" type="io" />
+	    <pin rect="548,131,569,156" id="PA1" type="io" />
+	    <pin rect="570,159,590,185" id="PA2" type="io" />
+	    <pin rect="570,131,590,157" id="PA3" type="io" />
+	    <pin rect="592,159,612,185" id="PA4" type="io" />
+	    <pin rect="592,131,612,157" id="PA5" type="io" />
+	    <pin rect="613,159,635,185" id="PA6" type="io" />
+	    <pin rect="614,131,634,157" id="PA7" type="io" />
+	    <pin rect="548,232,569,258" id="PC0" type="io" />
+	    <pin rect="548,204,569,231" id="PC1" type="io" />
+	    <pin rect="570,232,591,258" id="PC2" type="io" />
+	    <pin rect="570,204,591,231" id="PC3" type="io" />
+	    <pin rect="592,232,612,258" id="PC4" type="io,pwm" />
+	    <pin rect="592,204,612,231" id="PC5" type="io,pwm" />
+	    <pin rect="614,232,634,258" id="PC6" type="io,pwm" />
+	    <pin rect="614,204,634,231" id="PC7" type="io" />
+	    <pin rect="548,304,569,330" id="PD0" type="io,int" />
+	    <pin rect="548,276,569,303" id="PD1" type="io,int,pwm" />
+	    <pin rect="570,304,591,330" id="PD2" type="io,int" other="RX"/>
+	    <pin rect="570,276,591,303" id="PD3" type="io,int" other="TX"/>
+	    <pin rect="592,304,613,330" id="PD4" type="io" other="LED1, D2" />
+	    <pin rect="592,276,612,303" id="PD5" type="io" other="LED1, D2" />
+	    <pin rect="614,304,634,330" id="PD6" type="io" other="LED2, D5" />
+	    <pin rect="613,276,634,303" id="PD7" type="io" other="LED2, D5" />
+
+	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	    <property name="Usage" description="HID usage of the control." type="usage" default="1:3"/>
+	    <property name="Voltage" description="Is the microcontroller 5v or 3.3v." type="enum" default="3.3">
+		<enum name="5"/>
+		<enum name="3.3"/>
+	    </property>
+	    <property name="Power-Source" description="Is the USB device powered via the USB Bus or does it use an external supply." type="enum" default="Bus-Powered">
+		<enum name="Self-Powered"/>
+		<enum name="Bus-Powered"/>
+	    </property>
+	    <property name="Serial-Debug" description="Are pins PD2/PD3 as serial RXD/TXD pins for debug output (38400, 8, none, 1)" type="bool" default="false"/>
+	    <property name="HID-Debug" description="Is debug through the HID interface enabled." type="bool" default="false"/>
+	    <property name="Current" description="Current usage of the microcontroller in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="100"/>
+	    <property name="UseUsbKeyLEDs" description="Use the default AT90USBKey LEDs as indicators of the USB status." type="enum" default="LED1">
+		<enum name="LED1"/>
+		<enum name="LED2"/>
+		<enum name="Both"/>
+		<enum name="None"/>
+	    </property>
+	    <property name="SerialNo" description="Required unique serial number of the device.  This must be unique between all GenericHID devices or MS-Windows will Blue-Screen if two duplicate devices are plugged in!" type="string" default="1"/>
+	</Shape>
 
 
 
@@ -207,1258 +239,1249 @@
 
 
 
-    <Shape Id="usbkeywithwiredwings" Type="at90usb128" Source="false" Image="resources\AVRUSBKey - Wired Wings.png" Icon="resources\AVRUSBKeyIcon.png" width="585" height="377" maxInstances="1" description="AT90USB Key Demo board with WizBang wings and IDC connectors">
-      <pin rect="1,152,22,178" id="PF0" type="io,adc" />
-      <pin rect="23,152,44,178" id="PF1" type="io,adc" />
-      <pin rect="45,152,66,178" id="PF2" type="io,adc" />
-      <pin rect="67,152,88,178" id="PF3" type="io,adc" />
-      <pin rect="89,152,110,178" id="PF4" type="io,adc" />
-      <pin rect="111,152,132,178" id="PF5" type="io,adc" />
-      <pin rect="133,152,154,178" id="PF6" type="io,adc" />
-      <pin rect="155,152,176,178" id="PF7" type="io,adc" />
-      <pin rect="1,214,22,240" id="PE0" type="io" />
-      <pin rect="23,214,44,240" id="PE1" type="io" />
-      <pin rect="45,214,66,240" id="PE2" type="io" />
-      <pin rect="67,214,88,240" id="PE3" type="io" />
-      <pin rect="89,214,110,240" id="PE4" type="io,int" />
-      <pin rect="111,214,132,240" id="PE5" type="io,int" />
-      <pin rect="133,214,154,240" id="PE6" type="io,int" />
-      <pin rect="155,214,176,240" id="PE7" type="io,int" />
-      <pin rect="1,278,22,304" id="PB0" type="io,int" />
-      <pin rect="23,278,44,304" id="PB1" type="io,int" />
-      <pin rect="45,278,66,304" id="PB2" type="io,int" />
-      <pin rect="67,278,88,304" id="PB3" type="io,int" />
-      <pin rect="89,278,110,304" id="PB4" type="io,int,pwm" />
-      <pin rect="111,278,132,304" id="PB5" type="io,int,pwm" />
-      <pin rect="133,278,154,304" id="PB6" type="io,int,pwm" />
-      <pin rect="155,278,176,304" id="PB7" type="io,int,pwm" />
-      <pin rect="365,152,386,178" id="PA0" type="io" />
-      <pin rect="387,152,408,178" id="PA1" type="io" />
-      <pin rect="409,152,430,178" id="PA2" type="io" />
-      <pin rect="431,152,452,178" id="PA3" type="io" />
-      <pin rect="453,152,473,178" id="PA4" type="io" />
-      <pin rect="475,152,495,178" id="PA5" type="io" />
-      <pin rect="497,152,517,178" id="PA6" type="io" />
-      <pin rect="519,152,540,178" id="PA7" type="io" />
-      <pin rect="365,214,386,240" id="PC0" type="io" />
-      <pin rect="387,214,408,240" id="PC1" type="io" />
-      <pin rect="409,214,430,240" id="PC2" type="io" />
-      <pin rect="431,214,452,240" id="PC3" type="io" />
-      <pin rect="453,214,474,240" id="PC4" type="io,pwm" />
-      <pin rect="475,214,496,240" id="PC5" type="io,pwm" />
-      <pin rect="497,214,518,240" id="PC6" type="io,pwm" />
-      <pin rect="519,214,540,240" id="PC7" type="io" />
-      <pin rect="365,278,386,304" id="PD0" type="io,int" />
-      <pin rect="387,278,408,304" id="PD1" type="io,int,pwm" />
-      <pin rect="409,278,430,304" id="PD2" type="io,int" />
-      <pin rect="431,278,452,304" id="PD3" type="io,int" />
-      <pin rect="453,278,473,304" id="PD4" type="io" />
-      <pin rect="475,278,496,304" id="PD5" type="io" />
-      <pin rect="497,278,517,304" id="PD6" type="io" />
-      <pin rect="519,278,539,304" id="PD7" type="io" />
+	<Shape Id="usbkeywithwiredwings" Type="at90usb128" Source="false" Image="resources/AVRUSBKey - Wired Wings.png" Icon="resources/AVRUSBKeyIcon.png" width="585" height="377" maxInstances="1" description="AT90USB Key Demo board with WizBang wings and IDC connectors">
+	    <pin rect="1,152,22,178" id="PF0" type="io,adc" />
+	    <pin rect="23,152,44,178" id="PF1" type="io,adc" />
+	    <pin rect="45,152,66,178" id="PF2" type="io,adc" />
+	    <pin rect="67,152,88,178" id="PF3" type="io,adc" />
+	    <pin rect="89,152,110,178" id="PF4" type="io,adc" />
+	    <pin rect="111,152,132,178" id="PF5" type="io,adc" />
+	    <pin rect="133,152,154,178" id="PF6" type="io,adc" />
+	    <pin rect="155,152,176,178" id="PF7" type="io,adc" />
+	    <pin rect="1,214,22,240" id="PE0" type="io" />
+	    <pin rect="23,214,44,240" id="PE1" type="io" />
+	    <pin rect="45,214,66,240" id="PE2" type="io" />
+	    <pin rect="67,214,88,240" id="PE3" type="io" />
+	    <pin rect="89,214,110,240" id="PE4" type="io,int" />
+	    <pin rect="111,214,132,240" id="PE5" type="io,int" />
+	    <pin rect="133,214,154,240" id="PE6" type="io,int" />
+	    <pin rect="155,214,176,240" id="PE7" type="io,int" />
+	    <pin rect="1,278,22,304" id="PB0" type="io,int" />
+	    <pin rect="23,278,44,304" id="PB1" type="io,int" />
+	    <pin rect="45,278,66,304" id="PB2" type="io,int" />
+	    <pin rect="67,278,88,304" id="PB3" type="io,int" />
+	    <pin rect="89,278,110,304" id="PB4" type="io,int,pwm" />
+	    <pin rect="111,278,132,304" id="PB5" type="io,int,pwm" />
+	    <pin rect="133,278,154,304" id="PB6" type="io,int,pwm" />
+	    <pin rect="155,278,176,304" id="PB7" type="io,int,pwm" />
+	    <pin rect="365,152,386,178" id="PA0" type="io" />
+	    <pin rect="387,152,408,178" id="PA1" type="io" />
+	    <pin rect="409,152,430,178" id="PA2" type="io" />
+	    <pin rect="431,152,452,178" id="PA3" type="io" />
+	    <pin rect="453,152,473,178" id="PA4" type="io" />
+	    <pin rect="475,152,495,178" id="PA5" type="io" />
+	    <pin rect="497,152,517,178" id="PA6" type="io" />
+	    <pin rect="519,152,540,178" id="PA7" type="io" />
+	    <pin rect="365,214,386,240" id="PC0" type="io" />
+	    <pin rect="387,214,408,240" id="PC1" type="io" />
+	    <pin rect="409,214,430,240" id="PC2" type="io" />
+	    <pin rect="431,214,452,240" id="PC3" type="io" />
+	    <pin rect="453,214,474,240" id="PC4" type="io,pwm" />
+	    <pin rect="475,214,496,240" id="PC5" type="io,pwm" />
+	    <pin rect="497,214,518,240" id="PC6" type="io,pwm" />
+	    <pin rect="519,214,540,240" id="PC7" type="io" />
+	    <pin rect="365,278,386,304" id="PD0" type="io,int" />
+	    <pin rect="387,278,409,304" id="PD1" type="io,int,pwm" />
+	    <pin rect="409,278,430,304" id="PD2" type="io,int" />
+	    <pin rect="431,278,452,304" id="PD3" type="io,int" />
+	    <pin rect="453,278,473,304" id="PD4" type="io" />
+	    <pin rect="475,278,496,304" id="PD5" type="io" />
+	    <pin rect="497,278,517,304" id="PD6" type="io" />
+	    <pin rect="519,278,539,304" id="PD7" type="io" />
 
-      <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-      <property name="UsagePage" description="HID category of the usage of the control." type="usagepage" default="1"/>
-      <property name="Usage" description="HID usage of the control." type="usage" default="3"/>
-      <property name="Voltage" description="Is the microcontroller 5v or 3.3v." type="enum" default="3.3">
-        <enum name="5"/>
-        <enum name="3.3"/>
-      </property>
-      <property name="Power-Source" description="Is the USB device powered via the USB Bus or does it use an external supply." type="enum" default="Bus-Powered">
-        <enum name="Self-Powered"/>
-        <enum name="Bus-Powered"/>
-      </property>
-      <property name="Serial-Debug" description="Are pins PD2/PD3 as serial RXD/TXD pins for debug output (38400, 8, none, 1)" type="bool" default="false"/>
-      <property name="HID-Debug" description="Is debug through the HID interface enabled." type="bool" default="false"/>
-      <property name="Current" description="Current usage of the microcontroller in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="100"/>
-      <property name="UseUsbKeyLEDs" description="Use the default AT90USBKey LEDs as indicators of the USB status." type="enum" default="LED1">
-        <enum name="LED1"/>
-        <enum name="LED2"/>
-        <enum name="Both"/>
-        <enum name="None"/>
-      </property>
-      <property name="SerialNo" description="Required unique serial number of the device.  This must be unique between all GenericHID devices or MS-Windows will Blue-Screen if two duplicate devices are plugged in!" type="string" default="1"/>
-    </Shape>
-
+	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	    <property name="Usage" description="HID usage of the control." type="usage" default="1:3"/>
+	    <property name="Voltage" description="Is the microcontroller 5v or 3.3v." type="enum" default="3.3">
+		<enum name="5"/>
+		<enum name="3.3"/>
+	    </property>
+	    <property name="Power-Source" description="Is the USB device powered via the USB Bus or does it use an external supply." type="enum" default="Bus-Powered">
+		<enum name="Self-Powered"/>
+		<enum name="Bus-Powered"/>
+	    </property>
+	    <property name="Serial-Debug" description="Are pins PD2/PD3 as serial RXD/TXD pins for debug output (38400, 8, none, 1)" type="bool" default="false"/>
+	    <property name="HID-Debug" description="Is debug through the HID interface enabled." type="bool" default="false"/>
+	    <property name="Current" description="Current usage of the microcontroller in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="100"/>
+	    <property name="UseUsbKeyLEDs" description="Use the default AT90USBKey LEDs as indicators of the USB status." type="enum" default="LED1">
+		<enum name="LED1"/>
+		<enum name="LED2"/>
+		<enum name="Both"/>
+		<enum name="None"/>
+	    </property>
+	    <property name="SerialNo" description="Required unique serial number of the device.  This must be unique between all GenericHID devices or MS-Windows will Blue-Screen if two duplicate devices are plugged in!" type="string" default="1"/>
+	</Shape>
 
 
-    <Shape Id="pot" Type="pot" Source="true" Image="resources\Potentiometer.png" Icon="resources\PotentiometerIcon.png" width="140" height="89" maxInstances="0" description="Analog Potentiometer">
-      <pin rect="2,40,17,55" id="Output" type="adc" />
-      <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-      <property name="UsagePage" description="HID category of the usage of the control." type="usagepage" default="1"/>
-      <property name="Usage" description="HID usage of the control." type="usage" default="48"/>
-      <property name="Bits" description="ADC resolution the Potentiometer is sampled at." type="int" min="1" max="10" default="10"/>
-      <property name="Current" description="Current usage of the potentiometer in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
-    </Shape>
-    <Shape Id="digitalencoder" Type="digitalencoder" Source="true" Image="resources\DigitalEncoder.png" Icon="resources\DigitalEncoderIcon.png" width="97" height="98" maxInstances="0" description="Digital Encoder">
-      <pin rect="2,61,17,76" id="A" type="int" />
-      <pin rect="2,80,17,95" id="B" type="int" />
-      <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-      <property name="UsagePage" description="HID category of the usage of the control." type="usagepage" default="1"/>
-      <property name="Usage" description="HID usage of the control." type="usage" default="55" />
-      <property name="Current" description="Current usage of the encoder in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="100"/>
-    </Shape>
-    <Shape Id="switch" Type="switch" Source="true" Image="resources\switch.png" Icon="resources\SwitchIcon.png" width="68" height="103" maxInstances="0" description="Switch">
-      <pin rect="2,58,17,73" id="Common" type="io" />
-      <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-      <property name="UsagePage" description="HID category of the usage of the control." type="usagepage" default="9"/>
-      <property name="Usage" description="HID usage of the control." type="usage" default="1"/>
-      <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
-      <property name="Debounce" description="Waits for the mechanical switch stop bouncing before registering a switch closure." type="bool" default="true"/>
-      <property name="Current" description="Current usage of the switch in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
-    </Shape>
-    <Shape Id="keymatrix" Type="keymatrix" Source="true" Image="resources\keymatrix.png" Icon="resources\keymatrixicon.png" width="244" height="251" maxInstances="0" description="Key Matrix">
-      <pin rect="5,11,25,31" id="R1" type="io" />
-      <pin rect="5,35,25,56" id="R2" type="io" />
-      <pin rect="5,60,25,81" id="R3" type="io" />
-      <pin rect="5,85,25,105" id="R4" type="io" />
-      <pin rect="5,109,25,130" id="R5" type="io" />
-      <pin rect="5,134,25,154" id="R6" type="io" />
-      <pin rect="5,159,25,179" id="R7" type="io" />
-      <pin rect="6,184,25,204" id="R8" type="io" />
-      <pin rect="46,229,66,249" id="C1" type="io" />
-      <pin rect="71,229,91,249" id="C2" type="io" />
-      <pin rect="96,229,116,249" id="C3" type="io" />
-      <pin rect="121,229,140,249" id="C4" type="io" />
-      <pin rect="145,229,166,249" id="C5" type="io" />
-      <pin rect="170,229,190,249" id="C6" type="io" />
-      <pin rect="195,229,215,249" id="C7" type="io" />
-      <pin rect="219,229,239,249" id="C8" type="io" />
-      <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-      <property name="UsagePage" description="HID category of the usage of the control." type="usagepage" default="9"/>
-      <property name="UsageMin" description="HID usage of the first key.  Other keys are number consecutively." type="usage" default="1"/>
-      <property name="Rows" description="The number of rows in the matrix." type="int" min="1" max="8" default="4"/>
-      <property name="Columns" description="The number of columns in the matrix" type="int" min="1" max="8" default="4"/>
-      <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
-      <property name="Debounce" description="Waits for the mechanical switch stop bouncing before registering a switch closure." type="bool" default="true"/>
-      <property name="Current" description="Current usage of the keymatrix in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
-    </Shape>
 
-    <Shape Id="rotaryswitch" Type="rotaryswitch" Source="true" Image="resources\rotaryswitch.png" Icon="resources\rotaryswitchicon.png" width="128" height="328" maxInstances="0" description="Rotary Selector Switch">
-      <pin rect="3,279,25,300" id="1" type="io" />
-      <pin rect="18,304,39,324" id="2" type="io" />
-      <pin rect="32,279,53,299" id="3" type="io" />
-      <pin rect="47,304,68,324" id="4" type="io" />
-      <pin rect="61,279,81,299" id="5" type="io" />
-      <pin rect="76,304,96,324" id="6" type="io" />
-      <pin rect="90,279,110,299" id="7" type="io" />
-      <pin rect="105,304,125,324" id="8" type="io" />
-      <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-      <property name="UsagePage" description="HID category of the usage of the control." type="usagepage" default="9"/>
-      <property name="Usage" description="HID usage of the control." type="usage" default="1"/>
-      <property name="Outputs" description="The number of outputs on the selector switch." type="int" min="2" max="8" default="4"/>
-      <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
-      <property name="Debounce" description="Waits for the mechanical switch stop bouncing before registering a switch closure." type="bool" default="true"/>
-      <property name="Current" description="Current usage of the switch in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
-    </Shape>
+	<Shape Id="pot" Type="pot" Source="true" Image="resources/Potentiometer.png" Icon="resources/PotentiometerIcon.png" width="140" height="89" maxInstances="0" description="Analog Potentiometer">
+	    <pin rect="2,40,17,55" id="Out" type="adc" valign="above"/>
+	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	    <property name="Usage" description="HID usage of the control." type="usage" default="1:48"/>
+	    <property name="Bits" description="ADC resolution the Potentiometer is sampled at." type="int" min="1" max="10" default="10"/>
+	    <property name="Current" description="Current usage of the potentiometer in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
+	</Shape>
+	
+	<Shape Id="digitalencoder" Type="digitalencoder" Source="true" Image="resources/DigitalEncoder.png" Icon="resources/DigitalEncoderIcon.png" width="97" height="98" maxInstances="0" description="Digital Encoder">
+	    <pin rect="2,61,17,76" id="A" type="int" />
+	    <pin rect="2,80,17,95" id="B" type="int" />
+	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	    <property name="Usage" description="HID usage of the control." type="usage" default="1:55" />
+	    <property name="Current" description="Current usage of the encoder in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="100"/>
+	</Shape>
+	
+	<Shape Id="switch" Type="switch" Source="true" Image="resources/switch.png" Icon="resources/SwitchIcon.png" width="68" height="103" maxInstances="0" description="Switch">
+	    <pin rect="2,58,17,73" id="In" type="io" />
+	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	    <property name="Usage" description="HID usage of the control." type="usage" default="9:1"/>
+	    <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
+	    <property name="Debounce" description="Waits for the mechanical switch stop bouncing before registering a switch closure." type="bool" default="true"/>
+	    <property name="Current" description="Current usage of the switch in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
+	</Shape>
+	
+	<Shape Id="keymatrix" Type="keymatrix" Source="true" Image="resources/keymatrix.png" Icon="resources/keymatrixicon.png" width="244" height="251" maxInstances="0" description="Key Matrix">
+	    <pin rect="5,11,25,31" id="R1" type="io" />
+	    <pin rect="5,35,25,56" id="R2" type="io" />
+	    <pin rect="5,60,25,81" id="R3" type="io" />
+	    <pin rect="5,85,25,105" id="R4" type="io" />
+	    <pin rect="5,109,25,130" id="R5" type="io" />
+	    <pin rect="5,134,25,154" id="R6" type="io" />
+	    <pin rect="5,159,25,179" id="R7" type="io" />
+	    <pin rect="6,184,25,204" id="R8" type="io" />
+	    <pin rect="46,229,66,249" id="C1" type="io" rotate="-90"/>
+	    <pin rect="71,229,91,249" id="C2" type="io" rotate="-90"/>
+	    <pin rect="96,229,116,249" id="C3" type="io" rotate="-90"/>
+	    <pin rect="121,229,140,249" id="C4" type="io" rotate="-90"/>
+	    <pin rect="145,229,166,249" id="C5" type="io" rotate="-90"/>
+	    <pin rect="170,229,190,249" id="C6" type="io" rotate="-90"/>
+	    <pin rect="195,229,215,249" id="C7" type="io" rotate="-90"/>
+	    <pin rect="219,229,239,249" id="C8" type="io" rotate="-90"/>
+	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	    <property name="UsageMin" description="HID usage of the first key.  Other keys are number consecutively." type="usage" default="9:1"/>
+	    <property name="Rows" description="The number of rows in the matrix." type="int" min="1" max="8" default="4"/>
+	    <property name="Columns" description="The number of columns in the matrix" type="int" min="1" max="8" default="4"/>
+	    <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
+	    <property name="Debounce" description="Waits for the mechanical switch stop bouncing before registering a switch closure." type="bool" default="true"/>
+	    <property name="Current" description="Current usage of the keymatrix in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
+	</Shape>
 
-    <Shape Id="codedrotaryswitch" Type="codedrotaryswitch" Source="true" Image="resources\codedrotaryswitch.png" Icon="resources\codedrotaryswitchicon.png" width="63" height="87" maxInstances="0" description="Coded Rotary Switch">
-      <pin rect="1,73,14,86" id="1" type="io" />
-      <pin rect="17,73,30,86" id="2" type="io" />
-      <pin rect="33,73,45,86" id="4" type="io" />
-      <pin rect="49,73,62,86" id="8" type="io" />
-      <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-      <property name="UsagePage" description="HID category of the usage of the control." type="usagepage" default="9"/>
-      <property name="Usage" description="HID usage of the control." type="usage" default="1"/>
-      <property name="Outputs" description="The number of outputs on the selector switch." type="int" min="2" max="32" default="4"/>
-      <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
-      <property name="Debounce" description="Waits for the mechanical switch stop bouncing before registering a switch closure." type="bool" default="true"/>
-      <property name="Current" description="Current usage of the switch in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
-    </Shape>
+	<Shape Id="rotaryswitch" Type="rotaryswitch" Source="true" Image="resources/rotaryswitch.png" Icon="resources/rotaryswitchicon.png" width="128" height="328" maxInstances="0" description="Rotary Selector Switch">
+	    <pin rect="3,279,25,300" id="1" type="io" />
+	    <pin rect="18,304,39,324" id="2" type="io" />
+	    <pin rect="32,279,53,299" id="3" type="io" />
+	    <pin rect="47,304,68,324" id="4" type="io" />
+	    <pin rect="61,279,81,299" id="5" type="io" />
+	    <pin rect="76,304,96,324" id="6" type="io" />
+	    <pin rect="90,279,110,299" id="7" type="io" />
+	    <pin rect="105,304,125,324" id="8" type="io" />
+	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	    <property name="Usage" description="HID usage of the control." type="usage" default="9:1"/>
+	    <property name="Outputs" description="The number of outputs on the selector switch." type="int" min="2" max="8" default="4"/>
+	    <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
+	    <property name="Debounce" description="Waits for the mechanical switch stop bouncing before registering a switch closure." type="bool" default="true"/>
+	    <property name="Current" description="Current usage of the switch in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
+	</Shape>
 
-    <Shape Id="lcd" Type="lcd" Source="true" Image="resources\lcd.png" Icon="resources\lcdicon.png" width="169" height="131" maxInstances="0" description="LCD Alphanumeric Display">
-      <pin rect="2,112,14,129" id="RS" type="io" />
-      <pin rect="17,112,30,129" id="R/W" type="io" />
-      <pin rect="32,112,45,129" id="E" type="io" />
-      <pin rect="48,112,60,129" id="D0" type="io" />
-      <pin rect="63,112,75,129" id="D1" type="io" />
-      <pin rect="78,112,91,129" id="D2" type="io" />
-      <pin rect="94,112,106,129" id="D3" type="io" />
-      <pin rect="109,112,121,129" id="D4" type="io" />
-      <pin rect="124,112,137,129" id="D5" type="io" />
-      <pin rect="139,112,152,129" id="D6" type="io" />
-      <pin rect="155,112,167,129" id="D7" type="io" />
-      <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-      <property name="UsagePage" description="HID category of the usage of the control." type="usagepage" default="20"/>
-      <property name="Usage" description="HID usage of the control." type="usage" default="1"/>
-      <property name="Rows" description="The number of rows on the Display." type="int" min="1" max="4" default="2"/>
-      <property name="Columns" description="The number of columns on the Display." type="int" min="8" max="40" default="20"/>
-      <property name="8Bit" description="The number of data lines to connect to the LCD.  If true 8 bits are used.  If false, only 4 bits, data lines D4-D7 are used." type="bool" default="false"/>
-      <property name="Row1Address" description="The start address of row 1." type="int" min="0" max="255" default="0"/>
-      <property name="Row2Address" description="The start address of row 2." type="int" min="0" max="255" default="64"/>
-      <property name="Row3Address" description="The start address of row 3." type="int" min="0" max="255" default="20"/>
-      <property name="Row4Address" description="The start address of row 4." type="int" min="0" max="255" default="84"/>
-      <property name="Current" description="Current usage of the LCD in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="300"/>
-    </Shape>
+	<Shape Id="codedrotaryswitch" Type="codedrotaryswitch" Source="true" Image="resources/codedrotaryswitch.png" Icon="resources/codedrotaryswitchicon.png" width="63" height="87" maxInstances="0" description="Coded Rotary Switch">
+	    <pin rect="1,73,14,86" id="1" type="io" />
+	    <pin rect="17,73,30,86" id="2" type="io" />
+	    <pin rect="33,73,45,86" id="4" type="io" />
+	    <pin rect="49,73,62,86" id="8" type="io" />
+	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	    <property name="Usage" description="HID usage of the control." type="usage" default="9:1"/>
+	    <property name="Outputs" description="The number of outputs on the selector switch." type="int" min="2" max="32" default="4"/>
+	    <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
+	    <property name="Debounce" description="Waits for the mechanical switch stop bouncing before registering a switch closure." type="bool" default="true"/>
+	    <property name="Current" description="Current usage of the switch in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
+	</Shape>
+
+	<Shape Id="lcd" Type="lcd" Source="true" Image="resources/lcd.png" Icon="resources/lcdicon.png" width="169" height="131" maxInstances="0" description="LCD Alphanumeric Display">
+	    <pin rect="2,112,14,129" id="RS" type="io" />
+	    <pin rect="17,112,30,129" id="R/W" type="io" />
+	    <pin rect="32,112,45,129" id="E" type="io" />
+	    <pin rect="48,112,60,129" id="D0" type="io" />
+	    <pin rect="63,112,75,129" id="D1" type="io" />
+	    <pin rect="78,112,91,129" id="D2" type="io" />
+	    <pin rect="94,112,106,129" id="D3" type="io" />
+	    <pin rect="109,112,121,129" id="D4" type="io" />
+	    <pin rect="124,112,137,129" id="D5" type="io" />
+	    <pin rect="139,112,152,129" id="D6" type="io" />
+	    <pin rect="155,112,167,129" id="D7" type="io" />
+	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	    <property name="Usage" description="HID usage of the control." type="usage" default="20:1"/>
+	    <property name="Rows" description="The number of rows on the Display." type="int" min="1" max="4" default="2"/>
+	    <property name="Columns" description="The number of columns on the Display." type="int" min="8" max="40" default="20"/>
+	    <property name="8Bit" description="The number of data lines to connect to the LCD.  If true 8 bits are used.  If false, only 4 bits, data lines D4-D7 are used." type="bool" default="false"/>
+	    <property name="Row1Address" description="The start address of row 1." type="int" min="0" max="255" default="0"/>
+	    <property name="Row2Address" description="The start address of row 2." type="int" min="0" max="255" default="64"/>
+	    <property name="Row3Address" description="The start address of row 3." type="int" min="0" max="255" default="20"/>
+	    <property name="Row4Address" description="The start address of row 4." type="int" min="0" max="255" default="84"/>
+	    <property name="Current" description="Current usage of the LCD in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="300"/>
+	</Shape>
 
 
-    <Shape Id="led" Type="led" Source="true" Image="resources\led.png" Icon="resources\ledicon.png" width="28" height="90" maxInstances="0" description="LED">
-      <pin rect="11,75,26,90" id="In" type="io" />
-      <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-      <property name="UsagePage" description="HID category of the usage of the control." type="usagepage" default="8"/>
-      <property name="Usage" description="HID usage of the control." type="usage" default="1000"/>
-      <property name="Source" description="Does the LED light when the microcontroller outputs a high value &quot;true&quot;, or when the microcontroller pulls the port low  &quot;false&quot;." type="bool" default="true"/>
-      <property name="Current" description="Current usage of the LED in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="5"/>
-    </Shape>
+	<Shape Id="led" Type="led" Source="true" Image="resources/led.png" Icon="resources/ledicon.png" width="28" height="90" maxInstances="0" description="LED">
+	    <pin rect="11,75,26,90" id="In" type="io" />
+	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	    <property name="Usage" description="HID usage of the control." type="usage" default="8:1000"/>
+	    <property name="Source" description="Does the LED light when the microcontroller outputs a high value &quot;true&quot;, or when the microcontroller pulls the port low  &quot;false&quot;." type="bool" default="true"/>
+	    <property name="Current" description="Current usage of the LED in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="5"/>
+	</Shape>
 
-    <Shape Id="bicolourled"  Type="bicolourled" Source="true" Image="resources\bicolourled.png" Icon="resources\bicolourledicon.png" width="31" height="81" maxInstances="0" description="2-lead Bicolour LED">
-      <pin rect="1,67,14,80" id="1" type="io" />
-      <pin rect="17,67,30,80" id="2" type="io" />
-      <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-      <property name="UsagePage" description="HID category of the usage of the control." type="usagepage" default="8"/>
-      <property name="Usage" description="HID usage of the control." type="usage" default="1"/>
-      <property name="Current" description="Current usage of the LED in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="5"/>
-    </Shape>
+	<Shape Id="bicolourled"  Type="bicolourled" Source="true" Image="resources/bicolourled.png" Icon="resources/bicolourledicon.png" width="31" height="81" maxInstances="0" description="2-lead Bicolour LED">
+	    <pin rect="1,67,14,80" id="1" type="io" />
+	    <pin rect="17,67,30,80" id="2" type="io" />
+	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	    <property name="Usage" description="HID usage of the control." type="usage" default="8:1"/>
+	    <property name="Current" description="Current usage of the LED in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="5"/>
+	</Shape>
 
-    <Shape Id="tricolourled" Type="tricolourled" Source="true" Image="resources\tricolourled.png" Icon="resources\tricolourledicon.png" width="47" height="85" maxInstances="0" description="3-lead Tricolour LED">
-      <pin rect="2,71,14,83" id="1" type="io" />
-      <pin rect="33,71,45,83" id="2" type="io" />
-      <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-      <property name="UsagePage" description="HID category of the usage of the control." type="usagepage" default="8"/>
-      <property name="Usage" description="HID usage of the control." type="usage" default="1"/>
-      <property name="Current" description="Current usage of the LED in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="10"/>
-    </Shape>
+	<Shape Id="tricolourled" Type="tricolourled" Source="true" Image="resources/tricolourled.png" Icon="resources/tricolourledicon.png" width="47" height="85" maxInstances="0" description="3-lead Tricolour LED">
+	    <pin rect="2,71,14,83" id="1" type="io" />
+	    <pin rect="33,71,45,83" id="2" type="io" />
+	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	    <property name="Usage" description="HID usage of the control." type="usage" default="8:1"/>
+	    <property name="Current" description="Current usage of the LED in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="10"/>
+	</Shape>
 
-    <Shape Id="dirswitch" Type="dirswitch" Source="true" Image="resources\DirectionalSwitch.png" Icon="resources\DirectionalSwitchIcon.png" width="86" height="171" maxInstances="0" description="n-way Directional Switch (POV hat switch)">
-      <pin rect="16,112,32,128" id="NW" type="io" />
-      <pin rect="36,112,52,128" id="N" type="io" />
-      <pin rect="56,112,72,128" id="NE" type="io" />
-      <pin rect="56,132,72,148" id="E" type="io" />
-      <pin rect="56,152,72,168" id="SE" type="io" />
-      <pin rect="36,152,52,168" id="S" type="io" />
-      <pin rect="16,152,32,168" id="SW" type="io" />
-      <pin rect="16,132,32,148" id="W" type="io" />
-      <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-      <property name="UsagePage" description="HID category of the usage of the control." type="usagepage" default="1"/>
-      <property name="Usage" description="HID usage of the control." type="usage" default="57"/>
-      <property name="Directions" description="The number of directions." type="enum" default="4">
-        <enum name="2"/>
-        <enum name="4"/>
-        <enum name="8"/>
-      </property>
-      <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
-      <property name="Debounce" description="Waits for the mechanical switch stop bouncing before registering a switch closure." type="bool" default="true"/>
-      <property name="Current" description="Current usage of the switch in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
-    </Shape>
-    
-  </Shapes>
-  <Usages>
-    <UsagePage Name="Generic Desktop Controls" Id="0x01" >
-      <Usage Name="Pointer" Id="0x01" />
-      <Usage Name="Mouse" Id="0x02" />
-      <Usage Name="Joystick" Id="0x04" />
-      <Usage Name="Game Pad" Id="0x05" />
-      <Usage Name="Keyboard" Id="0x06" />
-      <Usage Name="Keypad" Id="0x07" />
-      <Usage Name="Multi-axis Controller" Id="0x08" />
-      <Usage Name="Tablet PC System Controls" Id="0x09" />
-      <Usage Name="X" Id="0x30" />
-      <Usage Name="Y" Id="0x31" />
-      <Usage Name="Z" Id="0x32" />
-      <Usage Name="Rx" Id="0x33" />
-      <Usage Name="Ry" Id="0x34" />
-      <Usage Name="Rz" Id="0x35" />
-      <Usage Name="Slider" Id="0x36" />
-      <Usage Name="Dial" Id="0x37" />
-      <Usage Name="Wheel" Id="0x38" />
-      <Usage Name="Hat switch" Id="0x39" />
-      <Usage Name="Counted Buffer" Id="0x3A" />
-      <Usage Name="Byte Count" Id="0x3B" />
-      <Usage Name="Motion Wakeup" Id="0x3C" />
-      <Usage Name="Start" Id="0x3D" />
-      <Usage Name="Select" Id="0x3E" />
-      <Usage Name="Vx" Id="0x40" />
-      <Usage Name="Vy" Id="0x41" />
-      <Usage Name="Vz" Id="0x42" />
-      <Usage Name="Vbrx" Id="0x43" />
-      <Usage Name="Vbry" Id="0x44" />
-      <Usage Name="Vbrz" Id="0x45" />
-      <Usage Name="Vno" Id="0x46" />
-      <Usage Name="Feature Notification" Id="0x47" />
-      <Usage Name="Resolution Multiplier" Id="0x48" />
-      <Usage Name="System Control" Id="0x80" />
-      <Usage Name="System Power Down" Id="0x81" />
-      <Usage Name="System Sleep" Id="0x82" />
-      <Usage Name="System Wake Up" Id="0x83" />
-      <Usage Name="System Context Menu" Id="0x84" />
-      <Usage Name="System Main Menu" Id="0x85" />
-      <Usage Name="System App Menu" Id="0x86" />
-      <Usage Name="System Menu Help" Id="0x87" />
-      <Usage Name="System Menu Exit" Id="0x88" />
-      <Usage Name="System Menu Select" Id="0x89" />
-      <Usage Name="System Menu Right" Id="0x8A" />
-      <Usage Name="System Menu Left" Id="0x8B" />
-      <Usage Name="System Menu Up" Id="0x8C" />
-      <Usage Name="System Menu Down" Id="0x8D" />
-      <Usage Name="System Cold Restart" Id="0x8E" />
-      <Usage Name="System Warm Restart" Id="0x8F" />
-      <Usage Name="D-pad Up" Id="0x90" />
-      <Usage Name="D-pad Down" Id="0x91" />
-      <Usage Name="D-pad Right" Id="0x92" />
-      <Usage Name="D-pad Left" Id="0x93" />
-      <Usage Name="System Dock" Id="0xA0" />
-      <Usage Name="System Undock" Id="0xA1" />
-      <Usage Name="System Setup" Id="0xA2" />
-      <Usage Name="System Break" Id="0xA3" />
-      <Usage Name="System Debugger Break" Id="0xA4" />
-      <Usage Name="Application Break" Id="0xA5" />
-      <Usage Name="Application Debugger Break" Id="0xA6" />
-      <Usage Name="System Speaker Mute" Id="0xA7" />
-      <Usage Name="System Hibernate" Id="0xA8" />
-      <Usage Name="System Display Invert" Id="0xB0" />
-      <Usage Name="System Display Internal" Id="0xB1" />
-      <Usage Name="System Display External" Id="0xB2" />
-      <Usage Name="System Display Both" Id="0xB3" />
-      <Usage Name="System Display Dual" Id="0xB4" />
-      <Usage Name="System Display Toggle Int/Ext" Id="0xB5" />
-      <Usage Name="System Display Swap Primary/Secondary" Id="0xB6" />
-      <Usage Name="System Display LCD Autoscale" Id="0xB7" />
-    </UsagePage>
-    <UsagePage Name="Simulation Controls" Id="0x02">
-      <Usage Name="Flight Simulation Device" Id="0x01" />
-      <Usage Name="Automobile Simulation Device" Id="0x02" />
-      <Usage Name="Tank Simulation Device" Id="0x03" />
-      <Usage Name="Spaceship Simulation Device" Id="0x04" />
-      <Usage Name="Submarine Simulation Device" Id="0x05" />
-      <Usage Name="Sailing Simulation Device" Id="0x06" />
-      <Usage Name="Motorcycle Simulation Device" Id="0x07" />
-      <Usage Name="Sports Simulation Device" Id="0x08" />
-      <Usage Name="Airplane Simulation Device" Id="0x09" />
-      <Usage Name="Helicopter Simulation Device" Id="0x0A" />
-      <Usage Name="Magic Carpet Simulation Device" Id="0x0B" />
-      <Usage Name="Bicycle Simulation Device" Id="0x0C" />
-      <Usage Name="Flight Control Stick" Id="0x20" />
-      <Usage Name="Flight Stick" Id="0x21" />
-      <Usage Name="Cyclic Control" Id="0x22" />
-      <Usage Name="Cyclic Trim" Id="0x23" />
-      <Usage Name="Flight Yoke" Id="0x24" />
-      <Usage Name="Track Control" Id="0x25" />
-      <Usage Name="Aileron" Id="0xB0" />
-      <Usage Name="Aileron Trim" Id="0xB1" />
-      <Usage Name="Anti-Torque Control" Id="0xB2" />
-      <Usage Name="Autopilot Enable" Id="0xB3" />
-      <Usage Name="Chaff Release" Id="0xB4" />
-      <Usage Name="Collective Control" Id="0xB5" />
-      <Usage Name="Dive Brake" Id="0xB6" />
-      <Usage Name="Electronic Countermeasures" Id="0xB7" />
-      <Usage Name="Elevator" Id="0xB8" />
-      <Usage Name="Elevator Trim" Id="0xB9" />
-      <Usage Name="Rudder" Id="0xBA" />
-      <Usage Name="Throttle" Id="0xBB" />
-      <Usage Name="Flight Communications" Id="0xBC" />
-      <Usage Name="Flare Release" Id="0xBD" />
-      <Usage Name="Landing Gear" Id="0xBE" />
-      <Usage Name="Toe Brake" Id="0xBF" />
-      <Usage Name="Trigger" Id="0xC0" />
-      <Usage Name="Weapons Arm" Id="0xC1" />
-      <Usage Name="Weapons Select" Id="0xC2" />
-      <Usage Name="Wing Flaps" Id="0xC3" />
-      <Usage Name="Accelerator" Id="0xC4" />
-      <Usage Name="Brake" Id="0xC5" />
-      <Usage Name="Clutch" Id="0xC6" />
-      <Usage Name="Shifter" Id="0xC7" />
-      <Usage Name="Steering" Id="0xC8" />
-      <Usage Name="Turret Direction" Id="0xC9" />
-      <Usage Name="Barrel Elevation" Id="0xCA" />
-      <Usage Name="Dive Plane" Id="0xCB" />
-      <Usage Name="Ballast" Id="0xCC" />
-      <Usage Name="Bicycle Crank" Id="0xCD" />
-      <Usage Name="Handle Bars" Id="0xCE" />
-      <Usage Name="Front Brake" Id="0xCF" />
-      <Usage Name="Rear Brake" Id="0xD0" />
-    </UsagePage>
-    <UsagePage Name="VR Controls" Id="0x03">
-      <Usage Name="Belt" Id="0x01" />
-      <Usage Name="Body Suit" Id="0x02" />
-      <Usage Name="Flexor" Id="0x03" />
-      <Usage Name="Glove" Id="0x04" />
-      <Usage Name="Head Tracker" Id="0x05" />
-      <Usage Name="Head Mounted Display" Id="0x06" />
-      <Usage Name="Hand Tracker" Id="0x07" />
-      <Usage Name="Oculometer" Id="0x08" />
-      <Usage Name="Vest" Id="0x09" />
-      <Usage Name="Animatronic Device" Id="0x0A" />
-      <Usage Name="Stereo Enable" Id="0x20" />
-      <Usage Name="Display Enable" Id="0x21" />
-    </UsagePage>
-    <UsagePage Name="Sport Controls" Id="0x04">
-      <Usage Name="Baseball Bat" Id="0x01" />
-      <Usage Name="Golf Club" Id="0x02" />
-      <Usage Name="Rowing Machine" Id="0x03" />
-      <Usage Name="Treadmill" Id="0x04" />
-      <Usage Name="Oar" Id="0x30" />
-      <Usage Name="Slope" Id="0x31" />
-      <Usage Name="Rate" Id="0x32" />
-      <Usage Name="Stick Speed" Id="0x33" />
-      <Usage Name="Stick Face Angle" Id="0x34" />
-      <Usage Name="Stick Heel/Toe" Id="0x35" />
-      <Usage Name="Stick Follow Through" Id="0x36" />
-      <Usage Name="Stick Tempo" Id="0x37" />
-      <Usage Name="Stick Type" Id="0x38" />
-      <Usage Name="Stick Height" Id="0x39" />
-      <Usage Name="Putter" Id="0x50" />
-      <Usage Name="1 Iron" Id="0x51" />
-      <Usage Name="2 Iron" Id="0x52" />
-      <Usage Name="3 Iron" Id="0x53" />
-      <Usage Name="4 Iron" Id="0x54" />
-      <Usage Name="5 Iron" Id="0x55" />
-      <Usage Name="6 Iron" Id="0x56" />
-      <Usage Name="7 Iron" Id="0x57" />
-      <Usage Name="8 Iron" Id="0x58" />
-      <Usage Name="9 Iron" Id="0x59" />
-      <Usage Name="10 Iron" Id="0x5A" />
-      <Usage Name="11 Iron" Id="0x5B" />
-      <Usage Name="Sand Wedge" Id="0x5C" />
-      <Usage Name="Loft Wedge" Id="0x5D" />
-      <Usage Name="Power Wedge" Id="0x5E" />
-      <Usage Name="1 Wood" Id="0x5F" />
-      <Usage Name="3 Wood" Id="0x60" />
-      <Usage Name="5 Wood" Id="0x61" />
-      <Usage Name="7 Wood" Id="0x62" />
-      <Usage Name="9 Wood" Id="0x63" />
-    </UsagePage>
-    <UsagePage Name="Game Controls" Id="0x05">
-      <Usage Name="3D Game Controller" Id="0x01" />
-      <Usage Name="Pinball Device" Id="0x02" />
-      <Usage Name="Gun Device" Id="0x03" />
-      <Usage Name="Point of View" Id="0x20" />
-      <Usage Name="Turn Right/Left" Id="0x21" />
-      <Usage Name="Pitch Forward/Backward" Id="0x22" />
-      <Usage Name="Roll Right/Left" Id="0x23" />
-      <Usage Name="Move Right/Left" Id="0x24" />
-      <Usage Name="Move Forward/Backward" Id="0x25" />
-      <Usage Name="Move Up/Down" Id="0x26" />
-      <Usage Name="Lean Right/Left" Id="0x27" />
-      <Usage Name="Lean Forward/Backward" Id="0x28" />
-      <Usage Name="Height of POV" Id="0x29" />
-      <Usage Name="Flipper" Id="0x2A" />
-      <Usage Name="Secondary Flipper" Id="0x2B" />
-      <Usage Name="Bump" Id="0x2C" />
-      <Usage Name="New Game" Id="0x2D" />
-      <Usage Name="Shoot Ball" Id="0x2E" />
-      <Usage Name="Player" Id="0x2F" />
-      <Usage Name="Gun Bolt" Id="0x30" />
-      <Usage Name="Gun Clip" Id="0x31" />
-      <Usage Name="Gun Selector" Id="0x32" />
-      <Usage Name="Gun Single Shot" Id="0x33" />
-      <Usage Name="Gun Burst" Id="0x34" />
-      <Usage Name="Gun Automatic" Id="0x35" />
-      <Usage Name="Gun Safety" Id="0x36" />
-      <Usage Name="Gamepad Fire/Jump" Id="0x37" />
-      <Usage Name="Gamepad Trigger" Id="0x39" />
-    </UsagePage>
-    <UsagePage Name="Generic Device Controls" Id="0x06">
-      <Usage Name="Battery Strength" Id="0x20" />
-      <Usage Name="Wireless Channel" Id="0x21" />
-      <Usage Name="Wireless ID" Id="0x22" />
-      <Usage Name="Discover Wireless Control" Id="0x23" />
-      <Usage Name="Security Code Character Entered" Id="0x24" />
-      <Usage Name="Security Code Character Erased" Id="0x25" />
-      <Usage Name="Security Code Cleared" Id="0x26" />
-    </UsagePage>
-    <UsagePage Name="Keyboard/Keypad" Id="0x07">
-      <Usage Name="Keyboard ErrorRollOver" Id="1" />
-      <Usage Name="Keyboard POSTFail" Id="2" />
-      <Usage Name="Keyboard ErrorUndefined" Id="3" />
-      <Usage Name="Keyboard a and A" Id="4" />
-      <Usage Name="Keyboard b and B" Id="5" />
-      <Usage Name="Keyboard c and C" Id="6" />
-      <Usage Name="Keyboard d and D" Id="7" />
-      <Usage Name="Keyboard e and E" Id="8" />
-      <Usage Name="Keyboard f and F" Id="9" />
-      <Usage Name="Keyboard g and G" Id="10" />
-      <Usage Name="Keyboard h and H" Id="11" />
-      <Usage Name="Keyboard i and I" Id="12" />
-      <Usage Name="Keyboard j and J" Id="13" />
-      <Usage Name="Keyboard k and K" Id="14" />
-      <Usage Name="Keyboard l and L" Id="15" />
-      <Usage Name="Keyboard m and M" Id="16" />
-      <Usage Name="Keyboard n and N" Id="17" />
-      <Usage Name="Keyboard o and O" Id="18" />
-      <Usage Name="Keyboard p and P" Id="19" />
-      <Usage Name="Keyboard q and Q" Id="20" />
-      <Usage Name="Keyboard r and R" Id="21" />
-      <Usage Name="Keyboard s and S" Id="22" />
-      <Usage Name="Keyboard t and T" Id="23" />
-      <Usage Name="Keyboard u and U" Id="24" />
-      <Usage Name="Keyboard v and V" Id="25" />
-      <Usage Name="Keyboard w and W" Id="26" />
-      <Usage Name="Keyboard x and X" Id="27" />
-      <Usage Name="Keyboard y and Y" Id="28" />
-      <Usage Name="Keyboard z and Z" Id="29" />
-      <Usage Name="Keyboard 1 and !" Id="30" />
-      <Usage Name="Keyboard 2 and @" Id="31" />
-      <Usage Name="Keyboard 3 and #" Id="32" />
-      <Usage Name="Keyboard 4 and $" Id="33" />
-      <Usage Name="Keyboard 5 and %" Id="34" />
-      <Usage Name="Keyboard 6 and ^" Id="35" />
-      <Usage Name="Keyboard 7 and &amp;" Id="36" />
-      <Usage Name="Keyboard 8 and *" Id="37" />
-      <Usage Name="Keyboard 9 and (" Id="38" />
-      <Usage Name="Keyboard 0 and )" Id="39" />
-      <Usage Name="Keyboard Return (ENTER)" Id="40" />
-      <Usage Name="Keyboard ESCAPE" Id="41" />
-      <Usage Name="Keyboard DELETE (Backspace)" Id="42" />
-      <Usage Name="Keyboard Tab" Id="43" />
-      <Usage Name="Keyboard Spacebar" Id="44" />
-      <Usage Name="Keyboard - and (underscore)" Id="45" />
-      <Usage Name="Keyboard = and +" Id="46" />
-      <Usage Name="Keyboard [ and {" Id="47" />
-      <Usage Name="Keyboard ] and }" Id="48" />
-      <Usage Name="Keyboard \\ and |" Id="49" />
-      <Usage Name="Keyboard Non-US # and ~" Id="50" />
-      <Usage Name="Keyboard ; and :" Id="51" />
-      <Usage Name="Keyboard &apos; and &quot;" Id="52" />
-      <Usage Name="Keyboard Grave Accent and Tilde" Id="53" />
-      <Usage Name="Keyboard , and &lt;" Id="54" />
-      <Usage Name="Keyboard . and &gt;" Id="55" />
-      <Usage Name="Keyboard / and ?" Id="56" />
-      <Usage Name="Keyboard Caps Lock" Id="57" />
-      <Usage Name="Keyboard F1" Id="58" />
-      <Usage Name="Keyboard F2" Id="59" />
-      <Usage Name="Keyboard F3" Id="60" />
-      <Usage Name="Keyboard F4" Id="61" />
-      <Usage Name="Keyboard F5" Id="62" />
-      <Usage Name="Keyboard F6" Id="63" />
-      <Usage Name="Keyboard F7" Id="64" />
-      <Usage Name="Keyboard F8" Id="65" />
-      <Usage Name="Keyboard F9" Id="66" />
-      <Usage Name="Keyboard F10" Id="67" />
-      <Usage Name="Keyboard F11" Id="68" />
-      <Usage Name="Keyboard F12" Id="69" />
-      <Usage Name="Keyboard PrintScreen" Id="70" />
-      <Usage Name="Keyboard Scroll Lock" Id="71" />
-      <Usage Name="Keyboard Pause" Id="72" />
-      <Usage Name="Keyboard Insert" Id="73" />
-      <Usage Name="Keyboard Home" Id="74" />
-      <Usage Name="Keyboard PageUp" Id="75" />
-      <Usage Name="Keyboard Delete Forward" Id="76" />
-      <Usage Name="Keyboard End" Id="77" />
-      <Usage Name="Keyboard PageDown" Id="78" />
-      <Usage Name="Keyboard RightArrow" Id="79" />
-      <Usage Name="Keyboard LeftArrow" Id="80" />
-      <Usage Name="Keyboard DownArrow" Id="81" />
-      <Usage Name="Keyboard UpArrow" Id="82" />
-      <Usage Name="Keypad Num Lock and Clear" Id="83" />
-      <Usage Name="Keypad /" Id="84" />
-      <Usage Name="Keypad *" Id="85" />
-      <Usage Name="Keypad -" Id="86" />
-      <Usage Name="Keypad +" Id="87" />
-      <Usage Name="Keypad ENTER" Id="88" />
-      <Usage Name="Keypad 1 and End" Id="89" />
-      <Usage Name="Keypad 2 and Down Arrow" Id="90" />
-      <Usage Name="Keypad 3 and PageDn" Id="91" />
-      <Usage Name="Keypad 4 and Left Arrow" Id="92" />
-      <Usage Name="Keypad 5" Id="93" />
-      <Usage Name="Keypad 6 and Right Arrow" Id="94" />
-      <Usage Name="Keypad 7 and Home" Id="95" />
-      <Usage Name="Keypad 8 and Up Arrow" Id="96" />
-      <Usage Name="Keypad 9 and PageUp" Id="97" />
-      <Usage Name="Keypad 0 and Insert" Id="98" />
-      <Usage Name="Keypad . and Delete" Id="99" />
-      <Usage Name="Keyboard Non-US \\ and |" Id="100" />
-      <Usage Name="Keyboard Application" Id="101" />
-      <Usage Name="Keyboard Power9" Id="102" />
-      <Usage Name="Keypad =" Id="103" />
-      <Usage Name="Keyboard F13" Id="104" />
-      <Usage Name="Keyboard F14" Id="105" />
-      <Usage Name="Keyboard F15" Id="106" />
-      <Usage Name="Keyboard F16" Id="107" />
-      <Usage Name="Keyboard F17" Id="108" />
-      <Usage Name="Keyboard F18" Id="109" />
-      <Usage Name="Keyboard F19" Id="110" />
-      <Usage Name="Keyboard F20" Id="111" />
-      <Usage Name="Keyboard F21" Id="112" />
-      <Usage Name="Keyboard F22" Id="113" />
-      <Usage Name="Keyboard F23" Id="114" />
-      <Usage Name="Keyboard F24" Id="115" />
-      <Usage Name="Keyboard Execute" Id="116" />
-      <Usage Name="Keyboard Help" Id="117" />
-      <Usage Name="Keyboard Menu" Id="118" />
-      <Usage Name="Keyboard Select" Id="119" />
-      <Usage Name="Keyboard Stop" Id="120" />
-      <Usage Name="Keyboard Again" Id="121" />
-      <Usage Name="Keyboard Undo" Id="122" />
-      <Usage Name="Keyboard Cut" Id="123" />
-      <Usage Name="Keyboard Copy" Id="124" />
-      <Usage Name="Keyboard Paste" Id="125" />
-      <Usage Name="Keyboard Find" Id="126" />
-      <Usage Name="Keyboard Mute" Id="127" />
-      <Usage Name="Keyboard Volume Up" Id="128" />
-      <Usage Name="Keyboard Volume Down" Id="129" />
-      <Usage Name="Keyboard Locking Caps Lock" Id="130" />
-      <Usage Name="Keyboard Locking Num Lock" Id="131" />
-      <Usage Name="Keyboard Locking Scroll Lock" Id="132" />
-      <Usage Name="Keypad Comma" Id="133" />
-      <Usage Name="Keypad Equal Sign" Id="134" />
-      <Usage Name="Keyboard International1" Id="135" />
-      <Usage Name="Keyboard International2" Id="136" />
-      <Usage Name="Keyboard International3" Id="137" />
-      <Usage Name="Keyboard International4" Id="138" />
-      <Usage Name="Keyboard International5" Id="139" />
-      <Usage Name="Keyboard International6" Id="140" />
-      <Usage Name="Keyboard International7" Id="141" />
-      <Usage Name="Keyboard International8" Id="142" />
-      <Usage Name="Keyboard International9" Id="143" />
-      <Usage Name="Keyboard LANG1" Id="144" />
-      <Usage Name="Keyboard LANG2" Id="145" />
-      <Usage Name="Keyboard LANG3" Id="146" />
-      <Usage Name="Keyboard LANG4" Id="147" />
-      <Usage Name="Keyboard LANG5" Id="148" />
-      <Usage Name="Keyboard LANG6" Id="149" />
-      <Usage Name="Keyboard LANG7" Id="150" />
-      <Usage Name="Keyboard LANG8" Id="151" />
-      <Usage Name="Keyboard LANG9" Id="152" />
-      <Usage Name="Keyboard Alternate Erase" Id="153" />
-      <Usage Name="Keyboard SysReq/Attention" Id="154" />
-      <Usage Name="Keyboard Cancel" Id="155" />
-      <Usage Name="Keyboard Clear" Id="156" />
-      <Usage Name="Keyboard Prior" Id="157" />
-      <Usage Name="Keyboard Return" Id="158" />
-      <Usage Name="Keyboard Separator" Id="159" />
-      <Usage Name="Keyboard Out" Id="160" />
-      <Usage Name="Keyboard Oper" Id="161" />
-      <Usage Name="Keyboard Clear/Again" Id="162" />
-      <Usage Name="Keyboard CrSel/Props" Id="163" />
-      <Usage Name="Keyboard ExSel" Id="164" />
-      <Usage Name="Keypad 00" Id="176" />
-      <Usage Name="Keypad 000" Id="177" />
-      <Usage Name="Thousands Separator" Id="178" />
-      <Usage Name="Decimal Separator" Id="179" />
-      <Usage Name="Currency Unit" Id="180" />
-      <Usage Name="Currency Sub-unit" Id="181" />
-      <Usage Name="Keypad (" Id="182" />
-      <Usage Name="Keypad )" Id="183" />
-      <Usage Name="Keypad {" Id="184" />
-      <Usage Name="Keypad }" Id="185" />
-      <Usage Name="Keypad Tab" Id="186" />
-      <Usage Name="Keypad Backspace" Id="187" />
-      <Usage Name="Keypad A" Id="188" />
-      <Usage Name="Keypad B" Id="189" />
-      <Usage Name="Keypad C" Id="190" />
-      <Usage Name="Keypad D" Id="191" />
-      <Usage Name="Keypad E" Id="192" />
-      <Usage Name="Keypad F" Id="193" />
-      <Usage Name="Keypad XOR" Id="194" />
-      <Usage Name="Keypad ^" Id="195" />
-      <Usage Name="Keypad %" Id="196" />
-      <Usage Name="Keypad &lt;" Id="197" />
-      <Usage Name="Keypad &gt;" Id="198" />
-      <Usage Name="Keypad &amp;" Id="199" />
-      <Usage Name="Keypad &amp;&amp;" Id="200" />
-      <Usage Name="Keypad |" Id="201" />
-      <Usage Name="Keypad ||" Id="202" />
-      <Usage Name="Keypad :" Id="203" />
-      <Usage Name="Keypad #" Id="204" />
-      <Usage Name="Keypad Space" Id="205" />
-      <Usage Name="Keypad @" Id="206" />
-      <Usage Name="Keypad !" Id="207" />
-      <Usage Name="Keypad Memory Store" Id="208" />
-      <Usage Name="Keypad Memory Recall" Id="209" />
-      <Usage Name="Keypad Memory Clear" Id="210" />
-      <Usage Name="Keypad Memory Add" Id="211" />
-      <Usage Name="Keypad Memory Subtract" Id="212" />
-      <Usage Name="Keypad Memory Multiply" Id="213" />
-      <Usage Name="Keypad Memory Divide" Id="214" />
-      <Usage Name="Keypad +/-" Id="215" />
-      <Usage Name="Keypad Clear" Id="216" />
-      <Usage Name="Keypad Clear Entry" Id="217" />
-      <Usage Name="Keypad Binary" Id="218" />
-      <Usage Name="Keypad Octal" Id="219" />
-      <Usage Name="Keypad Decimal" Id="220" />
-      <Usage Name="Keypad Hexadecimal" Id="221" />
-      <Usage Name="Keyboard LeftControl" Id="224" />
-      <Usage Name="Keyboard LeftShift" Id="225" />
-      <Usage Name="Keyboard LeftAlt" Id="226" />
-      <Usage Name="Keyboard Left GUI" Id="227" />
-      <Usage Name="Keyboard RightControl" Id="228" />
-      <Usage Name="Keyboard RightShift" Id="229" />
-      <Usage Name="Keyboard RightAlt" Id="230" />
-      <Usage Name="Keyboard Right GUI" Id="231" />
-    </UsagePage>
-    <UsagePage Name="LEDs" Id="0x08">
-      <Usage Name="Num Lock" Id="0x01" />
-      <Usage Name="Caps Lock" Id="0x02" />
-      <Usage Name="Scroll Lock" Id="0x03" />
-      <Usage Name="Compose" Id="0x04" />
-      <Usage Name="Kana" Id="0x05" />
-      <Usage Name="Power" Id="0x06" />
-      <Usage Name="Shift" Id="0x07" />
-      <Usage Name="Do Not Disturb" Id="0x08" />
-      <Usage Name="Mute" Id="0x09" />
-      <Usage Name="Tone Enable" Id="0x0A" />
-      <Usage Name="High Cut Filter" Id="0x0B" />
-      <Usage Name="Low Cut Filter" Id="0x0C" />
-      <Usage Name="Equalizer Enable" Id="0x0D" />
-      <Usage Name="Sound Field On" Id="0x0E" />
-      <Usage Name="Surround On" Id="0x0F" />
-      <Usage Name="Repeat" Id="0x10" />
-      <Usage Name="Stereo" Id="0x11" />
-      <Usage Name="Sampling Rate Detect" Id="0x12" />
-      <Usage Name="Spinning" Id="0x13" />
-      <Usage Name="CAV" Id="0x14" />
-      <Usage Name="CLV" Id="0x15" />
-      <Usage Name="Recording Format Detect" Id="0x16" />
-      <Usage Name="Off-Hook" Id="0x17" />
-      <Usage Name="Ring" Id="0x18" />
-      <Usage Name="Message Waiting" Id="0x19" />
-      <Usage Name="Data Mode" Id="0x1A" />
-      <Usage Name="Battery Operation" Id="0x1B" />
-      <Usage Name="Battery OK" Id="0x1C" />
-      <Usage Name="Battery Low" Id="0x1D" />
-      <Usage Name="Speaker" Id="0x1E" />
-      <Usage Name="Head Set" Id="0x1F" />
-      <Usage Name="Hold" Id="0x20" />
-      <Usage Name="Microphone" Id="0x21" />
-      <Usage Name="Coverage" Id="0x22" />
-      <Usage Name="Night Mode" Id="0x23" />
-      <Usage Name="Send Calls" Id="0x24" />
-      <Usage Name="Call Pickup" Id="0x25" />
-      <Usage Name="Conference" Id="0x26" />
-      <Usage Name="Stand-by" Id="0x27" />
-      <Usage Name="Camera On" Id="0x28" />
-      <Usage Name="Camera Off" Id="0x29" />
-      <Usage Name="On-Line" Id="0x2A" />
-      <Usage Name="Off-Line" Id="0x2B" />
-      <Usage Name="Busy" Id="0x2C" />
-      <Usage Name="Ready" Id="0x2D" />
-      <Usage Name="Paper-Out" Id="0x2E" />
-      <Usage Name="Paper-Jam" Id="0x2F" />
-      <Usage Name="Remote" Id="0x30" />
-      <Usage Name="Forward" Id="0x31" />
-      <Usage Name="Reverse" Id="0x32" />
-      <Usage Name="Stop" Id="0x33" />
-      <Usage Name="Rewind" Id="0x34" />
-      <Usage Name="Fast Forward" Id="0x35" />
-      <Usage Name="Play" Id="0x36" />
-      <Usage Name="Pause" Id="0x37" />
-      <Usage Name="Record" Id="0x38" />
-      <Usage Name="Error" Id="0x39" />
-      <Usage Name="Usage Selected Indicator" Id="0x3A" />
-      <Usage Name="Usage In Use Indicator" Id="0x3B" />
-      <Usage Name="Usage Multi Mode Indicator" Id="0x3C" />
-      <Usage Name="Indicator On" Id="0x3D" />
-      <Usage Name="Indicator Flash" Id="0x3E" />
-      <Usage Name="Indicator Slow Blink" Id="0x3F" />
-      <Usage Name="Indicator Fast Blink" Id="0x40" />
-      <Usage Name="Indicator Off" Id="0x41" />
-      <Usage Name="Flash On Time" Id="0x42" />
-      <Usage Name="Slow Blink On Time" Id="0x43" />
-      <Usage Name="Slow Blink Off Time" Id="0x44" />
-      <Usage Name="Fast Blink On Time" Id="0x45" />
-      <Usage Name="Fast Blink Off Time" Id="0x46" />
-      <Usage Name="Usage Indicator Color" Id="0x47" />
-      <Usage Name="Indicator Red" Id="0x48" />
-      <Usage Name="Indicator Green" Id="0x49" />
-      <Usage Name="Indicator Amber" Id="0x4A" />
-      <Usage Name="Generic Indicator" Id="0x4B" />
-      <Usage Name="System Suspend" Id="0x4C" />
-      <Usage Name="External Power Connected" Id="0x4D" />
-    </UsagePage>
-    <UsagePage Name="Button" Id="0x09">
-    </UsagePage>
-    <UsagePage Name="Ordinal" Id="0x0A">
-    </UsagePage>
-    <UsagePage Name="Telephony" Id="0x0B">
-    </UsagePage>
-    <UsagePage Name="Consumer" Id="0x0C">
-      <Usage Name="Consumer Control" Id="0x01" />
-      <Usage Name="Numeric Key Pad" Id="0x02" />
-      <Usage Name="Programmable Buttons" Id="0x03" />
-      <Usage Name="Microphone" Id="0x04" />
-      <Usage Name="Headphone" Id="0x05" />
-      <Usage Name="Graphic Equalizer" Id="0x06" />
-      <Usage Name="+10" Id="0x20" />
-      <Usage Name="+100" Id="0x21" />
-      <Usage Name="AM/PM" Id="0x22" />
-      <Usage Name="Power" Id="0x30" />
-      <Usage Name="Reset" Id="0x31" />
-      <Usage Name="Sleep" Id="0x32" />
-      <Usage Name="Sleep After" Id="0x33" />
-      <Usage Name="Sleep Mode" Id="0x34" />
-      <Usage Name="Illumination" Id="0x35" />
-      <Usage Name="Function Buttons" Id="0x36" />
-      <Usage Name="Menu" Id="0x40" />
-      <Usage Name="Menu Pick" Id="0x41" />
-      <Usage Name="Menu Up" Id="0x42" />
-      <Usage Name="Menu Down" Id="0x43" />
-      <Usage Name="Menu Left" Id="0x44" />
-      <Usage Name="Menu Right" Id="0x45" />
-      <Usage Name="Menu Escape" Id="0x46" />
-      <Usage Name="Menu Value Increase" Id="0x47" />
-      <Usage Name="Menu Value Decrease" Id="0x48" />
-      <Usage Name="Data On Screen" Id="0x60" />
-      <Usage Name="Closed Caption" Id="0x61" />
-      <Usage Name="Closed Caption Select" Id="0x62" />
-      <Usage Name="VCR/TV" Id="0x63" />
-      <Usage Name="Broadcast Mode" Id="0x64" />
-      <Usage Name="Snapshot" Id="0x65" />
-      <Usage Name="Still" Id="0x66" />
-      <Usage Name="Selection" Id="0x80" />
-      <Usage Name="Assign Selection" Id="0x81" />
-      <Usage Name="Mode Step" Id="0x82" />
-      <Usage Name="Recall Last" Id="0x83" />
-      <Usage Name="Enter Channel" Id="0x84" />
-      <Usage Name="Order Movie" Id="0x85" />
-      <Usage Name="Channel" Id="0x86" />
-      <Usage Name="Media Selection" Id="0x87" />
-      <Usage Name="Media Select Computer" Id="0x88" />
-      <Usage Name="Media Select TV" Id="0x89" />
-      <Usage Name="Media Select WWW" Id="0x8A" />
-      <Usage Name="Media Select DVD" Id="0x8B" />
-      <Usage Name="Media Select Telephone" Id="0x8C" />
-      <Usage Name="Media Select Program Guide" Id="0x8D" />
-      <Usage Name="Media Select Video Phone" Id="0x8E" />
-      <Usage Name="Media Select Games" Id="0x8F" />
-      <Usage Name="Media Select Messages" Id="0x90" />
-      <Usage Name="Media Select CD" Id="0x91" />
-      <Usage Name="Media Select VCR" Id="0x92" />
-      <Usage Name="Media Select Tuner" Id="0x93" />
-      <Usage Name="Quit" Id="0x94" />
-      <Usage Name="Help" Id="0x95" />
-      <Usage Name="Media Select Tape" Id="0x96" />
-      <Usage Name="Media Select Cable" Id="0x97" />
-      <Usage Name="Media Select Satellite" Id="0x98" />
-      <Usage Name="Media Select Security" Id="0x99" />
-      <Usage Name="Media Select Home" Id="0x9A" />
-      <Usage Name="Media Select Call" Id="0x9B" />
-      <Usage Name="Channel Increment" Id="0x9C" />
-      <Usage Name="Channel Decrement" Id="0x9D" />
-      <Usage Name="Media Select SAP" Id="0x9E" />
-      <Usage Name="VCR Plus" Id="0xA0" />
-      <Usage Name="Once" Id="0xA1" />
-      <Usage Name="Daily" Id="0xA2" />
-      <Usage Name="Weekly" Id="0xA3" />
-      <Usage Name="Monthly" Id="0xA4" />
-      <Usage Name="Play" Id="0xB0" />
-      <Usage Name="Pause" Id="0xB1" />
-      <Usage Name="Record" Id="0xB2" />
-      <Usage Name="Fast Forward" Id="0xB3" />
-      <Usage Name="Rewind" Id="0xB4" />
-      <Usage Name="Scan Next Track" Id="0xB5" />
-      <Usage Name="Scan Previous Track" Id="0xB6" />
-      <Usage Name="Stop" Id="0xB7" />
-      <Usage Name="Eject" Id="0xB8" />
-      <Usage Name="Random Play" Id="0xB9" />
-      <Usage Name="Select Disc" Id="0xBA" />
-      <Usage Name="Enter Disc" Id="0xBB" />
-      <Usage Name="Repeat" Id="0xBC" />
-      <Usage Name="Tracking" Id="0xBD" />
-      <Usage Name="Track Normal" Id="0xBE" />
-      <Usage Name="Slow Tracking" Id="0xBF" />
-      <Usage Name="Frame Forward" Id="0xC0" />
-      <Usage Name="Frame Back" Id="0xC1" />
-      <Usage Name="Mark" Id="0xC2" />
-      <Usage Name="Clear Mark" Id="0xC3" />
-      <Usage Name="Repeat From Mark" Id="0xC4" />
-      <Usage Name="Return To Mark" Id="0xC5" />
-      <Usage Name="Search Mark Forward" Id="0xC6" />
-      <Usage Name="Search Mark Backwards" Id="0xC7" />
-      <Usage Name="Counter Reset" Id="0xC8" />
-      <Usage Name="Show Counter" Id="0xC9" />
-      <Usage Name="Tracking Increment" Id="0xCA" />
-      <Usage Name="Tracking Decrement" Id="0xCB" />
-      <Usage Name="Stop/Eject" Id="0xCC" />
-      <Usage Name="Play/Pause" Id="0xCD" />
-      <Usage Name="Play/Skip" Id="0xCE" />
-      <Usage Name="Volume" Id="0xE0" />
-      <Usage Name="Balance" Id="0xE1" />
-      <Usage Name="Mute" Id="0xE2" />
-      <Usage Name="Bass" Id="0xE3" />
-      <Usage Name="Treble" Id="0xE4" />
-      <Usage Name="Bass Boost" Id="0xE5" />
-      <Usage Name="Surround Mode" Id="0xE6" />
-      <Usage Name="Loudness" Id="0xE7" />
-      <Usage Name="MPX" Id="0xE8" />
-      <Usage Name="Volume Increment" Id="0xE9" />
-      <Usage Name="Volume Decrement" Id="0xEA" />
-      <Usage Name="Speed Select" Id="0xF0" />
-      <Usage Name="Playback Speed" Id="0xF1" />
-      <Usage Name="Standard Play" Id="0xF2" />
-      <Usage Name="Long Play" Id="0xF3" />
-      <Usage Name="Extended Play" Id="0xF4" />
-      <Usage Name="Slow" Id="0xF5" />
-      <Usage Name="Fan Enable" Id="0x100" />
-      <Usage Name="Fan Speed" Id="0x101" />
-      <Usage Name="Light Enable" Id="0x102" />
-      <Usage Name="Light Illumination Level" Id="0x103" />
-      <Usage Name="Climate Control Enable" Id="0x104" />
-      <Usage Name="Room Temperature" Id="0x105" />
-      <Usage Name="Security Enable" Id="0x106" />
-      <Usage Name="Fire Alarm" Id="0x107" />
-      <Usage Name="Police Alarm" Id="0x108" />
-      <Usage Name="Proximity" Id="0x109" />
-      <Usage Name="Motion" Id="0x10A" />
-      <Usage Name="Duress Alarm" Id="0x10B" />
-      <Usage Name="Holdup Alarm" Id="0x10C" />
-      <Usage Name="Medical Alarm" Id="0x10D" />
-      <Usage Name="Balance Right" Id="0x150" />
-      <Usage Name="Balance Left" Id="0x151" />
-      <Usage Name="Bass Increment" Id="0x152" />
-      <Usage Name="Bass Decrement" Id="0x153" />
-      <Usage Name="Treble Increment" Id="0x154" />
-      <Usage Name="Treble Decrement" Id="0x155" />
-      <Usage Name="Speaker System" Id="0x160" />
-      <Usage Name="Channel Left" Id="0x161" />
-      <Usage Name="Channel Right" Id="0x162" />
-      <Usage Name="Channel Center" Id="0x163" />
-      <Usage Name="Channel Front" Id="0x164" />
-      <Usage Name="Channel Center Front" Id="0x165" />
-      <Usage Name="Channel Side" Id="0x166" />
-      <Usage Name="Channel Surround" Id="0x167" />
-      <Usage Name="Channel Low Frequency Enhancement" Id="0x168" />
-      <Usage Name="Channel Top" Id="0x169" />
-      <Usage Name="Channel Unknown" Id="0x16A" />
-      <Usage Name="Sub-channel" Id="0x170" />
-      <Usage Name="Sub-channel Increment" Id="0x171" />
-      <Usage Name="Sub-channel Decrement" Id="0x172" />
-      <Usage Name="Alternate Audio Increment" Id="0x173" />
-      <Usage Name="Alternate Audio Decrement" Id="0x174" />
-      <Usage Name="Application Launch Buttons" Id="0x180" />
-      <Usage Name="AL Launch Button Configuration Tool" Id="0x181" />
-      <Usage Name="AL Programmable Button Configuration" Id="0x182" />
-      <Usage Name="AL Consumer Control Configuration" Id="0x183" />
-      <Usage Name="AL Word Processor" Id="0x184" />
-      <Usage Name="AL Text Editor" Id="0x185" />
-      <Usage Name="AL Spreadsheet" Id="0x186" />
-      <Usage Name="AL Graphics Editor" Id="0x187" />
-      <Usage Name="AL Presentation App" Id="0x188" />
-      <Usage Name="AL Database App" Id="0x189" />
-      <Usage Name="AL Email Reader" Id="0x18A" />
-      <Usage Name="AL Newsreader" Id="0x18B" />
-      <Usage Name="AL Voicemail" Id="0x18C" />
-      <Usage Name="AL Contacts/Address Book" Id="0x18D" />
-      <Usage Name="AL Calendar/Schedule" Id="0x18E" />
-      <Usage Name="AL Task/Project Manager" Id="0x18F" />
-      <Usage Name="AL Log/Journal/Timecard" Id="0x190" />
-      <Usage Name="AL Checkbook/Finance" Id="0x191" />
-      <Usage Name="AL Calculator" Id="0x192" />
-      <Usage Name="AL A/V Capture/Playback" Id="0x193" />
-      <Usage Name="AL Local Machine Browser" Id="0x194" />
-      <Usage Name="AL LAN/WAN Browser" Id="0x195" />
-      <Usage Name="AL Internet Browser" Id="0x196" />
-      <Usage Name="AL Remote Networking/ISP Connect" Id="0x197" />
-      <Usage Name="AL Network Conference" Id="0x198" />
-      <Usage Name="AL Network Chat" Id="0x199" />
-      <Usage Name="AL Telephony/Dialer" Id="0x19A" />
-      <Usage Name="AL Logon" Id="0x19B" />
-      <Usage Name="AL Logoff" Id="0x19C" />
-      <Usage Name="AL Logon/Logoff" Id="0x19D" />
-      <Usage Name="AL Terminal Lock/Screensaver" Id="0x19E" />
-      <Usage Name="AL Control Panel" Id="0x19F" />
-      <Usage Name="AL Command Line Processor/Run" Id="0x1A0" />
-      <Usage Name="AL Process/Task Manager" Id="0x1A1" />
-      <Usage Name="AL Select Task/Application" Id="0x1A2" />
-      <Usage Name="AL Next Task/Application" Id="0x1A3" />
-      <Usage Name="AL Previous Task/Application" Id="0x1A4" />
-      <Usage Name="AL Preemptive Halt Task/Application" Id="0x1A5" />
-      <Usage Name="AL Integrated Help Center" Id="0x1A6" />
-      <Usage Name="AL Documents" Id="0x1A7" />
-      <Usage Name="AL Thesaurus" Id="0x1A8" />
-      <Usage Name="AL Dictionary" Id="0x1A9" />
-      <Usage Name="AL Desktop" Id="0x1AA" />
-      <Usage Name="AL Spell Check" Id="0x1AB" />
-      <Usage Name="AL Grammar Check" Id="0x1AC" />
-      <Usage Name="AL Wireless Status" Id="0x1AD" />
-      <Usage Name="AL Keyboard Layout" Id="0x1AE" />
-      <Usage Name="AL Virus Protection" Id="0x1AF" />
-      <Usage Name="AL Encryption" Id="0x1B0" />
-      <Usage Name="AL Screen Saver" Id="0x1B1" />
-      <Usage Name="AL Alarms" Id="0x1B2" />
-      <Usage Name="AL Clock" Id="0x1B3" />
-      <Usage Name="AL File Browser" Id="0x1B4" />
-      <Usage Name="AL Power Status" Id="0x1B5" />
-      <Usage Name="AL Image Browser" Id="0x1B6" />
-      <Usage Name="AL Audio Browser" Id="0x1B7" />
-      <Usage Name="AL Movie Browser" Id="0x1B8" />
-      <Usage Name="AL Digital Rights Manager" Id="0x1B9" />
-      <Usage Name="AL Digital Wallet" Id="0x1BA" />
-      <Usage Name="AL Instant Messaging" Id="0x1BC" />
-      <Usage Name="AL OEM Features/ Tips/Tutorial Browser" Id="0x1BD" />
-      <Usage Name="AL OEM Help" Id="0x1BE" />
-      <Usage Name="AL Online Community" Id="0x1BF" />
-      <Usage Name="AL Entertainment Content Browser" Id="0x1C0" />
-      <Usage Name="AL Online Shopping Browser" Id="0x1C1" />
-      <Usage Name="AL SmartCard Information/Help" Id="0x1C2" />
-      <Usage Name="AL Market Monitor/Finance Browser" Id="0x1C3" />
-      <Usage Name="AL Customized Corporate News Browser" Id="0x1C4" />
-      <Usage Name="AL Online Activity Browser" Id="0x1C5" />
-      <Usage Name="AL Research/Search Browser" Id="0x1C6" />
-      <Usage Name="AL Audio Player" Id="0x1C7" />
-      <Usage Name="Generic GUI Application Controls" Id="0x200" />
-      <Usage Name="AC New" Id="0x201" />
-      <Usage Name="AC Open" Id="0x202" />
-      <Usage Name="AC Close" Id="0x203" />
-      <Usage Name="AC Exit Sel" Id="0x204" />
-      <Usage Name="AC Maximize" Id="0x205" />
-      <Usage Name="AC Minimize" Id="0x206" />
-      <Usage Name="AC Save" Id="0x207" />
-      <Usage Name="AC Print" Id="0x208" />
-      <Usage Name="AC Properties" Id="0x209" />
-      <Usage Name="AC Undo" Id="0x21A" />
-      <Usage Name="AC Copy" Id="0x21B" />
-      <Usage Name="AC Cut" Id="0x21C" />
-      <Usage Name="AC Paste" Id="0x21D" />
-      <Usage Name="AC Select All" Id="0x21E" />
-      <Usage Name="AC Find" Id="0x21F" />
-      <Usage Name="AC Find and Replace" Id="0x220" />
-      <Usage Name="AC Search" Id="0x221" />
-      <Usage Name="AC Go To" Id="0x222" />
-      <Usage Name="AC Home" Id="0x223" />
-      <Usage Name="AC Back" Id="0x224" />
-      <Usage Name="AC Forward" Id="0x225" />
-      <Usage Name="AC Stop" Id="0x226" />
-      <Usage Name="AC Refresh" Id="0x227" />
-      <Usage Name="AC Previous Link" Id="0x228" />
-      <Usage Name="AC Next Link" Id="0x229" />
-      <Usage Name="AC Bookmarks" Id="0x22A" />
-      <Usage Name="AC History" Id="0x22B" />
-      <Usage Name="AC Subscriptions" Id="0x22C" />
-      <Usage Name="AC Zoom In" Id="0x22D" />
-      <Usage Name="AC Zoom Out" Id="0x22E" />
-      <Usage Name="AC Zoom" Id="0x22F" />
-      <Usage Name="AC Full Screen View" Id="0x230" />
-      <Usage Name="AC Normal View" Id="0x231" />
-      <Usage Name="AC View Toggle" Id="0x232" />
-      <Usage Name="AC Scroll Up" Id="0x233" />
-      <Usage Name="AC Scroll Down" Id="0x234" />
-      <Usage Name="AC Scroll" Id="0x235" />
-      <Usage Name="AC Pan Left" Id="0x236" />
-      <Usage Name="AC Pan Right" Id="0x237" />
-      <Usage Name="AC Pan" Id="0x238" />
-      <Usage Name="AC New Window" Id="0x239" />
-      <Usage Name="AC Tile Horizontally" Id="0x23A" />
-      <Usage Name="AC Tile Vertically" Id="0x23B" />
-      <Usage Name="AC Format" Id="0x23C" />
-      <Usage Name="AC Edit" Id="0x23D" />
-      <Usage Name="AC Bold" Id="0x23E" />
-      <Usage Name="AC Italics" Id="0x23F" />
-      <Usage Name="AC Underline" Id="0x240" />
-      <Usage Name="AC Strikethrough" Id="0x241" />
-      <Usage Name="AC Subscript" Id="0x242" />
-      <Usage Name="AC Superscript" Id="0x243" />
-      <Usage Name="AC All Caps" Id="0x244" />
-      <Usage Name="AC Rotate" Id="0x245" />
-      <Usage Name="AC Resize" Id="0x246" />
-      <Usage Name="AC Flip horizontal" Id="0x247" />
-      <Usage Name="AC Flip Vertical" Id="0x248" />
-      <Usage Name="AC Mirror Horizontal" Id="0x249" />
-      <Usage Name="AC Mirror Vertical" Id="0x24A" />
-      <Usage Name="AC Font Select" Id="0x24B" />
-      <Usage Name="AC Font Color" Id="0x24C" />
-      <Usage Name="AC Font Size" Id="0x24D" />
-      <Usage Name="AC Justify Left" Id="0x24E" />
-      <Usage Name="AC Justify Center H" Id="0x24F" />
-      <Usage Name="AC Justify Right" Id="0x250" />
-      <Usage Name="AC Justify Block H" Id="0x251" />
-      <Usage Name="AC Justify Top" Id="0x252" />
-      <Usage Name="AC Justify Center V" Id="0x253" />
-      <Usage Name="AC Justify Bottom" Id="0x254" />
-      <Usage Name="AC Justify Block V" Id="0x255" />
-      <Usage Name="AC Indent Decrease" Id="0x256" />
-      <Usage Name="AC Indent Increase" Id="0x257" />
-      <Usage Name="AC Numbered List" Id="0x258" />
-      <Usage Name="AC Restart Numbering" Id="0x259" />
-      <Usage Name="AC Bulleted List" Id="0x25A" />
-      <Usage Name="AC Promote" Id="0x25B" />
-      <Usage Name="AC Demote" Id="0x25C" />
-      <Usage Name="AC Yes" Id="0x25D" />
-      <Usage Name="AC No" Id="0x25E" />
-      <Usage Name="AC Cancel" Id="0x25F" />
-      <Usage Name="AC Catalog" Id="0x260" />
-      <Usage Name="AC Buy/Checkout" Id="0x261" />
-      <Usage Name="AC Add to Cart" Id="0x262" />
-      <Usage Name="AC Expand" Id="0x263" />
-      <Usage Name="AC Expand All" Id="0x264" />
-      <Usage Name="AC Collapse" Id="0x265" />
-      <Usage Name="AC Collapse All" Id="0x266" />
-      <Usage Name="AC Print Preview" Id="0x267" />
-      <Usage Name="AC Paste Special" Id="0x268" />
-      <Usage Name="AC Insert Mode" Id="0x269" />
-      <Usage Name="AC Delete" Id="0x26A" />
-      <Usage Name="AC Lock" Id="0x26B" />
-      <Usage Name="AC Unlock" Id="0x26C" />
-      <Usage Name="AC Protect" Id="0x26D" />
-      <Usage Name="AC Unprotect" Id="0x26E" />
-      <Usage Name="AC Attach Comment" Id="0x26F" />
-      <Usage Name="AC Delete Comment" Id="0x270" />
-      <Usage Name="AC View Comment" Id="0x271" />
-      <Usage Name="AC Select Word" Id="0x272" />
-      <Usage Name="AC Select Sentence" Id="0x273" />
-      <Usage Name="AC Select Paragraph" Id="0x274" />
-      <Usage Name="AC Select Column" Id="0x275" />
-      <Usage Name="AC Select Row" Id="0x276" />
-      <Usage Name="AC Select Table" Id="0x277" />
-      <Usage Name="AC Select Object" Id="0x278" />
-      <Usage Name="AC Redo/Repeat" Id="0x279" />
-      <Usage Name="AC Sort" Id="0x27A" />
-      <Usage Name="AC Sort Ascending" Id="0x27B" />
-      <Usage Name="AC Sort Descending" Id="0x27C" />
-      <Usage Name="AC Filter" Id="0x27D" />
-      <Usage Name="AC Set Clock" Id="0x27E" />
-      <Usage Name="AC View Clock" Id="0x27F" />
-      <Usage Name="AC Select Time Zone" Id="0x280" />
-      <Usage Name="AC Edit Time Zones" Id="0x281" />
-      <Usage Name="AC Set Alarm Sel" Id="0x282" />
-      <Usage Name="AC Clear Alarm" Id="0x283" />
-      <Usage Name="AC Snooze Alarm" Id="0x284" />
-      <Usage Name="AC Reset Alarm" Id="0x285" />
-      <Usage Name="AC Synchronize" Id="0x286" />
-      <Usage Name="AC Send/Receive" Id="0x287" />
-      <Usage Name="AC Send To" Id="0x288" />
-      <Usage Name="AC Reply" Id="0x289" />
-      <Usage Name="AC Reply All" Id="0x28A" />
-      <Usage Name="AC Forward Msg" Id="0x28B" />
-      <Usage Name="AC Send" Id="0x28C" />
-      <Usage Name="AC Attach File" Id="0x28D" />
-      <Usage Name="AC Upload" Id="0x28E" />
-      <Usage Name="AC Download (Save Target As)" Id="0x28F" />
-      <Usage Name="AC Set Borders" Id="0x290" />
-      <Usage Name="AC Insert Row" Id="0x291" />
-      <Usage Name="AC Insert Column" Id="0x292" />
-      <Usage Name="AC Insert File" Id="0x293" />
-      <Usage Name="AC Insert Picture" Id="0x294" />
-      <Usage Name="AC Insert Object" Id="0x295" />
-      <Usage Name="AC Insert Symbol" Id="0x296" />
-      <Usage Name="AC Save and Close" Id="0x297" />
-      <Usage Name="AC Rename" Id="0x298" />
-      <Usage Name="AC Merge" Id="0x299" />
-      <Usage Name="AC Split" Id="0x29A" />
-      <Usage Name="AC Disribute Horizontally" Id="0x29B" />
-      <Usage Name="AC Distribute Vertically" Id="0x29C" />
-    </UsagePage>
-    <UsagePage Name="Digitizer" Id="0x0D">
-      <Usage Name="Digitizer" Id="0x01" />
-      <Usage Name="Pen" Id="0x02" />
-      <Usage Name="Light Pen" Id="0x03" />
-      <Usage Name="Touch Screen" Id="0x04" />
-      <Usage Name="Touch Pad" Id="0x05" />
-      <Usage Name="White Board" Id="0x06" />
-      <Usage Name="Coordinate MeasuringMachine" Id="0x07" />
-      <Usage Name="3D Digitizer" Id="0x08" />
-      <Usage Name="Stereo Plotter" Id="0x09" />
-      <Usage Name="Articulated Arm" Id="0x0A" />
-      <Usage Name="Armature" Id="0x0B" />
-      <Usage Name="Multiple Point Digitizer" Id="0x0C" />
-      <Usage Name="Free Space Wand" Id="0x0D" />
-      <Usage Name="Stylus" Id="0x20" />
-      <Usage Name="Puck" Id="0x21" />
-      <Usage Name="Finger" Id="0x22" />
-      <Usage Name="Tip Pressure" Id="0x30" />
-      <Usage Name="Barrel Pressure" Id="0x31" />
-      <Usage Name="In Range" Id="0x32" />
-      <Usage Name="Touch" Id="0x33" />
-      <Usage Name="Untouch" Id="0x34" />
-      <Usage Name="Tap" Id="0x35" />
-      <Usage Name="Quality" Id="0x36" />
-      <Usage Name="Data Valid" Id="0x37" />
-      <Usage Name="Transducer Index" Id="0x38" />
-      <Usage Name="Tablet Function Keys" Id="0x39" />
-      <Usage Name="Program Change Keys" Id="0x3A" />
-      <Usage Name="Battery Strength" Id="0x3B" />
-      <Usage Name="Invert" Id="0x3C" />
-      <Usage Name="X Tilt" Id="0x3D" />
-      <Usage Name="Y Tilt" Id="0x3E" />
-      <Usage Name="Azimuth" Id="0x3F" />
-      <Usage Name="Altitude" Id="0x40" />
-      <Usage Name="Twist" Id="0x41" />
-      <Usage Name="Tip Switch" Id="0x42" />
-      <Usage Name="Secondary Tip Switch" Id="0x43" />
-      <Usage Name="Barrel Switch" Id="0x44" />
-      <Usage Name="Eraser" Id="0x45" />
-      <Usage Name="Tablet Pick" Id="0x46" />
-    </UsagePage>
-    <UsagePage Name="PID Page" Id="0x0F">
-    </UsagePage>
-    <UsagePage Name="Unicode" Id="0x10">
-    </UsagePage>
-    <UsagePage Name="Alphanumeric Display" Id="0x14">
-      <Usage Name="Alphanumeric Display" Id="0x01" />
-      <Usage Name="Bitmapped Display" Id="0x02" />
-      <Usage Name="Display Attributes Report" Id="0x20" />
-      <Usage Name="ASCII Character Set" Id="0x21" />
-      <Usage Name="Data Read Back" Id="0x22" />
-      <Usage Name="Font Read Back" Id="0x23" />
-      <Usage Name="Display Control Report" Id="0x24" />
-      <Usage Name="Clear Display" Id="0x25" />
-      <Usage Name="Display Enable" Id="0x26" />
-      <Usage Name="Screen Saver Delay" Id="0x27" />
-      <Usage Name="Screen Saver Enable" Id="0x28" />
-      <Usage Name="Vertical Scroll" Id="0x29" />
-      <Usage Name="Horizontal Scroll" Id="0x2A" />
-      <Usage Name="Character Report" Id="0x2B" />
-      <Usage Name="Display Data" Id="0x2C" />
-      <Usage Name="Display Status" Id="0x2D" />
-      <Usage Name="Stat Not Ready" Id="0x2E" />
-      <Usage Name="Stat Ready" Id="0x2F" />
-      <Usage Name="Err Not a loadable character" Id="0x30" />
-      <Usage Name="Err Font data cannot be read" Id="0x31" />
-      <Usage Name="Cursor Position Report" Id="0x32" />
-      <Usage Name="Row" Id="0x33" />
-      <Usage Name="Column" Id="0x34" />
-      <Usage Name="Rows" Id="0x35" />
-      <Usage Name="Columns" Id="0x36" />
-      <Usage Name="Cursor Pixel Positioning" Id="0x37" />
-      <Usage Name="Cursor Mode" Id="0x38" />
-      <Usage Name="Cursor Enable" Id="0x39" />
-      <Usage Name="Cursor Blink" Id="0x3A" />
-      <Usage Name="Font Report" Id="0x3B" />
-      <Usage Name="Font Data" Id="0x3C" />
-      <Usage Name="Character Width" Id="0x3D" />
-      <Usage Name="Character Height" Id="0x3E" />
-      <Usage Name="Character Spacing Horizontal" Id="0x3F" />
-      <Usage Name="Character Spacing Vertical" Id="0x40" />
-      <Usage Name="Unicode Character Set" Id="0x41" />
-      <Usage Name="Font 7-Segment" Id="0x42" />
-      <Usage Name="7-Segment Direct Map" Id="0x43" />
-      <Usage Name="Font 14-Segment" Id="0x44" />
-      <Usage Name="14-Segment Direct Map" Id="0x45" />
-      <Usage Name="Display Brightness" Id="0x46" />
-      <Usage Name="Display Contrast" Id="0x47" />
-      <Usage Name="Character Attribute" Id="0x48" />
-      <Usage Name="Attribute Readback" Id="0x49" />
-      <Usage Name="Attribute Data" Id="0x4A" />
-      <Usage Name="Char Attr Enhance" Id="0x4B" />
-      <Usage Name="Char Attr Underline" Id="0x4C" />
-      <Usage Name="Char Attr Blink" Id="0x4D" />
-      <Usage Name="Bitmap Size X" Id="0x80" />
-      <Usage Name="Bitmap Size Y" Id="0x81" />
-      <Usage Name="Bit Depth Format" Id="0x83" />
-      <Usage Name="Display Orientation" Id="0x84" />
-      <Usage Name="Palette Report" Id="0x85" />
-      <Usage Name="Palette Data Size" Id="0x86" />
-      <Usage Name="Palette Data Offset" Id="0x87" />
-      <Usage Name="Palette Data" Id="0x88" />
-      <Usage Name="Blit Report" Id="0x8A" />
-      <Usage Name="Blit Rectangle X1" Id="0x8B" />
-      <Usage Name="Blit Rectangle Y1" Id="0x8C" />
-      <Usage Name="Blit Rectangle X2" Id="0x8D" />
-      <Usage Name="Blit Rectangle Y2" Id="0x8E" />
-      <Usage Name="Blit Data" Id="0x8F" />
-      <Usage Name="Soft Button" Id="0x90" />
-      <Usage Name="Soft Button ID" Id="0x91" />
-      <Usage Name="Soft Button Side" Id="0x92" />
-      <Usage Name="Soft Button Offset 1" Id="0x93" />
-      <Usage Name="Soft Button Offset 2" Id="0x94" />
-      <Usage Name="Soft Button Report" Id="0x95" />
-    </UsagePage>
-    <UsagePage Name="Medical Instruments" Id="0x40">
-    </UsagePage>
-    <UsagePage Name="Monitor pages" Id="0x83">
-    </UsagePage>
-    <UsagePage Name="Power pages" Id="0x87">
-    </UsagePage>
-    <UsagePage Name="Bar Code Scanner page" Id="0x8C">
-    </UsagePage>
-    <UsagePage Name="Scale page" Id="0x8D">
-    </UsagePage>
-    <UsagePage Name="Magnetic Stripe Reading (MSR) Devices" Id="0x8E">
-    </UsagePage>
-    <UsagePage Name="Camera Control Page" Id="0x90">
-    </UsagePage>
-    <UsagePage Name="Arcade Page" Id="0x91">
-    </UsagePage>
-    <UsagePage Name="Vendor-defined" Id="0xFFFF">
-    </UsagePage>
-  </Usages>
+	<Shape Id="dirswitch" Type="dirswitch" Source="true" Image="resources/DirectionalSwitch.png" Icon="resources/DirectionalSwitchIcon.png" width="86" height="171" maxInstances="0" description="n-way Directional Switch (POV hat switch)">
+	    <pin rect="16,112,32,128" id="NW" type="io" />
+	    <pin rect="36,112,52,128" id="N" type="io" />
+	    <pin rect="56,112,72,128" id="NE" type="io" />
+	    <pin rect="56,132,72,148" id="E" type="io" />
+	    <pin rect="56,152,72,168" id="SE" type="io" />
+	    <pin rect="36,152,52,168" id="S" type="io" />
+	    <pin rect="16,152,32,168" id="SW" type="io" />
+	    <pin rect="16,132,32,148" id="W" type="io" />
+	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	    <property name="Usage" description="HID usage of the control." type="usage" default="1:57"/>
+	    <property name="Directions" description="The number of directions." type="enum" default="4">
+		<enum name="2"/>
+		<enum name="4"/>
+		<enum name="8"/>
+	    </property>
+	    <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
+	    <property name="Debounce" description="Waits for the mechanical switch stop bouncing before registering a switch closure." type="bool" default="true"/>
+	    <property name="Current" description="Current usage of the switch in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
+	</Shape>
+
+    </Shapes>
+    <Usages>
+	<UsagePage Name="Generic Desktop Controls" Id="0x01" >
+	    <Usage Name="Pointer" Id="0x01" />
+	    <Usage Name="Mouse" Id="0x02" />
+	    <Usage Name="Joystick" Id="0x04" />
+	    <Usage Name="Game Pad" Id="0x05" />
+	    <Usage Name="Keyboard" Id="0x06" />
+	    <Usage Name="Keypad" Id="0x07" />
+	    <Usage Name="Multi-axis Controller" Id="0x08" />
+	    <Usage Name="Tablet PC System Controls" Id="0x09" />
+	    <Usage Name="X" Id="0x30" />
+	    <Usage Name="Y" Id="0x31" />
+	    <Usage Name="Z" Id="0x32" />
+	    <Usage Name="Rx" Id="0x33" />
+	    <Usage Name="Ry" Id="0x34" />
+	    <Usage Name="Rz" Id="0x35" />
+	    <Usage Name="Slider" Id="0x36" />
+	    <Usage Name="Dial" Id="0x37" />
+	    <Usage Name="Wheel" Id="0x38" />
+	    <Usage Name="Hat switch" Id="0x39" />
+	    <Usage Name="Counted Buffer" Id="0x3A" />
+	    <Usage Name="Byte Count" Id="0x3B" />
+	    <Usage Name="Motion Wakeup" Id="0x3C" />
+	    <Usage Name="Start" Id="0x3D" />
+	    <Usage Name="Select" Id="0x3E" />
+	    <Usage Name="Vx" Id="0x40" />
+	    <Usage Name="Vy" Id="0x41" />
+	    <Usage Name="Vz" Id="0x42" />
+	    <Usage Name="Vbrx" Id="0x43" />
+	    <Usage Name="Vbry" Id="0x44" />
+	    <Usage Name="Vbrz" Id="0x45" />
+	    <Usage Name="Vno" Id="0x46" />
+	    <Usage Name="Feature Notification" Id="0x47" />
+	    <Usage Name="Resolution Multiplier" Id="0x48" />
+	    <Usage Name="System Control" Id="0x80" />
+	    <Usage Name="System Power Down" Id="0x81" />
+	    <Usage Name="System Sleep" Id="0x82" />
+	    <Usage Name="System Wake Up" Id="0x83" />
+	    <Usage Name="System Context Menu" Id="0x84" />
+	    <Usage Name="System Main Menu" Id="0x85" />
+	    <Usage Name="System App Menu" Id="0x86" />
+	    <Usage Name="System Menu Help" Id="0x87" />
+	    <Usage Name="System Menu Exit" Id="0x88" />
+	    <Usage Name="System Menu Select" Id="0x89" />
+	    <Usage Name="System Menu Right" Id="0x8A" />
+	    <Usage Name="System Menu Left" Id="0x8B" />
+	    <Usage Name="System Menu Up" Id="0x8C" />
+	    <Usage Name="System Menu Down" Id="0x8D" />
+	    <Usage Name="System Cold Restart" Id="0x8E" />
+	    <Usage Name="System Warm Restart" Id="0x8F" />
+	    <Usage Name="D-pad Up" Id="0x90" />
+	    <Usage Name="D-pad Down" Id="0x91" />
+	    <Usage Name="D-pad Right" Id="0x92" />
+	    <Usage Name="D-pad Left" Id="0x93" />
+	    <Usage Name="System Dock" Id="0xA0" />
+	    <Usage Name="System Undock" Id="0xA1" />
+	    <Usage Name="System Setup" Id="0xA2" />
+	    <Usage Name="System Break" Id="0xA3" />
+	    <Usage Name="System Debugger Break" Id="0xA4" />
+	    <Usage Name="Application Break" Id="0xA5" />
+	    <Usage Name="Application Debugger Break" Id="0xA6" />
+	    <Usage Name="System Speaker Mute" Id="0xA7" />
+	    <Usage Name="System Hibernate" Id="0xA8" />
+	    <Usage Name="System Display Invert" Id="0xB0" />
+	    <Usage Name="System Display Internal" Id="0xB1" />
+	    <Usage Name="System Display External" Id="0xB2" />
+	    <Usage Name="System Display Both" Id="0xB3" />
+	    <Usage Name="System Display Dual" Id="0xB4" />
+	    <Usage Name="System Display Toggle Int/Ext" Id="0xB5" />
+	    <Usage Name="System Display Swap Primary/Secondary" Id="0xB6" />
+	    <Usage Name="System Display LCD Autoscale" Id="0xB7" />
+	</UsagePage>
+	<UsagePage Name="Simulation Controls" Id="0x02">
+	    <Usage Name="Flight Simulation Device" Id="0x01" />
+	    <Usage Name="Automobile Simulation Device" Id="0x02" />
+	    <Usage Name="Tank Simulation Device" Id="0x03" />
+	    <Usage Name="Spaceship Simulation Device" Id="0x04" />
+	    <Usage Name="Submarine Simulation Device" Id="0x05" />
+	    <Usage Name="Sailing Simulation Device" Id="0x06" />
+	    <Usage Name="Motorcycle Simulation Device" Id="0x07" />
+	    <Usage Name="Sports Simulation Device" Id="0x08" />
+	    <Usage Name="Airplane Simulation Device" Id="0x09" />
+	    <Usage Name="Helicopter Simulation Device" Id="0x0A" />
+	    <Usage Name="Magic Carpet Simulation Device" Id="0x0B" />
+	    <Usage Name="Bicycle Simulation Device" Id="0x0C" />
+	    <Usage Name="Flight Control Stick" Id="0x20" />
+	    <Usage Name="Flight Stick" Id="0x21" />
+	    <Usage Name="Cyclic Control" Id="0x22" />
+	    <Usage Name="Cyclic Trim" Id="0x23" />
+	    <Usage Name="Flight Yoke" Id="0x24" />
+	    <Usage Name="Track Control" Id="0x25" />
+	    <Usage Name="Aileron" Id="0xB0" />
+	    <Usage Name="Aileron Trim" Id="0xB1" />
+	    <Usage Name="Anti-Torque Control" Id="0xB2" />
+	    <Usage Name="Autopilot Enable" Id="0xB3" />
+	    <Usage Name="Chaff Release" Id="0xB4" />
+	    <Usage Name="Collective Control" Id="0xB5" />
+	    <Usage Name="Dive Brake" Id="0xB6" />
+	    <Usage Name="Electronic Countermeasures" Id="0xB7" />
+	    <Usage Name="Elevator" Id="0xB8" />
+	    <Usage Name="Elevator Trim" Id="0xB9" />
+	    <Usage Name="Rudder" Id="0xBA" />
+	    <Usage Name="Throttle" Id="0xBB" />
+	    <Usage Name="Flight Communications" Id="0xBC" />
+	    <Usage Name="Flare Release" Id="0xBD" />
+	    <Usage Name="Landing Gear" Id="0xBE" />
+	    <Usage Name="Toe Brake" Id="0xBF" />
+	    <Usage Name="Trigger" Id="0xC0" />
+	    <Usage Name="Weapons Arm" Id="0xC1" />
+	    <Usage Name="Weapons Select" Id="0xC2" />
+	    <Usage Name="Wing Flaps" Id="0xC3" />
+	    <Usage Name="Accelerator" Id="0xC4" />
+	    <Usage Name="Brake" Id="0xC5" />
+	    <Usage Name="Clutch" Id="0xC6" />
+	    <Usage Name="Shifter" Id="0xC7" />
+	    <Usage Name="Steering" Id="0xC8" />
+	    <Usage Name="Turret Direction" Id="0xC9" />
+	    <Usage Name="Barrel Elevation" Id="0xCA" />
+	    <Usage Name="Dive Plane" Id="0xCB" />
+	    <Usage Name="Ballast" Id="0xCC" />
+	    <Usage Name="Bicycle Crank" Id="0xCD" />
+	    <Usage Name="Handle Bars" Id="0xCE" />
+	    <Usage Name="Front Brake" Id="0xCF" />
+	    <Usage Name="Rear Brake" Id="0xD0" />
+	</UsagePage>
+	<UsagePage Name="VR Controls" Id="0x03">
+	    <Usage Name="Belt" Id="0x01" />
+	    <Usage Name="Body Suit" Id="0x02" />
+	    <Usage Name="Flexor" Id="0x03" />
+	    <Usage Name="Glove" Id="0x04" />
+	    <Usage Name="Head Tracker" Id="0x05" />
+	    <Usage Name="Head Mounted Display" Id="0x06" />
+	    <Usage Name="Hand Tracker" Id="0x07" />
+	    <Usage Name="Oculometer" Id="0x08" />
+	    <Usage Name="Vest" Id="0x09" />
+	    <Usage Name="Animatronic Device" Id="0x0A" />
+	    <Usage Name="Stereo Enable" Id="0x20" />
+	    <Usage Name="Display Enable" Id="0x21" />
+	</UsagePage>
+	<UsagePage Name="Sport Controls" Id="0x04">
+	    <Usage Name="Baseball Bat" Id="0x01" />
+	    <Usage Name="Golf Club" Id="0x02" />
+	    <Usage Name="Rowing Machine" Id="0x03" />
+	    <Usage Name="Treadmill" Id="0x04" />
+	    <Usage Name="Oar" Id="0x30" />
+	    <Usage Name="Slope" Id="0x31" />
+	    <Usage Name="Rate" Id="0x32" />
+	    <Usage Name="Stick Speed" Id="0x33" />
+	    <Usage Name="Stick Face Angle" Id="0x34" />
+	    <Usage Name="Stick Heel/Toe" Id="0x35" />
+	    <Usage Name="Stick Follow Through" Id="0x36" />
+	    <Usage Name="Stick Tempo" Id="0x37" />
+	    <Usage Name="Stick Type" Id="0x38" />
+	    <Usage Name="Stick Height" Id="0x39" />
+	    <Usage Name="Putter" Id="0x50" />
+	    <Usage Name="1 Iron" Id="0x51" />
+	    <Usage Name="2 Iron" Id="0x52" />
+	    <Usage Name="3 Iron" Id="0x53" />
+	    <Usage Name="4 Iron" Id="0x54" />
+	    <Usage Name="5 Iron" Id="0x55" />
+	    <Usage Name="6 Iron" Id="0x56" />
+	    <Usage Name="7 Iron" Id="0x57" />
+	    <Usage Name="8 Iron" Id="0x58" />
+	    <Usage Name="9 Iron" Id="0x59" />
+	    <Usage Name="10 Iron" Id="0x5A" />
+	    <Usage Name="11 Iron" Id="0x5B" />
+	    <Usage Name="Sand Wedge" Id="0x5C" />
+	    <Usage Name="Loft Wedge" Id="0x5D" />
+	    <Usage Name="Power Wedge" Id="0x5E" />
+	    <Usage Name="1 Wood" Id="0x5F" />
+	    <Usage Name="3 Wood" Id="0x60" />
+	    <Usage Name="5 Wood" Id="0x61" />
+	    <Usage Name="7 Wood" Id="0x62" />
+	    <Usage Name="9 Wood" Id="0x63" />
+	</UsagePage>
+	<UsagePage Name="Game Controls" Id="0x05">
+	    <Usage Name="3D Game Controller" Id="0x01" />
+	    <Usage Name="Pinball Device" Id="0x02" />
+	    <Usage Name="Gun Device" Id="0x03" />
+	    <Usage Name="Point of View" Id="0x20" />
+	    <Usage Name="Turn Right/Left" Id="0x21" />
+	    <Usage Name="Pitch Forward/Backward" Id="0x22" />
+	    <Usage Name="Roll Right/Left" Id="0x23" />
+	    <Usage Name="Move Right/Left" Id="0x24" />
+	    <Usage Name="Move Forward/Backward" Id="0x25" />
+	    <Usage Name="Move Up/Down" Id="0x26" />
+	    <Usage Name="Lean Right/Left" Id="0x27" />
+	    <Usage Name="Lean Forward/Backward" Id="0x28" />
+	    <Usage Name="Height of POV" Id="0x29" />
+	    <Usage Name="Flipper" Id="0x2A" />
+	    <Usage Name="Secondary Flipper" Id="0x2B" />
+	    <Usage Name="Bump" Id="0x2C" />
+	    <Usage Name="New Game" Id="0x2D" />
+	    <Usage Name="Shoot Ball" Id="0x2E" />
+	    <Usage Name="Player" Id="0x2F" />
+	    <Usage Name="Gun Bolt" Id="0x30" />
+	    <Usage Name="Gun Clip" Id="0x31" />
+	    <Usage Name="Gun Selector" Id="0x32" />
+	    <Usage Name="Gun Single Shot" Id="0x33" />
+	    <Usage Name="Gun Burst" Id="0x34" />
+	    <Usage Name="Gun Automatic" Id="0x35" />
+	    <Usage Name="Gun Safety" Id="0x36" />
+	    <Usage Name="Gamepad Fire/Jump" Id="0x37" />
+	    <Usage Name="Gamepad Trigger" Id="0x39" />
+	</UsagePage>
+	<UsagePage Name="Generic Device Controls" Id="0x06">
+	    <Usage Name="Battery Strength" Id="0x20" />
+	    <Usage Name="Wireless Channel" Id="0x21" />
+	    <Usage Name="Wireless ID" Id="0x22" />
+	    <Usage Name="Discover Wireless Control" Id="0x23" />
+	    <Usage Name="Security Code Character Entered" Id="0x24" />
+	    <Usage Name="Security Code Character Erased" Id="0x25" />
+	    <Usage Name="Security Code Cleared" Id="0x26" />
+	</UsagePage>
+	<UsagePage Name="Keyboard/Keypad" Id="0x07">
+	    <Usage Name="Keyboard ErrorRollOver" Id="1" />
+	    <Usage Name="Keyboard POSTFail" Id="2" />
+	    <Usage Name="Keyboard ErrorUndefined" Id="3" />
+	    <Usage Name="Keyboard a and A" Id="4" />
+	    <Usage Name="Keyboard b and B" Id="5" />
+	    <Usage Name="Keyboard c and C" Id="6" />
+	    <Usage Name="Keyboard d and D" Id="7" />
+	    <Usage Name="Keyboard e and E" Id="8" />
+	    <Usage Name="Keyboard f and F" Id="9" />
+	    <Usage Name="Keyboard g and G" Id="10" />
+	    <Usage Name="Keyboard h and H" Id="11" />
+	    <Usage Name="Keyboard i and I" Id="12" />
+	    <Usage Name="Keyboard j and J" Id="13" />
+	    <Usage Name="Keyboard k and K" Id="14" />
+	    <Usage Name="Keyboard l and L" Id="15" />
+	    <Usage Name="Keyboard m and M" Id="16" />
+	    <Usage Name="Keyboard n and N" Id="17" />
+	    <Usage Name="Keyboard o and O" Id="18" />
+	    <Usage Name="Keyboard p and P" Id="19" />
+	    <Usage Name="Keyboard q and Q" Id="20" />
+	    <Usage Name="Keyboard r and R" Id="21" />
+	    <Usage Name="Keyboard s and S" Id="22" />
+	    <Usage Name="Keyboard t and T" Id="23" />
+	    <Usage Name="Keyboard u and U" Id="24" />
+	    <Usage Name="Keyboard v and V" Id="25" />
+	    <Usage Name="Keyboard w and W" Id="26" />
+	    <Usage Name="Keyboard x and X" Id="27" />
+	    <Usage Name="Keyboard y and Y" Id="28" />
+	    <Usage Name="Keyboard z and Z" Id="29" />
+	    <Usage Name="Keyboard 1 and !" Id="30" />
+	    <Usage Name="Keyboard 2 and @" Id="31" />
+	    <Usage Name="Keyboard 3 and #" Id="32" />
+	    <Usage Name="Keyboard 4 and $" Id="33" />
+	    <Usage Name="Keyboard 5 and %" Id="34" />
+	    <Usage Name="Keyboard 6 and ^" Id="35" />
+	    <Usage Name="Keyboard 7 and &amp;" Id="36" />
+	    <Usage Name="Keyboard 8 and *" Id="37" />
+	    <Usage Name="Keyboard 9 and (" Id="38" />
+	    <Usage Name="Keyboard 0 and )" Id="39" />
+	    <Usage Name="Keyboard Return (ENTER)" Id="40" />
+	    <Usage Name="Keyboard ESCAPE" Id="41" />
+	    <Usage Name="Keyboard DELETE (Backspace)" Id="42" />
+	    <Usage Name="Keyboard Tab" Id="43" />
+	    <Usage Name="Keyboard Spacebar" Id="44" />
+	    <Usage Name="Keyboard - and (underscore)" Id="45" />
+	    <Usage Name="Keyboard = and +" Id="46" />
+	    <Usage Name="Keyboard [ and {" Id="47" />
+	    <Usage Name="Keyboard ] and }" Id="48" />
+	    <Usage Name="Keyboard \\ and |" Id="49" />
+	    <Usage Name="Keyboard Non-US # and ~" Id="50" />
+	    <Usage Name="Keyboard ; and :" Id="51" />
+	    <Usage Name="Keyboard &apos; and &quot;" Id="52" />
+	    <Usage Name="Keyboard Grave Accent and Tilde" Id="53" />
+	    <Usage Name="Keyboard , and &lt;" Id="54" />
+	    <Usage Name="Keyboard . and &gt;" Id="55" />
+	    <Usage Name="Keyboard / and ?" Id="56" />
+	    <Usage Name="Keyboard Caps Lock" Id="57" />
+	    <Usage Name="Keyboard F1" Id="58" />
+	    <Usage Name="Keyboard F2" Id="59" />
+	    <Usage Name="Keyboard F3" Id="60" />
+	    <Usage Name="Keyboard F4" Id="61" />
+	    <Usage Name="Keyboard F5" Id="62" />
+	    <Usage Name="Keyboard F6" Id="63" />
+	    <Usage Name="Keyboard F7" Id="64" />
+	    <Usage Name="Keyboard F8" Id="65" />
+	    <Usage Name="Keyboard F9" Id="66" />
+	    <Usage Name="Keyboard F10" Id="67" />
+	    <Usage Name="Keyboard F11" Id="68" />
+	    <Usage Name="Keyboard F12" Id="69" />
+	    <Usage Name="Keyboard PrintScreen" Id="70" />
+	    <Usage Name="Keyboard Scroll Lock" Id="71" />
+	    <Usage Name="Keyboard Pause" Id="72" />
+	    <Usage Name="Keyboard Insert" Id="73" />
+	    <Usage Name="Keyboard Home" Id="74" />
+	    <Usage Name="Keyboard PageUp" Id="75" />
+	    <Usage Name="Keyboard Delete Forward" Id="76" />
+	    <Usage Name="Keyboard End" Id="77" />
+	    <Usage Name="Keyboard PageDown" Id="78" />
+	    <Usage Name="Keyboard RightArrow" Id="79" />
+	    <Usage Name="Keyboard LeftArrow" Id="80" />
+	    <Usage Name="Keyboard DownArrow" Id="81" />
+	    <Usage Name="Keyboard UpArrow" Id="82" />
+	    <Usage Name="Keypad Num Lock and Clear" Id="83" />
+	    <Usage Name="Keypad /" Id="84" />
+	    <Usage Name="Keypad *" Id="85" />
+	    <Usage Name="Keypad -" Id="86" />
+	    <Usage Name="Keypad +" Id="87" />
+	    <Usage Name="Keypad ENTER" Id="88" />
+	    <Usage Name="Keypad 1 and End" Id="89" />
+	    <Usage Name="Keypad 2 and Down Arrow" Id="90" />
+	    <Usage Name="Keypad 3 and PageDn" Id="91" />
+	    <Usage Name="Keypad 4 and Left Arrow" Id="92" />
+	    <Usage Name="Keypad 5" Id="93" />
+	    <Usage Name="Keypad 6 and Right Arrow" Id="94" />
+	    <Usage Name="Keypad 7 and Home" Id="95" />
+	    <Usage Name="Keypad 8 and Up Arrow" Id="96" />
+	    <Usage Name="Keypad 9 and PageUp" Id="97" />
+	    <Usage Name="Keypad 0 and Insert" Id="98" />
+	    <Usage Name="Keypad . and Delete" Id="99" />
+	    <Usage Name="Keyboard Non-US \\ and |" Id="100" />
+	    <Usage Name="Keyboard Application" Id="101" />
+	    <Usage Name="Keyboard Power9" Id="102" />
+	    <Usage Name="Keypad =" Id="103" />
+	    <Usage Name="Keyboard F13" Id="104" />
+	    <Usage Name="Keyboard F14" Id="105" />
+	    <Usage Name="Keyboard F15" Id="106" />
+	    <Usage Name="Keyboard F16" Id="107" />
+	    <Usage Name="Keyboard F17" Id="108" />
+	    <Usage Name="Keyboard F18" Id="109" />
+	    <Usage Name="Keyboard F19" Id="110" />
+	    <Usage Name="Keyboard F20" Id="111" />
+	    <Usage Name="Keyboard F21" Id="112" />
+	    <Usage Name="Keyboard F22" Id="113" />
+	    <Usage Name="Keyboard F23" Id="114" />
+	    <Usage Name="Keyboard F24" Id="115" />
+	    <Usage Name="Keyboard Execute" Id="116" />
+	    <Usage Name="Keyboard Help" Id="117" />
+	    <Usage Name="Keyboard Menu" Id="118" />
+	    <Usage Name="Keyboard Select" Id="119" />
+	    <Usage Name="Keyboard Stop" Id="120" />
+	    <Usage Name="Keyboard Again" Id="121" />
+	    <Usage Name="Keyboard Undo" Id="122" />
+	    <Usage Name="Keyboard Cut" Id="123" />
+	    <Usage Name="Keyboard Copy" Id="124" />
+	    <Usage Name="Keyboard Paste" Id="125" />
+	    <Usage Name="Keyboard Find" Id="126" />
+	    <Usage Name="Keyboard Mute" Id="127" />
+	    <Usage Name="Keyboard Volume Up" Id="128" />
+	    <Usage Name="Keyboard Volume Down" Id="129" />
+	    <Usage Name="Keyboard Locking Caps Lock" Id="130" />
+	    <Usage Name="Keyboard Locking Num Lock" Id="131" />
+	    <Usage Name="Keyboard Locking Scroll Lock" Id="132" />
+	    <Usage Name="Keypad Comma" Id="133" />
+	    <Usage Name="Keypad Equal Sign" Id="134" />
+	    <Usage Name="Keyboard International1" Id="135" />
+	    <Usage Name="Keyboard International2" Id="136" />
+	    <Usage Name="Keyboard International3" Id="137" />
+	    <Usage Name="Keyboard International4" Id="138" />
+	    <Usage Name="Keyboard International5" Id="139" />
+	    <Usage Name="Keyboard International6" Id="140" />
+	    <Usage Name="Keyboard International7" Id="141" />
+	    <Usage Name="Keyboard International8" Id="142" />
+	    <Usage Name="Keyboard International9" Id="143" />
+	    <Usage Name="Keyboard LANG1" Id="144" />
+	    <Usage Name="Keyboard LANG2" Id="145" />
+	    <Usage Name="Keyboard LANG3" Id="146" />
+	    <Usage Name="Keyboard LANG4" Id="147" />
+	    <Usage Name="Keyboard LANG5" Id="148" />
+	    <Usage Name="Keyboard LANG6" Id="149" />
+	    <Usage Name="Keyboard LANG7" Id="150" />
+	    <Usage Name="Keyboard LANG8" Id="151" />
+	    <Usage Name="Keyboard LANG9" Id="152" />
+	    <Usage Name="Keyboard Alternate Erase" Id="153" />
+	    <Usage Name="Keyboard SysReq/Attention" Id="154" />
+	    <Usage Name="Keyboard Cancel" Id="155" />
+	    <Usage Name="Keyboard Clear" Id="156" />
+	    <Usage Name="Keyboard Prior" Id="157" />
+	    <Usage Name="Keyboard Return" Id="158" />
+	    <Usage Name="Keyboard Separator" Id="159" />
+	    <Usage Name="Keyboard Out" Id="160" />
+	    <Usage Name="Keyboard Oper" Id="161" />
+	    <Usage Name="Keyboard Clear/Again" Id="162" />
+	    <Usage Name="Keyboard CrSel/Props" Id="163" />
+	    <Usage Name="Keyboard ExSel" Id="164" />
+	    <Usage Name="Keypad 00" Id="176" />
+	    <Usage Name="Keypad 000" Id="177" />
+	    <Usage Name="Thousands Separator" Id="178" />
+	    <Usage Name="Decimal Separator" Id="179" />
+	    <Usage Name="Currency Unit" Id="180" />
+	    <Usage Name="Currency Sub-unit" Id="181" />
+	    <Usage Name="Keypad (" Id="182" />
+	    <Usage Name="Keypad )" Id="183" />
+	    <Usage Name="Keypad {" Id="184" />
+	    <Usage Name="Keypad }" Id="185" />
+	    <Usage Name="Keypad Tab" Id="186" />
+	    <Usage Name="Keypad Backspace" Id="187" />
+	    <Usage Name="Keypad A" Id="188" />
+	    <Usage Name="Keypad B" Id="189" />
+	    <Usage Name="Keypad C" Id="190" />
+	    <Usage Name="Keypad D" Id="191" />
+	    <Usage Name="Keypad E" Id="192" />
+	    <Usage Name="Keypad F" Id="193" />
+	    <Usage Name="Keypad XOR" Id="194" />
+	    <Usage Name="Keypad ^" Id="195" />
+	    <Usage Name="Keypad %" Id="196" />
+	    <Usage Name="Keypad &lt;" Id="197" />
+	    <Usage Name="Keypad &gt;" Id="198" />
+	    <Usage Name="Keypad &amp;" Id="199" />
+	    <Usage Name="Keypad &amp;&amp;" Id="200" />
+	    <Usage Name="Keypad |" Id="201" />
+	    <Usage Name="Keypad ||" Id="202" />
+	    <Usage Name="Keypad :" Id="203" />
+	    <Usage Name="Keypad #" Id="204" />
+	    <Usage Name="Keypad Space" Id="205" />
+	    <Usage Name="Keypad @" Id="206" />
+	    <Usage Name="Keypad !" Id="207" />
+	    <Usage Name="Keypad Memory Store" Id="208" />
+	    <Usage Name="Keypad Memory Recall" Id="209" />
+	    <Usage Name="Keypad Memory Clear" Id="210" />
+	    <Usage Name="Keypad Memory Add" Id="211" />
+	    <Usage Name="Keypad Memory Subtract" Id="212" />
+	    <Usage Name="Keypad Memory Multiply" Id="213" />
+	    <Usage Name="Keypad Memory Divide" Id="214" />
+	    <Usage Name="Keypad +/-" Id="215" />
+	    <Usage Name="Keypad Clear" Id="216" />
+	    <Usage Name="Keypad Clear Entry" Id="217" />
+	    <Usage Name="Keypad Binary" Id="218" />
+	    <Usage Name="Keypad Octal" Id="219" />
+	    <Usage Name="Keypad Decimal" Id="220" />
+	    <Usage Name="Keypad Hexadecimal" Id="221" />
+	    <Usage Name="Keyboard LeftControl" Id="224" />
+	    <Usage Name="Keyboard LeftShift" Id="225" />
+	    <Usage Name="Keyboard LeftAlt" Id="226" />
+	    <Usage Name="Keyboard Left GUI" Id="227" />
+	    <Usage Name="Keyboard RightControl" Id="228" />
+	    <Usage Name="Keyboard RightShift" Id="229" />
+	    <Usage Name="Keyboard RightAlt" Id="230" />
+	    <Usage Name="Keyboard Right GUI" Id="231" />
+	</UsagePage>
+	<UsagePage Name="LEDs" Id="0x08">
+	    <Usage Name="Num Lock" Id="0x01" />
+	    <Usage Name="Caps Lock" Id="0x02" />
+	    <Usage Name="Scroll Lock" Id="0x03" />
+	    <Usage Name="Compose" Id="0x04" />
+	    <Usage Name="Kana" Id="0x05" />
+	    <Usage Name="Power" Id="0x06" />
+	    <Usage Name="Shift" Id="0x07" />
+	    <Usage Name="Do Not Disturb" Id="0x08" />
+	    <Usage Name="Mute" Id="0x09" />
+	    <Usage Name="Tone Enable" Id="0x0A" />
+	    <Usage Name="High Cut Filter" Id="0x0B" />
+	    <Usage Name="Low Cut Filter" Id="0x0C" />
+	    <Usage Name="Equalizer Enable" Id="0x0D" />
+	    <Usage Name="Sound Field On" Id="0x0E" />
+	    <Usage Name="Surround On" Id="0x0F" />
+	    <Usage Name="Repeat" Id="0x10" />
+	    <Usage Name="Stereo" Id="0x11" />
+	    <Usage Name="Sampling Rate Detect" Id="0x12" />
+	    <Usage Name="Spinning" Id="0x13" />
+	    <Usage Name="CAV" Id="0x14" />
+	    <Usage Name="CLV" Id="0x15" />
+	    <Usage Name="Recording Format Detect" Id="0x16" />
+	    <Usage Name="Off-Hook" Id="0x17" />
+	    <Usage Name="Ring" Id="0x18" />
+	    <Usage Name="Message Waiting" Id="0x19" />
+	    <Usage Name="Data Mode" Id="0x1A" />
+	    <Usage Name="Battery Operation" Id="0x1B" />
+	    <Usage Name="Battery OK" Id="0x1C" />
+	    <Usage Name="Battery Low" Id="0x1D" />
+	    <Usage Name="Speaker" Id="0x1E" />
+	    <Usage Name="Head Set" Id="0x1F" />
+	    <Usage Name="Hold" Id="0x20" />
+	    <Usage Name="Microphone" Id="0x21" />
+	    <Usage Name="Coverage" Id="0x22" />
+	    <Usage Name="Night Mode" Id="0x23" />
+	    <Usage Name="Send Calls" Id="0x24" />
+	    <Usage Name="Call Pickup" Id="0x25" />
+	    <Usage Name="Conference" Id="0x26" />
+	    <Usage Name="Stand-by" Id="0x27" />
+	    <Usage Name="Camera On" Id="0x28" />
+	    <Usage Name="Camera Off" Id="0x29" />
+	    <Usage Name="On-Line" Id="0x2A" />
+	    <Usage Name="Off-Line" Id="0x2B" />
+	    <Usage Name="Busy" Id="0x2C" />
+	    <Usage Name="Ready" Id="0x2D" />
+	    <Usage Name="Paper-Out" Id="0x2E" />
+	    <Usage Name="Paper-Jam" Id="0x2F" />
+	    <Usage Name="Remote" Id="0x30" />
+	    <Usage Name="Forward" Id="0x31" />
+	    <Usage Name="Reverse" Id="0x32" />
+	    <Usage Name="Stop" Id="0x33" />
+	    <Usage Name="Rewind" Id="0x34" />
+	    <Usage Name="Fast Forward" Id="0x35" />
+	    <Usage Name="Play" Id="0x36" />
+	    <Usage Name="Pause" Id="0x37" />
+	    <Usage Name="Record" Id="0x38" />
+	    <Usage Name="Error" Id="0x39" />
+	    <Usage Name="Usage Selected Indicator" Id="0x3A" />
+	    <Usage Name="Usage In Use Indicator" Id="0x3B" />
+	    <Usage Name="Usage Multi Mode Indicator" Id="0x3C" />
+	    <Usage Name="Indicator On" Id="0x3D" />
+	    <Usage Name="Indicator Flash" Id="0x3E" />
+	    <Usage Name="Indicator Slow Blink" Id="0x3F" />
+	    <Usage Name="Indicator Fast Blink" Id="0x40" />
+	    <Usage Name="Indicator Off" Id="0x41" />
+	    <Usage Name="Flash On Time" Id="0x42" />
+	    <Usage Name="Slow Blink On Time" Id="0x43" />
+	    <Usage Name="Slow Blink Off Time" Id="0x44" />
+	    <Usage Name="Fast Blink On Time" Id="0x45" />
+	    <Usage Name="Fast Blink Off Time" Id="0x46" />
+	    <Usage Name="Usage Indicator Color" Id="0x47" />
+	    <Usage Name="Indicator Red" Id="0x48" />
+	    <Usage Name="Indicator Green" Id="0x49" />
+	    <Usage Name="Indicator Amber" Id="0x4A" />
+	    <Usage Name="Generic Indicator" Id="0x4B" />
+	    <Usage Name="System Suspend" Id="0x4C" />
+	    <Usage Name="External Power Connected" Id="0x4D" />
+	</UsagePage>
+	<UsagePage Name="Button" Id="0x09">
+	</UsagePage>
+	<UsagePage Name="Ordinal" Id="0x0A">
+	</UsagePage>
+	<UsagePage Name="Telephony" Id="0x0B">
+	</UsagePage>
+	<UsagePage Name="Consumer" Id="0x0C">
+	    <Usage Name="Consumer Control" Id="0x01" />
+	    <Usage Name="Numeric Key Pad" Id="0x02" />
+	    <Usage Name="Programmable Buttons" Id="0x03" />
+	    <Usage Name="Microphone" Id="0x04" />
+	    <Usage Name="Headphone" Id="0x05" />
+	    <Usage Name="Graphic Equalizer" Id="0x06" />
+	    <Usage Name="+10" Id="0x20" />
+	    <Usage Name="+100" Id="0x21" />
+	    <Usage Name="AM/PM" Id="0x22" />
+	    <Usage Name="Power" Id="0x30" />
+	    <Usage Name="Reset" Id="0x31" />
+	    <Usage Name="Sleep" Id="0x32" />
+	    <Usage Name="Sleep After" Id="0x33" />
+	    <Usage Name="Sleep Mode" Id="0x34" />
+	    <Usage Name="Illumination" Id="0x35" />
+	    <Usage Name="Function Buttons" Id="0x36" />
+	    <Usage Name="Menu" Id="0x40" />
+	    <Usage Name="Menu Pick" Id="0x41" />
+	    <Usage Name="Menu Up" Id="0x42" />
+	    <Usage Name="Menu Down" Id="0x43" />
+	    <Usage Name="Menu Left" Id="0x44" />
+	    <Usage Name="Menu Right" Id="0x45" />
+	    <Usage Name="Menu Escape" Id="0x46" />
+	    <Usage Name="Menu Value Increase" Id="0x47" />
+	    <Usage Name="Menu Value Decrease" Id="0x48" />
+	    <Usage Name="Data On Screen" Id="0x60" />
+	    <Usage Name="Closed Caption" Id="0x61" />
+	    <Usage Name="Closed Caption Select" Id="0x62" />
+	    <Usage Name="VCR/TV" Id="0x63" />
+	    <Usage Name="Broadcast Mode" Id="0x64" />
+	    <Usage Name="Snapshot" Id="0x65" />
+	    <Usage Name="Still" Id="0x66" />
+	    <Usage Name="Selection" Id="0x80" />
+	    <Usage Name="Assign Selection" Id="0x81" />
+	    <Usage Name="Mode Step" Id="0x82" />
+	    <Usage Name="Recall Last" Id="0x83" />
+	    <Usage Name="Enter Channel" Id="0x84" />
+	    <Usage Name="Order Movie" Id="0x85" />
+	    <Usage Name="Channel" Id="0x86" />
+	    <Usage Name="Media Selection" Id="0x87" />
+	    <Usage Name="Media Select Computer" Id="0x88" />
+	    <Usage Name="Media Select TV" Id="0x89" />
+	    <Usage Name="Media Select WWW" Id="0x8A" />
+	    <Usage Name="Media Select DVD" Id="0x8B" />
+	    <Usage Name="Media Select Telephone" Id="0x8C" />
+	    <Usage Name="Media Select Program Guide" Id="0x8D" />
+	    <Usage Name="Media Select Video Phone" Id="0x8E" />
+	    <Usage Name="Media Select Games" Id="0x8F" />
+	    <Usage Name="Media Select Messages" Id="0x90" />
+	    <Usage Name="Media Select CD" Id="0x91" />
+	    <Usage Name="Media Select VCR" Id="0x92" />
+	    <Usage Name="Media Select Tuner" Id="0x93" />
+	    <Usage Name="Quit" Id="0x94" />
+	    <Usage Name="Help" Id="0x95" />
+	    <Usage Name="Media Select Tape" Id="0x96" />
+	    <Usage Name="Media Select Cable" Id="0x97" />
+	    <Usage Name="Media Select Satellite" Id="0x98" />
+	    <Usage Name="Media Select Security" Id="0x99" />
+	    <Usage Name="Media Select Home" Id="0x9A" />
+	    <Usage Name="Media Select Call" Id="0x9B" />
+	    <Usage Name="Channel Increment" Id="0x9C" />
+	    <Usage Name="Channel Decrement" Id="0x9D" />
+	    <Usage Name="Media Select SAP" Id="0x9E" />
+	    <Usage Name="VCR Plus" Id="0xA0" />
+	    <Usage Name="Once" Id="0xA1" />
+	    <Usage Name="Daily" Id="0xA2" />
+	    <Usage Name="Weekly" Id="0xA3" />
+	    <Usage Name="Monthly" Id="0xA4" />
+	    <Usage Name="Play" Id="0xB0" />
+	    <Usage Name="Pause" Id="0xB1" />
+	    <Usage Name="Record" Id="0xB2" />
+	    <Usage Name="Fast Forward" Id="0xB3" />
+	    <Usage Name="Rewind" Id="0xB4" />
+	    <Usage Name="Scan Next Track" Id="0xB5" />
+	    <Usage Name="Scan Previous Track" Id="0xB6" />
+	    <Usage Name="Stop" Id="0xB7" />
+	    <Usage Name="Eject" Id="0xB8" />
+	    <Usage Name="Random Play" Id="0xB9" />
+	    <Usage Name="Select Disc" Id="0xBA" />
+	    <Usage Name="Enter Disc" Id="0xBB" />
+	    <Usage Name="Repeat" Id="0xBC" />
+	    <Usage Name="Tracking" Id="0xBD" />
+	    <Usage Name="Track Normal" Id="0xBE" />
+	    <Usage Name="Slow Tracking" Id="0xBF" />
+	    <Usage Name="Frame Forward" Id="0xC0" />
+	    <Usage Name="Frame Back" Id="0xC1" />
+	    <Usage Name="Mark" Id="0xC2" />
+	    <Usage Name="Clear Mark" Id="0xC3" />
+	    <Usage Name="Repeat From Mark" Id="0xC4" />
+	    <Usage Name="Return To Mark" Id="0xC5" />
+	    <Usage Name="Search Mark Forward" Id="0xC6" />
+	    <Usage Name="Search Mark Backwards" Id="0xC7" />
+	    <Usage Name="Counter Reset" Id="0xC8" />
+	    <Usage Name="Show Counter" Id="0xC9" />
+	    <Usage Name="Tracking Increment" Id="0xCA" />
+	    <Usage Name="Tracking Decrement" Id="0xCB" />
+	    <Usage Name="Stop/Eject" Id="0xCC" />
+	    <Usage Name="Play/Pause" Id="0xCD" />
+	    <Usage Name="Play/Skip" Id="0xCE" />
+	    <Usage Name="Volume" Id="0xE0" />
+	    <Usage Name="Balance" Id="0xE1" />
+	    <Usage Name="Mute" Id="0xE2" />
+	    <Usage Name="Bass" Id="0xE3" />
+	    <Usage Name="Treble" Id="0xE4" />
+	    <Usage Name="Bass Boost" Id="0xE5" />
+	    <Usage Name="Surround Mode" Id="0xE6" />
+	    <Usage Name="Loudness" Id="0xE7" />
+	    <Usage Name="MPX" Id="0xE8" />
+	    <Usage Name="Volume Increment" Id="0xE9" />
+	    <Usage Name="Volume Decrement" Id="0xEA" />
+	    <Usage Name="Speed Select" Id="0xF0" />
+	    <Usage Name="Playback Speed" Id="0xF1" />
+	    <Usage Name="Standard Play" Id="0xF2" />
+	    <Usage Name="Long Play" Id="0xF3" />
+	    <Usage Name="Extended Play" Id="0xF4" />
+	    <Usage Name="Slow" Id="0xF5" />
+	    <Usage Name="Fan Enable" Id="0x100" />
+	    <Usage Name="Fan Speed" Id="0x101" />
+	    <Usage Name="Light Enable" Id="0x102" />
+	    <Usage Name="Light Illumination Level" Id="0x103" />
+	    <Usage Name="Climate Control Enable" Id="0x104" />
+	    <Usage Name="Room Temperature" Id="0x105" />
+	    <Usage Name="Security Enable" Id="0x106" />
+	    <Usage Name="Fire Alarm" Id="0x107" />
+	    <Usage Name="Police Alarm" Id="0x108" />
+	    <Usage Name="Proximity" Id="0x109" />
+	    <Usage Name="Motion" Id="0x10A" />
+	    <Usage Name="Duress Alarm" Id="0x10B" />
+	    <Usage Name="Holdup Alarm" Id="0x10C" />
+	    <Usage Name="Medical Alarm" Id="0x10D" />
+	    <Usage Name="Balance Right" Id="0x150" />
+	    <Usage Name="Balance Left" Id="0x151" />
+	    <Usage Name="Bass Increment" Id="0x152" />
+	    <Usage Name="Bass Decrement" Id="0x153" />
+	    <Usage Name="Treble Increment" Id="0x154" />
+	    <Usage Name="Treble Decrement" Id="0x155" />
+	    <Usage Name="Speaker System" Id="0x160" />
+	    <Usage Name="Channel Left" Id="0x161" />
+	    <Usage Name="Channel Right" Id="0x162" />
+	    <Usage Name="Channel Center" Id="0x163" />
+	    <Usage Name="Channel Front" Id="0x164" />
+	    <Usage Name="Channel Center Front" Id="0x165" />
+	    <Usage Name="Channel Side" Id="0x166" />
+	    <Usage Name="Channel Surround" Id="0x167" />
+	    <Usage Name="Channel Low Frequency Enhancement" Id="0x168" />
+	    <Usage Name="Channel Top" Id="0x169" />
+	    <Usage Name="Channel Unknown" Id="0x16A" />
+	    <Usage Name="Sub-channel" Id="0x170" />
+	    <Usage Name="Sub-channel Increment" Id="0x171" />
+	    <Usage Name="Sub-channel Decrement" Id="0x172" />
+	    <Usage Name="Alternate Audio Increment" Id="0x173" />
+	    <Usage Name="Alternate Audio Decrement" Id="0x174" />
+	    <Usage Name="Application Launch Buttons" Id="0x180" />
+	    <Usage Name="AL Launch Button Configuration Tool" Id="0x181" />
+	    <Usage Name="AL Programmable Button Configuration" Id="0x182" />
+	    <Usage Name="AL Consumer Control Configuration" Id="0x183" />
+	    <Usage Name="AL Word Processor" Id="0x184" />
+	    <Usage Name="AL Text Editor" Id="0x185" />
+	    <Usage Name="AL Spreadsheet" Id="0x186" />
+	    <Usage Name="AL Graphics Editor" Id="0x187" />
+	    <Usage Name="AL Presentation App" Id="0x188" />
+	    <Usage Name="AL Database App" Id="0x189" />
+	    <Usage Name="AL Email Reader" Id="0x18A" />
+	    <Usage Name="AL Newsreader" Id="0x18B" />
+	    <Usage Name="AL Voicemail" Id="0x18C" />
+	    <Usage Name="AL Contacts/Address Book" Id="0x18D" />
+	    <Usage Name="AL Calendar/Schedule" Id="0x18E" />
+	    <Usage Name="AL Task/Project Manager" Id="0x18F" />
+	    <Usage Name="AL Log/Journal/Timecard" Id="0x190" />
+	    <Usage Name="AL Checkbook/Finance" Id="0x191" />
+	    <Usage Name="AL Calculator" Id="0x192" />
+	    <Usage Name="AL A/V Capture/Playback" Id="0x193" />
+	    <Usage Name="AL Local Machine Browser" Id="0x194" />
+	    <Usage Name="AL LAN/WAN Browser" Id="0x195" />
+	    <Usage Name="AL Internet Browser" Id="0x196" />
+	    <Usage Name="AL Remote Networking/ISP Connect" Id="0x197" />
+	    <Usage Name="AL Network Conference" Id="0x198" />
+	    <Usage Name="AL Network Chat" Id="0x199" />
+	    <Usage Name="AL Telephony/Dialer" Id="0x19A" />
+	    <Usage Name="AL Logon" Id="0x19B" />
+	    <Usage Name="AL Logoff" Id="0x19C" />
+	    <Usage Name="AL Logon/Logoff" Id="0x19D" />
+	    <Usage Name="AL Terminal Lock/Screensaver" Id="0x19E" />
+	    <Usage Name="AL Control Panel" Id="0x19F" />
+	    <Usage Name="AL Command Line Processor/Run" Id="0x1A0" />
+	    <Usage Name="AL Process/Task Manager" Id="0x1A1" />
+	    <Usage Name="AL Select Task/Application" Id="0x1A2" />
+	    <Usage Name="AL Next Task/Application" Id="0x1A3" />
+	    <Usage Name="AL Previous Task/Application" Id="0x1A4" />
+	    <Usage Name="AL Preemptive Halt Task/Application" Id="0x1A5" />
+	    <Usage Name="AL Integrated Help Center" Id="0x1A6" />
+	    <Usage Name="AL Documents" Id="0x1A7" />
+	    <Usage Name="AL Thesaurus" Id="0x1A8" />
+	    <Usage Name="AL Dictionary" Id="0x1A9" />
+	    <Usage Name="AL Desktop" Id="0x1AA" />
+	    <Usage Name="AL Spell Check" Id="0x1AB" />
+	    <Usage Name="AL Grammar Check" Id="0x1AC" />
+	    <Usage Name="AL Wireless Status" Id="0x1AD" />
+	    <Usage Name="AL Keyboard Layout" Id="0x1AE" />
+	    <Usage Name="AL Virus Protection" Id="0x1AF" />
+	    <Usage Name="AL Encryption" Id="0x1B0" />
+	    <Usage Name="AL Screen Saver" Id="0x1B1" />
+	    <Usage Name="AL Alarms" Id="0x1B2" />
+	    <Usage Name="AL Clock" Id="0x1B3" />
+	    <Usage Name="AL File Browser" Id="0x1B4" />
+	    <Usage Name="AL Power Status" Id="0x1B5" />
+	    <Usage Name="AL Image Browser" Id="0x1B6" />
+	    <Usage Name="AL Audio Browser" Id="0x1B7" />
+	    <Usage Name="AL Movie Browser" Id="0x1B8" />
+	    <Usage Name="AL Digital Rights Manager" Id="0x1B9" />
+	    <Usage Name="AL Digital Wallet" Id="0x1BA" />
+	    <Usage Name="AL Instant Messaging" Id="0x1BC" />
+	    <Usage Name="AL OEM Features/ Tips/Tutorial Browser" Id="0x1BD" />
+	    <Usage Name="AL OEM Help" Id="0x1BE" />
+	    <Usage Name="AL Online Community" Id="0x1BF" />
+	    <Usage Name="AL Entertainment Content Browser" Id="0x1C0" />
+	    <Usage Name="AL Online Shopping Browser" Id="0x1C1" />
+	    <Usage Name="AL SmartCard Information/Help" Id="0x1C2" />
+	    <Usage Name="AL Market Monitor/Finance Browser" Id="0x1C3" />
+	    <Usage Name="AL Customized Corporate News Browser" Id="0x1C4" />
+	    <Usage Name="AL Online Activity Browser" Id="0x1C5" />
+	    <Usage Name="AL Research/Search Browser" Id="0x1C6" />
+	    <Usage Name="AL Audio Player" Id="0x1C7" />
+	    <Usage Name="Generic GUI Application Controls" Id="0x200" />
+	    <Usage Name="AC New" Id="0x201" />
+	    <Usage Name="AC Open" Id="0x202" />
+	    <Usage Name="AC Close" Id="0x203" />
+	    <Usage Name="AC Exit Sel" Id="0x204" />
+	    <Usage Name="AC Maximize" Id="0x205" />
+	    <Usage Name="AC Minimize" Id="0x206" />
+	    <Usage Name="AC Save" Id="0x207" />
+	    <Usage Name="AC Print" Id="0x208" />
+	    <Usage Name="AC Properties" Id="0x209" />
+	    <Usage Name="AC Undo" Id="0x21A" />
+	    <Usage Name="AC Copy" Id="0x21B" />
+	    <Usage Name="AC Cut" Id="0x21C" />
+	    <Usage Name="AC Paste" Id="0x21D" />
+	    <Usage Name="AC Select All" Id="0x21E" />
+	    <Usage Name="AC Find" Id="0x21F" />
+	    <Usage Name="AC Find and Replace" Id="0x220" />
+	    <Usage Name="AC Search" Id="0x221" />
+	    <Usage Name="AC Go To" Id="0x222" />
+	    <Usage Name="AC Home" Id="0x223" />
+	    <Usage Name="AC Back" Id="0x224" />
+	    <Usage Name="AC Forward" Id="0x225" />
+	    <Usage Name="AC Stop" Id="0x226" />
+	    <Usage Name="AC Refresh" Id="0x227" />
+	    <Usage Name="AC Previous Link" Id="0x228" />
+	    <Usage Name="AC Next Link" Id="0x229" />
+	    <Usage Name="AC Bookmarks" Id="0x22A" />
+	    <Usage Name="AC History" Id="0x22B" />
+	    <Usage Name="AC Subscriptions" Id="0x22C" />
+	    <Usage Name="AC Zoom In" Id="0x22D" />
+	    <Usage Name="AC Zoom Out" Id="0x22E" />
+	    <Usage Name="AC Zoom" Id="0x22F" />
+	    <Usage Name="AC Full Screen View" Id="0x230" />
+	    <Usage Name="AC Normal View" Id="0x231" />
+	    <Usage Name="AC View Toggle" Id="0x232" />
+	    <Usage Name="AC Scroll Up" Id="0x233" />
+	    <Usage Name="AC Scroll Down" Id="0x234" />
+	    <Usage Name="AC Scroll" Id="0x235" />
+	    <Usage Name="AC Pan Left" Id="0x236" />
+	    <Usage Name="AC Pan Right" Id="0x237" />
+	    <Usage Name="AC Pan" Id="0x238" />
+	    <Usage Name="AC New Window" Id="0x239" />
+	    <Usage Name="AC Tile Horizontally" Id="0x23A" />
+	    <Usage Name="AC Tile Vertically" Id="0x23B" />
+	    <Usage Name="AC Format" Id="0x23C" />
+	    <Usage Name="AC Edit" Id="0x23D" />
+	    <Usage Name="AC Bold" Id="0x23E" />
+	    <Usage Name="AC Italics" Id="0x23F" />
+	    <Usage Name="AC Underline" Id="0x240" />
+	    <Usage Name="AC Strikethrough" Id="0x241" />
+	    <Usage Name="AC Subscript" Id="0x242" />
+	    <Usage Name="AC Superscript" Id="0x243" />
+	    <Usage Name="AC All Caps" Id="0x244" />
+	    <Usage Name="AC Rotate" Id="0x245" />
+	    <Usage Name="AC Resize" Id="0x246" />
+	    <Usage Name="AC Flip horizontal" Id="0x247" />
+	    <Usage Name="AC Flip Vertical" Id="0x248" />
+	    <Usage Name="AC Mirror Horizontal" Id="0x249" />
+	    <Usage Name="AC Mirror Vertical" Id="0x24A" />
+	    <Usage Name="AC Font Select" Id="0x24B" />
+	    <Usage Name="AC Font Color" Id="0x24C" />
+	    <Usage Name="AC Font Size" Id="0x24D" />
+	    <Usage Name="AC Justify Left" Id="0x24E" />
+	    <Usage Name="AC Justify Center H" Id="0x24F" />
+	    <Usage Name="AC Justify Right" Id="0x250" />
+	    <Usage Name="AC Justify Block H" Id="0x251" />
+	    <Usage Name="AC Justify Top" Id="0x252" />
+	    <Usage Name="AC Justify Center V" Id="0x253" />
+	    <Usage Name="AC Justify Bottom" Id="0x254" />
+	    <Usage Name="AC Justify Block V" Id="0x255" />
+	    <Usage Name="AC Indent Decrease" Id="0x256" />
+	    <Usage Name="AC Indent Increase" Id="0x257" />
+	    <Usage Name="AC Numbered List" Id="0x258" />
+	    <Usage Name="AC Restart Numbering" Id="0x259" />
+	    <Usage Name="AC Bulleted List" Id="0x25A" />
+	    <Usage Name="AC Promote" Id="0x25B" />
+	    <Usage Name="AC Demote" Id="0x25C" />
+	    <Usage Name="AC Yes" Id="0x25D" />
+	    <Usage Name="AC No" Id="0x25E" />
+	    <Usage Name="AC Cancel" Id="0x25F" />
+	    <Usage Name="AC Catalog" Id="0x260" />
+	    <Usage Name="AC Buy/Checkout" Id="0x261" />
+	    <Usage Name="AC Add to Cart" Id="0x262" />
+	    <Usage Name="AC Expand" Id="0x263" />
+	    <Usage Name="AC Expand All" Id="0x264" />
+	    <Usage Name="AC Collapse" Id="0x265" />
+	    <Usage Name="AC Collapse All" Id="0x266" />
+	    <Usage Name="AC Print Preview" Id="0x267" />
+	    <Usage Name="AC Paste Special" Id="0x268" />
+	    <Usage Name="AC Insert Mode" Id="0x269" />
+	    <Usage Name="AC Delete" Id="0x26A" />
+	    <Usage Name="AC Lock" Id="0x26B" />
+	    <Usage Name="AC Unlock" Id="0x26C" />
+	    <Usage Name="AC Protect" Id="0x26D" />
+	    <Usage Name="AC Unprotect" Id="0x26E" />
+	    <Usage Name="AC Attach Comment" Id="0x26F" />
+	    <Usage Name="AC Delete Comment" Id="0x270" />
+	    <Usage Name="AC View Comment" Id="0x271" />
+	    <Usage Name="AC Select Word" Id="0x272" />
+	    <Usage Name="AC Select Sentence" Id="0x273" />
+	    <Usage Name="AC Select Paragraph" Id="0x274" />
+	    <Usage Name="AC Select Column" Id="0x275" />
+	    <Usage Name="AC Select Row" Id="0x276" />
+	    <Usage Name="AC Select Table" Id="0x277" />
+	    <Usage Name="AC Select Object" Id="0x278" />
+	    <Usage Name="AC Redo/Repeat" Id="0x279" />
+	    <Usage Name="AC Sort" Id="0x27A" />
+	    <Usage Name="AC Sort Ascending" Id="0x27B" />
+	    <Usage Name="AC Sort Descending" Id="0x27C" />
+	    <Usage Name="AC Filter" Id="0x27D" />
+	    <Usage Name="AC Set Clock" Id="0x27E" />
+	    <Usage Name="AC View Clock" Id="0x27F" />
+	    <Usage Name="AC Select Time Zone" Id="0x280" />
+	    <Usage Name="AC Edit Time Zones" Id="0x281" />
+	    <Usage Name="AC Set Alarm Sel" Id="0x282" />
+	    <Usage Name="AC Clear Alarm" Id="0x283" />
+	    <Usage Name="AC Snooze Alarm" Id="0x284" />
+	    <Usage Name="AC Reset Alarm" Id="0x285" />
+	    <Usage Name="AC Synchronize" Id="0x286" />
+	    <Usage Name="AC Send/Receive" Id="0x287" />
+	    <Usage Name="AC Send To" Id="0x288" />
+	    <Usage Name="AC Reply" Id="0x289" />
+	    <Usage Name="AC Reply All" Id="0x28A" />
+	    <Usage Name="AC Forward Msg" Id="0x28B" />
+	    <Usage Name="AC Send" Id="0x28C" />
+	    <Usage Name="AC Attach File" Id="0x28D" />
+	    <Usage Name="AC Upload" Id="0x28E" />
+	    <Usage Name="AC Download (Save Target As)" Id="0x28F" />
+	    <Usage Name="AC Set Borders" Id="0x290" />
+	    <Usage Name="AC Insert Row" Id="0x291" />
+	    <Usage Name="AC Insert Column" Id="0x292" />
+	    <Usage Name="AC Insert File" Id="0x293" />
+	    <Usage Name="AC Insert Picture" Id="0x294" />
+	    <Usage Name="AC Insert Object" Id="0x295" />
+	    <Usage Name="AC Insert Symbol" Id="0x296" />
+	    <Usage Name="AC Save and Close" Id="0x297" />
+	    <Usage Name="AC Rename" Id="0x298" />
+	    <Usage Name="AC Merge" Id="0x299" />
+	    <Usage Name="AC Split" Id="0x29A" />
+	    <Usage Name="AC Disribute Horizontally" Id="0x29B" />
+	    <Usage Name="AC Distribute Vertically" Id="0x29C" />
+	</UsagePage>
+	<UsagePage Name="Digitizer" Id="0x0D">
+	    <Usage Name="Digitizer" Id="0x01" />
+	    <Usage Name="Pen" Id="0x02" />
+	    <Usage Name="Light Pen" Id="0x03" />
+	    <Usage Name="Touch Screen" Id="0x04" />
+	    <Usage Name="Touch Pad" Id="0x05" />
+	    <Usage Name="White Board" Id="0x06" />
+	    <Usage Name="Coordinate MeasuringMachine" Id="0x07" />
+	    <Usage Name="3D Digitizer" Id="0x08" />
+	    <Usage Name="Stereo Plotter" Id="0x09" />
+	    <Usage Name="Articulated Arm" Id="0x0A" />
+	    <Usage Name="Armature" Id="0x0B" />
+	    <Usage Name="Multiple Point Digitizer" Id="0x0C" />
+	    <Usage Name="Free Space Wand" Id="0x0D" />
+	    <Usage Name="Stylus" Id="0x20" />
+	    <Usage Name="Puck" Id="0x21" />
+	    <Usage Name="Finger" Id="0x22" />
+	    <Usage Name="Tip Pressure" Id="0x30" />
+	    <Usage Name="Barrel Pressure" Id="0x31" />
+	    <Usage Name="In Range" Id="0x32" />
+	    <Usage Name="Touch" Id="0x33" />
+	    <Usage Name="Untouch" Id="0x34" />
+	    <Usage Name="Tap" Id="0x35" />
+	    <Usage Name="Quality" Id="0x36" />
+	    <Usage Name="Data Valid" Id="0x37" />
+	    <Usage Name="Transducer Index" Id="0x38" />
+	    <Usage Name="Tablet Function Keys" Id="0x39" />
+	    <Usage Name="Program Change Keys" Id="0x3A" />
+	    <Usage Name="Battery Strength" Id="0x3B" />
+	    <Usage Name="Invert" Id="0x3C" />
+	    <Usage Name="X Tilt" Id="0x3D" />
+	    <Usage Name="Y Tilt" Id="0x3E" />
+	    <Usage Name="Azimuth" Id="0x3F" />
+	    <Usage Name="Altitude" Id="0x40" />
+	    <Usage Name="Twist" Id="0x41" />
+	    <Usage Name="Tip Switch" Id="0x42" />
+	    <Usage Name="Secondary Tip Switch" Id="0x43" />
+	    <Usage Name="Barrel Switch" Id="0x44" />
+	    <Usage Name="Eraser" Id="0x45" />
+	    <Usage Name="Tablet Pick" Id="0x46" />
+	</UsagePage>
+	<UsagePage Name="PID Page" Id="0x0F">
+	</UsagePage>
+	<UsagePage Name="Unicode" Id="0x10">
+	</UsagePage>
+	<UsagePage Name="Alphanumeric Display" Id="0x14">
+	    <Usage Name="Alphanumeric Display" Id="0x01" />
+	    <Usage Name="Bitmapped Display" Id="0x02" />
+	    <Usage Name="Display Attributes Report" Id="0x20" />
+	    <Usage Name="ASCII Character Set" Id="0x21" />
+	    <Usage Name="Data Read Back" Id="0x22" />
+	    <Usage Name="Font Read Back" Id="0x23" />
+	    <Usage Name="Display Control Report" Id="0x24" />
+	    <Usage Name="Clear Display" Id="0x25" />
+	    <Usage Name="Display Enable" Id="0x26" />
+	    <Usage Name="Screen Saver Delay" Id="0x27" />
+	    <Usage Name="Screen Saver Enable" Id="0x28" />
+	    <Usage Name="Vertical Scroll" Id="0x29" />
+	    <Usage Name="Horizontal Scroll" Id="0x2A" />
+	    <Usage Name="Character Report" Id="0x2B" />
+	    <Usage Name="Display Data" Id="0x2C" />
+	    <Usage Name="Display Status" Id="0x2D" />
+	    <Usage Name="Stat Not Ready" Id="0x2E" />
+	    <Usage Name="Stat Ready" Id="0x2F" />
+	    <Usage Name="Err Not a loadable character" Id="0x30" />
+	    <Usage Name="Err Font data cannot be read" Id="0x31" />
+	    <Usage Name="Cursor Position Report" Id="0x32" />
+	    <Usage Name="Row" Id="0x33" />
+	    <Usage Name="Column" Id="0x34" />
+	    <Usage Name="Rows" Id="0x35" />
+	    <Usage Name="Columns" Id="0x36" />
+	    <Usage Name="Cursor Pixel Positioning" Id="0x37" />
+	    <Usage Name="Cursor Mode" Id="0x38" />
+	    <Usage Name="Cursor Enable" Id="0x39" />
+	    <Usage Name="Cursor Blink" Id="0x3A" />
+	    <Usage Name="Font Report" Id="0x3B" />
+	    <Usage Name="Font Data" Id="0x3C" />
+	    <Usage Name="Character Width" Id="0x3D" />
+	    <Usage Name="Character Height" Id="0x3E" />
+	    <Usage Name="Character Spacing Horizontal" Id="0x3F" />
+	    <Usage Name="Character Spacing Vertical" Id="0x40" />
+	    <Usage Name="Unicode Character Set" Id="0x41" />
+	    <Usage Name="Font 7-Segment" Id="0x42" />
+	    <Usage Name="7-Segment Direct Map" Id="0x43" />
+	    <Usage Name="Font 14-Segment" Id="0x44" />
+	    <Usage Name="14-Segment Direct Map" Id="0x45" />
+	    <Usage Name="Display Brightness" Id="0x46" />
+	    <Usage Name="Display Contrast" Id="0x47" />
+	    <Usage Name="Character Attribute" Id="0x48" />
+	    <Usage Name="Attribute Readback" Id="0x49" />
+	    <Usage Name="Attribute Data" Id="0x4A" />
+	    <Usage Name="Char Attr Enhance" Id="0x4B" />
+	    <Usage Name="Char Attr Underline" Id="0x4C" />
+	    <Usage Name="Char Attr Blink" Id="0x4D" />
+	    <Usage Name="Bitmap Size X" Id="0x80" />
+	    <Usage Name="Bitmap Size Y" Id="0x81" />
+	    <Usage Name="Bit Depth Format" Id="0x83" />
+	    <Usage Name="Display Orientation" Id="0x84" />
+	    <Usage Name="Palette Report" Id="0x85" />
+	    <Usage Name="Palette Data Size" Id="0x86" />
+	    <Usage Name="Palette Data Offset" Id="0x87" />
+	    <Usage Name="Palette Data" Id="0x88" />
+	    <Usage Name="Blit Report" Id="0x8A" />
+	    <Usage Name="Blit Rectangle X1" Id="0x8B" />
+	    <Usage Name="Blit Rectangle Y1" Id="0x8C" />
+	    <Usage Name="Blit Rectangle X2" Id="0x8D" />
+	    <Usage Name="Blit Rectangle Y2" Id="0x8E" />
+	    <Usage Name="Blit Data" Id="0x8F" />
+	    <Usage Name="Soft Button" Id="0x90" />
+	    <Usage Name="Soft Button ID" Id="0x91" />
+	    <Usage Name="Soft Button Side" Id="0x92" />
+	    <Usage Name="Soft Button Offset 1" Id="0x93" />
+	    <Usage Name="Soft Button Offset 2" Id="0x94" />
+	    <Usage Name="Soft Button Report" Id="0x95" />
+	</UsagePage>
+	<UsagePage Name="Medical Instruments" Id="0x40">
+	</UsagePage>
+	<UsagePage Name="Monitor pages" Id="0x83">
+	</UsagePage>
+	<UsagePage Name="Power pages" Id="0x87">
+	</UsagePage>
+	<UsagePage Name="Bar Code Scanner page" Id="0x8C">
+	</UsagePage>
+	<UsagePage Name="Scale page" Id="0x8D">
+	</UsagePage>
+	<UsagePage Name="Magnetic Stripe Reading (MSR) Devices" Id="0x8E">
+	</UsagePage>
+	<UsagePage Name="Camera Control Page" Id="0x90">
+	</UsagePage>
+	<UsagePage Name="Arcade Page" Id="0x91">
+	</UsagePage>
+	<UsagePage Name="Vendor-defined" Id="0xFFFF">
+	</UsagePage>
+    </Usages>
 </Config>

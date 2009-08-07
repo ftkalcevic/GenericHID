@@ -30,7 +30,7 @@ namespace ShapeType
 class Shape
 {
 public:
-    Shape(QDomElement &node, const QString &sShapeId, bool bSource, const QString &sImageFile, int nImageWidth, int nImageHeight, const QString &sIconFile, int nMaxInstances, const QString &sDescription);
+    Shape(QDomElement &node, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, int nImageWidth, int nImageHeight, const QString &sIconFile, int nMaxInstances, const QString &sDescription);
     virtual ~Shape(void);
 
     static Shape *CreateFromXML( QDomElement &doc );
@@ -38,8 +38,14 @@ public:
     const QString &shapeFile() const  { return m_sImageFile; }
     const QString &name() const  { return m_sShapeId; }
     const QString &description() const  { return m_sDescription; }
+    int maxInstances() const  { return m_nMaxInstances; }
+    ShapeType::ShapeType shapeType() const { return m_eShapeType; }
+    QPixmap pixmap();
+    const QList<Pin *> &pins() const { return m_Pins; }
+    const QList<ShapeProperty *> &properties() const { return m_Properties; }
 
 private:
+    ShapeType::ShapeType m_eShapeType;
     QString m_sShapeId;
     bool m_bSource;
     QString m_sImageFile;
@@ -51,6 +57,7 @@ private:
 
     QList<Pin *> m_Pins;
     QList<ShapeProperty *> m_Properties;
+    QPixmap m_pixmap;
 };
 
 #endif
