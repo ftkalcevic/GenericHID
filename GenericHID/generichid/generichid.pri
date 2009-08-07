@@ -5,6 +5,7 @@
 
 #Header files
 HEADERS += dragtoolbutton.h \
+    editor.h \
     eepromdata.h \
     generichid.h \
     pin.h \
@@ -31,6 +32,7 @@ HEADERS += dragtoolbutton.h \
 
 #Source files
 SOURCES += dragtoolbutton.cpp \
+    editor.cpp \
     eepromdata.cpp \
     generichid.cpp \
     main.cpp \
