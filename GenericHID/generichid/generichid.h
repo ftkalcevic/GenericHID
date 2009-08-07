@@ -5,7 +5,7 @@
 #include "shapecollection.h"
 #include "shapeinstancecollection.h"
 
-class GenericHID : public QMainWindow
+class GenericHID : public QMainWindow, public Editor
 {
     Q_OBJECT
 
@@ -32,10 +32,6 @@ private:
     ShapeCollection *m_pShapes;
     ShapeInstanceCollection m_pShapeInstances;
     QGraphicsScene *m_pScene;
-    QCursor *m_curMirror;
-    QCursor *m_curRotate;
-    QCursor *m_curWire;
-    QCursor *m_curPointer;
 };
 
 #endif // GENERICHID_H

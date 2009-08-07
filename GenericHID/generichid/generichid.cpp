@@ -44,6 +44,7 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
 
     // Cursors
     m_curMirror = new QCursor( QPixmap(":/GenericHID/MirrorCursor"),0,0);
+    m_curMirrorOff = new QCursor( QPixmap(":/GenericHID/MirrorCursorOff"),0,0);
     m_curRotate = new QCursor( QPixmap(":/GenericHID/RotateCursor"),0,0);
     m_curWire = new QCursor( QPixmap(":/GenericHID/WireCursor"),0,0);
     m_curPointer = new QCursor( QPixmap(":/GenericHID/Cursor"),0,0);
@@ -97,7 +98,7 @@ void GenericHID::onDropShapeEvent( const ::Shape *pShape, QPointF pos )
 	return;
     }
 
-    ShapeInstance *pInstance = m_pShapeInstances.CreateNewShape( pShape );
+    ShapeInstance *pInstance = m_pShapeInstances.CreateNewShape( pShape, this );
     if ( pInstance != NULL )
     {
 	pInstance->item()->setPos( pos );
@@ -108,19 +109,25 @@ void GenericHID::onDropShapeEvent( const ::Shape *pShape, QPointF pos )
 void GenericHID::onRotateTool()
 {
     ui.graphicsView->setCursor( *m_curRotate );
+    m_eEditMode = EditMode::Rotate;
 }
 
 void GenericHID::onMirrorTool()
 {
-    ui.graphicsView->setCursor( *m_curMirror );
+    ui.graphicsView->setCursor( *m_curMirrorOff );
+    m_eEditMode = EditMode::Mirror;
 }
+
 void GenericHID::onPointerTool()
 {
-    ui.graphicsView->setCursor( *m_curPointer );//ui.graphicsView->setCursor( QCursor(Qt::ArrowCursor) );
+    ui.graphicsView->setCursor( *m_curPointer );
+    m_eEditMode = EditMode::Pointer;
 }
+
 void GenericHID::onWireLinkTool()
 {
     ui.graphicsView->setCursor( *m_curWire );
+    m_eEditMode = EditMode::Wiring;
 }
 
 /*

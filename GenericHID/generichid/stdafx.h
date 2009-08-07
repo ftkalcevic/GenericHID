@@ -14,6 +14,7 @@
 #include <QToolButton>
 #include <QtGui/QMainWindow>
 #include <QGraphicsView>
+#include <QGraphicsPixmapItem>
 
 
 #include "common.h"

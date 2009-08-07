@@ -30,10 +30,10 @@ bool ShapeInstanceCollection::CanAdd( const Shape *pShape, QString &sError )
     return true;
 }
 
-ShapeInstance *ShapeInstanceCollection::CreateNewShape( const Shape *pShape )
+ShapeInstance *ShapeInstanceCollection::CreateNewShape( const Shape *pShape, Editor *pEditor )
 {
     ShapeInstance *pInstance = new ShapeInstance( pShape );
-    pInstance->CreateGraphics();
+    pInstance->CreateGraphics(pEditor);
     m_Instances.push_back( pInstance );
     return pInstance;
 }

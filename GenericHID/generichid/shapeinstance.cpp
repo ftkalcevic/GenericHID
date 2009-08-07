@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "shapeinstance.h"
 #include "pinitem.h"
+#include "shapeitem.h"
 
 ShapeInstance::ShapeInstance(const Shape *pShape)
 : m_pShape(pShape)
@@ -12,9 +13,9 @@ ShapeInstance::~ShapeInstance(void)
 }
 
 
-bool ShapeInstance::CreateGraphics()
+bool ShapeInstance::CreateGraphics(Editor *pEditor)
 {
-    m_pItem = new QGraphicsPixmapItem( QPixmap(m_pShape->shapeFile()), NULL, NULL );
+    m_pItem = new ShapeItem( m_pShape->shapeFile(), pEditor, NULL );
 
     m_pItem->setZValue(-1);
     m_pItem->setFlag( QGraphicsItem::ItemIsMovable);

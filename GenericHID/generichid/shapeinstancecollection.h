@@ -11,7 +11,7 @@ public:
     ~ShapeInstanceCollection(void);
 
     bool CanAdd( const Shape *pShape, QString &sError );
-    ShapeInstance *CreateNewShape( const Shape *pShape );
+    ShapeInstance *CreateNewShape( const Shape *pShape, Editor *pEditor );
 private:
     QList<ShapeInstance *> m_Instances;
 };

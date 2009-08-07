@@ -178,6 +178,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\editor.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\eepromdata.cpp"
 				>
 			</File>
@@ -312,6 +316,10 @@
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\editor.h"
+				>
 			</File>
 			<File
 				RelativePath=".\eepromdata.h"
@@ -1064,6 +1072,10 @@
 			</File>
 			<File
 				RelativePath=".\resources\ledicon.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\Mirror Cursor Off.png"
 				>
 			</File>
 			<File

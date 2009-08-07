@@ -9,5 +9,6 @@
         <file alias="MirrorCursor" >resources/Mirror Cursor.png</file>
         <file alias="RotateCursor" >resources/Rotate Cursor.png</file>
         <file alias="WireCursor" >resources/Wire Cursor.png</file>
+        <file alias="MirrorCursorOff" >resources/Mirror Cursor Off.png</file>
     </qresource>
 </RCC>
