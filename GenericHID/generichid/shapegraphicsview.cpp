@@ -23,8 +23,8 @@ void ShapeGraphicsView::dropEvent ( QDropEvent * event )
 	emit dropShapeEvent( mimeData->shape(), mapToScene(event->pos()) );
 	event->acceptProposedAction();
     }
-    else
-	QGraphicsView::dropEvent( event );
+    //else
+	//QGraphicsView::dropEvent( event );
 }
 
 void ShapeGraphicsView::dragEnterEvent( QDragEnterEvent * event )
@@ -32,8 +32,8 @@ void ShapeGraphicsView::dragEnterEvent( QDragEnterEvent * event )
     const ShapeMimeData *mimeData = qobject_cast<const ShapeMimeData *>(event->mimeData());
     if ( mimeData != NULL )
 	event->acceptProposedAction();
-    else
-	QGraphicsView::dragEnterEvent( event );
+    //else
+	//QGraphicsView::dragEnterEvent( event );
 }
 
 void ShapeGraphicsView::dragMoveEvent( QDragMoveEvent * event )
@@ -41,8 +41,8 @@ void ShapeGraphicsView::dragMoveEvent( QDragMoveEvent * event )
     const ShapeMimeData *mimeData = qobject_cast<const ShapeMimeData *>(event->mimeData());
     if ( mimeData != NULL )
 	event->acceptProposedAction();
-    else
-	QGraphicsView::dragMoveEvent( event );
+    //else
+	//QGraphicsView::dragMoveEvent( event );
 }
 
 
