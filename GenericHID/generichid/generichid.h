@@ -35,6 +35,7 @@ private:
     QCursor *m_curMirror;
     QCursor *m_curRotate;
     QCursor *m_curWire;
+    QCursor *m_curPointer;
 };
 
 #endif // GENERICHID_H

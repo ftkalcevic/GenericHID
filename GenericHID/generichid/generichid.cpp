@@ -46,6 +46,8 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
     m_curMirror = new QCursor( QPixmap(":/GenericHID/MirrorCursor"),0,0);
     m_curRotate = new QCursor( QPixmap(":/GenericHID/RotateCursor"),0,0);
     m_curWire = new QCursor( QPixmap(":/GenericHID/WireCursor"),0,0);
+    m_curPointer = new QCursor( QPixmap(":/GenericHID/Cursor"),0,0);
+    onPointerTool();
 
     connect( ui.graphicsView, SIGNAL(dropShapeEvent( const ::Shape *, QPointF) ), this, SLOT(onDropShapeEvent( const ::Shape *, QPointF) ) );
 }
@@ -114,7 +116,7 @@ void GenericHID::onMirrorTool()
 }
 void GenericHID::onPointerTool()
 {
-    ui.graphicsView->setCursor( QCursor(Qt::ArrowCursor) );
+    ui.graphicsView->setCursor( *m_curPointer );//ui.graphicsView->setCursor( QCursor(Qt::ArrowCursor) );
 }
 void GenericHID::onWireLinkTool()
 {

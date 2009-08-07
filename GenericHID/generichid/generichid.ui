@@ -167,7 +167,7 @@
    </property>
    <property name="icon">
     <iconset resource="generichid.qrc">
-     <normaloff>:/GenericHID/resources/Cursor.png</normaloff>:/GenericHID/resources/Cursor.png</iconset>
+     <normaloff>:/GenericHID/Cursor</normaloff>:/GenericHID/Cursor</iconset>
    </property>
    <property name="text">
     <string>Pointer</string>
