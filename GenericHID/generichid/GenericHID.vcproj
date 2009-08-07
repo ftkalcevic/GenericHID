@@ -750,13 +750,6 @@
 						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\generatedfiles\debug\moc_pinitem.cpp"
@@ -979,7 +972,63 @@
 			Name="Resources"
 			>
 			<File
+				RelativePath=".\resources\AVRUSBKey - Wings and labels.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\AVRUSBKey - Wings.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\AVRUSBKey - Wired Wings.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\AVRUSBKey.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\AVRUSBKeyIcon.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\AVRUSBKeyStripped.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\BiColourLED.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\BiColourLEDIcon.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\CodedRotarySwitch.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\CodedRotarySwitchIcon.png"
+				>
+			</File>
+			<File
 				RelativePath=".\resources\Cursor.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\DigitalEncoder.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\DigitalEncoderIcon.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\DirectionalSwitch.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\DirectionalSwitchIcon.png"
 				>
 			</File>
 			<File
@@ -987,7 +1036,39 @@
 				>
 			</File>
 			<File
+				RelativePath=".\resources\KeyMatrix.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\KeyMatrixIcon.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\LCD.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\LCDIcon.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\led.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\ledicon.png"
+				>
+			</File>
+			<File
 				RelativePath=".\resources\Mirror.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\Potentiometer.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\PotentiometerIcon.png"
 				>
 			</File>
 			<File
@@ -995,7 +1076,31 @@
 				>
 			</File>
 			<File
+				RelativePath=".\resources\RotarySwitch.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\RotarySwitchIcon.png"
+				>
+			</File>
+			<File
 				RelativePath=".\resources\Rotate.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\Switch.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\SwitchIcon.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\TriColourLED.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\TriColourLEDIcon.png"
 				>
 			</File>
 			<File
