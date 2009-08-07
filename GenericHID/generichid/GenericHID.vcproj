@@ -750,6 +750,13 @@
 						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\generatedfiles\debug\moc_pinitem.cpp"
@@ -1060,6 +1067,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\resources\Mirror Cursor.png"
+				>
+			</File>
+			<File
 				RelativePath=".\resources\Mirror.png"
 				>
 			</File>
@@ -1084,6 +1095,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\resources\Rotate Cursor.png"
+				>
+			</File>
+			<File
 				RelativePath=".\resources\Rotate.png"
 				>
 			</File>
@@ -1101,6 +1116,10 @@
 			</File>
 			<File
 				RelativePath=".\resources\TriColourLEDIcon.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\Wire Cursor.png"
 				>
 			</File>
 			<File

@@ -22,12 +22,19 @@ public slots:
     void onMicrocontrollerExport();
     void onMicrocontrollerImportAndProgram();
     void onDropShapeEvent( const ::Shape *pShape, QPointF pos );
+    void onRotateTool();
+    void onMirrorTool();
+    void onPointerTool();
+    void onWireLinkTool();
 
 private:
     Ui::GenericHIDClass ui;
     ShapeCollection *m_pShapes;
     ShapeInstanceCollection m_pShapeInstances;
     QGraphicsScene *m_pScene;
+    QCursor *m_curMirror;
+    QCursor *m_curRotate;
+    QCursor *m_curWire;
 };
 
 #endif // GENERICHID_H

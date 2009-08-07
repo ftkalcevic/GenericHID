@@ -1,10 +1,13 @@
 <RCC>
-  <qresource prefix="GenericHID" >
-    <file>resources/Rotate.png</file>
-    <file>resources/Wire.png</file>
-    <file>resources/Cursor.png</file>
-    <file>resources/Mirror.png</file>
-    <file alias="greenlight" >resources/GreenLight.png</file>
-    <file alias="redlight" >resources/RedLight.png</file>
-  </qresource>
+    <qresource prefix="/GenericHID" >
+        <file>resources/Rotate.png</file>
+        <file>resources/Wire.png</file>
+        <file>resources/Cursor.png</file>
+        <file>resources/Mirror.png</file>
+        <file alias="greenlight" >resources/GreenLight.png</file>
+        <file alias="redlight" >resources/RedLight.png</file>
+        <file alias="MirrorCursor" >resources/Mirror Cursor.png</file>
+        <file alias="RotateCursor" >resources/Rotate Cursor.png</file>
+        <file alias="WireCursor" >resources/Wire Cursor.png</file>
+    </qresource>
 </RCC>

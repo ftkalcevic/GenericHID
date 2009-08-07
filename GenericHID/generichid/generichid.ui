@@ -162,6 +162,9 @@
    </property>
   </action>
   <action name="actionPointerTool">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="generichid.qrc">
      <normaloff>:/GenericHID/resources/Cursor.png</normaloff>:/GenericHID/resources/Cursor.png</iconset>
@@ -171,6 +174,9 @@
    </property>
   </action>
   <action name="actionWireLinkTool">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="generichid.qrc">
      <normaloff>:/GenericHID/resources/Wire.png</normaloff>:/GenericHID/resources/Wire.png</iconset>
@@ -180,6 +186,9 @@
    </property>
   </action>
   <action name="actionRotateTool">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="generichid.qrc">
      <normaloff>:/GenericHID/resources/Rotate.png</normaloff>:/GenericHID/resources/Rotate.png</iconset>
@@ -189,6 +198,9 @@
    </property>
   </action>
   <action name="actionMirrorTool">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="generichid.qrc">
      <normaloff>:/GenericHID/resources/Mirror.png</normaloff>:/GenericHID/resources/Mirror.png</iconset>
@@ -327,6 +339,70 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionRotateTool</sender>
+   <signal>triggered()</signal>
+   <receiver>GenericHIDClass</receiver>
+   <slot>onRotateTool()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>577</x>
+     <y>398</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionMirrorTool</sender>
+   <signal>triggered()</signal>
+   <receiver>GenericHIDClass</receiver>
+   <slot>onMirrorTool()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>577</x>
+     <y>398</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionPointerTool</sender>
+   <signal>triggered()</signal>
+   <receiver>GenericHIDClass</receiver>
+   <slot>onPointerTool()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>577</x>
+     <y>398</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionWireLinkTool</sender>
+   <signal>triggered()</signal>
+   <receiver>GenericHIDClass</receiver>
+   <slot>onWireLinkTool()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>577</x>
+     <y>398</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onFileOpen()</slot>
@@ -336,5 +412,9 @@
   <slot>onMicrocontrollerProgram()</slot>
   <slot>onMicrocontrollerExport()</slot>
   <slot>onMicrocontrollerImportAndProgram()</slot>
+  <slot>onRotateTool()</slot>
+  <slot>onMirrorTool()</slot>
+  <slot>onPointerTool()</slot>
+  <slot>onWireLinkTool()</slot>
  </slots>
 </ui>
