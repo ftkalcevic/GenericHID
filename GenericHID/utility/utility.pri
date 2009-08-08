@@ -1,15 +1,17 @@
 #Header files
 HEADERS += ./log.h \
-    ./xmlutility.h 
+    ./xmlutility.h  \
+    usages.h
 
 #Source files
 SOURCES += ./xmlutility.cpp \
            ./log.cpp \
-	   ./logcore.cpp
+	   ./logcore.cpp \
+	   usages.cpp
 
 #Forms
 #FORMS += 
 
 #Resource file(s)
-#RESOURCES +=
+RESOURCES += utility.qrc
 
