@@ -24,8 +24,10 @@
 #include "qtpropertymanager.h"
 #include "qtvariantproperty.h"
 #include "qtpropertymanager.h"
+#include "usagepropertymanager.h"
 #include "qtvariantproperty.h"
 #include <QtTreePropertyBrowser>
+#include <QtAbstractPropertyManager>
 
 
 #include "common.h"

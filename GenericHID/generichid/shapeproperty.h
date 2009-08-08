@@ -40,6 +40,7 @@ protected:
     static QtEnumPropertyManager *m_enumManager;
     static QtBoolPropertyManager *m_boolManager;
     static QtIntPropertyManager *m_intManager;
+    static UsagePropertyManager *m_usageManager;
     
     static bool m_bInitialised;
 

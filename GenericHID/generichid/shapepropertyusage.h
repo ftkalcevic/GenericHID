@@ -10,6 +10,9 @@ public:
     ShapePropertyUsage(const QString &sName, const QString &sDescription);
     virtual ~ShapePropertyUsage(void);
     virtual QtProperty *getQtProperty();
+    virtual bool Configure( QDomElement &node );
+private:
+    QString m_sDefault;
 };
 
 #endif

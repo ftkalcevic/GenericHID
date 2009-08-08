@@ -13,8 +13,12 @@ ShapePropertyUsage::~ShapePropertyUsage(void)
 
 QtProperty *ShapePropertyUsage::getQtProperty()
 {
-    //QtProperty *pProp = m_boolManager->addProperty( m_sName );
-    //return pProp;
-    return NULL;
+    QtProperty *pProp = m_usageManager->addProperty( m_sName );
+    return pProp;
 }
 
+bool ShapePropertyUsage::Configure( QDomElement &node )
+{
+    m_sDefault = XMLUtility::getAttribute( node, "default", "" );
+    return true;
+}

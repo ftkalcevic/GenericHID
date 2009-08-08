@@ -42,6 +42,7 @@ QtDoublePropertyManager *ShapeProperty::m_doubleManager = NULL;
 QtEnumPropertyManager *ShapeProperty::m_enumManager = NULL;
 QtBoolPropertyManager *ShapeProperty::m_boolManager = NULL;
 QtIntPropertyManager *ShapeProperty::m_intManager = NULL;
+UsagePropertyManager *ShapeProperty::m_usageManager = NULL;
 
 bool ShapeProperty::m_bInitialised = false;
 
@@ -82,6 +83,7 @@ void ShapeProperty::Init()
         m_enumManager = new QtEnumPropertyManager();
         m_boolManager = new QtBoolPropertyManager();
 	m_intManager = new QtIntPropertyManager();
+        m_usageManager = new UsagePropertyManager();
         m_bInitialised = true;
     }
 }
