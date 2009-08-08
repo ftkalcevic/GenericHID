@@ -214,6 +214,14 @@
 			Name="Generated Files"
 			>
 		</Filter>
+		<Filter
+			Name="Resources"
+			>
+			<File
+				RelativePath=".\resources\usages.xml"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>
