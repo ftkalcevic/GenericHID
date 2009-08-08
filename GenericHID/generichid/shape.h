@@ -2,7 +2,7 @@
 #define _SHAPE_H_
 
 #include "pin.h"
-#include "shapeproperty.h"
+#include "shapeproperties.h"
 
 namespace ShapeType
 {
@@ -42,7 +42,7 @@ public:
     ShapeType::ShapeType shapeType() const { return m_eShapeType; }
     QPixmap pixmap();
     const QList<Pin *> &pins() const { return m_Pins; }
-    const QList<ShapeProperty *> &properties() const { return m_Properties; }
+    const ShapeProperties  &properties() const { return m_Properties; }
     bool source() const { return m_bSource; }	// source or sink device
 
 private:
@@ -57,7 +57,7 @@ private:
     QString m_sDescription;
 
     QList<Pin *> m_Pins;
-    QList<ShapeProperty *> m_Properties;
+    ShapeProperties m_Properties;
     QPixmap m_pixmap;
 };
 

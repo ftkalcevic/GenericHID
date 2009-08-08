@@ -10,6 +10,10 @@ class ShapePropertyString :
 public:
     ShapePropertyString(const QString &sName, const QString &sDescription);
     virtual ~ShapePropertyString(void);
+    virtual QtProperty *getQtProperty();
+    virtual bool Configure( QDomElement &node );
+private:
+    QString m_sDefault;
 };
 
 #endif

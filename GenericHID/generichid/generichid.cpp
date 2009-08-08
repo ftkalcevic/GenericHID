@@ -54,6 +54,10 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
     onPointerTool();
 
     connect( ui.graphicsView, SIGNAL(dropShapeEvent( const ::Shape *, QPointF) ), this, SLOT(onDropShapeEvent( const ::Shape *, QPointF) ) );
+
+    ui.listView->setPropertiesWithoutValueMarked(true);
+    ui.listView->setRootIsDecorated(false);
+    ShapeProperty::SetBrowserFactory( ui.listView );
 }
 
 GenericHID::~GenericHID()
@@ -102,6 +106,17 @@ void GenericHID::onDropShapeEvent( const ::Shape *pShape, QPointF pos )
     }
 
     ShapeItem *pItem = m_pScene->CreateNewShape( pShape, this, pos );
+
+
+    ui.listView->clear();
+    if ( pItem != NULL )
+    {
+        const ShapeProperties &pProps = pItem->shapeData()->properties();
+        ShapeProperty::SetBrowserFactory( ui.listView );
+        ui.listView->addProperty(pProps.topItem());
+        pProps.populate(pItem);
+    }
+
 }
 
 void GenericHID::onRotateTool()

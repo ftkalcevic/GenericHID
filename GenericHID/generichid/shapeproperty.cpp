@@ -33,10 +33,66 @@ namespace  PropertyType
 
 };
 
+
+QtGroupPropertyManager *ShapeProperty::m_groupManager = NULL;
+QtStringPropertyManager *ShapeProperty::m_stringManager = NULL;
+QtPointFPropertyManager *ShapeProperty::m_pointfScaleManager = NULL;
+QtPointFPropertyManager *ShapeProperty::m_pointfManager = NULL;
+QtDoublePropertyManager *ShapeProperty::m_doubleManager = NULL;
+QtEnumPropertyManager *ShapeProperty::m_enumManager = NULL;
+QtBoolPropertyManager *ShapeProperty::m_boolManager = NULL;
+QtIntPropertyManager *ShapeProperty::m_intManager = NULL;
+
+bool ShapeProperty::m_bInitialised = false;
+
+QtProperty *ShapeProperty::MakeGroupItem( const QString &s )
+{
+    Init();
+    return m_groupManager->addProperty(s);
+}
+
+void ShapeProperty::SetBrowserFactory( QtAbstractPropertyBrowser *browser )
+{
+    Init();
+
+    QtLineEditFactory *lineEditFactory = new QtLineEditFactory();
+    QtDoubleSpinBoxFactory *doubleSpinBoxFactory = new QtDoubleSpinBoxFactory();
+    QtEnumEditorFactory *comboBoxFactory = new QtEnumEditorFactory();
+    QtCheckBoxFactory *checkBoxFactory = new QtCheckBoxFactory();
+    QtSpinBoxFactory *spinBoxFactory = new QtSpinBoxFactory();
+
+    browser->setFactoryForManager(m_stringManager, lineEditFactory);
+    browser->setFactoryForManager(m_pointfManager->subDoublePropertyManager(), doubleSpinBoxFactory);
+    browser->setFactoryForManager(m_pointfScaleManager->subDoublePropertyManager(), doubleSpinBoxFactory);
+    browser->setFactoryForManager(m_doubleManager, doubleSpinBoxFactory);
+    browser->setFactoryForManager(m_enumManager, comboBoxFactory);
+    browser->setFactoryForManager(m_boolManager, checkBoxFactory);
+    browser->setFactoryForManager(m_intManager, spinBoxFactory);
+}
+
+void ShapeProperty::Init()
+{
+    if ( !m_bInitialised )
+    {
+        m_groupManager = new QtGroupPropertyManager();
+        m_stringManager = new QtStringPropertyManager();
+        m_pointfScaleManager = new QtPointFPropertyManager();
+        m_pointfManager = new QtPointFPropertyManager();
+        m_doubleManager = new QtDoublePropertyManager();
+        m_enumManager = new QtEnumPropertyManager();
+        m_boolManager = new QtBoolPropertyManager();
+	m_intManager = new QtIntPropertyManager();
+        m_bInitialised = true;
+    }
+}
+
+
+
 ShapeProperty::ShapeProperty( const QString &sName, const QString &sDescription )
 : m_sName(sName)
 , m_sDescription( sDescription )
 {
+    Init();
 }
 
 ShapeProperty::~ShapeProperty(void)

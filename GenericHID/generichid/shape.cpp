@@ -2,6 +2,8 @@
 #include "shape.h"
 #include "shapemcu.h"
 
+#include "shapeproperty.h"
+
 
 namespace ShapeType
 {
@@ -123,7 +125,7 @@ Shape *Shape::CreateFromXML( QDomElement &node )
 	    ShapeProperty *pShapeProperty = ShapeProperty::CreateShapeProperty( propertyNode, sPropName, sPropDescription, ePropType );
 
 	    if ( pShapeProperty != NULL )
-		pShape->m_Properties.push_back( pShapeProperty );
+		pShape->m_Properties.add( pShapeProperty );
 	}
     }
     return pShape;

@@ -19,6 +19,14 @@
 #include <QGraphicsScene>
 #include <QGraphicsPolygonItem>
 
+#include <QtLineEditFactory>
+#include <QtDoubleSpinBoxFactory>
+#include "qtpropertymanager.h"
+#include "qtvariantproperty.h"
+#include "qtpropertymanager.h"
+#include "qtvariantproperty.h"
+#include <QtTreePropertyBrowser>
+
 
 #include "common.h"
 #include "log.h"

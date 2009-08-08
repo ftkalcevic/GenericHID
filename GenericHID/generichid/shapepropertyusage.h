@@ -9,6 +9,7 @@ class ShapePropertyUsage :
 public:
     ShapePropertyUsage(const QString &sName, const QString &sDescription);
     virtual ~ShapePropertyUsage(void);
+    virtual QtProperty *getQtProperty();
 };
 
 #endif

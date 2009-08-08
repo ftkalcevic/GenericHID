@@ -269,7 +269,8 @@ void ShapeScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 		    }
 		    else if ( pPinItem->pin()->shape() == m_pEditor->m_pWiringStartPin->pin()->shape() )
 		    {
-			// todo - this checks the shape, not the shape instance
+			// todo - this checks the shape, not the shape instance - may not be necessary
+			//        I don't think we can connect to ourselves - sink -> source
 			SetCursor( *m_pEditor->m_curWireNot );
 			//ATLTRACE("Pin 2 can't wire to ourselves\n");
 		    }

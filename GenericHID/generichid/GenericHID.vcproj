@@ -238,6 +238,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\shapeproperties.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\shapeproperty.cpp"
 				>
 			</File>
@@ -548,6 +552,10 @@
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\shapeproperties.h"
+				>
 			</File>
 			<File
 				RelativePath=".\shapeproperty.h"

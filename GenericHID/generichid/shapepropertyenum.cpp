@@ -9,3 +9,29 @@ ShapePropertyEnum::ShapePropertyEnum( const QString &sName, const QString &sDesc
 ShapePropertyEnum::~ShapePropertyEnum(void)
 {
 }
+
+
+QtProperty *ShapePropertyEnum::getQtProperty()
+{
+    QtProperty *pProp = m_enumManager->addProperty(m_sName);
+    m_enumManager->setEnumNames( pProp, m_Enums );
+    return pProp;
+}
+
+
+bool ShapePropertyEnum::Configure( QDomElement &node )
+{
+    m_sDefault = XMLUtility::getAttribute( node, "default", "" );
+
+    // Read the enum names
+    QDomNodeList enumNodes = XMLUtility::elementsByTagName( node, "enum" );
+    for ( uint i = 0; i < enumNodes.length(); i++ )
+    {
+	QDomElement enumNode = enumNodes.item(i).toElement();
+	QString sName = XMLUtility::getAttribute( enumNode, "name", "" );
+
+	if ( sName.length() > 0 && !m_Enums.contains(sName) )
+	    m_Enums.push_back( sName );
+    }
+    return true;
+}

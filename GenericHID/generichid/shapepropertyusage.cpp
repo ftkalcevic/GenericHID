@@ -9,3 +9,12 @@ ShapePropertyUsage::ShapePropertyUsage( const QString &sName, const QString &sDe
 ShapePropertyUsage::~ShapePropertyUsage(void)
 {
 }
+
+
+QtProperty *ShapePropertyUsage::getQtProperty()
+{
+    //QtProperty *pProp = m_boolManager->addProperty( m_sName );
+    //return pProp;
+    return NULL;
+}
+
