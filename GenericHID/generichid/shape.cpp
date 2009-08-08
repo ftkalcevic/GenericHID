@@ -103,7 +103,7 @@ Shape *Shape::CreateFromXML( QDomElement &node )
 	for ( uint i = 0; i < pinNodes.length(); i++ )
 	{
 	    QDomElement pinNode = pinNodes.item(i).toElement();
-	    Pin *pPin = Pin::CreateFromXML( pinNode );
+	    Pin *pPin = Pin::CreateFromXML( pinNode, pShape );
 
 	    if ( pPin != NULL )
 		pShape->m_Pins.push_back( pPin );

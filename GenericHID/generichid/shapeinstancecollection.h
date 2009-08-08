@@ -12,6 +12,7 @@ public:
 
     bool CanAdd( const Shape *pShape, QString &sError );
     ShapeInstance *CreateNewShape( const Shape *pShape, Editor *pEditor );
+    const QList<ShapeInstance *> &instances() const { return m_Instances; }
 private:
     QList<ShapeInstance *> m_Instances;
 };

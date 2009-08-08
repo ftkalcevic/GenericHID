@@ -43,6 +43,7 @@ public:
     QPixmap pixmap();
     const QList<Pin *> &pins() const { return m_Pins; }
     const QList<ShapeProperty *> &properties() const { return m_Properties; }
+    bool source() const { return m_bSource; }	// source or sink device
 
 private:
     ShapeType::ShapeType m_eShapeType;

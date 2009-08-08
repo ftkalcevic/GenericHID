@@ -42,13 +42,15 @@ namespace PinVAlign
     extern enum PinVAlign fromString(const QString &s);
 };
 
+class Shape;
+
 class Pin
 {
 public:
-    Pin( const QString &sId, PinType::PinType ePinType, const QRect &rect, const QString &sOtherUser, bool bEnabled, PinHAlign::PinHAlign eHAlign, PinVAlign::PinVAlign eVAlign, double dRotate );
+    Pin( const Shape *pShape, const QString &sId, PinType::PinType ePinType, const QRect &rect, const QString &sOtherUser, bool bEnabled, PinHAlign::PinHAlign eHAlign, PinVAlign::PinVAlign eVAlign, double dRotate );
     ~Pin(void);
 
-    static Pin *CreateFromXML( QDomElement node );
+    static Pin *CreateFromXML( QDomElement node, const Shape *pShape );
     const QString &id() const { return m_sId; }
     PinType::PinType pinType() const { return  m_ePinType; }
     const QRect geometry() const { return m_geometry; }
@@ -57,6 +59,7 @@ public:
     PinHAlign::PinHAlign hAlign() const { return m_eHAlign; }
     PinVAlign::PinVAlign vAlign() const { return m_eVAlign; }
     double rotate() const { return m_dRotate; }
+    const Shape *shape() const { return m_pShape; }
 
 private:
     QString m_sId;
@@ -67,6 +70,7 @@ private:
     PinHAlign::PinHAlign m_eHAlign;
     PinVAlign::PinVAlign m_eVAlign;
     double m_dRotate;
+    const Shape *m_pShape;
 };
 
 

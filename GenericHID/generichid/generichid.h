@@ -4,6 +4,7 @@
 #include "ui_generichid.h"
 #include "shapecollection.h"
 #include "shapeinstancecollection.h"
+#include "shapescene.h"
 
 class GenericHID : public QMainWindow, public Editor
 {
@@ -28,10 +29,12 @@ public slots:
     void onWireLinkTool();
 
 private:
+    void SetCursor( QCursor &cur1, QCursor &cur2 );
+
     Ui::GenericHIDClass ui;
     ShapeCollection *m_pShapes;
     ShapeInstanceCollection m_pShapeInstances;
-    QGraphicsScene *m_pScene;
+    ShapeScene *m_pScene;
 };
 
 #endif // GENERICHID_H

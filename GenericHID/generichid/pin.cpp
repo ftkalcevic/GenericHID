@@ -85,8 +85,9 @@ namespace PinVAlign
 };
 
 
-Pin::Pin( const QString &sId, PinType::PinType ePinType, const QRect &rect, const QString &sOtherUse, bool bEnabled, PinHAlign::PinHAlign eHAlign, PinVAlign::PinVAlign eVAlign, double dRotate )
-: m_sId( sId )
+Pin::Pin( const Shape *pShape, const QString &sId, PinType::PinType ePinType, const QRect &rect, const QString &sOtherUse, bool bEnabled, PinHAlign::PinHAlign eHAlign, PinVAlign::PinVAlign eVAlign, double dRotate )
+: m_pShape(pShape)
+, m_sId( sId )
 , m_ePinType( ePinType )
 , m_geometry( rect )
 , m_sOtherUse( sOtherUse )
@@ -103,7 +104,7 @@ Pin::~Pin(void)
 }
 
 
-Pin *Pin::CreateFromXML( QDomElement node )
+Pin *Pin::CreateFromXML( QDomElement node, const Shape *pShape )
 {
     QString sId = XMLUtility::getAttribute( node, "id", "" );
     QString sRect = XMLUtility::getAttribute( node, "rect", "" );
@@ -127,6 +128,6 @@ Pin *Pin::CreateFromXML( QDomElement node )
         y2 = sCoords[3].toInt();
     }
 
-    return new Pin( sId, ePinType, QRect(QPoint(x1,y1),QPoint(x2,y2)), sOtherUse, bEnabled, eHAlign, eVAlign, dRotate );
+    return new Pin( pShape, sId, ePinType, QRect(QPoint(x1,y1),QPoint(x2,y2)), sOtherUse, bEnabled, eHAlign, eVAlign, dRotate );
 }
 

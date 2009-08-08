@@ -15,11 +15,24 @@
 #include <QtGui/QMainWindow>
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
+#include <QGraphicsRectItem>
+#include <QGraphicsScene>
+#include <QGraphicsPolygonItem>
 
 
 #include "common.h"
 #include "log.h"
 #include "xmlutility.h"
+
+
+namespace UserTypes
+{
+    enum UserTypes
+    {
+	PinItemType = 1,
+	ShapeItemType
+    };
+}
 
 #endif
 

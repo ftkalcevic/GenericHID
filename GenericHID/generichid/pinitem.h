@@ -1,18 +1,32 @@
 #ifndef PINITEM_H
 #define PINITEM_H
 
-#include <QGraphicsRectItem>
+#include "editor.h"
+#include "pin.h"
+#include "wireitem.h"
 
 class PinItem : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 
 public:
-    PinItem( QRectF rc, QGraphicsItem *parent = 0 );
+    PinItem( QRectF rc, const Pin *pPin, Editor *pEditor, QGraphicsItem *parent = 0 );
     ~PinItem();
 
-private:
+    enum { Type = UserType + UserTypes::PinItemType };
+    int type() const { return Type; }
+    WireItem *wire() const { return m_pWire; }
+    const Pin *pin() const { return m_pPin; }
 
+    void setWire( WireItem *pWire ) { m_pWire = pWire; }
+
+private:
+    //virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
+    //virtual void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
+    //virtual void mousePressEvent( QGraphicsSceneMouseEvent * event );
+    Editor *m_pEditor;
+    const Pin *m_pPin;
+    WireItem *m_pWire;
 };
 
 #endif // PINITEM_H
