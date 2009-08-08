@@ -18,6 +18,10 @@ public:
     bool CreateGraphics();
     const Shape *shapeData() const { return m_pShape; }
     QList<PinItem *> pins() { return m_pins; }
+    bool mirror() const { return m_bMirror; }
+    void setMirror( bool b ) { m_bMirror = b; DoTransform(); }
+    double rotation() const { return m_dRotate; }
+    void setRotation( double d ) { m_dRotate = d; while ( m_dRotate > 360.0 ) m_dRotate -= 360.0; DoTransform(); }
 
 signals:
     void itemChange( QGraphicsItem *item, QGraphicsItem::GraphicsItemChange change, const QVariant & value );

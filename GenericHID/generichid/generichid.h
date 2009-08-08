@@ -3,7 +3,6 @@
 
 #include "ui_generichid.h"
 #include "shapecollection.h"
-#include "shapeinstancecollection.h"
 #include "shapescene.h"
 
 class GenericHID : public QMainWindow, public Editor
@@ -33,7 +32,6 @@ private:
 
     Ui::GenericHIDClass ui;
     ShapeCollection *m_pShapes;
-    ShapeInstanceCollection m_pShapeInstances;
     ShapeScene *m_pScene;
 };
 

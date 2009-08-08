@@ -22,10 +22,14 @@ public slots:
     void onViewItemChanged( QGraphicsItem *item, QGraphicsItem::GraphicsItemChange change, const QVariant &value);
 
 private:
-    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+
+    void UpdateWires( ShapeItem *pItem );
+    PinItem *PinUnderCursor( QPointF pos );
+    ShapeItem *ShapeUnderCursor( QPointF pos );
+
     Editor *m_pEditor;
     QList<ShapeItem *> m_ShapeItems;
     QList<WireItem *> m_WireItems;

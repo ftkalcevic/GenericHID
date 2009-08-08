@@ -52,14 +52,13 @@ ShapeItem *ShapeScene::CreateNewShape( const Shape *pShape, Editor *pEditor, QPo
 
 
 
-
-
 // Currently, we only get this is an object is moved interactively by the user.  Update wire ends.
 void ShapeScene::onViewItemChanged( QGraphicsItem *item, QGraphicsItem::GraphicsItemChange change, const QVariant &value)
 {
     if ( item->type() == ShapeItem::Type )
     {
 	ShapeItem *pItem = qgraphicsitem_cast<ShapeItem *>(item);
+	UpdateWires( pItem );
 	foreach(PinItem *pPin, pItem->pins())
 	{
 	    if ( pPin->wire() != NULL )
@@ -68,31 +67,93 @@ void ShapeScene::onViewItemChanged( QGraphicsItem *item, QGraphicsItem::Graphics
     }
 }
 
-void ShapeScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
+void ShapeScene::UpdateWires( ShapeItem *pItem )
 {
-    ATLTRACE("ShapeScene::mousePressEvent!\n");
-    if (mouseEvent->button() != Qt::LeftButton || m_pEditor->m_eEditMode != EditMode::Wiring )
+    foreach(PinItem *pPin, pItem->pins())
     {
-	QGraphicsScene::mousePressEvent(mouseEvent);
-	return;
+	if ( pPin->wire() != NULL )
+	    pPin->wire()->UpdateEndpoints();
     }
+}
 
-    // Find the item we clicked on.  Must be a free pin.
-    QList<QGraphicsItem *> itemsUnderCursor = items( mouseEvent->scenePos() );
+PinItem *ShapeScene::PinUnderCursor( QPointF pos )
+{
+    QList<QGraphicsItem *> itemsUnderCursor = items( pos );
     foreach ( QGraphicsItem *pItem, itemsUnderCursor )
     {
 	if ( pItem->type() == PinItem::Type )
-	{
-	    PinItem *pPinItem = qgraphicsitem_cast<PinItem *>(pItem);
-	    if ( pPinItem->wire() == NULL )
+	    return qgraphicsitem_cast<PinItem *>(pItem);
+    }
+    return NULL;
+}
+
+ShapeItem *ShapeScene::ShapeUnderCursor( QPointF pos )
+{
+    QList<QGraphicsItem *> itemsUnderCursor = items( pos );
+    foreach ( QGraphicsItem *pItem, itemsUnderCursor )
+    {
+	if ( pItem->type() == ShapeItem::Type )
+	    return qgraphicsitem_cast<ShapeItem *>(pItem);
+    }
+    return NULL;
+}
+
+void ShapeScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+    ATLTRACE("ShapeScene::mousePressEvent!\n");
+    bool bHandled = false;
+
+    switch ( m_pEditor->m_eEditMode )
+    {
+	case EditMode::Wiring:
+	    if ( mouseEvent->button() == Qt::LeftButton )
 	    {
-		m_pEditor->m_pWiringStartPin = pPinItem;
-		m_pEditor->m_pCurrentWire = new WireItem( pPinItem->mapToScene(pPinItem->boundingRect().center()), mouseEvent->scenePos() );
-		addItem( m_pEditor->m_pCurrentWire );
-		mouseEvent->accept();
-		ATLTRACE("Wiring!\n");
+		// Find the item we clicked on.  Must be a free pin.
+		PinItem *pPinItem = PinUnderCursor( mouseEvent->scenePos() );
+		if ( pPinItem != NULL && pPinItem->wire() == NULL )
+		{
+		    m_pEditor->m_pWiringStartPin = pPinItem;
+		    m_pEditor->m_pCurrentWire = new WireItem( pPinItem->mapToScene(pPinItem->boundingRect().center()), mouseEvent->scenePos() );
+		    addItem( m_pEditor->m_pCurrentWire );
+		    mouseEvent->accept();
+		    bHandled = true;
+		    ATLTRACE("Wiring!\n");
+		}
 	    }
-	}
+	    break;
+	case EditMode::Mirror:
+	    if ( mouseEvent->button() == Qt::LeftButton )
+	    {
+		ShapeItem *pItem = ShapeUnderCursor( mouseEvent->scenePos() );
+		if ( pItem != NULL )
+		{
+		    pItem->setMirror( !pItem->mirror() );
+		    UpdateWires( pItem );
+		    mouseEvent->accept();
+		    bHandled = true;
+		}
+	    }
+	    break;
+	case EditMode::Rotate:
+	    if ( mouseEvent->button() == Qt::LeftButton )
+	    {
+		ShapeItem *pItem = ShapeUnderCursor( mouseEvent->scenePos() );
+		if ( pItem != NULL )
+		{
+		    pItem->setRotation( pItem->rotation() + 90.0 );
+		    UpdateWires( pItem );
+		    mouseEvent->accept();
+		    bHandled = true;
+		}
+	    }
+	    break;
+    }
+
+    ATLTRACE( "Handled=%d\n", bHandled );
+    if ( !bHandled )
+    {
+	mouseEvent->ignore();
+	QGraphicsScene::mousePressEvent(mouseEvent);
     }
 }
 
@@ -202,7 +263,7 @@ void ShapeScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
         m_pEditor->m_pCurrentWire->setEnd( mouseEvent->scenePos() );
 	ATLTRACE("Moving wire!\n");
     }
-    else
+    else 
 	mouseEvent->ignore();
 
     QGraphicsScene::mouseMoveEvent(mouseEvent);
@@ -225,6 +286,7 @@ void ShapeScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	    }
 	}
 
+	// this is an ugly copy of the conditions in mouseMoveEvent
 	if ( pSecondPin != NULL &&		// over a pin
 	     pSecondPin->wire() == NULL &&	// already wired ?
 	     pSecondPin->pin()->shape() != m_pEditor->m_pWiringStartPin->pin()->shape() && // wiring to myself?

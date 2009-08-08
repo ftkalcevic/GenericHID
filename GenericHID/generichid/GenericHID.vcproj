@@ -226,14 +226,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\shapeinstance.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\shapeinstancecollection.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\shapeitem.cpp"
 				>
 			</File>
@@ -500,14 +492,6 @@
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
 					/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\shapeinstance.h"
-				>
-			</File>
-			<File
-				RelativePath=".\shapeinstancecollection.h"
-				>
 			</File>
 			<File
 				RelativePath=".\shapeitem.h"

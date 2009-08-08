@@ -127,3 +127,4 @@ void ShapeItem::DoTransform()
 	scale(-1,1);
     translate( -center.x(), -center.y() );
 }
+
