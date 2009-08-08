@@ -25,10 +25,13 @@ private:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    virtual void keyPressEvent( QKeyEvent * keyEvent );
 
     void UpdateWires( ShapeItem *pItem );
     PinItem *PinUnderCursor( QPointF pos );
     ShapeItem *ShapeUnderCursor( QPointF pos );
+    void RemoveWire( WireItem *pItem );
+    void RemoveShape( ShapeItem *pItem );
 
     Editor *m_pEditor;
     QList<ShapeItem *> m_ShapeItems;

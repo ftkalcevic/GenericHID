@@ -14,6 +14,8 @@ public:
     void setStart(QPointF pt);
     void setEnd(QPointF pt);
 
+    PinItem *pin1() const { return m_pPin1; }
+    PinItem *pin2() const { return m_pPin2; }
     void setPin1( PinItem *pPin ) { m_pPin1 = pPin; }
     void setPin2( PinItem *pPin ) { m_pPin2 = pPin; }
     void UpdateEndpoints();

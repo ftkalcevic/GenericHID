@@ -10,6 +10,7 @@ WireItem::WireItem(QPointF ptStart, QPointF ptEnd, QGraphicsItem *parent)
 , m_pPin2( NULL )
 {
     MakePolygon();
+    setFlag( QGraphicsItem::ItemIsSelectable);
 }
 
 WireItem::~WireItem()
