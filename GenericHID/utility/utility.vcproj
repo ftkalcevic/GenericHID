@@ -157,6 +157,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\usages.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\xmlutility.cpp"
 				>
 			</File>
@@ -179,9 +183,36 @@
 				>
 			</File>
 			<File
+				RelativePath=".\usages.h"
+				>
+			</File>
+			<File
 				RelativePath=".\xmlutility.h"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			>
+			<File
+				RelativePath=".\utility.qrc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Rcc&apos;ing $(InputPath)..."
+						CommandLine="&quot;$(QTDIR)\bin\rcc.exe&quot; -name &quot;$(InputName)&quot; -no-compress &quot;$(InputPath)&quot; -o .\GeneratedFiles\qrc_$(InputName).cpp"
+						AdditionalDependencies="$(InputPath);resources/usages.xml"
+						Outputs=".\GeneratedFiles\qrc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Generated Files"
+			>
 		</Filter>
 	</Files>
 	<Globals>
