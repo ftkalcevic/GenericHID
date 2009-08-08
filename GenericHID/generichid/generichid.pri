@@ -19,8 +19,6 @@ HEADERS += dragtoolbutton.h \
     shapeitem.h \
     shapemcu.h \
     shapemimedata.h \
-    shapeinstance.h \
-    shapeinstancecollection.h \
     shapepropertybool.h \
     shapepropertybrowser.h \
     shapepropertyenum.h \
@@ -28,7 +26,9 @@ HEADERS += dragtoolbutton.h \
     shapepropertyint.h \
     shapepropertystring.h \
     shapepropertyusage.h \
-    stdafx.h
+    shapescene.h \
+    stdafx.h \
+    wireitem.h
 
 #Source files
 SOURCES += dragtoolbutton.cpp \
@@ -47,8 +47,6 @@ SOURCES += dragtoolbutton.cpp \
     shapeitem.cpp \
     shapemcu.cpp \
     shapemimedata.cpp \
-    shapeinstance.cpp \
-    shapeinstancecollection.cpp \
     shapepropertybool.cpp \
     shapepropertybrowser.cpp \
     shapeproperty.cpp \
@@ -56,7 +54,9 @@ SOURCES += dragtoolbutton.cpp \
     shapepropertyint.cpp \
     shapepropertystring.cpp \
     shapepropertyusage.cpp \
-    stdafx.cpp 
+    shapescene.cpp \
+    stdafx.cpp  \
+    wireitem.cpp
 
 #Forms
 FORMS += ./generichid.ui \

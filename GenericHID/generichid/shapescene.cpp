@@ -100,7 +100,7 @@ ShapeItem *ShapeScene::ShapeUnderCursor( QPointF pos )
 
 void ShapeScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    ATLTRACE("ShapeScene::mousePressEvent!\n");
+    //ATLTRACE("ShapeScene::mousePressEvent!\n");
     bool bHandled = false;
 
     switch ( m_pEditor->m_eEditMode )
@@ -117,7 +117,7 @@ void ShapeScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 		    addItem( m_pEditor->m_pCurrentWire );
 		    mouseEvent->accept();
 		    bHandled = true;
-		    ATLTRACE("Wiring!\n");
+		    //ATLTRACE("Wiring!\n");
 		}
 	    }
 	    break;
@@ -149,7 +149,7 @@ void ShapeScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	    break;
     }
 
-    ATLTRACE( "Handled=%d\n", bHandled );
+    //ATLTRACE( "Handled=%d\n", bHandled );
     if ( !bHandled )
     {
 	mouseEvent->ignore();
@@ -202,12 +202,12 @@ void ShapeScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 		    if ( pPinItem->wire() != NULL )
 		    {
 			SetCursor( *m_pEditor->m_curWireNot );	 // already connected
-			ATLTRACE("Pin 1 already connected\n");
+			//ATLTRACE("Pin 1 already connected\n");
 		    }
 		    else
 		    {
 			SetCursor( *m_pEditor->m_curWire );
-			ATLTRACE("Pin 1 wire\n");
+			//ATLTRACE("Pin 1 wire\n");
 		    }
 		}
 		else
@@ -216,13 +216,13 @@ void ShapeScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 		    if ( pPinItem->wire() != NULL )  // already wired
 		    {
 			SetCursor( *m_pEditor->m_curWireNot );
-			ATLTRACE("Pin 2 already connected\n");
+			//ATLTRACE("Pin 2 already connected\n");
 		    }
 		    else if ( pPinItem->pin()->shape() == m_pEditor->m_pWiringStartPin->pin()->shape() )
 		    {
 			// todo - this checks the shape, not the shape instance
 			SetCursor( *m_pEditor->m_curWireNot );
-			ATLTRACE("Pin 2 can't wire to ourselves\n");
+			//ATLTRACE("Pin 2 can't wire to ourselves\n");
 		    }
 		    else
 		    {
@@ -241,7 +241,7 @@ void ShapeScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 				bGood = false;	// incompatible types
 			}
 
-			ATLTRACE("Pin 2 ?????????\n");
+			//ATLTRACE("Pin 2 ?????????\n");
 			if ( !bGood )
 			    SetCursor( *m_pEditor->m_curWireNot );
 			else
@@ -252,7 +252,7 @@ void ShapeScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	    else
 	    {
 		SetCursor( *m_pEditor->m_curWireOff );
-		ATLTRACE("Not over a pin\n");
+		//ATLTRACE("Not over a pin\n");
 	    }
 	    break;
     }
@@ -261,7 +261,7 @@ void ShapeScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
     if ( m_pEditor->m_eEditMode == EditMode::Wiring && m_pEditor->m_pCurrentWire != NULL )
     {
         m_pEditor->m_pCurrentWire->setEnd( mouseEvent->scenePos() );
-	ATLTRACE("Moving wire!\n");
+	//ATLTRACE("Moving wire!\n");
     }
     else 
 	mouseEvent->ignore();
@@ -274,7 +274,7 @@ void ShapeScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if ( m_pEditor->m_eEditMode == EditMode::Wiring && m_pEditor->m_pCurrentWire != NULL )
     {
-	ATLTRACE("Finished wiring!\n");
+	//ATLTRACE("Finished wiring!\n");
 	PinItem *pSecondPin = NULL;
 	QList<QGraphicsItem *> itemsUnderCursor = items( mouseEvent->scenePos() );
 	foreach ( QGraphicsItem *pItem, itemsUnderCursor )
