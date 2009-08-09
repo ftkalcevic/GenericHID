@@ -19,6 +19,6 @@ QtProperty *ShapePropertyUsage::getQtProperty()
 
 bool ShapePropertyUsage::Configure( QDomElement &node )
 {
-    m_sDefault = XMLUtility::getAttribute( node, "default", "" );
+    m_sDefault = XMLUtility::getAttribute( node, "default", "1:1" );
     return true;
 }

@@ -27,16 +27,22 @@
 
 class Usage
 {
-public:
+    friend class Usages;
+
     QString m_sName;
     unsigned short m_nId;
 
     Usage(QString sName, unsigned short nId);
+public:
+    const QString &name() const { return m_sName; }
+    unsigned short id() const { return m_nId; }
 };
 
 class UsagePage
 {
-public:
+    friend class Usages;
+
+private:
     QString m_sName;
     unsigned short m_nId;
     std::vector<Usage*> m_Usages;
@@ -44,7 +50,13 @@ public:
 
     UsagePage(QString sName, unsigned short nId);
     void AddUsage( Usage *u );
+
+public:
+    const std::vector<Usage*> usages() const { return m_Usages; }
     QString GetUsageString(unsigned short nUsage);
+
+    unsigned short id() const { return m_nId; }
+    const QString &name() const { return m_sName; }
 };
 
 
@@ -56,6 +68,7 @@ public:
     ~Usages(void);
 
     static void GetUsages( unsigned short nPage, unsigned short nUsage, QString &sPage, QString &sUsage );
+    static const std::vector<UsagePage*> &GetUsagesPages() { LoadUsages(); return m_UsagePages; }
 
 private:
     static std::vector<UsagePage*> m_UsagePages;

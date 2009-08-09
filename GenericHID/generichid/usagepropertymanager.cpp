@@ -1,13 +1,29 @@
 #include "stdafx.h"
 #include "usagepropertymanager.h"
+#include "usages.h"
 
 UsagePropertyManager::UsagePropertyManager(QObject *parent)
 : QtAbstractPropertyManager(parent)
 , m_settingValue(false)
 {
-    m_enumPropertyManager = new QtEnumPropertyManager(this);
-    connect(m_enumPropertyManager, SIGNAL(valueChanged(QtProperty *, int)), this, SLOT(slotEnumChanged(QtProperty *, int)));
-    connect(m_enumPropertyManager, SIGNAL(propertyDestroyed(QtProperty *)), this, SLOT(slotPropertyDestroyed(QtProperty *)));
+    m_listPropertyManager = new ListPropertyManager(this);
+    connect(m_listPropertyManager, SIGNAL(valueChanged(QtProperty *, int)), this, SLOT(slotEnumChanged(QtProperty *, int)));
+    connect(m_listPropertyManager, SIGNAL(propertyDestroyed(QtProperty *)), this, SLOT(slotPropertyDestroyed(QtProperty *)));
+
+    // Build the usagepage and usages lists
+    const std::vector<UsagePage*> usagePages = Usages::GetUsagesPages();
+    for ( std::vector<UsagePage*>::const_iterator itUsagePage = usagePages.begin(); itUsagePage != usagePages.end(); itUsagePage++ )
+    {
+	m_UsagePages.append( EnumItem( (*itUsagePage)->id(), (*itUsagePage)->name() ) );
+
+	ListEnumList *sUsages = new ListEnumList;
+	const std::vector<Usage*> usages = (*itUsagePage)->usages();
+	for ( std::vector<Usage*>::const_iterator itUsage = usages.begin(); itUsage != usages.end(); itUsage++ )
+	{
+	    sUsages->append( EnumItem( (*itUsage)->id(), (*itUsage)->name() ));
+	}
+	m_UsagesMap.insert( (*itUsagePage)->id(), sUsages );
+    }
 }
 
 UsagePropertyManager::~UsagePropertyManager()
@@ -15,15 +31,27 @@ UsagePropertyManager::~UsagePropertyManager()
     clear();
 }
 
-QtEnumPropertyManager *UsagePropertyManager::subEnumPropertyManager() const
+ListPropertyManager *UsagePropertyManager::subListPropertyManager() const
 {
-    return m_enumPropertyManager;
+    return m_listPropertyManager;
 }
 
 QString UsagePropertyManager::value(const QtProperty *property) const
 {
     return m_values.value(property, QString());
 }
+
+static void ExtractUsage( QString s, unsigned short &nUsagePage, unsigned short &nUsage )
+{
+    nUsagePage = 1;
+    nUsage = 1;
+    QStringList l = s.split(QChar(':'));
+    if ( l.count() > 0 )
+	nUsagePage = l[0].toUShort();
+    if ( l.count() > 1 )
+	nUsage = l[1].toUShort();
+}
+
 
 void UsagePropertyManager::setValue(QtProperty *property, const QString &val)
 {
@@ -37,11 +65,14 @@ void UsagePropertyManager::setValue(QtProperty *property, const QString &val)
 
     it.value() = val;
 
+    unsigned short nUsagePage;
+    unsigned short nUsage;
+    ExtractUsage( val, nUsagePage, nUsage );
+
     bool settingValue = m_settingValue;
     m_settingValue = true;
-    int idx = 0;    // todo - ensure combos are populated.  find right ?
-    m_enumPropertyManager->setValue(m_propertyToUsagePage[property], idx);
-    m_enumPropertyManager->setValue(m_propertyToUsage[property], idx);
+    m_listPropertyManager->setValue(m_propertyToUsagePage[property], nUsagePage );
+    m_listPropertyManager->setValue(m_propertyToUsage[property],  nUsage );
     m_settingValue = settingValue;
 
     emit propertyChanged(property);
@@ -49,24 +80,33 @@ void UsagePropertyManager::setValue(QtProperty *property, const QString &val)
 }
 
 
-void UsagePropertyManager::slotEnumChanged(QtProperty *property, int value)
+void UsagePropertyManager::slotEnumChanged(QtProperty *property, int value)	// property == listproperty
 {
     if (m_settingValue)
 	return;
 
-    if (QtProperty *prop = m_propertyToUsagePage.value(property, 0)) 
+    if (QtProperty *prop = m_usagePageToProperty.value(property, 0)) 
     {
-	QString s = m_values[prop];
-	// do something with changed usage page
-        //f.setFamily(m_familyNames.at(value));
-	setValue(prop, s);  // todo this isn't right.  Need to setValue with usagepage:usage
+	// When the usage page changes, update the list of usages
+        QtProperty *propUsagePage = property; 
+        QtProperty *propUsage = m_propertyToUsage.value(prop, 0);
+	int nUsagePage = m_listPropertyManager->value( propUsagePage );
+	int nUsage = m_listPropertyManager->value( propUsage );
+	QMap<int,ListEnumList *>::const_iterator it = m_UsagesMap.constFind( nUsagePage );
+	if ( it != m_UsagesMap.constEnd() )
+	    m_listPropertyManager->setEnums( propUsage, *(it.value()) );
+	else
+	    m_listPropertyManager->setEnums( propUsage, ListEnumList() );
+
+	setValue(prop,QString("%1:%2").arg(nUsagePage).arg(nUsage) );
     }
-    else if (QtProperty *prop = m_propertyToUsage.value(property, 0)) 
+    else if (QtProperty *prop = m_usageToProperty.value(property, 0)) 
     {
-	QString s = m_values[prop];
-	// do something with changed usage page
-	//f.setFamily(m_familyNames.at(value));
-	setValue(prop, s);  // todo this isn't right.  Need to setValue with usagepage:usage
+        QtProperty *propUsagePage = m_propertyToUsagePage.value(prop, 0);
+        QtProperty *propUsage = property; 
+	int nUsagePage = m_listPropertyManager->value( propUsagePage );
+	int nUsage = m_listPropertyManager->value( propUsage );
+	setValue(prop,QString("%1:%2").arg(nUsagePage).arg(nUsage) );
     }
 }
 
@@ -92,48 +132,45 @@ QString UsagePropertyManager::valueText(const QtProperty *property) const
     if (it == m_values.constEnd())
         return QString();
 
-    // is this the usagepage:usage formatter
-    return it.value();
+    unsigned short nUsagePage;
+    unsigned short nUsage;
+    ExtractUsage( it.value(), nUsagePage, nUsage );
+
+    QString sPage, sUsage;
+    Usages::GetUsages( nUsagePage, nUsage, sPage, sUsage );
+    return QString("%1:%2").arg(sPage,sUsage);
 }
 
-QIcon UsagePropertyManager::valueIcon(const QtProperty *property) const
+void UsagePropertyManager::initializeProperty(QtProperty *property) // property == UsageProperty
 {
-    const PropertyValueMap::const_iterator it = m_values.constFind(property);
-    if (it == m_values.constEnd())
-        return QIcon();
-
-    // todo icon?
-    return QIcon(); //fontValueIcon(it.value());
-}
-
-void UsagePropertyManager::initializeProperty(QtProperty *property)
-{
-    QString val;
+    QString val("1:1");
     m_values[property] = val;
 
-    QtProperty *usagePageProp = m_enumPropertyManager->addProperty();
+    unsigned short nUsagePage;
+    unsigned short nUsage;
+    ExtractUsage( val, nUsagePage, nUsage );
+
+    QtProperty *usagePageProp = m_listPropertyManager->addProperty();
     usagePageProp->setPropertyName(tr("Usage Page"));
     // Fill Usage pages.
-    //m_enumPropertyManager->setEnumNames(usagePageProp, m_familyNames);
-    //int idx = d_ptr->m_familyNames.indexOf(val.family());
-    //if (idx == -1)
-    //    idx = 0;
-    //d_ptr->m_enumPropertyManager->setValue(familyProp, idx);
-    m_propertyToUsagePage[property] = usagePageProp;
-    m_usagePageToProperty[usagePageProp] = property;
+    m_propertyToUsagePage.insert(property, usagePageProp );
+    m_usagePageToProperty.insert(usagePageProp, property );
     property->addSubProperty(usagePageProp);
 
-    QtProperty *usageProp = m_enumPropertyManager->addProperty();
+    QtProperty *usageProp = m_listPropertyManager->addProperty();
     usageProp->setPropertyName(tr("Usage"));
     // Fill Usages.
-    //m_enumPropertyManager->setEnumNames(usageProp, m_familyNames);
+    //m_listPropertyManager->setEnumNames(usageProp, m_familyNames);
     //int idx = d_ptr->m_familyNames.indexOf(val.family());
     //if (idx == -1)
     //    idx = 0;
-    //d_ptr->m_enumPropertyManager->setValue(usageProp, idx);
     m_propertyToUsage[property] = usageProp;
     m_usageToProperty[usageProp] = property;
     property->addSubProperty(usageProp);
+
+    m_listPropertyManager->setEnums(usagePageProp, m_UsagePages);
+    m_listPropertyManager->setValue(usagePageProp, nUsagePage);
+    m_listPropertyManager->setValue(usageProp, nUsage);
 }
 
 

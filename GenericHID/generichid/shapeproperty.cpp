@@ -5,6 +5,7 @@
 #include "shapepropertyint.h"
 #include "shapepropertystring.h"
 #include "shapepropertyusage.h"
+#include "listeditorfactory.h"
 
 
 namespace  PropertyType
@@ -59,6 +60,7 @@ void ShapeProperty::SetBrowserFactory( QtAbstractPropertyBrowser *browser )
     QtLineEditFactory *lineEditFactory = new QtLineEditFactory();
     QtDoubleSpinBoxFactory *doubleSpinBoxFactory = new QtDoubleSpinBoxFactory();
     QtEnumEditorFactory *comboBoxFactory = new QtEnumEditorFactory();
+    ListEditorFactory *comboListFactory = new ListEditorFactory();
     QtCheckBoxFactory *checkBoxFactory = new QtCheckBoxFactory();
     QtSpinBoxFactory *spinBoxFactory = new QtSpinBoxFactory();
 
@@ -69,6 +71,7 @@ void ShapeProperty::SetBrowserFactory( QtAbstractPropertyBrowser *browser )
     browser->setFactoryForManager(m_enumManager, comboBoxFactory);
     browser->setFactoryForManager(m_boolManager, checkBoxFactory);
     browser->setFactoryForManager(m_intManager, spinBoxFactory);
+    browser->setFactoryForManager(m_usageManager->subListPropertyManager(), comboListFactory);
 }
 
 void ShapeProperty::Init()

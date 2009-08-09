@@ -62,14 +62,14 @@ UsagePage::UsagePage(QString sName, unsigned short nId)
 void UsagePage::AddUsage( Usage *u )
 {
     m_Usages.push_back(u);
-    m_UsageMap[u->m_nId] = u;
+    m_UsageMap[u->id()] = u;
 }
 
 QString UsagePage::GetUsageString(unsigned short nUsage)
 {
     std::map<unsigned short, Usage*>::iterator it = m_UsageMap.find(nUsage);
     if ( it != m_UsageMap.end() )
-	return it->second->m_sName;
+	return it->second->name();
     else
     {
 	return QString().setNum( nUsage );
@@ -94,7 +94,7 @@ void Usages::GetUsages( unsigned short nPage, unsigned short nUsage, QString &sP
     if ( it != m_UsagePageMap.end() )
     {
 	UsagePage *page = it->second;
-	sPage = page->m_sName;
+	sPage = page->name();
 	sUsage = page->GetUsageString(nUsage);
     }
     else
@@ -109,7 +109,7 @@ void Usages::LoadUsages()
 {
     if ( m_bInitialised )
         return;
-    Q_INIT_RESOURCE(usbhid);
+    Q_INIT_RESOURCE(utility);
 
     // Mark initialised even though it may fail to initialise.  No point repeating the same error.
     m_bInitialised = true;
