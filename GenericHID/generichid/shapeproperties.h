@@ -11,12 +11,14 @@ public:
 
     void add( ShapeProperty *pProperty );
     QtProperty *topItem() const { return m_topItem; }
-    void populate(class ShapeItem *pItem) const;
-    void retreive(class ShapeItem *pItem) const;
+    void populate(const QList<PropertyValue *> &Values) const;
+    void retreive(const QList<PropertyValue *> &Values) const;
+    const QList<ShapeProperty *> &items() const { return m_Properties; }
     
 private:
     QtProperty *m_topItem;
-    QList<ShapeProperty *> m_Propeties;
+    QList<ShapeProperty *> m_Properties;
+    QList<QtProperty *> m_QtProperties;
 };
 
 #endif

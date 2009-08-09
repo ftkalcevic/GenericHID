@@ -26,6 +26,7 @@ public slots:
     void onMirrorTool();
     void onPointerTool();
     void onWireLinkTool();
+    void onSelectionChanged();
 
 private:
     void SetCursor( QCursor &cur1, QCursor &cur2 );
@@ -33,6 +34,7 @@ private:
     Ui::GenericHIDClass ui;
     ShapeCollection *m_pShapes;
     ShapeScene *m_pScene;
+    ShapeItem *m_pLastSelectedShape;
 };
 
 #endif // GENERICHID_H

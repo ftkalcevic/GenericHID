@@ -15,13 +15,14 @@ public:
     
     enum { Type = UserType + UserTypes::ShapeItemType };
     int type() const { return Type; }
-    bool CreateGraphics();
     const Shape *shapeData() const { return m_pShape; }
     QList<PinItem *> pins() { return m_pins; }
     bool mirror() const { return m_bMirror; }
     void setMirror( bool b ) { m_bMirror = b; DoTransform(); }
     double rotation() const { return m_dRotate; }
     void setRotation( double d ) { m_dRotate = d; while ( m_dRotate > 360.0 ) m_dRotate -= 360.0; DoTransform(); }
+    QList<PropertyValue *> &values() { return m_values; }
+
 
 signals:
     void itemChange( QGraphicsItem *item, QGraphicsItem::GraphicsItemChange change, const QVariant & value );
@@ -35,6 +36,9 @@ private:
 
     void DoTransform();
     virtual QVariant itemChange ( GraphicsItemChange change, const QVariant & value );
+    void CreateProperties();
+    bool CreateGraphics();
+    QList<PropertyValue *> m_values;
 };
 
 #endif // SHAPEITEM_H

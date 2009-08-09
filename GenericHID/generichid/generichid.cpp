@@ -9,6 +9,7 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
 : QMainWindow(parent, flags)
 , m_pShapes( NULL )
 , m_pScene( NULL )
+, m_pLastSelectedShape( NULL )
 {
     ui.setupUi(this);
 
@@ -54,6 +55,8 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
     onPointerTool();
 
     connect( ui.graphicsView, SIGNAL(dropShapeEvent( const ::Shape *, QPointF) ), this, SLOT(onDropShapeEvent( const ::Shape *, QPointF) ) );
+    connect( m_pScene, SIGNAL(selectionChanged() ), this, SLOT(onSelectionChanged() ) );
+
 
     ui.listView->setPropertiesWithoutValueMarked(true);
     ui.listView->setRootIsDecorated(false);
@@ -107,17 +110,47 @@ void GenericHID::onDropShapeEvent( const ::Shape *pShape, QPointF pos )
 
     ShapeItem *pItem = m_pScene->CreateNewShape( pShape, this, pos );
 
-
     ui.listView->clear();
     if ( pItem != NULL )
     {
-        const ShapeProperties &pProps = pItem->shapeData()->properties();
-        ShapeProperty::SetBrowserFactory( ui.listView );
-        ui.listView->addProperty(pProps.topItem());
-        pProps.populate(pItem);
+	// unselect existing items, and select ours
+	foreach ( QGraphicsItem *item, m_pScene->selectedItems() )
+	    item->setSelected( false );
+	pItem->setSelected( true );
+    }
+}
+
+void GenericHID::onSelectionChanged()
+{
+    if ( m_pLastSelectedShape != NULL && !m_pLastSelectedShape->isSelected() )
+    {
+	// write back properties if this shape is no longer selected
+        const ShapeProperties &pProps = m_pLastSelectedShape->shapeData()->properties();
+        pProps.retreive(m_pLastSelectedShape->values());
     }
 
+    QList<ShapeItem *> selectedShapes;
+    foreach ( QGraphicsItem *pItem, m_pScene->selectedItems() )
+	if ( pItem->type() == ShapeItem::Type )
+	    selectedShapes.append( qgraphicsitem_cast<ShapeItem *>(pItem) );
+
+    if ( selectedShapes.count() == 1 )
+    {
+        ui.listView->clear();
+	m_pLastSelectedShape = selectedShapes[0];
+
+        const ShapeProperties &pProps = m_pLastSelectedShape->shapeData()->properties();
+        ShapeProperty::SetBrowserFactory( ui.listView );
+        ui.listView->addProperty(pProps.topItem());
+        pProps.populate(m_pLastSelectedShape->values());
+    }
+    else
+    {
+	m_pLastSelectedShape = NULL;
+        ui.listView->clear();
+    }
 }
+
 
 void GenericHID::onRotateTool()
 {

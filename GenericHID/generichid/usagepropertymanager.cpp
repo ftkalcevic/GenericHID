@@ -152,18 +152,14 @@ void UsagePropertyManager::initializeProperty(QtProperty *property) // property 
 
     QtProperty *usagePageProp = m_listPropertyManager->addProperty();
     usagePageProp->setPropertyName(tr("Usage Page"));
-    // Fill Usage pages.
+    // Fill UsagePages.
     m_propertyToUsagePage.insert(property, usagePageProp );
     m_usagePageToProperty.insert(usagePageProp, property );
     property->addSubProperty(usagePageProp);
 
     QtProperty *usageProp = m_listPropertyManager->addProperty();
     usageProp->setPropertyName(tr("Usage"));
-    // Fill Usages.
-    //m_listPropertyManager->setEnumNames(usageProp, m_familyNames);
-    //int idx = d_ptr->m_familyNames.indexOf(val.family());
-    //if (idx == -1)
-    //    idx = 0;
+    // Usages are filled when on the enum change event
     m_propertyToUsage[property] = usageProp;
     m_usageToProperty[usageProp] = property;
     property->addSubProperty(usageProp);

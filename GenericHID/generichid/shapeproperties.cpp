@@ -19,16 +19,20 @@ void ShapeProperties::add( ShapeProperty *pProperty )
     QtProperty *pQtProp = pProperty->getQtProperty();
     if ( pQtProp != NULL )
 	m_topItem->addSubProperty( pQtProp );
-    m_Propeties.push_back( pProperty );
+    m_Properties.push_back( pProperty );
+    m_QtProperties.push_back( pQtProp );
 }
 
 
-void ShapeProperties::populate(class ShapeItem *pItem) const
+void ShapeProperties::populate(const QList<PropertyValue *> &Values) const
 {
-
+    for ( int i = 0; i < m_Properties.count(); i++ )
+	m_Properties[i]->setValue( m_QtProperties[i], Values[i] );
 }
 
 
-void ShapeProperties::retreive(class ShapeItem *pItem) const
+void ShapeProperties::retreive(const QList<PropertyValue *> &Values) const
 {
+    for ( int i = 0; i < m_Properties.count(); i++ )
+	m_Properties[i]->getValue( m_QtProperties[i], Values[i] );
 }

@@ -10,11 +10,23 @@ ShapeItem::ShapeItem(const Shape *pShape, Editor *pEditor, QGraphicsItem *parent
 , m_bMirror(false)
 {
     setAcceptHoverEvents( true );
+    CreateProperties();
     CreateGraphics();
 }
 
 ShapeItem::~ShapeItem()
 {
+}
+
+void ShapeItem::CreateProperties()
+{
+    foreach ( PropertyValue *v, m_values )
+	delete v;
+    m_values.clear();
+    foreach ( const ShapeProperty *prop, m_pShape->properties().items() )
+    {
+	m_values.append( prop->createValue() );
+    }
 }
 
 QVariant ShapeItem::itemChange( GraphicsItemChange change, const QVariant & value )

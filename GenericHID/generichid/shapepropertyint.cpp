@@ -25,3 +25,20 @@ bool ShapePropertyInt::Configure( QDomElement &node )
     m_nMax = XMLUtility::getAttribute( node, "max", 65535 );
     return true;
 }
+
+
+
+void ShapePropertyInt::setValue(QtProperty *qtProp, PropertyValue *propVal) const
+{
+    PropertyValueInt *val = dynamic_cast<PropertyValueInt *>( propVal );
+    if ( val != NULL )
+	m_intManager->setValue( qtProp, val->Value );
+}
+
+void ShapePropertyInt::getValue(QtProperty *qtProp, PropertyValue *propVal) const
+{
+    PropertyValueInt *val = dynamic_cast<PropertyValueInt *>( propVal );
+    if ( val != NULL )
+	val->Value = m_intManager->value( qtProp );
+}
+

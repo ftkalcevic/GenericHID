@@ -16,6 +16,13 @@ namespace  PropertyType
     extern enum PropertyType fromString( const QString &s );
 };
 
+class PropertyValue
+{
+public:
+    PropertyValue() {}
+    virtual ~PropertyValue() {}
+};
+
 class ShapeProperty
 {
 protected:
@@ -28,6 +35,9 @@ public:
     static void Init();
     static QtProperty *MakeGroupItem( const QString &s );
     virtual QtProperty *getQtProperty() = 0;
+    virtual PropertyValue *createValue() const = 0;
+    virtual void setValue(QtProperty *, PropertyValue *) const = 0;
+    virtual void getValue(QtProperty *, PropertyValue *) const = 0;
 
 protected:
     virtual bool Configure( QDomElement &node ) { return true; }	// Extra configuration

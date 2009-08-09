@@ -35,3 +35,19 @@ bool ShapePropertyEnum::Configure( QDomElement &node )
     }
     return true;
 }
+
+
+void ShapePropertyEnum::setValue(QtProperty *qtProp, PropertyValue *propVal) const
+{
+    PropertyValueEnum *val = dynamic_cast<PropertyValueEnum *>( propVal );
+    if ( val != NULL )
+	m_enumManager->setValue( qtProp, m_Enums.indexOf(val->Value) );
+}
+
+void ShapePropertyEnum::getValue(QtProperty *qtProp, PropertyValue *propVal) const
+{
+    PropertyValueEnum *val = dynamic_cast<PropertyValueEnum *>( propVal );
+    if ( val != NULL )
+	val->Value = m_Enums[m_enumManager->value(qtProp)];
+}
+
