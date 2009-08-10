@@ -38,6 +38,11 @@ public:
     virtual PropertyValue *createValue() const = 0;
     virtual void setValue(QtProperty *, PropertyValue *) const = 0;
     virtual void getValue(QtProperty *, PropertyValue *) const = 0;
+    virtual QDomElement WriteXML(QDomElement &node, PropertyValue *) const;
+    virtual void getXML(QDomElement &node, PropertyValue *) const = 0;
+
+    const QString &name() const { return m_sName; }
+    const QString &description() const { return m_sDescription; }
 
 protected:
     virtual bool Configure( QDomElement &node ) { return true; }	// Extra configuration

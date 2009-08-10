@@ -4,6 +4,7 @@
 #include "ui_generichid.h"
 #include "shapecollection.h"
 #include "shapescene.h"
+#include "mru.h"
 
 class GenericHID : public QMainWindow, public Editor
 {
@@ -12,6 +13,7 @@ class GenericHID : public QMainWindow, public Editor
 public:
     GenericHID(QWidget *parent = 0, Qt::WFlags flags = 0);
     ~GenericHID();
+    void ProcessCommandline();
 
 public slots:
     void onFileOpen();
@@ -27,14 +29,25 @@ public slots:
     void onPointerTool();
     void onWireLinkTool();
     void onSelectionChanged();
+    void onMRUSelected(const QString &sFile);
 
 private:
-    void SetCursor( QCursor &cur1, QCursor &cur2 );
+    virtual void closeEvent( QCloseEvent * event );
 
+    void SetCursor( QCursor &cur1, QCursor &cur2 );
+    void updateWindowTitle();
+    bool DoSave();
+    bool DoOpen( const QString &sFile );
+    void writeSettings();
+    void readSettings();
+
+    QString m_sLastFile;
     Ui::GenericHIDClass ui;
     ShapeCollection *m_pShapes;
     ShapeScene *m_pScene;
     ShapeItem *m_pLastSelectedShape;
+    QSettings m_Settings;
+    MRU m_MRU;
 };
 
 #endif // GENERICHID_H

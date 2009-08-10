@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "pinitem.h"
 #include "shape.h"
+#include "shapeitem.h"
 
 PinItem::PinItem( QRectF rc, const Pin *pPin, Editor *pEditor, QGraphicsItem *parent )
 : QGraphicsRectItem( rc, parent )
@@ -88,3 +89,17 @@ PinItem::~PinItem()
 //   }
 //   event->ignore();
 //}
+
+
+const ShapeItem *PinItem::parentShape() const
+{
+    const QGraphicsItem *pParent = parentItem();
+
+    assert( pParent != NULL );
+    assert( pParent->type() == ShapeItem::Type );
+
+    if ( pParent != NULL && pParent->type() == ShapeItem::Type )
+	return 	qgraphicsitem_cast<const ShapeItem *>(pParent);
+
+    return NULL;
+}

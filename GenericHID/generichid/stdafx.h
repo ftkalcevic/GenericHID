@@ -18,6 +18,7 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
 #include <QGraphicsPolygonItem>
+#include <QSettings>
 
 #include <QtLineEditFactory>
 #include <QtDoubleSpinBoxFactory>
@@ -35,6 +36,7 @@
 #include "common.h"
 #include "log.h"
 #include "xmlutility.h"
+#include <assert.h>
 
 
 namespace UserTypes

@@ -52,6 +52,17 @@ QString XMLUtility::getAttribute( QDomElement &pNode, const char *sName, const c
     return sRet;
 }
 
+// Utility function to get a string attribute
+QString XMLUtility::getAttribute( QDomElement &pNode, const char *sName, const QString &sDefault )
+{
+    QString sRet;
+    if ( !getAttributeString( pNode, sName, sRet ) )
+	sRet = sDefault;
+    return sRet;
+}
+
+
+
 
 
 // Utility function to get an integer attribute

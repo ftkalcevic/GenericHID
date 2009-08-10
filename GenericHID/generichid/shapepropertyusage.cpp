@@ -37,3 +37,24 @@ void ShapePropertyUsage::getValue(QtProperty *qtProp, PropertyValue *propVal) co
 	val->Value = m_usageManager->value( qtProp );
 }
 
+
+QDomElement ShapePropertyUsage::WriteXML(QDomElement &node, PropertyValue *propVal) const
+{
+    PropertyValueUsage *val = dynamic_cast<PropertyValueUsage *>( propVal );
+    assert( val != NULL );
+    if ( val != NULL )
+    {
+	QDomElement propNode = ShapeProperty::WriteXML(node, propVal);
+	XMLUtility::setAttribute( propNode, "value", val->Value);
+	return propNode;
+    }
+    return QDomElement();
+}
+
+void ShapePropertyUsage::getXML(QDomElement &node, PropertyValue *propVal) const
+{
+    PropertyValueUsage *val = dynamic_cast<PropertyValueUsage *>( propVal );
+    assert( val != NULL );
+    if ( val != NULL )
+	val->Value = XMLUtility::getAttribute( node, "value", m_sDefault );
+}

@@ -51,3 +51,25 @@ void ShapePropertyEnum::getValue(QtProperty *qtProp, PropertyValue *propVal) con
 	val->Value = m_Enums[m_enumManager->value(qtProp)];
 }
 
+
+QDomElement ShapePropertyEnum::WriteXML(QDomElement &node, PropertyValue *propVal) const
+{
+    PropertyValueEnum *val = dynamic_cast<PropertyValueEnum *>( propVal );
+    assert( val != NULL );
+    if ( val != NULL )
+    {
+	QDomElement propNode = ShapeProperty::WriteXML(node, propVal);
+	XMLUtility::setAttribute( propNode, "value", val->Value);
+	return propNode;
+    }
+    return QDomElement();
+}
+
+
+void ShapePropertyEnum::getXML(QDomElement &node, PropertyValue *propVal) const
+{
+    PropertyValueEnum *val = dynamic_cast<PropertyValueEnum *>( propVal );
+    assert( val != NULL );
+    if ( val != NULL )
+	val->Value = XMLUtility::getAttribute( node, "value", m_sDefault );
+}

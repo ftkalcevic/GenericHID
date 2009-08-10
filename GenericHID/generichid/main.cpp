@@ -7,11 +7,15 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
     a.setApplicationName( "GenericHID" );
+    a.setOrganizationName( "Frank's Workshop" );
+    a.setOrganizationDomain( "www.franksworkshop.com.au" );
 
     usb_init();
     usb_set_debug(255);
     GenericHID w;
     w.show();
+    w.ProcessCommandline();
     return a.exec();
 }

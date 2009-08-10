@@ -13,6 +13,9 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
 {
     ui.setupUi(this);
 
+    m_MRU.setMenu( ui.menuFile );
+    connect( &m_MRU, SIGNAL(MRUSelected(const QString &)), this, SLOT(onMRUSelected(const QString &)) );
+
     m_pShapes = ShapeCollection::LoadShapeCollection( CONFIGDATA_FILE );
 
     // Load the shapes into the tool box
@@ -61,6 +64,34 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
     ui.listView->setPropertiesWithoutValueMarked(true);
     ui.listView->setRootIsDecorated(false);
     ShapeProperty::SetBrowserFactory( ui.listView );
+
+    readSettings();
+}
+
+
+void GenericHID::writeSettings()
+{
+    m_Settings.setValue("window/size", size());
+    m_Settings.setValue("window/pos", pos());
+
+    for ( int i = 0; i < MAX_MRU; i++ )
+	if ( i < m_MRU.count() )
+	    m_Settings.setValue( QString("application/mru%1").arg(i), m_MRU[i] );
+	else
+	    m_Settings.setValue( QString("application/mru%1").arg(i), "" );
+}
+
+void GenericHID::readSettings()
+{
+    resize(m_Settings.value("window/size", size()).toSize());
+    move(m_Settings.value("window/pos", pos()).toPoint());
+
+    for ( int i = 0; i < MAX_MRU; i++ )
+    {
+	QString sMRU = m_Settings.value(QString("application/mru%1").arg(i), "" ).toString();
+	if ( sMRU.length() > 0 )
+	    m_MRU.append( sMRU );
+    }
 }
 
 GenericHID::~GenericHID()
@@ -68,12 +99,103 @@ GenericHID::~GenericHID()
 
 }
 
+void GenericHID::onMRUSelected(const QString &sFile)
+{
+    // check for changes
+
+    // Clear existing 
+    DoOpen( sFile );
+}
+
 void GenericHID::onFileOpen()
 {
+    // check for changes
+
+    // open file
+    QString sFile = QFileDialog::getOpenFileName( this, "Open GenericHID device", m_sLastFile, QString("Generic HID device file (*.ghd);;All files (*)") );
+    if ( sFile.isNull() || sFile.isEmpty() )
+	return;
+
+    // Clear existing 
+    DoOpen( sFile );
 }
+
+bool GenericHID::DoOpen( const QString &sFile )
+{
+    m_sLastFile = sFile;
+
+    QFile file( sFile );
+    if ( !file.open(QIODevice::ReadOnly) )
+	return false;
+
+    m_MRU.append( m_sLastFile );
+    QDomDocument doc("GenericHID");
+    doc.setContent( &file );
+    file.close();
+
+    m_pScene->loadXML( doc, m_pShapes );
+
+    return true;
+}
+
 
 void GenericHID::onFileSave()
 {
+    if ( m_pLastSelectedShape != NULL )
+    {
+	// write back properties if this shape before trying to save
+        const ShapeProperties &pProps = m_pLastSelectedShape->shapeData()->properties();
+        pProps.retreive(m_pLastSelectedShape->values());
+    }
+
+    DoSave();
+}
+
+bool GenericHID::DoSave()
+{
+    // Validate everything
+    // Make the xml file to save
+    QString s = m_pScene->makeXML();
+    if ( s.length() > 0 )
+    {
+	for (;;)
+	{
+	    QString sFilename = QFileDialog::getSaveFileName( this, "Save GenericHID device", m_sLastFile, QString("Generic HID device file (*.ghd);;All files (*)") );
+	    if ( sFilename.isEmpty() || sFilename.isNull() )
+		return false;
+
+	    QFileInfo fi(sFilename);
+	    if ( fi.suffix().isEmpty() )
+		sFilename.append( ".ghd" );
+
+	    QFile file(sFilename.toLatin1().constData());
+	    if ( !file.open( QIODevice::WriteOnly | QIODevice::Truncate ) )
+	    {
+		QMessageBox::critical( this, "Can't save", QString("Failed to save file '%1':%2").arg(sFilename).arg(file.errorString()) );
+	    }
+	    else
+	    {
+		m_sLastFile = sFilename;
+		file.write( s.toLatin1() );
+		file.close();
+		break;
+	    }
+	}
+	m_MRU.append( m_sLastFile );
+	updateWindowTitle();
+    }
+    return true;
+}
+
+void GenericHID::updateWindowTitle()
+{
+    QString s = QCoreApplication::applicationName();
+    if ( !m_sLastFile.isEmpty() )
+    {
+	s += " - ";
+	s += m_sLastFile;
+    }
+    setWindowTitle( s );
 }
 
 void GenericHID::onFileSaveAs()
@@ -82,6 +204,12 @@ void GenericHID::onFileSaveAs()
 
 void GenericHID::onFileExit()
 {
+    close();
+}
+
+void GenericHID::closeEvent( QCloseEvent * event )
+{
+    writeSettings();
 }
 
 void GenericHID::onMicrocontrollerProgram()
@@ -187,6 +315,22 @@ void GenericHID::SetCursor( QCursor &cur1, QCursor &cur2 )
 //    foreach( ShapeInstance *pShape, m_pShapeInstances.instances() )
 //	pShape->item()->setCursor( cur2 );
 }
+
+void GenericHID::ProcessCommandline()
+{
+    QStringList args = QCoreApplication::instance()->arguments();
+
+    if ( args.count() > 1 )
+    {
+        QString sFile = args[1];
+        QFileInfo info( sFile );
+        if ( !info.exists() )
+            QMessageBox::critical( this, "File not found", QString("File '%1' does not exist").arg(sFile) );
+        else
+            DoOpen( sFile );
+    }
+}
+
 
 /*
  UI => XML => EEPROM Binary => Program

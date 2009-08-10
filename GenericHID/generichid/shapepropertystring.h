@@ -24,6 +24,9 @@ public:
     virtual PropertyValue *createValue() const { return new PropertyValueString(m_sDefault); }
     virtual void setValue(QtProperty *, PropertyValue *) const;
     virtual void getValue(QtProperty *, PropertyValue *) const;
+    virtual QDomElement WriteXML(QDomElement &node, PropertyValue *) const;
+    virtual void getXML(QDomElement &node, PropertyValue *) const;
+
 private:
     QString m_sDefault;
 };

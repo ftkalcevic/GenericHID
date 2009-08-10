@@ -12,9 +12,11 @@ public:
 
     static ShapeCollection *LoadShapeCollection( const QString &sPath );
     const QList<Shape *> &shapes() { return m_Shapes; }
+    const Shape * shape( const QString &sId ) { return m_ShapeMap.contains(sId) ? m_ShapeMap[sId] : NULL; }
 
 private:
     QList<Shape *> m_Shapes;
+    QMap<QString,Shape *> m_ShapeMap;
 };
 
 #endif

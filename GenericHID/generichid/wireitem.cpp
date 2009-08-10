@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "wireitem.h"
 #include "pinitem.h"
+#include "shapeitem.h"
 
 WireItem::WireItem(QPointF ptStart, QPointF ptEnd, QGraphicsItem *parent)
 : QGraphicsPolygonItem(parent)
@@ -9,9 +10,21 @@ WireItem::WireItem(QPointF ptStart, QPointF ptEnd, QGraphicsItem *parent)
 , m_pPin1( NULL )
 , m_pPin2( NULL )
 {
-    MakePolygon();
     setFlag( QGraphicsItem::ItemIsSelectable);
+    MakePolygon();
 }
+
+WireItem::WireItem(PinItem *pPin1, PinItem *pPin2, QGraphicsItem *parent)
+: QGraphicsPolygonItem(parent)
+, m_pPin1( pPin1 )
+, m_pPin2( pPin2 )
+{
+    setFlag( QGraphicsItem::ItemIsSelectable);
+    MakePolygon();
+    if ( m_pPin1 != NULL )
+	m_pPin1->setWire( this );
+    if ( m_pPin2 != NULL )
+	m_pPin2->setWire( this );}
 
 WireItem::~WireItem()
 {
@@ -44,3 +57,76 @@ void WireItem::MakePolygon()
     m_Points[1] = m_ptEnd;
     setPolygon( QPolygonF(m_Points) );
 }
+
+
+void WireItem::WriteXML( QDomElement &node ) const
+{
+    //	<Wire StartShapeId="c059aea5-bbf1-4b7b-841d-5b4f13b8dfdc" StartPinId="Output" EndShapeId="a1be9021-6352-4820-a0ac-a6a9b4c22ecf" EndPinId="PF0" />
+    QDomElement wireNode = node.ownerDocument().createElement( "Wire" );
+    node.appendChild( wireNode );
+
+    XMLUtility::setAttribute( wireNode, "startShapeId", m_pPin1->parentShape()->id() );
+    XMLUtility::setAttribute( wireNode, "startPinId", m_pPin1->pin()->id() );
+    XMLUtility::setAttribute( wireNode, "endShapeId", m_pPin2->parentShape()->id() );
+    XMLUtility::setAttribute( wireNode, "endPinId", m_pPin2->pin()->id() );
+}
+
+
+WireItem *WireItem::CreateFromXML( QList<ShapeItem *> &shapes, QDomElement &node )
+{
+    WireItem *pWire = NULL;
+
+    int nStartShapeId = XMLUtility::getAttribute( node, "startShapeId", -1 );
+    QString sStartPinId = XMLUtility::getAttribute( node, "startPinId", "" );
+    int nEndShapeId = XMLUtility::getAttribute( node, "endShapeId", -1 );
+    QString sEndPinId = XMLUtility::getAttribute( node, "endPinId", "" );
+
+    // Find the actual shapes and pins
+    ShapeItem *pStartShape = NULL;
+    ShapeItem *pEndShape = NULL;
+    PinItem *pStartPin = NULL;
+    PinItem *pEndPin = NULL;
+
+    foreach ( ShapeItem *pItem, shapes )
+	if ( pItem->id() == nStartShapeId )
+	{
+	    pStartShape = pItem;
+	    break;
+	}
+
+    foreach ( ShapeItem *pItem, shapes )
+	if ( pItem->id() == nEndShapeId )
+	{
+	    pEndShape = pItem;
+	    break;
+	}
+
+    if ( pStartShape != NULL )
+    {
+	foreach ( PinItem *pItem, pStartShape->pins() )
+	    if ( pItem->pin()->id() == sStartPinId )
+	    {
+		pStartPin = pItem;
+		break;
+	    }
+    }
+
+    if ( pEndShape != NULL )
+    {
+	foreach ( PinItem *pItem, pEndShape->pins() )
+	    if ( pItem->pin()->id() == sEndPinId )
+	    {
+		pEndPin = pItem;
+		break;
+	    }
+    }
+
+    if ( pStartPin != NULL && pEndPin != NULL )
+    {
+	pWire = new WireItem( pStartPin, pEndPin );
+    }
+
+
+    return pWire;
+}
+

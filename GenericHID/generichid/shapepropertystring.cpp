@@ -40,3 +40,26 @@ void ShapePropertyString::getValue(QtProperty *qtProp, PropertyValue *propVal) c
 	val->Value = m_stringManager->value( qtProp );
 }
 
+
+QDomElement ShapePropertyString::WriteXML(QDomElement &node, PropertyValue *propVal) const
+{
+    PropertyValueString *val = dynamic_cast<PropertyValueString *>( propVal );
+    assert( val != NULL );
+    if ( val != NULL )
+    {
+	QDomElement propNode = ShapeProperty::WriteXML(node, propVal);
+	XMLUtility::setAttribute( propNode, "value", val->Value);
+	return propNode;
+    }
+    return QDomElement();
+}
+
+
+
+void ShapePropertyString::getXML(QDomElement &node, PropertyValue *propVal) const
+{
+    PropertyValueString *val = dynamic_cast<PropertyValueString *>( propVal );
+    assert( val != NULL );
+    if ( val != NULL )
+	val->Value = XMLUtility::getAttribute( node, "value", m_sDefault );
+}

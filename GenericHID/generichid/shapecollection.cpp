@@ -45,7 +45,10 @@ ShapeCollection *ShapeCollection::LoadShapeCollection( const QString &sPath )
 	Shape *pShape = Shape::CreateFromXML( pShapeNode );
 
 	if ( pShape != NULL )
+	{
 	    pCol->m_Shapes.push_back( pShape );
+	    pCol->m_ShapeMap.insert( pShape->name(), pShape );
+	}
     }
 
     return pCol;

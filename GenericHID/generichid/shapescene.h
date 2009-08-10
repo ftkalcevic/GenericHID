@@ -17,6 +17,8 @@ public:
     bool CanAdd( const Shape *pShape, QString &sError );
     ShapeItem *CreateNewShape( const Shape *pShape, Editor *pEditor, QPointF pos );
     const QList<ShapeItem *> &shapeItems() const { return m_ShapeItems; }
+    QString makeXML();
+    bool loadXML( QDomDocument &doc, ShapeCollection *pCol );
 
 public slots:
     void onViewItemChanged( QGraphicsItem *item, QGraphicsItem::GraphicsItemChange change, const QVariant &value);
@@ -32,6 +34,7 @@ private:
     ShapeItem *ShapeUnderCursor( QPointF pos );
     void RemoveWire( WireItem *pItem );
     void RemoveShape( ShapeItem *pItem );
+    int GetUniqueShapeId();
 
     Editor *m_pEditor;
     QList<ShapeItem *> m_ShapeItems;

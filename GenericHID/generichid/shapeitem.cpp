@@ -2,12 +2,13 @@
 #include "shapeitem.h"
 #include "pinitem.h"
 
-ShapeItem::ShapeItem(const Shape *pShape, Editor *pEditor, QGraphicsItem *parent)
+ShapeItem::ShapeItem(const Shape *pShape, int id, Editor *pEditor, QGraphicsItem *parent)
 : QGraphicsPixmapItem(QPixmap(pShape->shapeFile()),parent)
 , m_pShape( pShape )
 , m_pEditor( pEditor )
 , m_dRotate(0)
 , m_bMirror(false)
+, m_nId( id )
 {
     setAcceptHoverEvents( true );
     CreateProperties();
@@ -140,3 +141,62 @@ void ShapeItem::DoTransform()
     translate( -center.x(), -center.y() );
 }
 
+
+void ShapeItem::WriteXML( QDomElement &node ) const
+{
+    //	<Shapes>
+    //	    <Shape ShapeId="strippedusbkey" InstanceId="a1be9021-6352-4820-a0ac-a6a9b4c22ecf" X="938" Y="666" Rotation="0" Mirror="False">
+    //		<Property Name="Name" Value="" />
+    QDomElement shapeNode = node.ownerDocument().createElement( "Shape" );
+    node.appendChild( shapeNode );
+
+    XMLUtility::setAttribute( shapeNode, "shapeId", m_pShape->name() );
+    XMLUtility::setAttribute( shapeNode, "instanceId", m_nId );
+    XMLUtility::setAttribute( shapeNode, "x", pos().x() );
+    XMLUtility::setAttribute( shapeNode, "y", pos().y() );
+    XMLUtility::setAttribute( shapeNode, "rotate", m_dRotate );
+    XMLUtility::setAttribute( shapeNode, "mirror", m_bMirror );
+
+    for ( int i = 0; i < m_pShape->properties().items().count(); i++ )
+	m_pShape->properties().items()[i]->WriteXML( shapeNode, m_values[i] );
+}
+
+
+ShapeItem *ShapeItem::CreateFromXML( ShapeCollection *pCol, Editor *pEditor, QDomElement &shapeNode )
+{
+    QString sShapeId = XMLUtility::getAttribute( shapeNode, "shapeId", QString("") );
+    int nId = XMLUtility::getAttribute( shapeNode, "instanceId", 0 );
+    double x = XMLUtility::getAttribute( shapeNode, "x", 0.0 );
+    double y = XMLUtility::getAttribute( shapeNode, "y", 0.0 );
+    double dRotate = XMLUtility::getAttribute( shapeNode, "rotate", 0.0 );
+    bool bMirror = XMLUtility::getAttribute( shapeNode, "mirror", false );
+
+    ShapeItem *pShapeItem = NULL;
+    const Shape *pShape = pCol->shape( sShapeId );
+    if ( pShape != NULL )
+    {
+	pShapeItem = new ShapeItem( pShape, nId, pEditor, NULL );
+	pShapeItem->setPos( QPointF(x,y) );
+	pShapeItem->setRotation( dRotate );
+	pShapeItem->setMirror( bMirror );
+
+	QDomNodeList propertyNodes = XMLUtility::elementsByTagName( shapeNode, "Property" );
+	for ( int i = 0; i < propertyNodes.count(); i++ )
+	{
+	    QDomElement item = propertyNodes.item(i).toElement();
+	    QString sName = XMLUtility::getAttribute( item, "name", "" );
+    	
+	    for ( int p = 0; p < pShape->properties().items().count(); p++ )
+	    {
+		ShapeProperty *prop = pShape->properties().items()[p];
+		if ( prop->name() == sName )
+		{
+		    prop->getXML( item, pShapeItem->m_values[p] );
+		    break;
+		}
+	    }
+	}
+    }
+
+    return pShapeItem;
+}

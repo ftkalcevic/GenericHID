@@ -31,6 +31,7 @@ public:
     static void setAttribute( QDomElement &pNode, const char *sName, bool bValue );
 
     static bool getAttributeString( QDomElement &pNode, const char *sName, QString &s );
+    static QString getAttribute( QDomElement &pNode, const char *sName, const QString &sDefault );
     static QString getAttribute( QDomElement &pNode, const char *sName, const char *sDefault );
     static int getAttribute( QDomElement &pNode, const char *sName, int nDefault );
     static double getAttribute( QDomElement &pNode, const char *sName, double nDefault );

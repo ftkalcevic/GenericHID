@@ -24,6 +24,9 @@ public:
     virtual PropertyValue *createValue() const { return new PropertyValueEnum(m_sDefault); }
     virtual void setValue(QtProperty *, PropertyValue *) const;
     virtual void getValue(QtProperty *, PropertyValue *) const;
+    virtual QDomElement WriteXML(QDomElement &node, PropertyValue *) const;
+    virtual void getXML(QDomElement &node, PropertyValue *) const;
+
 private:
     QStringList m_Enums;
     QString m_sDefault;

@@ -36,10 +36,20 @@ bool ShapeScene::CanAdd( const Shape *pShape, QString &sError )
     return true;
 }
 
+// Just return maxid+1
+int ShapeScene::GetUniqueShapeId()
+{
+    int nId = 1;
+    foreach( const ShapeItem *pItem, m_ShapeItems )
+	if ( pItem->id() >= nId )
+	    nId = pItem->id() + 1;
+    return nId;
+}
 
 ShapeItem *ShapeScene::CreateNewShape( const Shape *pShape, Editor *pEditor, QPointF pos )
 {
-    ShapeItem *pItem = new ShapeItem( pShape, pEditor );
+    int nNewId = GetUniqueShapeId();
+    ShapeItem *pItem = new ShapeItem( pShape, nNewId, pEditor );
     if ( pItem != NULL )
     {
 	m_ShapeItems.push_back( pItem );
@@ -350,6 +360,7 @@ void ShapeScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	    m_pEditor->m_pCurrentWire->setPin1(m_pEditor->m_pWiringStartPin);
 	    m_pEditor->m_pCurrentWire->setPin2(pSecondPin);
 	    m_pEditor->m_pCurrentWire->UpdateEndpoints();
+	    m_WireItems.append( m_pEditor->m_pCurrentWire );
 	    // add to wire list
 	    m_pEditor->m_pCurrentWire = NULL;
 	    m_pEditor->m_pWiringStartPin = NULL;
@@ -366,3 +377,77 @@ void ShapeScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	mouseEvent->ignore();
     QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }
+
+
+
+QString ShapeScene::makeXML()
+{
+    QDomDocument xml("GenericHID");
+
+    QDomElement rootElem = xml.createElement("GenericHID");
+    xml.appendChild( rootElem );
+
+    QDomElement shapesNode = xml.createElement("Shapes");
+    rootElem.appendChild( shapesNode );
+
+    foreach ( const ShapeItem *pItem, m_ShapeItems )
+    {
+	pItem->WriteXML( shapesNode );
+    }
+
+    QDomElement wiresNode = xml.createElement("Wires");
+    rootElem.appendChild( wiresNode );
+
+    foreach ( const WireItem *pItem, m_WireItems )
+    {
+	pItem->WriteXML( wiresNode );
+    }
+
+    return xml.toString();
+}
+
+bool ShapeScene::loadXML( QDomDocument &doc, ShapeCollection *pCol )
+{
+    QDomElement rootElement = doc.firstChildElement( "GenericHID" );
+    if ( rootElement.isNull() )
+    {
+	//LOG_MSG( logger, LogTypes::Error, "Root node is not 'GenericHID'" );
+	return false;
+    }
+
+    QDomElement shapesNode = XMLUtility::firstChildElement( rootElement, "Shapes" );
+    if ( shapesNode.isNull() )
+    {
+	//LOG_MSG( logger, LogTypes::Error, "Can't find 'Shapes' node" );
+	return false;
+    }
+
+    QDomNodeList shapeNodes = XMLUtility::elementsByTagName( shapesNode, "Shape" );
+    for ( int i = 0; i < shapeNodes.count(); i++ )
+    {
+	QDomElement item = shapeNodes.item(i).toElement();
+	ShapeItem *pItem = ShapeItem::CreateFromXML( pCol, m_pEditor, item );
+	m_ShapeItems.append( pItem );
+	addItem( pItem );
+	connect( pItem, SIGNAL(itemChange( QGraphicsItem *, QGraphicsItem::GraphicsItemChange, const QVariant & )), this, SLOT(onViewItemChanged( QGraphicsItem *, QGraphicsItem::GraphicsItemChange, const QVariant &)) );
+    }
+
+    QDomElement wiresNode = XMLUtility::firstChildElement( rootElement, "Wires" );
+    if ( wiresNode.isNull() )
+    {
+	//LOG_MSG( logger, LogTypes::Error, "Can't find 'Wires' node" );
+	return false;
+    }
+
+    QDomNodeList wireNodes = XMLUtility::elementsByTagName( wiresNode, "Wire" );
+    for ( int i = 0; i < wireNodes.count(); i++ )
+    {
+	QDomElement item = wireNodes.item(i).toElement();
+	WireItem *pItem = WireItem::CreateFromXML( m_ShapeItems, item );
+	m_WireItems.append( pItem );
+	addItem( pItem );
+	pItem->UpdateEndpoints();
+    }
+    return true;
+}
+

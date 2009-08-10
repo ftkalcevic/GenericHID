@@ -126,3 +126,13 @@ ShapeProperty *ShapeProperty::CreateShapeProperty( QDomElement &node, const QStr
 
     return pProp;
 }
+
+
+QDomElement ShapeProperty::WriteXML(QDomElement &node, PropertyValue *) const
+{
+    QDomElement propNode = node.ownerDocument().createElement( "Property" );
+    node.appendChild( propNode );
+
+    XMLUtility::setAttribute( propNode, "name", m_sName );
+    return propNode;
+}

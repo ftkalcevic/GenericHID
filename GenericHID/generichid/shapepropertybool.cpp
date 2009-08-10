@@ -38,3 +38,24 @@ void ShapePropertyBool::getValue(QtProperty *qtProp, PropertyValue *propVal) con
 	val->Value = m_boolManager->value( qtProp );
 }
 
+QDomElement ShapePropertyBool::WriteXML(QDomElement &node, PropertyValue *propVal) const
+{
+    PropertyValueBool *val = dynamic_cast<PropertyValueBool *>( propVal );
+    assert( val != NULL );
+    if ( val != NULL )
+    {
+	QDomElement propNode = ShapeProperty::WriteXML(node, propVal);
+	XMLUtility::setAttribute( propNode, "value", val->Value);
+	return propNode;
+    }
+    return QDomElement();
+}
+
+
+void ShapePropertyBool::getXML(QDomElement &node, PropertyValue *propVal) const
+{
+    PropertyValueBool *val = dynamic_cast<PropertyValueBool *>( propVal );
+    assert( val != NULL );
+    if ( val != NULL )
+	val->Value = XMLUtility::getAttribute( node, "value", m_bDefault );
+}
