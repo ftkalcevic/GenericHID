@@ -52,7 +52,7 @@ ListEditorFactory::~ListEditorFactory()
 }
 
 
-void ListEditorFactory::slotPropertyChanged(QtProperty *property, int value)
+void ListEditorFactory::slotPropertyChanged(QtProperty *property, int /*value*/)
 {
     if (!m_createdEditors.contains(property))
         return;
@@ -172,7 +172,7 @@ void ListEditorFactory::connectPropertyManager(ListPropertyManager *manager)
     connect(manager, SIGNAL(enumsChanged(QtProperty *)), this, SLOT(slotEnumNamesChanged(QtProperty *)));
 }
 
-QWidget *ListEditorFactory::createEditor(ListPropertyManager *manager, QtProperty *property, QWidget *parent)
+QWidget *ListEditorFactory::createEditor(ListPropertyManager * /*manager*/, QtProperty *property, QWidget *parent)
 {
     QComboBox *editor = _EditorFactoryPrivate<QComboBox>::createEditor(property, parent);
     editor->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);

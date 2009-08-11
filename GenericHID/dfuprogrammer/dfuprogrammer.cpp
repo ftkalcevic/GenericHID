@@ -75,7 +75,7 @@ static struct target_details target_map[] = {
 
 struct target_details *FindDetails( enum targets_enum target )
 {
-    for ( int i = 0; i < countof(target_map); i++ )
+    for ( unsigned int i = 0; i < countof(target_map); i++ )
 	if ( target_map[i].value == target )
 	    return target_map+i;
     return NULL;
@@ -276,7 +276,7 @@ bool DFUProgrammer::StartVerify(IntelHexBuffer &memory)
                                top_memory_address, buffer.data(),
                                memory_size, bEeprom, false, m_Callback, m_user_data );
 
-    if( memory_size != result ) 
+    if( memory_size != (uint32_t)result ) 
     {
         ERROR_MSG( "Error while validating.\n" );
         goto error;

@@ -12,9 +12,9 @@ public:
     ~ShapeMimeData();
     const Shape *shape() const { return m_pShape; }
 
-    virtual bool hasFormat( const QString & mimeType ) const { return false; }
+    virtual bool hasFormat( const QString & ) const { return false; }
     virtual QStringList formats () const { return QStringList(); }
-    virtual QVariant retrieveData ( const QString & mimeType, QVariant::Type type ) const { return QVariant(); }
+    virtual QVariant retrieveData ( const QString & , QVariant::Type ) const { return QVariant(); }
 
 private:
     const Shape *m_pShape;

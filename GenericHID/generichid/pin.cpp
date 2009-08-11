@@ -4,7 +4,7 @@
 
 namespace PinType
 {
-    struct 
+    struct PinTypesDetals
     {
 	enum PinType eType;
 	const char *sName;
@@ -23,7 +23,7 @@ namespace PinType
 	
 	foreach (QString s, sTypes) 
 	{
-	    for ( int i = 0; i < countof(types); i++ )
+	    for ( unsigned int i = 0; i < countof(types); i++ )
 		if ( s.compare( types[i].sName, Qt::CaseInsensitive ) == 0 )
 		{
 		    eType = (enum PinType)(eType | types[i].eType);
@@ -36,7 +36,7 @@ namespace PinType
     QString toString(enum PinType eType)
     {
 	QString sRet;
-	for ( int i = 0; i < countof(types); i++ )
+	for ( unsigned int i = 0; i < countof(types); i++ )
 	    if ( (eType & types[i].eType) != 0 )
 	    {
 		if ( !sRet.isEmpty() )
@@ -49,7 +49,7 @@ namespace PinType
 
 namespace PinHAlign
 {
-    struct 
+    struct PinHAlignDetails
     {
 	enum PinHAlign eType;
 	const char *sName;
@@ -65,7 +65,7 @@ namespace PinHAlign
 
     enum PinHAlign fromString(const QString &s)
     {
-	for ( int i = 0; i < countof(types); i++ )
+	for ( unsigned int i = 0; i < countof(types); i++ )
 	    if ( s.compare( types[i].sName, Qt::CaseInsensitive ) == 0 )
 		return types[i].eType;
 	return Centre;
@@ -74,7 +74,7 @@ namespace PinHAlign
 
 namespace PinVAlign
 {
-    struct 
+    struct PinVAlignDetails
     {
 	enum PinVAlign eType;
 	const char *sName;
@@ -90,7 +90,7 @@ namespace PinVAlign
 
     enum PinVAlign fromString(const QString &s)
     {
-	for ( int i = 0; i < countof(types); i++ )
+	for ( unsigned int i = 0; i < countof(types); i++ )
 	    if ( s.compare( types[i].sName, Qt::CaseInsensitive ) == 0 )
 		return types[i].eType;
 	return Centre;

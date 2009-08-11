@@ -45,7 +45,7 @@ public:
     const QString &description() const { return m_sDescription; }
 
 protected:
-    virtual bool Configure( QDomElement &node ) { return true; }	// Extra configuration
+    virtual bool Configure( QDomElement & /*node*/ ) { return true; }	// Extra configuration
 
     static QtGroupPropertyManager *m_groupManager;
     static QtStringPropertyManager *m_stringManager;

@@ -29,7 +29,7 @@ void DragToolButton::mousePressEvent(QMouseEvent *event)
 	QPixmap scaledShape = shape.scaled( (double)shape.width() * dScale, (double)shape.height() * dScale, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
 	drag->setPixmap( scaledShape );
 
-	Qt::DropAction dropAction = drag->exec();
+	drag->exec();
     }
 }
 

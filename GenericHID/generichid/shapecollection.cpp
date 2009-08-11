@@ -53,3 +53,5 @@ ShapeCollection *ShapeCollection::LoadShapeCollection( const QString &sPath )
 
     return pCol;
 }
+
+

@@ -63,7 +63,7 @@ ShapeItem *ShapeScene::CreateNewShape( const Shape *pShape, Editor *pEditor, QPo
 
 
 // Currently, we only get this is an object is moved interactively by the user.  Update wire ends.
-void ShapeScene::onViewItemChanged( QGraphicsItem *item, QGraphicsItem::GraphicsItemChange change, const QVariant &value)
+void ShapeScene::onViewItemChanged( QGraphicsItem *item, QGraphicsItem::GraphicsItemChange /*change*/, const QVariant & /*value*/)
 {
     if ( item->type() == ShapeItem::Type )
     {

@@ -63,6 +63,7 @@ public:
     const Shape *shape() const { return m_pShape; }
 
 private:
+    const Shape *m_pShape;
     QString m_sId;
     PinType::PinType m_ePinType;
     QRect m_geometry;
@@ -71,7 +72,6 @@ private:
     PinHAlign::PinHAlign m_eHAlign;
     PinVAlign::PinVAlign m_eVAlign;
     double m_dRotate;
-    const Shape *m_pShape;
 };
 
 

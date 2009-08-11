@@ -594,7 +594,7 @@ int32_t atmel_read_flash( dfu_device_t *device,
         }
         
         result = __atmel_read_page( device, current_start, (current_start + size), buffer, eeprom );
-        if( size != result ) {
+        if( size != (size_t)result ) {
             return -5;
         }
 
@@ -1186,7 +1186,7 @@ static int32_t atmel_flash_block( dfu_device_t *device,
 
     result = dfu_download( device, message_length, message );
 
-    if( message_length != result ) {
+    if( message_length != (size_t)result ) {
         if( -EPIPE == result ) {
             /* The control pipe stalled - this is an error
              * caused by the device saying "you can't do that"

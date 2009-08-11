@@ -7,7 +7,7 @@
 
 namespace ShapeType
 {
-    struct 
+    struct ShapeTypeDetails
     {
 	const char *sName;
 	enum ShapeType eType;
@@ -29,7 +29,7 @@ namespace ShapeType
 
     enum ShapeType fromString( const QString &s )
     {
-	for ( int i = 0; i < countof(types); i++ )
+	for ( unsigned int i = 0; i < countof(types); i++ )
 	    if ( s.compare( types[i].sName, Qt::CaseInsensitive ) == 0 )
 		return types[i].eType;
 	return None;
@@ -37,14 +37,14 @@ namespace ShapeType
 
     const char * toString( enum ShapeType eType )
     {
-	for ( int i = 0; i < countof(types); i++ )
+	for ( unsigned int i = 0; i < countof(types); i++ )
 	    if ( types[i].eType == eType )
 		return types[i].sName;
 	return "None";
     }
 }
 
-Shape::Shape(QDomElement &shapeNode, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, int nImageWidth, int nImageHeight, const QString &sIconFile, int nMaxInstances, const QString &sDescription)
+Shape::Shape(QDomElement & /*shapeNode*/, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, int nImageWidth, int nImageHeight, const QString &sIconFile, int nMaxInstances, const QString &sDescription)
 : m_eShapeType(eShapeType)
 , m_sShapeId(sShapeId)
 , m_bSource(bSource)

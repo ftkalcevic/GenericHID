@@ -451,7 +451,7 @@ void GenericHID::onWireLinkTool()
     m_eEditMode = EditMode::Wiring;
 }
 
-void GenericHID::SetCursor( QCursor &cur1, QCursor &cur2 )
+void GenericHID::SetCursor( QCursor & /*cur1*/, QCursor & /*cur2*/ )
 {
 //    ui.graphicsView->setCursor( cur1 );
 //    ui.graphicsView->viewport()->setCursor( cur1 );
@@ -495,3 +495,6 @@ todo
     - check changes
     - check validity - pre generate eeprom
  */
+
+
+

@@ -10,7 +10,7 @@
 
 namespace  PropertyType
 {
-    struct 
+    struct PropertyTypeMap
     {
 	enum PropertyType eType;
 	const char *sName;
@@ -25,7 +25,7 @@ namespace  PropertyType
 
     enum PropertyType fromString( const QString &s )
     {
-	for ( int i = 0; i < countof(types); i++ )
+	for ( unsigned int i = 0; i < countof(types); i++ )
 	    if ( s.compare( types[i].sName, Qt::CaseInsensitive ) == 0 )
 		return types[i].eType;
 	return None;

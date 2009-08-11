@@ -7,8 +7,8 @@ public:
     EnumItem() : i(0) {}
     EnumItem( int _i, const QString &_s ) : i(_i), s(_s) {}
     EnumItem( const EnumItem &other ) : i(other.i), s(other.s) {}
-    QString s;
     int i;
+    QString s;
 };
 
 typedef QList<EnumItem> ListEnumList;
