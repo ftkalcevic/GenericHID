@@ -938,13 +938,6 @@
 						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\generatedfiles\debug\moc_listeditorfactory.cpp"
@@ -1222,13 +1215,6 @@
 						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\generatedfiles\debug\moc_wireitem.cpp"
@@ -1289,6 +1275,10 @@
 		<Filter
 			Name="Resources"
 			>
+			<File
+				RelativePath=".\resources\ApplicationIcon.png"
+				>
+			</File>
 			<File
 				RelativePath=".\resources\AVRUSBKey - Wings and labels.png"
 				>
@@ -1390,6 +1380,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\resources\new.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\open.png"
+				>
+			</File>
+			<File
 				RelativePath=".\resources\Potentiometer.png"
 				>
 			</File>
@@ -1419,6 +1417,10 @@
 			</File>
 			<File
 				RelativePath=".\resources\Rotate.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\save.png"
 				>
 			</File>
 			<File
