@@ -8,6 +8,9 @@ HEADERS += dragtoolbutton.h \
     editor.h \
     eepromdata.h \
     generichid.h \
+    listeditorfactory.h \
+    listpropertymanager.h \
+    mru.h \
     pin.h \
     pinitem.h \
     programdlg.h \
@@ -37,7 +40,10 @@ SOURCES += dragtoolbutton.cpp \
     editor.cpp \
     eepromdata.cpp \
     generichid.cpp \
+    listeditorfactory.cpp \
+    listpropertymanager.cpp \
     main.cpp \
+    mru.cpp \
     pin.cpp \
     pinitem.cpp \
     programdlg.cpp \
