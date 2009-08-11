@@ -32,6 +32,19 @@ namespace PinType
 	}
 	return eType;
     }
+
+    QString toString(enum PinType eType)
+    {
+	QString sRet;
+	for ( int i = 0; i < countof(types); i++ )
+	    if ( (eType & types[i].eType) != 0 )
+	    {
+		if ( !sRet.isEmpty() )
+		    sRet += ",";
+		sRet += types[i].sName;
+	    }
+	return sRet;
+    }
 };
 
 namespace PinHAlign

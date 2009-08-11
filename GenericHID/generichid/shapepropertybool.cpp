@@ -14,6 +14,7 @@ ShapePropertyBool::~ShapePropertyBool(void)
 QtProperty *ShapePropertyBool::getQtProperty()
 {
     QtProperty *pProp = m_boolManager->addProperty( m_sName );
+    pProp->setToolTip( m_sDescription );
     return pProp;
 }
 

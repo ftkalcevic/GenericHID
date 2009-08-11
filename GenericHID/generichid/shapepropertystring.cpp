@@ -14,6 +14,8 @@ ShapePropertyString::~ShapePropertyString(void)
 QtProperty *ShapePropertyString::getQtProperty()
 {
     QtProperty *pProp = m_stringManager->addProperty( m_sName );
+    pProp->setToolTip( m_sDescription );
+    pProp->setWhatsThis( m_sDescription );
     return pProp;
 }
 

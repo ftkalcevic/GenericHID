@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     a.setApplicationName( "GenericHID" );
-    a.setOrganizationName( "Frank's Workshop" );
+    a.setOrganizationName( "FranksWorkshop" );
     a.setOrganizationDomain( "www.franksworkshop.com.au" );
 
     usb_init();

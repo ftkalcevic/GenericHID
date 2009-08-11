@@ -2,44 +2,44 @@
     <Shapes>
 	<Shape Id="stockusbkey" Type="at90usb128" Source="false" Image="resources/AVRUSBKey.png" Icon="resources/AVRUSBKeyIcon.png" width="411" height="453" maxInstances="1" description="Stock AT90USB Key Demo board">
 	    <pin rect="  1, 44, 31, 68" id="Vcc" type="" enabled="false" />
-	    <pin rect=" 32, 44, 62, 68" id="GND" type="io,adc" enabled="false" />
-	    <pin rect="  1, 69, 31, 93" id="PF7" type="io,adc" enabled="false" />
-	    <pin rect=" 32, 69, 62, 93" id="PF6" type="io,adc" enabled="false" />
-	    <pin rect="  1, 94, 31,118" id="PF5" type="io,adc" enabled="false" />
-	    <pin rect=" 32, 94, 62,118" id="PF4" type="io,adc" enabled="false"/>
-	    <pin rect="  1,119, 31,143" id="PF3" type="io,adc" enabled="false"/>
+	    <pin rect=" 32, 44, 62, 68" id="GND" type="" enabled="false" />
+	    <pin rect="  1, 69, 31, 93" id="PF7" type="io,adc" enabled="false" other="JTAG" />
+	    <pin rect=" 32, 69, 62, 93" id="PF6" type="io,adc" enabled="false" other="JTAG" />
+	    <pin rect="  1, 94, 31,118" id="PF5" type="io,adc" enabled="false" other="JTAG" />
+	    <pin rect=" 32, 94, 62,118" id="PF4" type="io,adc" enabled="false" other="JTAG" />
+	    <pin rect="  1,119, 31,143" id="PF3" type="io,adc" enabled="false" other="Battery voltage monitor" />
 	    <pin rect=" 32,119, 62,143" id="PF2" type="io,adc" />
 	    <pin rect="  1,144, 31,168" id="PF1" type="io,adc" />
-	    <pin rect=" 32,144, 62,168" id="PF0" type="io,adc" enabled="false"/>
+	    <pin rect=" 32,144, 62,168" id="PF0" type="io,adc" enabled="false" other="Temperature Sensor"/>
 
 	    <pin rect="  1,185, 31,209" id="Vcc" type="" enabled="false" />
-	    <pin rect=" 32,185, 62,209" id="GND" type="io,adc" enabled="false" />
-	    <pin rect="  1,210, 31,234" id="PE7" type="io,int" />
+	    <pin rect=" 32,185, 62,209" id="GND" type="" enabled="false" />
+	    <pin rect="  1,210, 31,234" id="PE7" type="io,int" enabled="false" other="UVCON"/>
 	    <pin rect=" 32,210, 62,234" id="PE6" type="io,int" />
-	    <pin rect="  1,235, 31,259" id="PE5" type="io,int" enabled="false"/>
-	    <pin rect=" 32,235, 62,259" id="PE4" type="io,int" enabled="false"/>
+	    <pin rect="  1,235, 31,259" id="PE5" type="io,int" enabled="false" other="Joystick" />
+	    <pin rect=" 32,235, 62,259" id="PE4" type="io,int" enabled="false" other="Joystick" />
 	    <pin rect="  1,260, 31,284" id="PE3" type="io" other="UID" enabled="false"/>
 	    <pin rect=" 32,260, 62,284" id="PE2" type="io" />
-	    <pin rect="  1,285, 31,309" id="PE1" type="io" enabled="false"/>
-	    <pin rect=" 32,285, 62,309" id="PE0" type="io" enabled="false"/>
+	    <pin rect="  1,285, 31,309" id="PE1" type="io" enabled="false" other="Flash" />
+	    <pin rect=" 32,285, 62,309" id="PE0" type="io" enabled="false" other="Flash" />
 
 	    <pin rect="  1,327, 31,351" id="Vcc" type="" enabled="false" />
-	    <pin rect=" 32,327, 62,351" id="GND" type="io,adc" enabled="false" />
-	    <pin rect="  1,352, 31,376" id="PB7" type="io,int,pwm" enabled="false"/>
-	    <pin rect=" 32,352, 62,376" id="PB6" type="io,int,pwm" enabled="false"/>
-	    <pin rect="  1,377, 31,401" id="PB5" type="io,int,pwm" enabled="false"/>
+	    <pin rect=" 32,327, 62,351" id="GND" type="" enabled="false" />
+	    <pin rect="  1,352, 31,376" id="PB7" type="io,int,pwm" enabled="false"  other="Joystick"/>
+	    <pin rect=" 32,352, 62,376" id="PB6" type="io,int,pwm" enabled="false"  other="Joystick"/>
+	    <pin rect="  1,377, 31,401" id="PB5" type="io,int,pwm" enabled="false"  other="Joystick"/>
 	    <pin rect=" 32,377, 62,401" id="PB4" type="io,int,pwm" />
-	    <pin rect="  1,402, 31,426" id="PB3" type="io,int" enabled="false"/>
-	    <pin rect=" 32,402, 62,426" id="PB2" type="io,int" enabled="false"/>
-	    <pin rect="  1,427, 31,451" id="PB1" type="io,int" enabled="false"/>
+	    <pin rect="  1,402, 31,426" id="PB3" type="io,int" enabled="false" other="Flash" />
+	    <pin rect=" 32,402, 62,426" id="PB2" type="io,int" enabled="false" other="Flash" />
+	    <pin rect="  1,427, 31,451" id="PB1" type="io,int" enabled="false" other="Flash" />
 	    <pin rect=" 32,427, 62,451" id="PB0" type="io,int" />
 
-	    <pin rect="379,327,409,351" id="GND" type="io,adc" enabled="false" />
+	    <pin rect="379,327,409,351" id="GND" type="" enabled="false" />
 	    <pin rect="348,327,378,351" id="Vcc" type="" enabled="false" />
-	    <pin rect="379,352,409,376" id="PD6" type="io" enabled="false"/>
-	    <pin rect="348,352,378,376" id="PD7" type="io" enabled="false"/>
-	    <pin rect="379,377,409,401" id="PD4" type="io" enabled="false"/>
-	    <pin rect="348,377,378,401" id="PD5" type="io" enabled="false"/>
+	    <pin rect="379,352,409,376" id="PD6" type="io" enabled="false" other="LED2, D5"/>
+	    <pin rect="348,352,378,376" id="PD7" type="io" enabled="false" other="LED2, D5"/>
+	    <pin rect="379,377,409,401" id="PD4" type="io" enabled="false" other="LED1, D2"/>
+	    <pin rect="348,377,378,401" id="PD5" type="io" enabled="false" other="LED1, D2"/>
 	    <pin rect="379,402,409,426" id="PD2" type="io,int" />
 	    <pin rect="348,402,378,426" id="PD3" type="io,int" />
 	    <pin rect="379,427,409,451" id="PD0" type="io,int" />
@@ -53,7 +53,7 @@
 	    <pin rect="348,235,378,259" id="PC5" type="io,pwm" />
 	    <pin rect="379,210,409,234" id="PC6" type="io,pwm" />
 	    <pin rect="348,210,378,234" id="PC7" type="io" />
-	    <pin rect="379,185,409,209" id="GND" type="io,adc" enabled="false" />
+	    <pin rect="379,185,409,209" id="GND" type="" enabled="false" />
 	    <pin rect="348,185,378,209" id="Vcc" type="" enabled="false" />
 
 	    <pin rect="348,144,378,168" id="PA1" type="io" />
@@ -64,11 +64,11 @@
 	    <pin rect="348, 94,378,118" id="PA5" type="io" />
 	    <pin rect="379, 69,409, 93" id="PA6" type="io" />
 	    <pin rect="348, 69,378, 93" id="PA7" type="io" />
-	    <pin rect="379, 44,409, 68" id="GND" type="io,adc" enabled="false" />
+	    <pin rect="379, 44,409, 68" id="GND" type="" enabled="false" />
 	    <pin rect="348, 44,378, 68" id="Vcc" type="" enabled="false" />
 
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="1:3" />
+	    <property name="Usage" description="HID usage of the control." type="usage" default="13:1" />
 	    <property name="Voltage" description="Is the microcontroller 5v or 3.3v." type="enum" default="3.3">
 		<enum name="5"/>
 		<enum name="3.3"/>
@@ -80,64 +80,87 @@
 	    <property name="Serial-Debug" description="Are pins PD2/PD3 as serial RXD/TXD pins for debug output (38400, 8, none, 1)" type="bool" default="false"/>
 	    <property name="HID-Debug" description="Is debug through the HID interface enabled." type="bool" default="false"/>
 	    <property name="Current" description="Current usage of the microcontroller.  Used to estimate the USB power draw." type="int" min="0" max="500" default="100"/>
-	    <property name="UseUsbKeyLEDs" description="Use the default AT90USBKey LEDs as indicators of the USB status." type="enum" default="LED1">
+	    <property name="Use Status LEDs" description="Use the default AT90USBKey LEDs as indicators of the USB status." type="enum" default="LED1">
 		<enum name="LED1"/>
 		<enum name="LED2"/>
 		<enum name="Both"/>
 		<enum name="None"/>
 	    </property>
+	    <property name="Use LEDs" description="Use the stock AT90USBKey LEDs as device output LEDs.  'Use Status LEDs' must be set to LED1, LED2, or None." type="bool" default="false"/>
+	    <property name="Use Voltage Monitor" description="Use the stock AT90USBKey Voltage Monitor as an analog input." type="bool" default="false"/>
+	    <property name="Use Temperature Sensor" description="Use the stock AT90USBKey Temperature Sensor as an analog input." type="bool" default="false"/>
+	    <property name="Use Joystick" description="Use the stock AT90USBKey Joystick as a directional input." type="bool" default="false"/>
 	    <property name="SerialNo" description="Required unique serial number of the device.  This must be unique between all GenericHID devices or MS-Windows will Blue-Screen if two duplicate devices are plugged in!" type="string" default="1"/>
 	</Shape>
-	<Shape Id="strippedusbkey" Type="at90usb128" Source="false" Image="resources/AVRUSBKeyStripped.png" Icon="resources/AVRUSBKeyIcon.png" width="411" height="453" maxInstances="1" description="Stripped AT90USB Key Demo board">
-	    <!--<pin rect="2,69,32,93" id="PF7" type="io,adc" />
-      <pin rect="33,69,63,93" id="PF6" type="io,adc" />
-      <pin rect="2,94,32,118" id="PF5" type="io,adc" />
-      <pin rect="32,94,63,118" id="PF4" type="io,adc" />-->
-	    <pin rect="1,119,32,143" id="PF3" type="io,adc" />
-	    <pin rect="33,119,63,143" id="PF2" type="io,adc" />
-	    <pin rect="1,144,32,168" id="PF1" type="io,adc" />
-	    <pin rect="33,144,63,168" id="PF0" type="io,adc" />
-	    <pin rect="2,210,32,234" id="PE7" type="io,int" />
-	    <pin rect="33,210,63,234" id="PE6" type="io,int" />
-	    <pin rect="2,236,32,259" id="PE5" type="io,int" />
-	    <pin rect="33,236,63,259" id="PE4" type="io,int" />
-	    <pin rect="33,261,63,284" id="PE2" type="io" />
-	    <pin rect="2,286,32,309" id="PE1" type="io" />
-	    <pin rect="33,286,63,309" id="PE0" type="io" />
-	    <pin rect="1,352,33,376" id="PB7" type="io,int,pwm" />
-	    <pin rect="32,352,63,376" id="PB6" type="io,int,pwm" />
-	    <pin rect="1,376,33,401" id="PB5" type="io,int,pwm" />
-	    <pin rect="32,377,64,401" id="PB4" type="io,int,pwm" />
-	    <pin rect="1,402,32,427" id="PB3" type="io,int" />
-	    <pin rect="32,402,63,427" id="PB2" type="io,int" />
-	    <pin rect="1,427,32,452" id="PB1" type="io,int" />
-	    <pin rect="32,427,63,452" id="PB0" type="io,int" />
-	    <pin rect="379,352,408,376" id="PD6" type="io" />
-	    <pin rect="379,377,408,401" id="PD4" type="io" />
-	    <pin rect="379,402,408,426" id="PD2" type="io,int" />
-	    <pin rect="379,428,408,451" id="PD0" type="io,int" />
-	    <pin rect="348,428,377,451" id="PD1" type="io,int,pwm" />
-	    <pin rect="348,402,377,426" id="PD3" type="io,int" />
-	    <pin rect="348,377,377,400" id="PD5" type="io" />
-	    <pin rect="348,352,377,376" id="PD7" type="io" />
-	    <pin rect="379,286,409,309" id="PC0" type="io" />
-	    <pin rect="348,286,377,309" id="PC1" type="io" />
-	    <pin rect="348,261,377,285" id="PC3" type="io" />
-	    <pin rect="379,261,409,285" id="PC2" type="io" />
-	    <pin rect="379,236,409,259" id="PC4" type="io,pwm" />
-	    <pin rect="348,236,377,259" id="PC5" type="io,pwm" />
-	    <pin rect="379,211,409,234" id="PC6" type="io,pwm" />
-	    <pin rect="348,211,377,234" id="PC7" type="io" />
-	    <pin rect="348,144,377,167" id="PA1" type="io" />
-	    <pin rect="379,144,408,167" id="PA0" type="io" />
-	    <pin rect="348,119,377,142" id="PA3" type="io" />
-	    <pin rect="379,119,408,142" id="PA2" type="io" />
-	    <pin rect="379,94,408,117" id="PA4" type="io" />
-	    <pin rect="348,94,377,117" id="PA5" type="io" />
-	    <pin rect="379,69,408,92" id="PA6" type="io" />
-	    <pin rect="348,69,377,92" id="PA7" type="io" />
+	<Shape Id="strippedusbkey" Type="at90usb128" Source="false" Image="resources/AVRUSBKey.png" Icon="resources/AVRUSBKeyIcon.png" width="411" height="453" maxInstances="1" description="Stripped  AT90USB Key Demo board">
+	    <pin rect="  1, 44, 31, 68" id="Vcc" type="" enabled="false" />
+	    <pin rect=" 32, 44, 62, 68" id="GND" type="" enabled="false" />
+	    <pin rect="  1, 69, 31, 93" id="PF7" type="io,adc" enabled="false" other="JTAG" />
+	    <pin rect=" 32, 69, 62, 93" id="PF6" type="io,adc" enabled="false" other="JTAG" />
+	    <pin rect="  1, 94, 31,118" id="PF5" type="io,adc" enabled="false" other="JTAG" />
+	    <pin rect=" 32, 94, 62,118" id="PF4" type="io,adc" enabled="false" other="JTAG" />
+	    <pin rect="  1,119, 31,143" id="PF3" type="io,adc" />
+	    <pin rect=" 32,119, 62,143" id="PF2" type="io,adc" />
+	    <pin rect="  1,144, 31,168" id="PF1" type="io,adc" />
+	    <pin rect=" 32,144, 62,168" id="PF0" type="io,adc" />
+
+	    <pin rect="  1,185, 31,209" id="Vcc" type="" enabled="false" />
+	    <pin rect=" 32,185, 62,209" id="GND" type="" enabled="false" />
+	    <pin rect="  1,210, 31,234" id="PE7" type="io,int" />
+	    <pin rect=" 32,210, 62,234" id="PE6" type="io,int" />
+	    <pin rect="  1,235, 31,259" id="PE5" type="io,int" />
+	    <pin rect=" 32,235, 62,259" id="PE4" type="io,int" />
+	    <pin rect="  1,260, 31,284" id="PE3" type="io" other="UID" enabled="false"/>
+	    <pin rect=" 32,260, 62,284" id="PE2" type="io" />
+	    <pin rect="  1,285, 31,309" id="PE1" type="io" />
+	    <pin rect=" 32,285, 62,309" id="PE0" type="io" />
+
+	    <pin rect="  1,327, 31,351" id="Vcc" type="" enabled="false" />
+	    <pin rect=" 32,327, 62,351" id="GND" type="" enabled="false" />
+	    <pin rect="  1,352, 31,376" id="PB7" type="io,int,pwm" />
+	    <pin rect=" 32,352, 62,376" id="PB6" type="io,int,pwm" />
+	    <pin rect="  1,377, 31,401" id="PB5" type="io,int,pwm" />
+	    <pin rect=" 32,377, 62,401" id="PB4" type="io,int,pwm" />
+	    <pin rect="  1,402, 31,426" id="PB3" type="io,int" />
+	    <pin rect=" 32,402, 62,426" id="PB2" type="io,int" />
+	    <pin rect="  1,427, 31,451" id="PB1" type="io,int" />
+	    <pin rect=" 32,427, 62,451" id="PB0" type="io,int" />
+
+	    <pin rect="379,327,409,351" id="GND" type="" enabled="false" />
+	    <pin rect="348,327,378,351" id="Vcc" type="" enabled="false" />
+	    <pin rect="379,352,409,376" id="PD6" type="io" enabled="false" other="LED2, D5"/>
+	    <pin rect="348,352,378,376" id="PD7" type="io" enabled="false" other="LED2, D5"/>
+	    <pin rect="379,377,409,401" id="PD4" type="io" enabled="false" other="LED1, D2"/>
+	    <pin rect="348,377,378,401" id="PD5" type="io" enabled="false" other="LED1, D2"/>
+	    <pin rect="379,402,409,426" id="PD2" type="io,int" />
+	    <pin rect="348,402,378,426" id="PD3" type="io,int" />
+	    <pin rect="379,427,409,451" id="PD0" type="io,int" />
+	    <pin rect="348,427,378,451" id="PD1" type="io,int,pwm" />
+
+	    <pin rect="379,285,409,309" id="PC0" type="io" />
+	    <pin rect="348,285,378,309" id="PC1" type="io" />
+	    <pin rect="348,260,378,284" id="PC3" type="io" />
+	    <pin rect="379,260,409,284" id="PC2" type="io" />
+	    <pin rect="379,235,409,259" id="PC4" type="io,pwm" />
+	    <pin rect="348,235,378,259" id="PC5" type="io,pwm" />
+	    <pin rect="379,210,409,234" id="PC6" type="io,pwm" />
+	    <pin rect="348,210,378,234" id="PC7" type="io" />
+	    <pin rect="379,185,409,209" id="GND" type="" enabled="false" />
+	    <pin rect="348,185,378,209" id="Vcc" type="" enabled="false" />
+
+	    <pin rect="348,144,378,168" id="PA1" type="io" />
+	    <pin rect="379,144,409,168" id="PA0" type="io" />
+	    <pin rect="348,119,378,143" id="PA3" type="io" />
+	    <pin rect="379,119,409,143" id="PA2" type="io" />
+	    <pin rect="379, 94,409,118" id="PA4" type="io" />
+	    <pin rect="348, 94,378,118" id="PA5" type="io" />
+	    <pin rect="379, 69,409, 93" id="PA6" type="io" />
+	    <pin rect="348, 69,378, 93" id="PA7" type="io" />
+	    <pin rect="379, 44,409, 68" id="GND" type="" enabled="false" />
+	    <pin rect="348, 44,378, 68" id="Vcc" type="" enabled="false" />
+
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="1:3"/>
+	    <property name="Usage" description="HID usage of the control." type="usage" default="13:1" />
 	    <property name="Voltage" description="Is the microcontroller 5v or 3.3v." type="enum" default="3.3">
 		<enum name="5"/>
 		<enum name="3.3"/>
@@ -148,8 +171,8 @@
 	    </property>
 	    <property name="Serial-Debug" description="Are pins PD2/PD3 as serial RXD/TXD pins for debug output (38400, 8, none, 1)" type="bool" default="false"/>
 	    <property name="HID-Debug" description="Is debug through the HID interface enabled." type="bool" default="false"/>
-	    <property name="Current" description="Current usage of the microcontroller in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="100"/>
-	    <property name="UseUsbKeyLEDs" description="Use the default AT90USBKey LEDs as indicators of the USB status." type="enum" default="LED1">
+	    <property name="Current" description="Current usage of the microcontroller.  Used to estimate the USB power draw." type="int" min="0" max="500" default="100"/>
+	    <property name="Use Status LEDs" description="Use the default AT90USBKey LEDs as indicators of the USB status." type="enum" default="LED1">
 		<enum name="LED1"/>
 		<enum name="LED2"/>
 		<enum name="Both"/>
@@ -157,6 +180,8 @@
 	    </property>
 	    <property name="SerialNo" description="Required unique serial number of the device.  This must be unique between all GenericHID devices or MS-Windows will Blue-Screen if two duplicate devices are plugged in!" type="string" default="1"/>
 	</Shape>
+	
+	
 	<Shape Id="usbkeywithwings" Type="at90usb128" Source="false" Image="resources/AVRUSBKey - Wings and labels.png" Icon="resources/AVRUSBKeyIcon.png" width="658" height="377" maxInstances="1" description="AT90USB Key Demo board with WizBang wings">
 	    <pin rect="1,158,22,185" id="PF0" type="io,adc" other="Temperature Sensor"/>
 	    <pin rect="1,131,22,157" id="PF1" type="io,adc" />
@@ -313,24 +338,24 @@
 
 
 
-	<Shape Id="pot" Type="pot" Source="true" Image="resources/Potentiometer.png" Icon="resources/PotentiometerIcon.png" width="140" height="89" maxInstances="0" description="Analog Potentiometer">
-	    <pin rect="2,40,17,55" id="Out" type="adc" valign="above"/>
+	<Shape Id="pot" Type="pot" Source="true" Image="resources/Potentiometer.png" Icon="resources/PotentiometerIcon.png" width="145" height="89" maxInstances="0" description="Analog Potentiometer">
+	    <pin rect="2,35,18,51" id="Out" type="adc" valign="above"/>
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
 	    <property name="Usage" description="HID usage of the control." type="usage" default="1:48"/>
 	    <property name="Bits" description="ADC resolution the Potentiometer is sampled at." type="int" min="1" max="10" default="10"/>
 	    <property name="Current" description="Current usage of the potentiometer in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
 	</Shape>
 	
-	<Shape Id="digitalencoder" Type="digitalencoder" Source="true" Image="resources/DigitalEncoder.png" Icon="resources/DigitalEncoderIcon.png" width="97" height="98" maxInstances="0" description="Digital Encoder">
-	    <pin rect="2,61,17,76" id="A" type="int" />
-	    <pin rect="2,80,17,95" id="B" type="int" />
+	<Shape Id="digitalencoder" Type="digitalencoder" Source="true" Image="resources/DigitalEncoder.png" Icon="resources/DigitalEncoderIcon.png" width="111" height="176" maxInstances="0" description="Digital Encoder">
+	    <pin rect="7,160,22,175" id="A" type="int" />
+	    <pin rect="25,160,40,175" id="B" type="int" />
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
 	    <property name="Usage" description="HID usage of the control." type="usage" default="1:55" />
 	    <property name="Current" description="Current usage of the encoder in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="100"/>
 	</Shape>
 	
-	<Shape Id="switch" Type="switch" Source="true" Image="resources/switch.png" Icon="resources/SwitchIcon.png" width="68" height="103" maxInstances="0" description="Switch">
-	    <pin rect="2,58,17,73" id="In" type="io" />
+	<Shape Id="pushbutton" Type="switch" Source="true" Image="resources/pushbutton.png" Icon="resources/pushbuttonIcon.png" width="68" height="103" maxInstances="0" description="Push Button">
+	    <pin rect="12,88,27,103" id="In" type="io" />
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
 	    <property name="Usage" description="HID usage of the control." type="usage" default="9:1"/>
 	    <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
@@ -365,14 +390,14 @@
 	</Shape>
 
 	<Shape Id="rotaryswitch" Type="rotaryswitch" Source="true" Image="resources/rotaryswitch.png" Icon="resources/rotaryswitchicon.png" width="128" height="328" maxInstances="0" description="Rotary Selector Switch">
-	    <pin rect="3,279,25,300" id="1" type="io" />
-	    <pin rect="18,304,39,324" id="2" type="io" />
-	    <pin rect="32,279,53,299" id="3" type="io" />
-	    <pin rect="47,304,68,324" id="4" type="io" />
-	    <pin rect="61,279,81,299" id="5" type="io" />
-	    <pin rect="76,304,96,324" id="6" type="io" />
-	    <pin rect="90,279,110,299" id="7" type="io" />
-	    <pin rect="105,304,125,324" id="8" type="io" />
+	    <pin rect="3,225,25,245" id="1" type="io" />
+	    <pin rect="18,250,39,270" id="2" type="io" />
+	    <pin rect="32,225,53,245" id="3" type="io" />
+	    <pin rect="47,250,68,270" id="4" type="io" />
+	    <pin rect="61,225,81,245" id="5" type="io" />
+	    <pin rect="76,250,96,270" id="6" type="io" />
+	    <pin rect="90,225,110,245" id="7" type="io" />
+	    <pin rect="105,250,125,270" id="8" type="io" />
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
 	    <property name="Usage" description="HID usage of the control." type="usage" default="9:1"/>
 	    <property name="Outputs" description="The number of outputs on the selector switch." type="int" min="2" max="8" default="4"/>

@@ -13,6 +13,7 @@ namespace PinType
 	PWM = 8
     };
     extern enum PinType fromString(const QString &sPinType);
+    extern QString toString(enum PinType eType);
 };
 
 namespace PinHAlign

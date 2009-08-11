@@ -13,6 +13,7 @@ ShapePropertyInt::~ShapePropertyInt(void)
 QtProperty *ShapePropertyInt::getQtProperty()
 {
     QtProperty *pProp = m_intManager->addProperty( m_sName );
+    pProp->setToolTip( m_sDescription );
     m_intManager->setMinimum( pProp, m_nMin );
     m_intManager->setMaximum( pProp, m_nMax );
     return pProp;

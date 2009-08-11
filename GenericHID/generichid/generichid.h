@@ -20,6 +20,7 @@ public slots:
     void onFileSave();
     void onFileSaveAs();
     void onFileExit();
+    void onFileNew();
     void onMicrocontrollerProgram();
     void onMicrocontrollerExport();
     void onMicrocontrollerImportAndProgram();
@@ -30,6 +31,7 @@ public slots:
     void onWireLinkTool();
     void onSelectionChanged();
     void onMRUSelected(const QString &sFile);
+    void onPropertiesCurrentItemChanged( QtBrowserItem * current );
 
 private:
     virtual void closeEvent( QCloseEvent * event );
@@ -37,11 +39,15 @@ private:
     void SetCursor( QCursor &cur1, QCursor &cur2 );
     void updateWindowTitle();
     bool DoSave();
+    bool DoSaveAs();
     bool DoOpen( const QString &sFile );
     void writeSettings();
     void readSettings();
+    void Clear();
+    bool CheckDataChanged();
 
     QString m_sLastFile;
+    QString m_sLastFileContents;
     Ui::GenericHIDClass ui;
     ShapeCollection *m_pShapes;
     ShapeScene *m_pScene;

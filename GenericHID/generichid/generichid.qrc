@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/GenericHID" >
+        <file alias="ApplicationIcon" >resources/ApplicationIcon.png</file>
         <file>resources/Rotate.png</file>
         <file>resources/Wire.png</file>
         <file alias="Cursor" >resources/Cursor.png</file>
@@ -13,5 +14,8 @@
         <file alias="RotateCursorOff" >resources/Rotate Cursor Off.png</file>
         <file alias="WireCursorOff" >resources/Wire Cursor Off.png</file>
         <file alias="WireCursorNot" >resources/Wire Cursor Not.png</file>
+        <file alias="FileSave" >resources/save.png</file>
+        <file alias="FileNew" >resources/new.png</file>
+        <file alias="FileOpen" >resources/open.png</file>
     </qresource>
 </RCC>

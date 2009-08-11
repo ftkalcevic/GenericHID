@@ -82,7 +82,7 @@ void ShapeScene::RemoveWire( WireItem *pItem )
     // Remove wire from pins
     pItem->pin1()->setWire( NULL );
     pItem->pin2()->setWire( NULL );
-    removeItem(pItem);
+    removeItem(pItem);		    // removeItem relinquishes ownership
     m_WireItems.removeAll(pItem);
     delete pItem;
 }
@@ -93,7 +93,7 @@ void ShapeScene::RemoveShape( ShapeItem *pItem )
     foreach (PinItem *pPin, pItem->pins() )
 	if ( pPin->wire() != NULL )
 	    RemoveWire( pPin->wire() );
-    removeItem(pItem);
+    removeItem(pItem);		    // removeItem relinquishes ownership
     m_ShapeItems.removeAll( pItem );
     delete pItem;
 }
@@ -449,5 +449,13 @@ bool ShapeScene::loadXML( QDomDocument &doc, ShapeCollection *pCol )
 	pItem->UpdateEndpoints();
     }
     return true;
+}
+
+
+void ShapeScene::clear()
+{
+    QGraphicsScene::clear();	// the graphics scene takes ownership of items and deletes them
+    m_WireItems.clear();
+    m_ShapeItems.clear();
 }
 

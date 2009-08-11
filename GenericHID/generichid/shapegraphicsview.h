@@ -12,6 +12,7 @@ public:
     ~ShapeGraphicsView();
 
     void scaleView( double dScale );
+    double scale() const { return m_dViewScale; }
 
 signals:
     void dropShapeEvent( const ::Shape *pShape, QPointF pos );

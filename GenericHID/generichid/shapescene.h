@@ -22,6 +22,7 @@ public:
 
 public slots:
     void onViewItemChanged( QGraphicsItem *item, QGraphicsItem::GraphicsItemChange change, const QVariant &value);
+    void clear();
 
 private:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);

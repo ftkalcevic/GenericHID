@@ -14,6 +14,7 @@ ShapePropertyUsage::~ShapePropertyUsage(void)
 QtProperty *ShapePropertyUsage::getQtProperty()
 {
     QtProperty *pProp = m_usageManager->addProperty( m_sName );
+    pProp->setToolTip( m_sDescription );
     return pProp;
 }
 

@@ -69,6 +69,8 @@ void UsagePropertyManager::setValue(QtProperty *property, const QString &val)
     unsigned short nUsage;
     ExtractUsage( val, nUsagePage, nUsage );
 
+    UpdateUsagePages( m_propertyToUsage[property], nUsagePage );
+
     bool settingValue = m_settingValue;
     m_settingValue = true;
     m_listPropertyManager->setValue(m_propertyToUsagePage[property], nUsagePage );
@@ -79,6 +81,14 @@ void UsagePropertyManager::setValue(QtProperty *property, const QString &val)
     emit valueChanged(property, val);
 }
 
+void UsagePropertyManager::UpdateUsagePages( QtProperty *propUsage, unsigned short nUsagePage )
+{
+    QMap<int,ListEnumList *>::const_iterator it = m_UsagesMap.constFind( nUsagePage );
+    if ( it != m_UsagesMap.constEnd() )
+	m_listPropertyManager->setEnums( propUsage, *(it.value()) );
+    else
+	m_listPropertyManager->setEnums( propUsage, ListEnumList() );
+}
 
 void UsagePropertyManager::slotEnumChanged(QtProperty *property, int value)	// property == listproperty
 {
@@ -90,14 +100,9 @@ void UsagePropertyManager::slotEnumChanged(QtProperty *property, int value)	// p
 	// When the usage page changes, update the list of usages
         QtProperty *propUsagePage = property; 
         QtProperty *propUsage = m_propertyToUsage.value(prop, 0);
-	int nUsagePage = m_listPropertyManager->value( propUsagePage );
+	int nUsagePage = value;
 	int nUsage = m_listPropertyManager->value( propUsage );
-	QMap<int,ListEnumList *>::const_iterator it = m_UsagesMap.constFind( nUsagePage );
-	if ( it != m_UsagesMap.constEnd() )
-	    m_listPropertyManager->setEnums( propUsage, *(it.value()) );
-	else
-	    m_listPropertyManager->setEnums( propUsage, ListEnumList() );
-
+	UpdateUsagePages( propUsage, nUsagePage );
 	setValue(prop,QString("%1:%2").arg(nUsagePage).arg(nUsage) );
     }
     else if (QtProperty *prop = m_usageToProperty.value(property, 0)) 
@@ -159,7 +164,7 @@ void UsagePropertyManager::initializeProperty(QtProperty *property) // property 
 
     QtProperty *usageProp = m_listPropertyManager->addProperty();
     usageProp->setPropertyName(tr("Usage"));
-    // Usages are filled when on the enum change event
+    // Usages are filled when on the change event
     m_propertyToUsage[property] = usageProp;
     m_usageToProperty[usageProp] = property;
     property->addSubProperty(usageProp);

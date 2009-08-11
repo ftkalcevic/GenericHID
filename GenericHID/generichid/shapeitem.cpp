@@ -56,6 +56,23 @@ bool ShapeItem::CreateGraphics()
 	else
 	    pPinItem->setBrush( QBrush(Qt::lightGray) );
 	pPinItem->setZValue(0);
+	QString sToolTip;
+	if ( pPin->enabled() )
+	{
+	    sToolTip = pPin->id();
+	    if ( pPin->pinType() != PinType::None )
+	    {
+		sToolTip += ":";
+		sToolTip += PinType::toString( pPin->pinType() );
+	    }
+	}
+	else 
+	{
+	    if ( !pPin->otherUse().isEmpty() )
+		sToolTip = QString("Used by: ") + pPin->otherUse();
+	}
+	if ( !sToolTip.isEmpty() )
+	    pPinItem->setToolTip( sToolTip );
 	m_pins.push_back( pPinItem );
 
 	QGraphicsSimpleTextItem *pTextItem = new QGraphicsSimpleTextItem( pPin->id(), this );

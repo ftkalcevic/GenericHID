@@ -43,6 +43,7 @@ protected:
     QString valueText(const QtProperty *property) const;
     virtual void initializeProperty(QtProperty *property);
     virtual void uninitializeProperty(QtProperty *property);
+    void UpdateUsagePages( QtProperty *propUsage, unsigned short nUsagePage );
 };
 
 #endif // QTUSAGEPROPERTYMANAGER_H

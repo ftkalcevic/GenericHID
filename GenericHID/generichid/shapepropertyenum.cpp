@@ -14,6 +14,7 @@ ShapePropertyEnum::~ShapePropertyEnum(void)
 QtProperty *ShapePropertyEnum::getQtProperty()
 {
     QtProperty *pProp = m_enumManager->addProperty(m_sName);
+    pProp->setToolTip( m_sDescription );
     m_enumManager->setEnumNames( pProp, m_Enums );
     return pProp;
 }
