@@ -132,15 +132,15 @@ Pin *Pin::CreateFromXML( QDomElement node, const Shape *pShape )
     double dRotate = XMLUtility::getAttribute( node, "rotate", 0.0 );
 
     QStringList sCoords = sRect.split( QChar(','), QString::SkipEmptyParts );
-    int x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+    int x1 = 0, y1 = 0, width = 0, height = 0;
     if (sCoords.length() == 4)
     {
         x1 = sCoords[0].toInt();
         y1 = sCoords[1].toInt();
-        x2 = sCoords[2].toInt();
-        y2 = sCoords[3].toInt();
+        width = sCoords[2].toInt();
+        height = sCoords[3].toInt();
     }
 
-    return new Pin( pShape, sId, ePinType, QRect(QPoint(x1,y1),QPoint(x2,y2)), sOtherUse, bEnabled, eHAlign, eVAlign, dRotate );
+    return new Pin( pShape, sId, ePinType, QRect(QPoint(x1,y1),QSize(width,height)), sOtherUse, bEnabled, eHAlign, eVAlign, dRotate );
 }
 
