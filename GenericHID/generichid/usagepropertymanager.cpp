@@ -98,7 +98,7 @@ void UsagePropertyManager::slotEnumChanged(QtProperty *property, int value)	// p
     if (QtProperty *prop = m_usagePageToProperty.value(property, 0)) 
     {
 	// When the usage page changes, update the list of usages
-        QtProperty *propUsagePage = property; 
+        //QtProperty *propUsagePage = property; 
         QtProperty *propUsage = m_propertyToUsage.value(prop, 0);
 	int nUsagePage = value;
 	int nUsage = m_listPropertyManager->value( propUsage );
