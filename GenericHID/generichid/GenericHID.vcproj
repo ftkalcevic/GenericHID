@@ -1396,6 +1396,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\resources\pushbutton.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\pushbuttonicon.png"
+				>
+			</File>
+			<File
 				RelativePath=".\resources\RedLight.png"
 				>
 			</File>
