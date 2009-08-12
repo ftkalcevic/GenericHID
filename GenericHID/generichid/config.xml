@@ -1,6 +1,6 @@
 ﻿<Config>
     <Shapes>
-	<Shape Id="stockusbkey" Type="at90usb128" Source="false" Image="resources/avrusbkey.png" Icon="resources/avrusbkeyicon.png" width="411" height="453" maxInstances="1" description="Stock AT90USB Key Demo board">
+	<Shape Id="stockusbkey" Type="at90usb128" Source="false" Image="resources/avrusbkey.png" Icon="resources/avrusbkeyicon.png" width="411" height="453" maxInstances="1" name="Stock AT90USB Key Demo board">
 	    <pin rect="  1, 44, 31, 25" id="Vcc" type="" enabled="false" />
 	    <pin rect=" 32, 44, 31, 25" id="GND" type="" enabled="false" />
 	    <pin rect="  1, 69, 31, 25" id="PF7" type="io,adc" enabled="false" other="JTAG" />
@@ -92,7 +92,7 @@
 	    <property name="Use Joystick" description="Use the stock AT90USBKey Joystick as a directional input." type="bool" default="false"/>
 	    <property name="SerialNo" description="Required unique serial number of the device.  This must be unique between all GenericHID devices or MS-Windows will Blue-Screen if two duplicate devices are plugged in!" type="string" default="1"/>
 	</Shape>
-	<Shape Id="strippedusbkey" Type="at90usb128" Source="false" Image="resources/avrusbkey.png" Icon="resources/avrusbkeyicon.png" width="411" height="453" maxInstances="1" description="Stripped  AT90USB Key Demo board">
+	<Shape Id="strippedusbkey" Type="at90usb128" Source="false" Image="resources/avrusbkey.png" Icon="resources/avrusbkeyicon.png" width="411" height="453" maxInstances="1" name="Stripped  AT90USB Key Demo board">
 	    <pin rect="  1, 44, 31, 25" id="Vcc" type="" enabled="false" />
 	    <pin rect=" 32, 44, 31, 25" id="GND" type="" enabled="false" />
 	    <pin rect="  1, 69, 31, 25" id="PF7" type="io,adc" enabled="false" other="JTAG" />
@@ -182,7 +182,7 @@
 	</Shape>
 	
 	
-	<Shape Id="usbkeywithwings" Type="at90usb128" Source="false" Image="resources/avrusbkey - wings and labels.png" Icon="resources/avrusbkeyicon.png" width="658" height="377" maxInstances="1" description="AT90USB Key Demo board with WizBang wings">
+	<Shape Id="usbkeywithwings" Type="at90usb128" Source="false" Image="resources/avrusbkey - wings and labels.png" Icon="resources/avrusbkeyicon.png" width="658" height="377" maxInstances="1" name="AT90USB Key Demo board with WizBang wings">
 	    <pin rect="1,158,22,185" id="PF0" type="io,adc" other="Temperature Sensor"/>
 	    <pin rect="1,131,22,157" id="PF1" type="io,adc" />
 	    <pin rect="23,158,44,185" id="PF2" type="io,adc" />
@@ -264,7 +264,7 @@
 
 
 
-	<Shape Id="usbkeywithwiredwings" Type="at90usb128" Source="false" Image="resources/avrusbkey - wired wings.png" Icon="resources/avrusbkeyicon.png" width="585" height="377" maxInstances="1" description="AT90USB Key Demo board with WizBang wings and IDC connectors">
+	<Shape Id="usbkeywithwiredwings" Type="at90usb128" Source="false" Image="resources/avrusbkey - wired wings.png" Icon="resources/avrusbkeyicon.png" width="585" height="377" maxInstances="1" name="AT90USB Key Demo board with WizBang wings and IDC connectors">
 	    <pin rect="1,152,22,178" id="PF0" type="io,adc" />
 	    <pin rect="23,152,44,178" id="PF1" type="io,adc" />
 	    <pin rect="45,152,66,178" id="PF2" type="io,adc" />
@@ -338,7 +338,7 @@
 
 
 
-	<Shape Id="pot" Type="pot" Source="true" Image="resources/potentiometer.png" Icon="resources/potentiometericon.png" width="145" height="89" maxInstances="0" description="Analog Potentiometer">
+	<Shape Id="pot" Type="pot" Source="true" Image="resources/potentiometer.png" Icon="resources/potentiometericon.png" width="145" height="89" maxInstances="0" name="Analog Potentiometer">
 	    <pin rect="2,35,16,16" id="Out" type="adc" valign="above"/>
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
 	    <property name="Usage" description="HID usage of the control." type="usage" default="1:48"/>
@@ -346,7 +346,7 @@
 	    <property name="Current" description="Current usage of the potentiometer in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
 	</Shape>
 	
-	<Shape Id="digitalencoder" Type="digitalencoder" Source="true" Image="resources/digitalencoder.png" Icon="resources/digitalencodericon.png" width="111" height="176" maxInstances="0" description="Digital Encoder">
+	<Shape Id="digitalencoder" Type="digitalencoder" Source="true" Image="resources/digitalencoder.png" Icon="resources/digitalencodericon.png" width="111" height="176" maxInstances="0" name="Digital Encoder">
 	    <pin rect="7,160,15,15" id="A" type="int" />
 	    <pin rect="25,160,15,15" id="B" type="int" />
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
@@ -354,7 +354,7 @@
 	    <property name="Current" description="Current usage of the encoder in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="100"/>
 	</Shape>
 	
-	<Shape Id="pushbutton" Type="switch" Source="true" Image="resources/pushbutton.png" Icon="resources/pushbuttonicon.png" width="68" height="103" maxInstances="0" description="Push Button">
+	<Shape Id="pushbutton" Type="switch" Source="true" Image="resources/pushbutton.png" Icon="resources/pushbuttonicon.png" width="68" height="103" maxInstances="0" name="Push Button">
 	    <pin rect="12,88,15,15" id="In" type="io" />
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
 	    <property name="Usage" description="HID usage of the control." type="usage" default="9:1"/>
@@ -363,7 +363,7 @@
 	    <property name="Current" description="Current usage of the switch in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
 	</Shape>
 	
-	<Shape Id="keymatrix" Type="keymatrix" Source="true" Image="resources/keymatrix.png" Icon="resources/keymatrixicon.png" width="244" height="251" maxInstances="0" description="Key Matrix">
+	<Shape Id="keymatrix" Type="keymatrix" Source="true" Image="resources/keymatrix.png" Icon="resources/keymatrixicon.png" width="244" height="251" maxInstances="0" name="Key Matrix">
 	    <pin rect="5,11,20,20" id="R1" type="io" />
 	    <pin rect="5,35,20,20" id="R2" type="io" />
 	    <pin rect="5,60,20,20" id="R3" type="io" />
@@ -389,7 +389,7 @@
 	    <property name="Current" description="Current usage of the keymatrix in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
 	</Shape>
 
-	<Shape Id="rotaryswitch" Type="rotaryswitch" Source="true" Image="resources/rotaryswitch.png" Icon="resources/rotaryswitchicon.png" width="128" height="328" maxInstances="0" description="Rotary Selector Switch">
+	<Shape Id="rotaryswitch" Type="rotaryswitch" Source="true" Image="resources/rotaryswitch.png" Icon="resources/rotaryswitchicon.png" width="128" height="328" maxInstances="0" name="Rotary Selector Switch">
 	    <pin rect="3,225,20,20" id="1" type="io" />
 	    <pin rect="18,250,20,20" id="2" type="io" />
 	    <pin rect="32,225,20,20" id="3" type="io" />
@@ -406,7 +406,7 @@
 	    <property name="Current" description="Current usage of the switch in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
 	</Shape>
 
-	<Shape Id="codedrotaryswitch" Type="codedrotaryswitch" Source="true" Image="resources/codedrotaryswitch.png" Icon="resources/codedrotaryswitchicon.png" width="63" height="87" maxInstances="0" description="Coded Rotary Switch">
+	<Shape Id="codedrotaryswitch" Type="codedrotaryswitch" Source="true" Image="resources/codedrotaryswitch.png" Icon="resources/codedrotaryswitchicon.png" width="63" height="87" maxInstances="0" name="Coded Rotary Switch">
 	    <pin rect="1,90,13,13" id="1" type="io" />
 	    <pin rect="17,90,13,13" id="2" type="io" />
 	    <pin rect="33,90,13,13" id="4" type="io" />
@@ -419,7 +419,7 @@
 	    <property name="Current" description="Current usage of the switch in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
 	</Shape>
 
-	<Shape Id="lcd" Type="lcd" Source="true" Image="resources/lcd.png" Icon="resources/lcdicon.png" width="169" height="131" maxInstances="0" description="LCD Alphanumeric Display">
+	<Shape Id="lcd" Type="lcd" Source="true" Image="resources/lcd.png" Icon="resources/lcdicon.png" width="169" height="131" maxInstances="0" name="LCD Alphanumeric Display">
 	    <pin rect="3,83,20,15" id="RS" type="io" />
 	    <pin rect="25,83,25,15" id="R/W" type="io" />
 	    <pin rect="52,83,15,15" id="E" type="io" />
@@ -444,7 +444,7 @@
 	</Shape>
 
 
-	<Shape Id="led" Type="led" Source="true" Image="resources/led.png" Icon="resources/ledicon.png" width="28" height="90" maxInstances="0" description="LED">
+	<Shape Id="led" Type="led" Source="true" Image="resources/led.png" Icon="resources/ledicon.png" width="28" height="90" maxInstances="0" name="LED" description=":/help/led.htm">
 	    <pin rect="31,105,15,15" id="In" type="io" />
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
 	    <property name="Usage" description="HID usage of the control." type="usage" default="8:1000"/>
@@ -452,7 +452,7 @@
 	    <property name="Current" description="Current usage of the LED in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="5"/>
 	</Shape>
 
-	<Shape Id="bicolourled"  Type="bicolourled" Source="true" Image="resources/bicolourled.png" Icon="resources/bicolourledicon.png" width="31" height="81" maxInstances="0" description="2-lead Bicolour LED">
+	<Shape Id="bicolourled"  Type="bicolourled" Source="true" Image="resources/bicolourled.png" Icon="resources/bicolourledicon.png" width="31" height="81" maxInstances="0" name="2-lead Bicolour LED">
 	    <pin rect="13,120,14,14" id="1" type="io" />
 	    <pin rect="31,120,14,14" id="2" type="io" />
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
@@ -460,15 +460,32 @@
 	    <property name="Current" description="Current usage of the LED in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="5"/>
 	</Shape>
 
-	<Shape Id="tricolourled" Type="tricolourled" Source="true" Image="resources/tricolourled.png" Icon="resources/tricolourledicon.png" width="47" height="85" maxInstances="0" description="3-lead Tricolour LED">
+	<Shape Id="tricolourled" Type="tricolourled" Source="true" Image="resources/tricolourled.png" Icon="resources/tricolourledicon.png" width="47" height="85" maxInstances="0" name="3-lead Tricolour LED">
 	    <pin rect="5,123,14,14" id="1" type="io" />
 	    <pin rect="43,123,14,14" id="2" type="io" />
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
 	    <property name="Usage" description="HID usage of the control." type="usage" default="8:1"/>
 	    <property name="Current" description="Current usage of the LED in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="10"/>
+	    <property name="Type" description="Whether the anodes or the cathodes of the internal diodes are connected together." type="enum" default="Common Cathode">
+		<enum name="Common Cathode"/>
+		<enum name="Common Anode"/>
+	    </property>
 	</Shape>
 
-	<Shape Id="dirswitch" Type="dirswitch" Source="true" Image="resources/directionalswitch.png" Icon="resources/directionalswitchicon.png" width="86" height="171" maxInstances="0" description="n-way Directional Switch (POV hat switch)">
+	<Shape Id="rgbled" Type="rgbled" Source="true" Image="resources/rgbled.png" Icon="resources/rgbledicon.png" width="47" height="85" maxInstances="0" name="4-lead RGB LED">
+	    <pin rect="0,123,14,14" id="G" type="io" />
+	    <pin rect="16,123,14,14" id="B" type="io" />
+	    <pin rect="50,123,14,14" id="R" type="io" />
+	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	    <property name="Usage" description="HID usage of the control." type="usage" default="8:1"/>
+	    <property name="Current" description="Current usage of the LED in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="10"/>
+	    <property name="Type" description="Whether the anodes or the cathodes of the internal diodes are connected together." type="enum" default="Common Cathode">
+		<enum name="Common Cathode"/>
+		<enum name="Common Anode"/>
+	    </property>
+	</Shape>
+
+	<Shape Id="dirswitch" Type="dirswitch" Source="true" Image="resources/directionalswitch.png" Icon="resources/directionalswitchicon.png" width="86" height="171" maxInstances="0" name="n-way Directional Switch (POV hat switch)">
 	    <pin rect="14,100,20,20" id="NW" type="io" />
 	    <pin rect="36,100,20,20" id="N" type="io" />
 	    <pin rect="58,100,20,20" id="NE" type="io" />
@@ -487,6 +504,20 @@
 	    <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
 	    <property name="Debounce" description="Waits for the mechanical switch stop bouncing before registering a switch closure." type="bool" default="true"/>
 	    <property name="Current" description="Current usage of the switch in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
+	</Shape>
+
+	<Shape Id="timer" Type="timer" Source="true" Image="resources/timer.png" Icon="resources/timericon.png" width="47" height="85" maxInstances="0" name="Millisecond Timer">
+	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	    <property name="Usage" description="HID usage of the control." type="usage" default="62500:1"/>
+	    <property name="Period" description="Period of the counter in milliseconds.  Every 'Period' ms, the counter ticks.  Use a large number, eg 500, for a watch dog, or 1 for a ms counter." type="int" min="1" max="65535" default="500"/>
+	</Shape>
+
+	<Shape Id="pwm" Type="pwm" Source="true" Image="resources/pwm.png" Icon="resources/pwmicon.png" width="47" height="85" maxInstances="0" name="PWM Output">
+	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	    <property name="Usage" description="HID usage of the control." type="usage" default="62500:1"/>
+	    <property name="Period" description="Period of the counter in milliseconds.  Every 'Period' ms, the counter ticks.  Use a large number, eg 500, for a watch dog, or 1 for a ms counter." type="int" min="1" max="65535" default="500"/>
+	    <property name="Resolution" description="The number of integer subdivisions to the PWM period is divided into." type="int" min="1" max="65535" default="100"/>
+	    <pin rect="60,70,30,20" id="PWM" type="pwm" />
 	</Shape>
 
     </Shapes>

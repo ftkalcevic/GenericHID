@@ -22,9 +22,12 @@ namespace ShapeType
         { "codedrotaryswitch", CodedRotarySwitch },
         { "lcd", LCD },
         { "led", LED },
+        { "rgbled", RGB },
         { "bicolourled", BiColourLED },
         { "tricolourled", TriColourLED },
         { "dirswitch", DirSwitch },
+        { "timer", Timer },
+        { "pwm", PWM },
     };
 
     enum ShapeType fromString( const QString &s )
@@ -44,8 +47,9 @@ namespace ShapeType
     }
 }
 
-Shape::Shape(QDomElement & /*shapeNode*/, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, int nImageWidth, int nImageHeight, const QString &sIconFile, int nMaxInstances, const QString &sDescription)
-: m_eShapeType(eShapeType)
+Shape::Shape(QDomElement & /*shapeNode*/, const QString &sShapeName, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, int nImageWidth, int nImageHeight, const QString &sIconFile, int nMaxInstances, const QString &sDescription)
+: m_sShapeName( sShapeName )
+, m_eShapeType(eShapeType)
 , m_sShapeId(sShapeId)
 , m_bSource(bSource)
 , m_sImageFile(sImageFile)
@@ -54,6 +58,7 @@ Shape::Shape(QDomElement & /*shapeNode*/, ShapeType::ShapeType eShapeType, const
 , m_sIconFile(sIconFile)
 , m_nMaxInstances(nMaxInstances)
 , m_sDescription(sDescription)
+, m_Properties( sShapeName, sDescription )
 {
 }
 
@@ -73,6 +78,7 @@ Shape *Shape::CreateFromXML( QDomElement &node )
     int nImageWidth = XMLUtility::getAttribute( node, "width", 0 );
     int nImageHeight = XMLUtility::getAttribute( node, "height", 0 );
     int nMaxInstances = XMLUtility::getAttribute( node, "maxInstances", 0 );
+    QString sName = XMLUtility::getAttribute( node, "name", "" );
     QString sDescription = XMLUtility::getAttribute( node, "description", "" );
 
 
@@ -81,7 +87,7 @@ Shape *Shape::CreateFromXML( QDomElement &node )
     Shape *pShape = NULL;
     switch ( eShapeType )
     {
-	case ShapeType::AT90USB128:	    pShape = new ShapeMCU(node, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::AT90USB128:	    pShape = new ShapeMCU(node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
 	case ShapeType::Pot:		    
 	case ShapeType::DigitalEncoder:
 	case ShapeType::Switch:
@@ -92,7 +98,10 @@ Shape *Shape::CreateFromXML( QDomElement &node )
 	case ShapeType::LED:
 	case ShapeType::BiColourLED:
 	case ShapeType::TriColourLED:
-	case ShapeType::DirSwitch:	    pShape = new Shape(node, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::DirSwitch:	    
+	case ShapeType::RGB:	    
+	case ShapeType::PWM:	    
+	case ShapeType::Timer:		pShape = new Shape(node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
 	default:
 	    // Problem
 	    break;

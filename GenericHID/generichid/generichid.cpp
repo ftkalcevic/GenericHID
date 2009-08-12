@@ -25,7 +25,7 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
     {
 	DragToolButton *pButton = new DragToolButton( this, pShape );
 	pButton->setIcon( QIcon(pShape->iconFile()) );
-	pButton->setToolTip( pShape->description() );
+	pButton->setToolTip( pShape->name() );
 	ui.toolToolBar->addWidget(  pButton );
     }
 
@@ -351,7 +351,20 @@ void GenericHID::onPropertiesCurrentItemChanged( QtBrowserItem * current )
 	ui.txtPropertyHelp->setText( QString() );
     else
     {
-	ui.txtPropertyHelp->setText( QString("<b>%1</b><br>\n%2").arg(current->property()->propertyName()).arg(current->property()->toolTip()) );
+	QString sText = current->property()->toolTip();
+	if ( sText.startsWith(QChar(':')) )
+	{
+	     QFile file(sText);
+	     if ( file.open(QIODevice::ReadOnly | QIODevice::Text) )
+	     {
+		 {
+		     QTextStream in(&file);
+		     sText = in.readAll();
+		 }
+		 file.close();
+	     }
+	}
+	ui.txtPropertyHelp->setText( QString("<b>%1</b><br>\n%2").arg(current->property()->propertyName()).arg(sText) );
     }
 }
 
@@ -369,6 +382,7 @@ void GenericHID::onMicrocontrollerImportAndProgram()
     dlg.exec();
 }
 
+// A shape has been dragged from the tool bar and dropped on the scene's view.
 void GenericHID::onDropShapeEvent( const ::Shape *pShape, QPointF pos )
 {
     // Create a new shape
@@ -391,6 +405,7 @@ void GenericHID::onDropShapeEvent( const ::Shape *pShape, QPointF pos )
     }
 }
 
+// The current item in the scene's view has changed.
 void GenericHID::onSelectionChanged()
 {
     if ( m_pLastSelectedShape != NULL && !m_pLastSelectedShape->isSelected() )
@@ -414,6 +429,8 @@ void GenericHID::onSelectionChanged()
         ShapeProperty::SetBrowserFactory( ui.listView );
         ui.listView->addProperty(pProps.topItem());
         pProps.populate(m_pLastSelectedShape->values());
+	if ( ui.listView->topLevelItems().count() > 0 )
+	    ui.listView->setCurrentItem( ui.listView->topLevelItems()[0] );
     }
     else
     {
@@ -488,8 +505,6 @@ void GenericHID::ProcessCommandline()
     - mcu attribute
 	- timer 1,2,3
 	- frequency shared between outputs a/b/c on a single timer
-  - counter
-  - watch dog
 
 todo
     - check changes

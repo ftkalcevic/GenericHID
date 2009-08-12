@@ -47,7 +47,7 @@ ShapeCollection *ShapeCollection::LoadShapeCollection( const QString &sPath )
 	if ( pShape != NULL )
 	{
 	    pCol->m_Shapes.push_back( pShape );
-	    pCol->m_ShapeMap.insert( pShape->name(), pShape );
+	    pCol->m_ShapeMap.insert( pShape->id(), pShape );
 	}
     }
 

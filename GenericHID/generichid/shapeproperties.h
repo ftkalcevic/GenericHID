@@ -6,7 +6,7 @@
 class ShapeProperties
 {
 public:
-    ShapeProperties(void);
+    ShapeProperties(const QString &sShapeName, const QString &sDescription);
     ~ShapeProperties(void);
 
     void add( ShapeProperty *pProperty );
@@ -17,6 +17,8 @@ public:
     
 private:
     QtProperty *m_topItem;
+    QString m_sName;
+    QString m_sDescription;
     QList<ShapeProperty *> m_Properties;
     QList<QtProperty *> m_QtProperties;
 };

@@ -892,7 +892,7 @@
 						Name="VCCustomBuildTool"
 						Description="Rcc&apos;ing $(InputPath)..."
 						CommandLine="&quot;$(QTDIR)\bin\rcc.exe&quot; -name &quot;$(InputName)&quot; -no-compress &quot;$(InputPath)&quot; -o .\GeneratedFiles\qrc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(InputPath);resources/greenlight.png;resources/redlight.png"
+						AdditionalDependencies="$(InputPath);resources/greenlight.png;resources/redlight.png;resources/help/led.htm"
 						Outputs=".\GeneratedFiles\qrc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -933,6 +933,13 @@
 				<FileConfiguration
 					Name="Release|Win32"
 					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -1404,7 +1411,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\resources\pwm.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\pwmicon.png"
+				>
+			</File>
+			<File
 				RelativePath=".\resources\RedLight.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\rgbled.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\rgbledicon.png"
 				>
 			</File>
 			<File
@@ -1437,6 +1460,14 @@
 			</File>
 			<File
 				RelativePath=".\resources\SwitchIcon.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\timer.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\timericon.png"
 				>
 			</File>
 			<File

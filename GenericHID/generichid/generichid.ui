@@ -232,7 +232,7 @@
    </property>
    <property name="icon">
     <iconset resource="generichid.qrc">
-     <normaloff>:/GenericHID/resources/Wire.png</normaloff>:/GenericHID/resources/Wire.png</iconset>
+     <normaloff>:/GenericHID/resources/wire.png</normaloff>:/GenericHID/resources/wire.png</iconset>
    </property>
    <property name="text">
     <string>Wire Link</string>
@@ -244,7 +244,7 @@
    </property>
    <property name="icon">
     <iconset resource="generichid.qrc">
-     <normaloff>:/GenericHID/resources/Rotate.png</normaloff>:/GenericHID/resources/Rotate.png</iconset>
+     <normaloff>:/GenericHID/resources/rotate.png</normaloff>:/GenericHID/resources/rotate.png</iconset>
    </property>
    <property name="text">
     <string>Rotate</string>
@@ -256,7 +256,7 @@
    </property>
    <property name="icon">
     <iconset resource="generichid.qrc">
-     <normaloff>:/GenericHID/resources/Mirror.png</normaloff>:/GenericHID/resources/Mirror.png</iconset>
+     <normaloff>:/GenericHID/resources/mirror.png</normaloff>:/GenericHID/resources/mirror.png</iconset>
    </property>
    <property name="text">
     <string>Mirror</string>

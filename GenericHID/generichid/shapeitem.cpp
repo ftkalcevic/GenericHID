@@ -167,7 +167,7 @@ void ShapeItem::WriteXML( QDomElement &node ) const
     QDomElement shapeNode = node.ownerDocument().createElement( "Shape" );
     node.appendChild( shapeNode );
 
-    XMLUtility::setAttribute( shapeNode, "shapeId", m_pShape->name() );
+    XMLUtility::setAttribute( shapeNode, "shapeId", m_pShape->id() );
     XMLUtility::setAttribute( shapeNode, "instanceId", m_nId );
     XMLUtility::setAttribute( shapeNode, "x", pos().x() );
     XMLUtility::setAttribute( shapeNode, "y", pos().y() );

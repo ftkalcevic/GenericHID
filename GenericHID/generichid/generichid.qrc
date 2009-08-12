@@ -18,4 +18,8 @@
         <file alias="FileNew" >resources/new.png</file>
         <file alias="FileOpen" >resources/open.png</file>
     </qresource>
+    <qresource prefix="/help" >
+        <file alias="led.htm" >resources/help/led.htm</file>
+        <file alias="LEDSch1.png" >resources/help/LEDSch1.png</file>
+    </qresource>
 </RCC>

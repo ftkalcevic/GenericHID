@@ -2,8 +2,10 @@
 #include "shapeproperties.h"
 #include "shapeitem.h"
 
-ShapeProperties::ShapeProperties(void)
+ShapeProperties::ShapeProperties(const QString &sShapeName, const QString &sDescription)
 : m_topItem( NULL )
+, m_sName( sShapeName )
+, m_sDescription( sDescription )
 {
 }
 
@@ -14,7 +16,10 @@ ShapeProperties::~ShapeProperties(void)
 void ShapeProperties::add( ShapeProperty *pProperty )
 {
     if ( m_topItem == NULL )
-	m_topItem = ShapeProperty::MakeGroupItem( "Component" );
+    {
+	m_topItem = ShapeProperty::MakeGroupItem( m_sName );
+	m_topItem->setToolTip( m_sDescription );
+    }
 
     QtProperty *pQtProp = pProperty->getQtProperty();
     if ( pQtProp != NULL )

@@ -17,9 +17,12 @@ namespace ShapeType
 	CodedRotarySwitch,
 	LCD,
 	LED,
+	RGB,
 	BiColourLED,
 	TriColourLED,
 	DirSwitch,
+	Timer,
+	PWM,
 	None,
     };
 
@@ -30,13 +33,14 @@ namespace ShapeType
 class Shape
 {
 public:
-    Shape(QDomElement &node, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, int nImageWidth, int nImageHeight, const QString &sIconFile, int nMaxInstances, const QString &sDescription);
+    Shape(QDomElement &node, const QString &sShapeName, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, int nImageWidth, int nImageHeight, const QString &sIconFile, int nMaxInstances, const QString &sDescription);
     virtual ~Shape(void);
 
     static Shape *CreateFromXML( QDomElement &doc );
     const QString &iconFile() const { return m_sIconFile; }
     const QString &shapeFile() const  { return m_sImageFile; }
-    const QString &name() const  { return m_sShapeId; }
+    const QString &id() const  { return m_sShapeId; }
+    const QString &name() const  { return m_sShapeName; }
     const QString &description() const  { return m_sDescription; }
     int maxInstances() const  { return m_nMaxInstances; }
     ShapeType::ShapeType shapeType() const { return m_eShapeType; }
@@ -46,6 +50,7 @@ public:
     bool source() const { return m_bSource; }	// source or sink device
 
 private:
+    QString m_sShapeName;
     ShapeType::ShapeType m_eShapeType;
     QString m_sShapeId;
     bool m_bSource;
