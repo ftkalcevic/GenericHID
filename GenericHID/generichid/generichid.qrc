@@ -20,6 +20,6 @@
     </qresource>
     <qresource prefix="/help" >
         <file alias="led.htm" >resources/help/led.htm</file>
-        <file alias="LEDSch1.png" >resources/help/LEDSch1.png</file>
+        <file alias="ledsch1.png" >resources/help/ledsch1.png</file>
     </qresource>
 </RCC>

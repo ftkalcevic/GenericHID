@@ -1494,6 +1494,19 @@
 				RelativePath=".\resources\Wire.png"
 				>
 			</File>
+			<Filter
+				Name="help"
+				>
+				<File
+					RelativePath=".\resources\help\led.htm"
+					DeploymentContent="true"
+					>
+				</File>
+				<File
+					RelativePath=".\resources\help\ledsch1.png"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Data"
