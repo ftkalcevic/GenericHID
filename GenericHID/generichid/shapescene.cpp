@@ -459,3 +459,74 @@ void ShapeScene::clear()
     m_ShapeItems.clear();
 }
 
+
+bool ShapeScene::VerifyShapes( QString &sError ) const
+{
+    bool bFailed = false;
+
+    // Must have an MCU shape
+    ShapeItem *pMCU = NULL;
+    foreach (ShapeItem *pItem, m_ShapeItems )
+	if ( pItem->shapeData()->shapeType() == ShapeType::AT90USB128 )
+	{
+	    pMCU = pItem;
+	    break;
+	}
+
+    if ( pMCU == NULL )
+    {
+	bFailed = true;
+	sError += "One micro-controller object must be present\n";
+    }
+
+    // Verify current consumption
+    int nCurrent = 0;
+    foreach (ShapeItem *pItem, m_ShapeItems )
+	nCurrent += pItem->current();
+
+    if ( nCurrent > 500 )
+    {
+	bFailed = true;
+	sError += QString("Device current exceeds 500mA (%1)\n").arg(nCurrent);
+    }
+
+    // Verify individual shapes
+    foreach (ShapeItem *pItem, m_ShapeItems )
+	bFailed = !pItem->Verify( sError ) || bFailed;
+
+    return !bFailed;
+}
+
+
+QString ShapeScene::MakeDeviceXML( ) const
+{
+    QDomDocument xml("GenericHIDDevice");
+
+    QDomElement rootElem = xml.createElement("GenericHIDDevice");
+    xml.appendChild( rootElem );
+
+    // Find the MCU and sum the current
+    ShapeItem *pMCU = NULL;
+    int nCurrent = 0;
+    foreach (ShapeItem *pItem, m_ShapeItems )
+    {
+	if ( pItem->shapeData()->shapeType() == ShapeType::AT90USB128 )
+	    pMCU = pItem;
+	nCurrent += pItem->current();
+    }
+
+    if ( pMCU != NULL )
+    {
+	// Output MCU first.
+	pMCU->MakeDeviceXML( rootElem, nCurrent );
+
+	QDomElement controls = xml.createElement("Controls");
+	rootElem.appendChild( controls );
+
+	// And the shapes/controls
+	foreach (ShapeItem *pItem, m_ShapeItems )
+	    pItem->MakeControlsXML( controls );
+    }
+
+    return xml.toString();
+}

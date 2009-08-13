@@ -45,6 +45,7 @@ private:
     void readSettings();
     void Clear();
     bool CheckDataChanged();
+    void RetreiveProperties();
 
     QString m_sLastFile;
     QString m_sLastFileContents;

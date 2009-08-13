@@ -230,7 +230,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\shapecodedselectorswitch.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\shapecollection.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\shapedirectionalswitch.cpp"
 				>
 			</File>
 			<File
@@ -239,6 +247,14 @@
 			</File>
 			<File
 				RelativePath=".\shapeitem.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\shapekeymatrix.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\shapelcd.cpp"
 				>
 			</File>
 			<File
@@ -283,6 +299,10 @@
 			</File>
 			<File
 				RelativePath=".\shapescene.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\shapeselectorswitch.cpp"
 				>
 			</File>
 			<File
@@ -570,7 +590,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\shapecodedselectorswitch.h"
+				>
+			</File>
+			<File
 				RelativePath=".\shapecollection.h"
+				>
+			</File>
+			<File
+				RelativePath=".\shapedirectionalswitch.h"
 				>
 			</File>
 			<File
@@ -624,6 +652,14 @@
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\shapekeymatrix.h"
+				>
+			</File>
+			<File
+				RelativePath=".\shapelcd.h"
+				>
 			</File>
 			<File
 				RelativePath=".\shapemcu.h"
@@ -734,6 +770,10 @@
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\shapeselectorswitch.h"
+				>
 			</File>
 			<File
 				RelativePath=".\stdafx.h"

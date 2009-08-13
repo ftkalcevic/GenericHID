@@ -80,6 +80,10 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
     ui.splitter->setSizes( sizes );
 
     readSettings();
+
+    // to see if anything has change, we keep the contents of the whole 
+    // file we loaded.  We need an empty xml file to start with.
+    m_sLastFileContents = m_pScene->makeXML();
 }
 
 
@@ -136,6 +140,17 @@ void GenericHID::Clear()
     m_pScene->clear();
 }
 
+void GenericHID::RetreiveProperties()
+{
+    if ( m_pLastSelectedShape != NULL )
+    {
+	// write back properties if this shape before trying to save
+        const ShapeProperties &pProps = m_pLastSelectedShape->shapeData()->properties();
+        pProps.retreive(m_pLastSelectedShape->values());
+    }
+}
+
+
 bool GenericHID::CheckDataChanged()
 {
     QString s = m_pScene->makeXML();
@@ -168,6 +183,7 @@ void GenericHID::onFileNew()
 
     m_sLastFile.clear();
     m_sLastFileContents = m_pScene->makeXML();
+    updateWindowTitle();
 }
 
 void GenericHID::onMRUSelected(const QString &sFile)
@@ -234,12 +250,7 @@ bool GenericHID::DoOpen( const QString &sFile )
 
 void GenericHID::onFileSave()
 {
-    if ( m_pLastSelectedShape != NULL )
-    {
-	// write back properties if this shape before trying to save
-        const ShapeProperties &pProps = m_pLastSelectedShape->shapeData()->properties();
-        pProps.retreive(m_pLastSelectedShape->values());
-    }
+    RetreiveProperties();
 
     if ( m_sLastFile.isEmpty() )
 	DoSaveAs();
@@ -318,12 +329,7 @@ void GenericHID::updateWindowTitle()
 
 void GenericHID::onFileSaveAs()
 {
-    if ( m_pLastSelectedShape != NULL )
-    {
-	// write back properties if this shape before trying to save
-        const ShapeProperties &pProps = m_pLastSelectedShape->shapeData()->properties();
-        pProps.retreive(m_pLastSelectedShape->values());
-    }
+    RetreiveProperties();
 
     DoSaveAs();
 }
@@ -370,14 +376,40 @@ void GenericHID::onPropertiesCurrentItemChanged( QtBrowserItem * current )
 
 void GenericHID::onMicrocontrollerProgram()
 {
+    RetreiveProperties();
+
+    // Verify
+    QString sError;
+    if ( !m_pScene->VerifyShapes( sError ) )
+    {
+	QMessageBox msg(QMessageBox::Critical, "Errors Found", "Errors were found processing the device configuration", QMessageBox::Ok, this );
+	msg.setDetailedText( sError );
+	msg.exec();
+	return;
+    }
+    // make xml
+    QString s = m_pScene->MakeDeviceXML();
+    if ( s.isEmpty() )
+    {
+    }
+
+    // make eeprom
+    // program
 }
 
 void GenericHID::onMicrocontrollerExport()
 {
+    RetreiveProperties();
+
+    // Verify
+    // make xml
 }
 
 void GenericHID::onMicrocontrollerImportAndProgram()
 {
+    // load xml
+    // make eeprom
+    // program
     ProgramDlg dlg(this);
     dlg.exec();
 }
@@ -408,12 +440,7 @@ void GenericHID::onDropShapeEvent( const ::Shape *pShape, QPointF pos )
 // The current item in the scene's view has changed.
 void GenericHID::onSelectionChanged()
 {
-    if ( m_pLastSelectedShape != NULL && !m_pLastSelectedShape->isSelected() )
-    {
-	// write back properties if this shape is no longer selected
-        const ShapeProperties &pProps = m_pLastSelectedShape->shapeData()->properties();
-        pProps.retreive(m_pLastSelectedShape->values());
-    }
+    RetreiveProperties();
 
     QList<ShapeItem *> selectedShapes;
     foreach ( QGraphicsItem *pItem, m_pScene->selectedItems() )
@@ -507,8 +534,7 @@ void GenericHID::ProcessCommandline()
 	- frequency shared between outputs a/b/c on a single timer
 
 todo
-    - check changes
-    - check validity - pre generate eeprom
+    - allow multiple wires on an mcu pin (eg LCD, pwm
  */
 
 

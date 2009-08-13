@@ -14,6 +14,7 @@ public:
     void populate(const QList<PropertyValue *> &Values) const;
     void retreive(const QList<PropertyValue *> &Values) const;
     const QList<ShapeProperty *> &items() const { return m_Properties; }
+    int find( const QString &sName ) const;
     
 private:
     QtProperty *m_topItem;

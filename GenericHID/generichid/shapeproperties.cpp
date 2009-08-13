@@ -41,3 +41,12 @@ void ShapeProperties::retreive(const QList<PropertyValue *> &Values) const
     for ( int i = 0; i < m_Properties.count(); i++ )
 	m_Properties[i]->getValue( m_QtProperties[i], Values[i] );
 }
+
+int ShapeProperties::find( const QString &sName ) const
+{
+    for ( int i = 0; i < m_Properties.count(); i++ )
+	if ( sName.compare( m_Properties[i]->name(), Qt::CaseInsensitive ) == 0  )
+	    return i;
+
+    return -1;
+}

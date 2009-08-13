@@ -49,7 +49,7 @@ void ShapeGraphicsView::dragMoveEvent( QDragMoveEvent * event )
 void ShapeGraphicsView::wheelEvent(QWheelEvent *event)
 {
     int nDelta = event->delta();
-    double dScale = pow((double)2, -nDelta / 240.0);
+    double dScale = pow((double)2, nDelta / 240.0);
     //ATLTRACE( "nDelta=%d, dScale=%f\n", nDelta, dScale );
     scaleView( m_dViewScale * dScale );
 }

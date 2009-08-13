@@ -217,3 +217,25 @@ ShapeItem *ShapeItem::CreateFromXML( ShapeCollection *pCol, Editor *pEditor, QDo
 
     return pShapeItem;
 }
+
+
+bool ShapeItem::Verify( QString &sError ) const
+{
+    return m_pShape->Verify( sError, m_pins, m_values );
+}
+
+void ShapeItem::MakeDeviceXML( QDomElement &elem, int nCurrent ) const 
+{
+    m_pShape->MakeDeviceXML( elem, nCurrent, m_values );
+}
+
+void ShapeItem::MakeControlsXML( QDomElement &elem ) const 
+{
+    m_pShape->MakeControlsXML( elem, m_pins, m_values );
+}
+
+int ShapeItem::current() const 
+{
+    return m_pShape->GetPropertyValueInt( "Current", m_values, 0 );
+}
+

@@ -1,8 +1,19 @@
 #include "stdafx.h"
 #include "shape.h"
+
 #include "shapemcu.h"
+#include "shapedirectionalswitch.h"
+#include "shapecodedselectorswitch.h"
+#include "shapeselectorswitch.h"
+#include "shapelcd.h"
+#include "shapekeymatrix.h"
 
 #include "shapeproperty.h"
+#include "shapepropertybool.h"
+#include "shapepropertyenum.h"
+#include "shapepropertyint.h"
+#include "shapepropertystring.h"
+#include "shapepropertyusage.h"
 
 
 namespace ShapeType
@@ -88,20 +99,20 @@ Shape *Shape::CreateFromXML( QDomElement &node )
     switch ( eShapeType )
     {
 	case ShapeType::AT90USB128:	    pShape = new ShapeMCU(node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::DirSwitch:	    pShape = new ShapeDirectionalSwitch(node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::KeyMatrix:	    pShape = new ShapeKeyMatrix(node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::RotarySwitch:	    pShape = new ShapeSelectorSwitch(node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::CodedRotarySwitch:  pShape = new ShapeCodedSelectorSwitch(node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::LCD:		    pShape = new ShapeLCD(node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
 	case ShapeType::Pot:		    
 	case ShapeType::DigitalEncoder:
 	case ShapeType::Switch:
-	case ShapeType::KeyMatrix:
-	case ShapeType::RotarySwitch:
-	case ShapeType::CodedRotarySwitch:
-	case ShapeType::LCD:
 	case ShapeType::LED:
 	case ShapeType::BiColourLED:
 	case ShapeType::TriColourLED:
-	case ShapeType::DirSwitch:	    
 	case ShapeType::RGB:	    
 	case ShapeType::PWM:	    
-	case ShapeType::Timer:		pShape = new Shape(node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::Timer:		    pShape = new Shape(node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
 	default:
 	    // Problem
 	    break;
@@ -147,3 +158,210 @@ QPixmap Shape::pixmap()
     return m_pixmap;
 }
 
+
+bool Shape::CheckPins( QString &sErrors, const QList<class PinItem *> &pins, const QSet<QString> &pinsToCheck ) const
+{
+    bool bSuccess = true;
+
+    foreach ( const QString sPin, pinsToCheck )
+    {
+	int index;
+	if ( (index = findPin( sPin )) >= 0 )
+	{
+	    if ( pins[index]->wire() == NULL )
+	    {
+		bSuccess = false;
+		sErrors += QString( "Pin '%1' is not connected on '%2'\n" ).arg(pins[index]->pin()->id()).arg(m_sShapeName);
+	    }
+	}
+    }
+    return bSuccess;
+}
+
+
+bool Shape::CheckNotPins( QString &sErrors, const QList<class PinItem *> &pins, const QSet<QString> &pinsToCheck ) const
+{
+    bool bSuccess = true;
+
+    foreach ( const QString sPin, pinsToCheck )
+    {
+	int index;
+	if ( (index = findPin( sPin )) >= 0 )
+	{
+	    if ( pins[index]->wire() != NULL )
+	    {
+		bSuccess = false;
+		sErrors += QString( "Pin '%1' is connected although it is not used on '%2'\n" ).arg(pins[index]->pin()->id()).arg(m_sShapeName);
+	    }
+	}
+    }
+    return bSuccess;
+}
+
+
+int Shape::findPin( const QString &sName ) const
+{
+    for ( int i = 0; i < m_Pins.count(); i++ )
+	if ( m_Pins[i]->id().compare( sName, Qt::CaseInsensitive ) == 0 )
+	    return i;
+    return -1;
+}
+
+
+bool Shape::Verify( QString &sErrors, const QList<class PinItem *> &pins, const QList<PropertyValue *> &values ) const
+{
+    bool bSuccess = true;
+
+    // default implmentation just checks that every pin is connected.  Shapes that don't need this can override
+    foreach ( PinItem *pin, pins )
+    {
+	if ( pin->wire() == NULL )
+	{
+	    sErrors += QString( "Pin '%1' is not connected on '%2'\n" ).arg(pin->pin()->id()).arg(m_sShapeName);
+	    bSuccess = false;
+	}
+    }
+    return bSuccess;
+}
+
+
+
+PropertyValue *Shape::GetPropertyValue( const QString &sName, const QList<class PropertyValue *> &values ) const
+{
+    // Find the index of the property
+    int index = m_Properties.find(sName);
+    if ( index < 0 || index >= values.count() )
+	return NULL;
+    else
+	return values[index];
+}
+
+
+bool Shape::GetPropertyValueBool( const QString &sName, const QList<class PropertyValue *> &values, bool bDefault ) const
+{
+    // Look up and convert the value
+    PropertyValueBool *pBool = dynamic_cast<PropertyValueBool *>( GetPropertyValue(sName,values) );
+    if ( pBool == NULL )
+	return bDefault;
+    else
+	return pBool->Value;
+}
+
+
+QString Shape::GetPropertyValueEnum( const QString &sName, const QList<class PropertyValue *> &values, const QString &sDefault ) const
+{
+    // Look up and convert the value
+    PropertyValueEnum *pEnum = dynamic_cast<PropertyValueEnum *>( GetPropertyValue(sName,values) );
+    if ( pEnum == NULL )
+	return sDefault;
+    else
+	return pEnum->Value;
+}
+
+
+int Shape::GetPropertyValueInt( const QString &sName, const QList<class PropertyValue *> &values, int nDefault ) const
+{
+    // Look up and convert the value
+    PropertyValueInt *pInt = dynamic_cast<PropertyValueInt*>( GetPropertyValue(sName,values) );
+    if ( pInt == NULL )
+	return nDefault;
+    else
+	return pInt->Value;
+}
+
+QString Shape::GetPropertyValueString( const QString &sName, const QList<class PropertyValue *> &values, const QString &sDefault ) const
+{
+    PropertyValueString *pString = dynamic_cast<PropertyValueString*>( GetPropertyValue(sName,values) );
+    if ( pString == NULL )
+	return sDefault;
+    else
+	return pString->Value;
+}
+
+unsigned short Shape::GetPropertyValueUsagePage( const QString &sName, const QList<class PropertyValue *> &values, int nDefault ) const
+{
+    QString sUsage = GetPropertyValueString(sName, values, "" );
+    QStringList s = sUsage.split(QChar(':'));
+    if ( s.count() > 0 )
+	return s[0].toUShort();
+    else 
+	return nDefault;
+}
+
+unsigned short Shape::GetPropertyValueUsage( const QString &sName, const QList<class PropertyValue *> &values, int nDefault ) const
+{
+    QString sUsage = GetPropertyValueString(sName, values, "" );
+    QStringList s = sUsage.split(QChar(':'));
+    if ( s.count() > 1 )
+	return s[1].toUShort();
+    else 
+	return nDefault;
+}
+
+
+void Shape::MakeDeviceXML( QDomElement &elem, int nCurrent, const QList<PropertyValue *> &values  ) const
+{
+}
+
+void Shape::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &pins, const QList<PropertyValue *> &values  ) const
+{
+}
+
+
+void Shape::MakeDirectionalSwitchControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bPullup, bool bDebounce, int nDirections, const QString &sNorthPort, const QString &sSouthPort, const QString &sEastPort, const QString &sWestPort, const QString &sNEPort, const QString &sNWPort, const QString &sSEPort, const QString &sSWPort ) const
+{
+    QDomElement node = elem.ownerDocument().createElement( "DirectionalSwitch" );
+    elem.appendChild( node );
+
+    XMLUtility::setAttribute( node, "Name", sName );
+    XMLUtility::setAttribute( node, "UsagePage", nUsagePage );
+    XMLUtility::setAttribute( node, "Usage", nUsage );
+    XMLUtility::setAttribute( node, "Pullup", bPullup );
+    XMLUtility::setAttribute( node, "Debounce", bDebounce );
+    XMLUtility::setAttribute( node, "Directons", nDirections );
+    if ( !sNorthPort.isEmpty() ) XMLUtility::setAttribute( node, "PortN", sNorthPort );
+    if ( !sSouthPort.isEmpty() ) XMLUtility::setAttribute( node, "PortS", sSouthPort );
+    if ( !sEastPort.isEmpty() ) XMLUtility::setAttribute( node, "PortE", sEastPort );
+    if ( !sWestPort.isEmpty() ) XMLUtility::setAttribute( node, "PortW", sWestPort );
+    if ( !sNEPort.isEmpty() ) XMLUtility::setAttribute( node, "PortNE", sNEPort );
+    if ( !sNWPort.isEmpty() ) XMLUtility::setAttribute( node, "PortNW", sNWPort );
+    if ( !sSEPort.isEmpty() ) XMLUtility::setAttribute( node, "PortSE", sSEPort );
+    if ( !sSWPort.isEmpty() ) XMLUtility::setAttribute( node, "PortSW", sSWPort );
+}
+
+void Shape::MakePotentiometerControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nBits, const QString &sPort ) const
+{
+    QDomElement node = elem.ownerDocument().createElement( "AnalogIn" );
+    elem.appendChild( node );
+
+    XMLUtility::setAttribute( node, "Name", sName );
+    XMLUtility::setAttribute( node, "UsagePage", nUsagePage );
+    XMLUtility::setAttribute( node, "Usage", nUsage );
+    XMLUtility::setAttribute( node, "Bits", nBits );
+    XMLUtility::setAttribute( node, "Port", sPort );
+}
+
+void Shape::MakeSwitchControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bPullup, bool bDebounce, const QString &sPort ) const
+{
+    QDomElement node = elem.ownerDocument().createElement( "Switch" );
+    elem.appendChild( node );
+
+    XMLUtility::setAttribute( node, "Name", sName );
+    XMLUtility::setAttribute( node, "UsagePage", nUsagePage );
+    XMLUtility::setAttribute( node, "Usage", nUsage );
+    XMLUtility::setAttribute( node, "Pullup", bPullup );
+    XMLUtility::setAttribute( node, "Debounce", bDebounce );
+    XMLUtility::setAttribute( node, "Port", sPort );
+}
+
+void Shape::MakeTricolourLEDControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, const QString &sPort1, const QString &sPort2 ) const
+{
+    QDomElement node = elem.ownerDocument().createElement( "TricolourLED" );
+    elem.appendChild( node );
+
+    XMLUtility::setAttribute( node, "Name", sName );
+    XMLUtility::setAttribute( node, "UsagePage", nUsagePage );
+    XMLUtility::setAttribute( node, "Usage", nUsage );
+    XMLUtility::setAttribute( node, "PortA", sPort1 );
+    XMLUtility::setAttribute( node, "PortB", sPort2 );
+}

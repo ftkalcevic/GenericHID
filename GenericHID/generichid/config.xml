@@ -67,7 +67,7 @@
 	    <pin rect="379, 44, 31, 25" id="GND" type="" enabled="false" />
 	    <pin rect="348, 44, 31, 25" id="Vcc" type="" enabled="false" />
 
-	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	    <property name="Name" description="The optional user friendly name given to the control." type="string" default="Generic HID Device"/>
 	    <property name="Usage" description="HID usage of the control." type="usage" default="13:1" />
 	    <property name="Voltage" description="Is the microcontroller 5v or 3.3v." type="enum" default="3.3">
 		<enum name="5"/>
@@ -178,6 +178,10 @@
 		<enum name="Both"/>
 		<enum name="None"/>
 	    </property>
+	    <property name="Use LEDs" description="Use the stock AT90USBKey LEDs as device output LEDs.  'Use Status LEDs' must be set to LED1, LED2, or None." type="bool" default="false"/>
+	    <property name="Use Voltage Monitor" description="Use the stock AT90USBKey Voltage Monitor as an analog input." type="bool" default="false"/>
+	    <property name="Use Temperature Sensor" description="Use the stock AT90USBKey Temperature Sensor as an analog input." type="bool" default="false"/>
+	    <property name="Use Joystick" description="Use the stock AT90USBKey Joystick as a directional input." type="bool" default="false"/>
 	    <property name="SerialNo" description="Required unique serial number of the device.  This must be unique between all GenericHID devices or MS-Windows will Blue-Screen if two duplicate devices are plugged in!" type="string" default="1"/>
 	</Shape>
 	
@@ -390,17 +394,21 @@
 	</Shape>
 
 	<Shape Id="rotaryswitch" Type="rotaryswitch" Source="true" Image="resources/rotaryswitch.png" Icon="resources/rotaryswitchicon.png" width="128" height="328" maxInstances="0" name="Rotary Selector Switch">
-	    <pin rect="3,225,20,20" id="1" type="io" />
-	    <pin rect="18,250,20,20" id="2" type="io" />
-	    <pin rect="32,225,20,20" id="3" type="io" />
-	    <pin rect="47,250,20,20" id="4" type="io" />
-	    <pin rect="61,225,20,20" id="5" type="io" />
-	    <pin rect="76,250,20,20" id="6" type="io" />
-	    <pin rect="90,225,20,20" id="7" type="io" />
-	    <pin rect="105,250,20,20" id="8" type="io" />
+	    <pin rect="3,215,23,18" id="1" type="io" />
+	    <pin rect="33,215,23,18" id="4" type="io" />
+	    <pin rect="63,215,23,18" id="7" type="io" />
+	    <pin rect="93,215,23,18" id="10" type="io" />
+	    <pin rect="13,235,23,18" id="2" type="io" />
+	    <pin rect="43,235,23,18" id="5" type="io" />
+	    <pin rect="73,235,23,18" id="8" type="io" />
+	    <pin rect="103,235,23,18" id="11" type="io" />
+	    <pin rect="23,255,23,18" id="3" type="io" />
+	    <pin rect="53,255,23,18" id="6" type="io" />
+	    <pin rect="83,255,23,18" id="9" type="io" />
+	    <pin rect="113,255,23,18" id="12" type="io" />
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
 	    <property name="Usage" description="HID usage of the control." type="usage" default="9:1"/>
-	    <property name="Outputs" description="The number of outputs on the selector switch." type="int" min="2" max="8" default="4"/>
+	    <property name="Outputs" description="The number of outputs on the selector switch." type="int" min="2" max="12" default="4"/>
 	    <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
 	    <property name="Debounce" description="Waits for the mechanical switch stop bouncing before registering a switch closure." type="bool" default="true"/>
 	    <property name="Current" description="Current usage of the switch in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
@@ -413,7 +421,7 @@
 	    <pin rect="49,90,13,13" id="8" type="io" />
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
 	    <property name="Usage" description="HID usage of the control." type="usage" default="9:1"/>
-	    <property name="Outputs" description="The number of outputs on the selector switch." type="int" min="2" max="32" default="4"/>
+	    <property name="Outputs" description="The number of outputs on the selector switch. This is the values that can be represented, not pins." type="int" min="2" max="16" default="4"/>
 	    <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
 	    <property name="Debounce" description="Waits for the mechanical switch stop bouncing before registering a switch closure." type="bool" default="true"/>
 	    <property name="Current" description="Current usage of the switch in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
@@ -435,7 +443,7 @@
 	    <property name="Usage" description="HID usage of the control." type="usage" default="20:1"/>
 	    <property name="Rows" description="The number of rows on the Display." type="int" min="1" max="4" default="2"/>
 	    <property name="Columns" description="The number of columns on the Display." type="int" min="8" max="40" default="20"/>
-	    <property name="8Bit" description="The number of data lines to connect to the LCD.  If true 8 bits are used.  If false, only 4 bits, data lines D4-D7 are used." type="bool" default="false"/>
+	    <property name="8 Bit" description="The number of data lines to connect to the LCD.  If true 8 bits are used.  If false, only 4 bits, data lines D4-D7 are used." type="bool" default="false"/>
 	    <property name="Row1Address" description="The start address of row 1." type="int" min="0" max="255" default="0"/>
 	    <property name="Row2Address" description="The start address of row 2." type="int" min="0" max="255" default="64"/>
 	    <property name="Row3Address" description="The start address of row 3." type="int" min="0" max="255" default="20"/>
@@ -497,7 +505,8 @@
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
 	    <property name="Usage" description="HID usage of the control." type="usage" default="1:57"/>
 	    <property name="Directions" description="The number of directions." type="enum" default="4">
-		<enum name="2"/>
+		<enum name="2 - N/S"/>
+		<enum name="2 - W/E"/>
 		<enum name="4"/>
 		<enum name="8"/>
 	    </property>
@@ -516,7 +525,7 @@
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
 	    <property name="Usage" description="HID usage of the control." type="usage" default="62500:1"/>
 	    <property name="Period" description="Period of the counter in milliseconds.  Every 'Period' ms, the counter ticks.  Use a large number, eg 500, for a watch dog, or 1 for a ms counter." type="int" min="1" max="65535" default="500"/>
-	    <property name="Resolution" description="The number of integer subdivisions to the PWM period is divided into." type="int" min="1" max="65535" default="100"/>
+	    <property name="Resolution" description="The number of integer subdivisions to the PWM period is divided into." type="int" min="2" max="65535" default="100"/>
 	    <pin rect="60,70,30,20" id="PWM" type="pwm" />
 	</Shape>
 

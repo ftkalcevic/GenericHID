@@ -24,9 +24,13 @@ public:
     void setRotation( double d ) { m_dRotate = d; while ( m_dRotate > 360.0 ) m_dRotate -= 360.0; DoTransform(); }
     QList<PropertyValue *> &values() { return m_values; }
     int id() const { return m_nId; }
-
     void WriteXML( QDomElement &node ) const;
+    bool Verify( QString &sError ) const;
+    void MakeDeviceXML( QDomElement &elem, int nCurrent ) const;
+    void MakeControlsXML( QDomElement &elem ) const;
+
     static ShapeItem *CreateFromXML( ShapeCollection *pCol, Editor *, QDomElement & );
+    int current() const;
 
 signals:
     void itemChange( QGraphicsItem *item, QGraphicsItem::GraphicsItemChange change, const QVariant & value );

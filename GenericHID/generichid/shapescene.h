@@ -19,6 +19,8 @@ public:
     const QList<ShapeItem *> &shapeItems() const { return m_ShapeItems; }
     QString makeXML();
     bool loadXML( QDomDocument &doc, ShapeCollection *pCol );
+    bool VerifyShapes( QString &sError ) const;
+    QString MakeDeviceXML() const;
 
 public slots:
     void onViewItemChanged( QGraphicsItem *item, QGraphicsItem::GraphicsItemChange change, const QVariant &value);
