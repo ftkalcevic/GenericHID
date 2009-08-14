@@ -230,11 +230,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\shapebicolourled.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\shapecodedselectorswitch.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\shapecollection.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\shapedigitalencoder.cpp"
 				>
 			</File>
 			<File
@@ -258,11 +266,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\shapeled.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\shapemcu.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\shapemimedata.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\shapepotentiometer.cpp"
 				>
 			</File>
 			<File
@@ -298,11 +314,31 @@
 				>
 			</File>
 			<File
+				RelativePath=".\shapepwm.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\shapergb.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\shapescene.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\shapeselectorswitch.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\shapeswitch.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\shapetimer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\shapetricolourled.cpp"
 				>
 			</File>
 			<File
@@ -590,11 +626,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\shapebicolourled.h"
+				>
+			</File>
+			<File
 				RelativePath=".\shapecodedselectorswitch.h"
 				>
 			</File>
 			<File
 				RelativePath=".\shapecollection.h"
+				>
+			</File>
+			<File
+				RelativePath=".\shapedigitalencoder.h"
 				>
 			</File>
 			<File
@@ -662,6 +706,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\shapeled.h"
+				>
+			</File>
+			<File
 				RelativePath=".\shapemcu.h"
 				>
 			</File>
@@ -690,6 +738,10 @@
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\shapepotentiometer.h"
+				>
 			</File>
 			<File
 				RelativePath=".\shapeproperties.h"
@@ -746,6 +798,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\shapepwm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\shapergb.h"
+				>
+			</File>
+			<File
 				RelativePath=".\shapescene.h"
 				>
 				<FileConfiguration
@@ -773,6 +833,18 @@
 			</File>
 			<File
 				RelativePath=".\shapeselectorswitch.h"
+				>
+			</File>
+			<File
+				RelativePath=".\shapeswitch.h"
+				>
+			</File>
+			<File
+				RelativePath=".\shapetimer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\shapetricolourled.h"
 				>
 			</File>
 			<File
@@ -973,13 +1045,6 @@
 				<FileConfiguration
 					Name="Release|Win32"
 					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"

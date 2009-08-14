@@ -7,6 +7,15 @@
 #include "shapeselectorswitch.h"
 #include "shapelcd.h"
 #include "shapekeymatrix.h"
+#include "shapepotentiometer.h"
+#include "shapedigitalencoder.h"
+#include "shapeswitch.h"
+#include "shapeled.h"
+#include "shapebicolourled.h"
+#include "shapetricolourled.h"
+#include "shapergb.h"
+#include "shapepwm.h"
+#include "shapetimer.h"
 
 #include "shapeproperty.h"
 #include "shapepropertybool.h"
@@ -39,6 +48,7 @@ namespace ShapeType
         { "dirswitch", DirSwitch },
         { "timer", Timer },
         { "pwm", PWM },
+        { "power", Power },
     };
 
     enum ShapeType fromString( const QString &s )
@@ -98,23 +108,24 @@ Shape *Shape::CreateFromXML( QDomElement &node )
     Shape *pShape = NULL;
     switch ( eShapeType )
     {
-	case ShapeType::AT90USB128:	    pShape = new ShapeMCU(node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::DirSwitch:	    pShape = new ShapeDirectionalSwitch(node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::KeyMatrix:	    pShape = new ShapeKeyMatrix(node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::RotarySwitch:	    pShape = new ShapeSelectorSwitch(node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::CodedRotarySwitch:  pShape = new ShapeCodedSelectorSwitch(node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::LCD:		    pShape = new ShapeLCD(node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::Pot:		    
-	case ShapeType::DigitalEncoder:
-	case ShapeType::Switch:
-	case ShapeType::LED:
-	case ShapeType::BiColourLED:
-	case ShapeType::TriColourLED:
-	case ShapeType::RGB:	    
-	case ShapeType::PWM:	    
-	case ShapeType::Timer:		    pShape = new Shape(node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::AT90USB128:	    pShape = new ShapeMCU( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::DirSwitch:	    pShape = new ShapeDirectionalSwitch( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::KeyMatrix:	    pShape = new ShapeKeyMatrix( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::RotarySwitch:	    pShape = new ShapeSelectorSwitch( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::CodedRotarySwitch:  pShape = new ShapeCodedSelectorSwitch( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::LCD:		    pShape = new ShapeLCD( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::Pot:		    pShape = new ShapePotentiometer( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::DigitalEncoder:	    pShape = new ShapeDigitalEncoder( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::Switch:		    pShape = new ShapeSwitch( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::LED:		    pShape = new ShapeLED( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::BiColourLED:	    pShape = new ShapeBiColourLED( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::TriColourLED:	    pShape = new ShapeTriColourLED( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::RGB:		    pShape = new ShapeRGB( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::PWM:		    pShape = new ShapePWM( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::Timer:		    pShape = new ShapeTimer( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::Power:		    pShape = new Shape( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
 	default:
-	    // Problem
+	    assert( false );
 	    break;
     }
 
@@ -299,7 +310,7 @@ unsigned short Shape::GetPropertyValueUsage( const QString &sName, const QList<c
 }
 
 
-void Shape::MakeDeviceXML( QDomElement &elem, int nCurrent, const QList<PropertyValue *> &values  ) const
+void Shape::MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sPowerPin, const QList<PropertyValue *> &values  ) const
 {
 }
 
@@ -354,7 +365,7 @@ void Shape::MakeSwitchControl( QDomElement &elem, const QString &sName, unsigned
     XMLUtility::setAttribute( node, "Port", sPort );
 }
 
-void Shape::MakeTricolourLEDControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, const QString &sPort1, const QString &sPort2 ) const
+void Shape::MakeTricolourLEDControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bSource, const QString &sPort1, const QString &sPort2 ) const
 {
     QDomElement node = elem.ownerDocument().createElement( "TricolourLED" );
     elem.appendChild( node );
@@ -362,6 +373,175 @@ void Shape::MakeTricolourLEDControl( QDomElement &elem, const QString &sName, un
     XMLUtility::setAttribute( node, "Name", sName );
     XMLUtility::setAttribute( node, "UsagePage", nUsagePage );
     XMLUtility::setAttribute( node, "Usage", nUsage );
+    XMLUtility::setAttribute( node, "Source", bSource );
     XMLUtility::setAttribute( node, "PortA", sPort1 );
     XMLUtility::setAttribute( node, "PortB", sPort2 );
+}
+
+
+void Shape::MakeDigitalEncoderControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, const QString &sPortA, const QString &sPortB ) const
+{
+    QDomElement node = elem.ownerDocument().createElement( "DigitalEncoder" );
+    elem.appendChild( node );
+
+    XMLUtility::setAttribute( node, "Name", sName );
+    XMLUtility::setAttribute( node, "UsagePage", nUsagePage );
+    XMLUtility::setAttribute( node, "Usage", nUsage );
+    XMLUtility::setAttribute( node, "PortA", sPortA );
+    XMLUtility::setAttribute( node, "PortB", sPortB );
+}
+
+void Shape::MakeKeyMatrixControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsageMin, bool bPullUp, bool bDebounce, const QStringList &rows, const QStringList &cols  ) const
+{
+    QDomElement node = elem.ownerDocument().createElement( "KeyMatrix" );
+    elem.appendChild( node );
+
+    XMLUtility::setAttribute( node, "Name", sName );
+    XMLUtility::setAttribute( node, "UsagePage", nUsagePage );
+    XMLUtility::setAttribute( node, "UsageMin", nUsageMin );
+    XMLUtility::setAttribute( node, "Pullup", bPullUp );
+    XMLUtility::setAttribute( node, "Debounce", bDebounce );
+
+    foreach ( QString sRow, rows )
+    {
+	QDomElement row = elem.ownerDocument().createElement( "RowIn" );
+	node.appendChild( row );
+	XMLUtility::setAttribute( row, "Port", sRow );
+    }
+
+    foreach ( QString sCol, cols )
+    {
+	QDomElement col = elem.ownerDocument().createElement( "ColOut" );
+	node.appendChild( col );
+	XMLUtility::setAttribute( col, "Port", sCol );
+    }
+}
+void Shape::MakeRotarySwitchControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bPullUp, bool bDebounce, bool bEncoded, int nBits, const QStringList &outputs ) const
+{
+    QDomElement node = elem.ownerDocument().createElement( "RotarySwitch" );
+    elem.appendChild( node );
+
+    XMLUtility::setAttribute( node, "Name", sName );
+    XMLUtility::setAttribute( node, "UsagePage", nUsagePage );
+    XMLUtility::setAttribute( node, "Usage", nUsage );
+    XMLUtility::setAttribute( node, "Pullup", bPullUp );
+    XMLUtility::setAttribute( node, "Debounce", bDebounce );
+    XMLUtility::setAttribute( node, "Encoded", bEncoded );
+
+    for ( int i = 0; i < outputs.count(); i++ )
+    {
+	QDomElement input = elem.ownerDocument().createElement( "Input" );
+	node.appendChild( input );
+	XMLUtility::setAttribute( input, "Bit", bEncoded ? (1<<i) : (i+1) );
+	XMLUtility::setAttribute( input, "Port", outputs[i] );
+    }
+}
+
+void Shape::MakeLCDControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nRows, int nCols, bool b8Bit,
+			    const QString &sPortRS, const QString &sPortRW, const QString &sPortE, const QString &sPortD0, const QString &sPortD1, const QString &sPortD2,
+			    const QString &sPortD3, const QString &sPortD4, const QString &sPortD5, const QString &sPortD6, const QString &sPortD7, 
+			    int nAddrRow0, int nAddrRow1, int nAddrRow2, int nAddrRow3 ) const
+{
+    QDomElement node = elem.ownerDocument().createElement( "LED" );
+    elem.appendChild( node );
+
+    XMLUtility::setAttribute( node, "Name", sName );
+    XMLUtility::setAttribute( node, "UsagePage", nUsagePage );
+    XMLUtility::setAttribute( node, "Usage", nUsage );
+    XMLUtility::setAttribute( node, "Rows", nRows );
+    XMLUtility::setAttribute( node, "Columns", nCols );
+    XMLUtility::setAttribute( node, "Bus8Bit", b8Bit );
+    XMLUtility::setAttribute( node, "PortRS", sPortRS);
+    XMLUtility::setAttribute( node, "PortRW", sPortRW);
+    XMLUtility::setAttribute( node, "PortE", sPortE);
+    XMLUtility::setAttribute( node, "PortD0", sPortD0);
+    XMLUtility::setAttribute( node, "PortD1", sPortD1);
+    XMLUtility::setAttribute( node, "PortD2", sPortD2);
+    XMLUtility::setAttribute( node, "PortD3", sPortD3);
+    XMLUtility::setAttribute( node, "PortD4", sPortD4);
+    XMLUtility::setAttribute( node, "PortD5", sPortD5);
+    XMLUtility::setAttribute( node, "PortD6", sPortD6);
+    XMLUtility::setAttribute( node, "PortD7", sPortD7);
+    XMLUtility::setAttribute( node, "Row0", nAddrRow0);
+    XMLUtility::setAttribute( node, "Row1", nAddrRow1);
+    XMLUtility::setAttribute( node, "Row2", nAddrRow2);
+    XMLUtility::setAttribute( node, "Row3", nAddrRow3);
+}
+
+
+void Shape::MakeLEDControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, const QString &sPort ) const
+{
+    QDomElement node = elem.ownerDocument().createElement( "LED" );
+    elem.appendChild( node );
+
+    XMLUtility::setAttribute( node, "Name", sName );
+    XMLUtility::setAttribute( node, "UsagePage", nUsagePage );
+    XMLUtility::setAttribute( node, "Usage", nUsage );
+    XMLUtility::setAttribute( node, "Port", sPort );
+}
+
+void Shape::MakeBiColourControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, const QString &sPortA, const QString &sPortB ) const
+{
+    QDomElement node = elem.ownerDocument().createElement( "BicolourLED" );
+    elem.appendChild( node );
+
+    XMLUtility::setAttribute( node, "Name", sName );
+    XMLUtility::setAttribute( node, "UsagePage", nUsagePage );
+    XMLUtility::setAttribute( node, "Usage", nUsage );
+    XMLUtility::setAttribute( node, "PortA", sPortA );
+    XMLUtility::setAttribute( node, "PortB", sPortB );
+}
+
+void Shape::MakeRGBControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bSource, const QString &sPortR, const QString &sPortG, const QString &sPortB ) const
+{
+    QDomElement node = elem.ownerDocument().createElement( "RGBLED" );
+    elem.appendChild( node );
+
+    XMLUtility::setAttribute( node, "Name", sName );
+    XMLUtility::setAttribute( node, "UsagePage", nUsagePage );
+    XMLUtility::setAttribute( node, "Usage", nUsage );
+    XMLUtility::setAttribute( node, "Source", bSource );
+    XMLUtility::setAttribute( node, "PortR", sPortR );
+    XMLUtility::setAttribute( node, "PortG", sPortG );
+    XMLUtility::setAttribute( node, "PortB", sPortB );
+}
+
+void Shape::MakePWMControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nPeriod, int nResolution, const QString &sPort ) const
+{
+    QDomElement node = elem.ownerDocument().createElement( "PWM" );
+    elem.appendChild( node );
+
+    XMLUtility::setAttribute( node, "Name", sName );
+    XMLUtility::setAttribute( node, "UsagePage", nUsagePage );
+    XMLUtility::setAttribute( node, "Usage", nUsage );
+    XMLUtility::setAttribute( node, "Period", nPeriod );
+    XMLUtility::setAttribute( node, "Resolution", nResolution );
+    XMLUtility::setAttribute( node, "Port", sPort );
+}
+
+void Shape::MakeTimerControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nPeriod, int nBits ) const
+{
+    QDomElement node = elem.ownerDocument().createElement( "Timer" );
+    elem.appendChild( node );
+
+    XMLUtility::setAttribute( node, "Name", sName );
+    XMLUtility::setAttribute( node, "UsagePage", nUsagePage );
+    XMLUtility::setAttribute( node, "Usage", nUsage );
+    XMLUtility::setAttribute( node, "Period", nPeriod );
+    XMLUtility::setAttribute( node, "Bits", nBits );
+}
+
+QString Shape::GetPort( QList<PinItem *> pins, const QString &sName  ) const
+{
+    for ( int i = 0; i < pins.count(); i++ )
+	if ( pins[i]->pin()->id().compare( sName, Qt::CaseInsensitive ) == 0 )
+	{
+	    if ( pins[i]->wire() == NULL )
+		return QString();
+	    else if ( pins[i]->wire()->pin1() != pins[i] )
+		return pins[i]->wire()->pin1()->pin()->id();
+	    else
+		return pins[i]->wire()->pin2()->pin()->id();
+	}
+    return QString();
 }

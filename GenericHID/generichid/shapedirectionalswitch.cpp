@@ -36,3 +36,26 @@ bool ShapeDirectionalSwitch::Verify( QString &sErrors, const QList<class PinItem
 
     return bSuccess;
 }
+
+
+void ShapeDirectionalSwitch::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &pins, const QList<PropertyValue *> &values  ) const
+{
+    QString sDirections = GetPropertyValueBool("sDirections",values,true);
+    int nDirections = sDirections.toInt();
+
+    MakeDirectionalSwitchControl( elem, 
+				  GetPropertyValueString("Name",values,""), 
+				  GetPropertyValueUsagePage("Usage",values,1),
+				  GetPropertyValueUsage("Usage",values,1),
+				  GetPropertyValueBool("Pullup",values,true),
+				  GetPropertyValueBool("Debounce",values,true),
+				  nDirections,
+				  GetPropertyValueString("N",values,""),
+				  GetPropertyValueString("S",values,""),
+				  GetPropertyValueString("E",values,""),
+				  GetPropertyValueString("W",values,""),
+				  GetPropertyValueString("NE",values,""),
+				  GetPropertyValueString("NW",values,""),
+				  GetPropertyValueString("SE",values,""),
+				  GetPropertyValueString("SW",values,"") );
+}

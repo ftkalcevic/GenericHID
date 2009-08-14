@@ -224,9 +224,9 @@ bool ShapeItem::Verify( QString &sError ) const
     return m_pShape->Verify( sError, m_pins, m_values );
 }
 
-void ShapeItem::MakeDeviceXML( QDomElement &elem, int nCurrent ) const 
+void ShapeItem::MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sPowerPin ) const 
 {
-    m_pShape->MakeDeviceXML( elem, nCurrent, m_values );
+    m_pShape->MakeDeviceXML( elem, nCurrent, sPowerPin, m_values );
 }
 
 void ShapeItem::MakeControlsXML( QDomElement &elem ) const 

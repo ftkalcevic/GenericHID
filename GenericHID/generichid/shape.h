@@ -24,6 +24,7 @@ namespace ShapeType
 	DirSwitch,
 	Timer,
 	PWM,
+	Power,
 	None,
     };
 
@@ -53,7 +54,7 @@ public:
     int findPin( const QString &sName ) const;
     bool CheckPins( QString &sErrors, const QList<class PinItem *> &pins, const QSet<QString> &pinsToCheck ) const;
     bool CheckNotPins( QString &sErrors, const QList<class PinItem *> &pins, const QSet<QString> &notPinsToCheck ) const;
-    virtual void MakeDeviceXML( QDomElement &elem, int nCurrent, const QList<PropertyValue *> &values  ) const;
+    virtual void MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sPowerPin, const QList<PropertyValue *> &values  ) const;
     virtual void MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &pins, const QList<PropertyValue *> &values  ) const;
     PropertyValue *GetPropertyValue( const QString &sName, const QList<class PropertyValue *> &values ) const;
     bool GetPropertyValueBool( const QString &sName, const QList<PropertyValue *> &values, bool bDefault ) const;
@@ -62,11 +63,24 @@ public:
     QString GetPropertyValueString( const QString &sName, const QList<class PropertyValue *> &values, const QString &sDefault ) const;
     unsigned short GetPropertyValueUsagePage( const QString &sName, const QList<class PropertyValue *> &values, int nDefault ) const;
     unsigned short GetPropertyValueUsage( const QString &sName, const QList<class PropertyValue *> &values, int nDefault ) const;
+    QString GetPort( QList<PinItem *> pins, const QString &sName  ) const;
 
-    void MakeDirectionalSwitchControl( QDomElement &node, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bPullup, bool bPulldown, int nDirections, const QString &sNorthPort, const QString &sSouthPort, const QString &sEastPort, const QString &sWestPort, const QString &sNEPort, const QString &sNWPort, const QString &sSEPort, const QString &sSWPort ) const;
+    void MakeDirectionalSwitchControl( QDomElement &node, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bPullup, bool bDebounce, int nDirections, const QString &sNorthPort, const QString &sSouthPort, const QString &sEastPort, const QString &sWestPort, const QString &sNEPort, const QString &sNWPort, const QString &sSEPort, const QString &sSWPort ) const;
     void MakePotentiometerControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nBits, const QString &sPort ) const;
     void MakeSwitchControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bPullup, bool bDebounce, const QString &sPort ) const;
-    void MakeTricolourLEDControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, const QString &sPort1, const QString &sPort2 ) const;
+    void MakeTricolourLEDControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bSource, const QString &sPort1, const QString &sPort2 ) const;
+    void MakeDigitalEncoderControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, const QString &sPortA, const QString &sPortB ) const;
+    void MakeKeyMatrixControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsageMin, bool bPullUp, bool bDebounce, const QStringList &rows, const QStringList &cols  ) const;
+    void MakeRotarySwitchControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bPullUp, bool bDebounce, bool bEncoded, int nBits, const QStringList &outputs ) const;
+    void MakeLCDControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nRows, int nCols, bool b8Bit,
+			 const QString &sPortRS, const QString &sPortRW, const QString &sPortE, const QString &sPortD0, const QString &sPortD1, const QString &sPortD2,
+			 const QString &sPortD3, const QString &sPortD4, const QString &sPortD5, const QString &sPortD6, const QString &sPortD7, 
+			 int nAddrRow0, int nAddrRow1, int nAddrRow2, int nAddrRow3 ) const;
+    void MakeLEDControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, const QString &sPort ) const;
+    void MakeBiColourControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, const QString &sPortA, const QString &sPortB ) const;
+    void MakeRGBControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bSource, const QString &sPortR, const QString &sPortG, const QString &sPortB ) const;
+    void MakePWMControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nPeriod, int nResolution, const QString &sPort ) const;
+    void MakeTimerControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nPeriod, int nBits ) const;
 
 protected:
     QString m_sShapeName;
@@ -86,3 +100,5 @@ protected:
 };
 
 #endif
+
+

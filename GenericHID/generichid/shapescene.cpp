@@ -515,10 +515,19 @@ QString ShapeScene::MakeDeviceXML( ) const
 	nCurrent += pItem->current();
     }
 
+    // Find the optional Power Pin
+    QString sPowerPin;
+    foreach (ShapeItem *pItem, m_ShapeItems )
+	if ( pItem->shapeData()->shapeType() == ShapeType::Power )
+	{
+	    sPowerPin = pItem->shapeData()->GetPort( pItem->pins(), "G" );
+	    break;
+	}
+    
     if ( pMCU != NULL )
     {
 	// Output MCU first.
-	pMCU->MakeDeviceXML( rootElem, nCurrent );
+	pMCU->MakeDeviceXML( rootElem, nCurrent, sPowerPin );
 
 	QDomElement controls = xml.createElement("Controls");
 	rootElem.appendChild( controls );

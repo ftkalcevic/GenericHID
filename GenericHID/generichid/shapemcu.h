@@ -11,7 +11,7 @@ public:
     virtual ~ShapeMCU(void);
 
     virtual bool Verify( QString &sErrors, const QList<class PinItem *> &pins, const QList<class PropertyValue *> &values ) const;
-    virtual void MakeDeviceXML( QDomElement &elem, int nCurrent, const QList<PropertyValue *> &values  ) const;
+    virtual void MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sPowerPin, const QList<PropertyValue *> &values  ) const;
     virtual void MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &pins, const QList<PropertyValue *> &values  ) const;
 };
 

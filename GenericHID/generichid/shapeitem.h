@@ -26,7 +26,7 @@ public:
     int id() const { return m_nId; }
     void WriteXML( QDomElement &node ) const;
     bool Verify( QString &sError ) const;
-    void MakeDeviceXML( QDomElement &elem, int nCurrent ) const;
+    void MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sPowerPin ) const;
     void MakeControlsXML( QDomElement &elem ) const;
 
     static ShapeItem *CreateFromXML( ShapeCollection *pCol, Editor *, QDomElement & );

@@ -29,3 +29,34 @@ bool ShapeLCD::Verify( QString &sErrors, const QList<class PinItem *> &pins, con
 
     return bSuccess;
 }
+
+
+
+
+void ShapeLCD::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &pins, const QList<PropertyValue *> &values  ) const
+{
+    MakeLCDControl( elem, 
+		    GetPropertyValueString("Name",values,""), 
+		    GetPropertyValueUsagePage("Usage",values,1),
+		    GetPropertyValueUsage("Usage",values,1),
+		    GetPropertyValueInt("Rows",values,0),
+		    GetPropertyValueInt("Columns",values,0),
+		    GetPropertyValueInt("8 Bit",values,0),
+		    GetPort(pins, "RS"),
+		    GetPort(pins, "R/W"),
+		    GetPort(pins, "E"),
+		    GetPort(pins, "D0"),
+		    GetPort(pins, "D1"),
+		    GetPort(pins, "D2"),
+		    GetPort(pins, "D3"),
+		    GetPort(pins, "D4"),
+		    GetPort(pins, "D5"),
+		    GetPort(pins, "D6"),
+		    GetPort(pins, "D7"),
+		    GetPropertyValueInt("Row1Address", values, 0 ),
+		    GetPropertyValueInt("Row2Address", values, 64 ),
+		    GetPropertyValueInt("Row3Address", values, 20 ),
+		    GetPropertyValueInt("Row4Address", values, 84 ) );
+
+
+}

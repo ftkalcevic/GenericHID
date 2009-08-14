@@ -32,3 +32,22 @@ bool ShapeSelectorSwitch::Verify( QString &sErrors, const QList<class PinItem *>
 
     return bSuccess;
 }
+
+
+void ShapeSelectorSwitch::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &pins, const QList<PropertyValue *> &values  ) const
+{
+    int nBits = GetPropertyValueInt("Bits",values,0);
+    QStringList outputs;
+    for ( int i = 0; i < nBits; i++ )
+	outputs << GetPort( pins, QString::number( i+1 ) );
+
+    MakeRotarySwitchControl( elem, 
+			     GetPropertyValueString("Name",values,""), 
+			     GetPropertyValueUsagePage("Usage",values,1),
+			     GetPropertyValueUsage("Usage",values,1),
+			     GetPropertyValueBool("Pullup",values,true),
+			     GetPropertyValueBool("Debounce",values,true),
+			     false,
+			     nBits,
+			     outputs );
+}

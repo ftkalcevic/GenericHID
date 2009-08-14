@@ -114,7 +114,7 @@ bool ShapeMCU::Verify( QString &sErrors, const QList<class PinItem *> &pins, con
     return bSuccess;
 }
 
-void ShapeMCU::MakeDeviceXML( QDomElement &elem, int nCurrent, const QList<PropertyValue *> &values  ) const
+void ShapeMCU::MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sPowerPin, const QList<PropertyValue *> &values  ) const
 {
     QDomElement deviceNode = elem.ownerDocument().createElement( "Device" );
     elem.appendChild( deviceNode );
@@ -137,6 +137,7 @@ void ShapeMCU::MakeDeviceXML( QDomElement &elem, int nCurrent, const QList<Prope
     XMLUtility::setAttribute( configNode, "SerialDebug", GetPropertyValueBool("Serial-Debug",values,false) );
     XMLUtility::setAttribute( configNode, "HIDDebug", GetPropertyValueBool("HID-Debug",values,false) );
     XMLUtility::setAttribute( configNode, "UseLEDs", GetPropertyValueBool("Use LEDs",values,false) );
+    XMLUtility::setAttribute( configNode, "PowerPort", sPowerPin );
 }
 
 
@@ -169,18 +170,18 @@ void ShapeMCU::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> 
 	if ( sUseLEDs.compare( "LED1", Qt::CaseSensitive) == 0 )
 	{
 	    // Make an tricolour-LED output on LED 2
-	    MakeTricolourLEDControl( elem, "LED2", 8, 1000, "PD6", "PD7" );
+	    MakeTricolourLEDControl( elem, "LED2", 8, 1000, true, "PD6", "PD7" );
 	}
 	else if ( sUseLEDs.compare( "LED2", Qt::CaseSensitive) == 0 )
 	{
 	    // Make an tricolour-LED output on LED 1
-	    MakeTricolourLEDControl( elem, "LED1", 8, 1000, "PD4", "PD5" );
+	    MakeTricolourLEDControl( elem, "LED1", 8, 1000, true, "PD4", "PD5" );
 	}
 	else if ( sUseLEDs.compare( "none", Qt::CaseSensitive ) == 0 )
 	{
 	    // Make an tricolour-LED output on LED 1 and 2
-	    MakeTricolourLEDControl( elem, "LED1", 8, 1000, "PD4", "PD5" );
-	    MakeTricolourLEDControl( elem, "LED2", 8, 1000, "PD6", "PD7" );
+	    MakeTricolourLEDControl( elem, "LED1", 8, 1000, true, "PD4", "PD5" );
+	    MakeTricolourLEDControl( elem, "LED2", 8, 1000, true, "PD6", "PD7" );
 	}
     }
 }

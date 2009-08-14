@@ -519,6 +519,7 @@
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
 	    <property name="Usage" description="HID usage of the control." type="usage" default="62500:1"/>
 	    <property name="Period" description="Period of the counter in milliseconds.  Every 'Period' ms, the counter ticks.  Use a large number, eg 500, for a watch dog, or 1 for a ms counter." type="int" min="1" max="65535" default="500"/>
+	    <property name="Counter Bits" description="The size of counter variable.  1-16 bits." type="int" min="1" max="16" default="16"/>
 	</Shape>
 
 	<Shape Id="pwm" Type="pwm" Source="true" Image="resources/pwm.png" Icon="resources/pwmicon.png" width="47" height="85" maxInstances="0" name="PWM Output">
@@ -529,6 +530,11 @@
 	    <pin rect="60,70,30,20" id="PWM" type="pwm" />
 	</Shape>
 
+	<Shape Id="power" Type="power" Source="true" Image="resources/power.png" Icon="resources/powericon.png" width="47" height="85" maxInstances="1" name="Vcc Power Switch" description="Used to designate a pin on the microcontroller as a switch to enable high powered devices (devices that take the total current consumption above 100mA, but below 500mA" >
+	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	    <pin rect="55,65,20,20" id="G" type="io" />
+	</Shape>
+	
     </Shapes>
     
 </Config>
