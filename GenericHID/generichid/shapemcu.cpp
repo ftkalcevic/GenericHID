@@ -147,7 +147,8 @@ void ShapeMCU::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> 
     bool bVoltageMonitor = GetPropertyValueBool("Use Voltage Monitor",values,false);
     bool bUseJoystick = GetPropertyValueBool("Use Joystick",values,false);
     bool bUseLEDs  = GetPropertyValueBool("Use LEDs",values,false);
-    QString sUseLEDs  = GetPropertyValueBool("Use LEDs",values,false);
+    QString sUseLEDs  = GetPropertyValueEnum("Use Status LEDs",values,"");
+
 
     if ( bTempSensor )
     {
@@ -185,3 +186,5 @@ void ShapeMCU::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> 
 	}
     }
 }
+
+

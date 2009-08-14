@@ -31,6 +31,20 @@ HEADERS += dragtoolbutton.h \
     shapepropertystring.h \
     shapepropertyusage.h \
     shapescene.h \
+    shapedigitalencoder.h \
+    shapelcd.h \
+    shapeselectorswitch.h \
+    shapergb.h \
+    shapetimer.h \
+    shapepotentiometer.h \
+    shapekeymatrix.h \
+    shapeswitch.h \
+    shapebicolourled.h \
+    shapeled.h \
+    shapecodedselectorswitch.h \
+    shapedirectionalswitch.h \
+    shapepwm.h \
+    shapetricolourled.h \
     stdafx.h \
     usagepropertymanager.h \
     wireitem.h
@@ -64,6 +78,20 @@ SOURCES += dragtoolbutton.cpp \
     shapepropertystring.cpp \
     shapepropertyusage.cpp \
     shapescene.cpp \
+    shapedigitalencoder.cpp \
+    shapelcd.cpp \
+    shapeselectorswitch.cpp \
+    shapergb.cpp \
+    shapetimer.cpp \
+    shapepotentiometer.cpp \
+    shapekeymatrix.cpp \
+    shapeswitch.cpp \
+    shapebicolourled.cpp \
+    shapeled.cpp \
+    shapecodedselectorswitch.cpp \
+    shapedirectionalswitch.cpp \
+    shapepwm.cpp \
+    shapetricolourled.cpp \
     stdafx.cpp  \
     usagepropertymanager.cpp \
     wireitem.cpp
