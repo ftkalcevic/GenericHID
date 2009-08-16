@@ -18,5 +18,6 @@ void ShapeLED::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> 
 		    GetPropertyValueString("Name",values,""), 
 		    GetPropertyValueUsagePage("Usage",values,1),
 		    GetPropertyValueUsage("Usage",values,1),
-	            GetPort( pins, "In") );
+	            GetPort( pins, "In"), 
+		    GetPropertyValueBool("Source",values,true) );
 }

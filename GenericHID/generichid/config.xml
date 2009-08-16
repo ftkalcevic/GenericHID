@@ -515,7 +515,7 @@
 	    <property name="Current" description="Current usage of the switch in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
 	</Shape>
 
-	<Shape Id="timer" Type="timer" Source="true" Image="resources/timer.png" Icon="resources/timericon.png" width="47" height="85" maxInstances="0" name="Millisecond Timer">
+	<Shape Id="counter" Type="counter" Source="true" Image="resources/timer.png" Icon="resources/timericon.png" width="47" height="85" maxInstances="0" name="Millisecond Counter">
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
 	    <property name="Usage" description="HID usage of the control." type="usage" default="62500:1"/>
 	    <property name="Period" description="Period of the counter in milliseconds.  Every 'Period' ms, the counter ticks.  Use a large number, eg 500, for a watch dog, or 1 for a ms counter." type="int" min="1" max="65535" default="500"/>

@@ -13,7 +13,7 @@ ShapeTimer::~ShapeTimer(void)
 
 void ShapeTimer::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &pins, const QList<PropertyValue *> &values  ) const
 {
-    MakeTimerControl( elem, 
+    MakeCounterControl( elem, 
 		      GetPropertyValueString("Name",values,""), 
 		      GetPropertyValueUsagePage("Usage",values,1),
 		      GetPropertyValueUsage("Usage",values,1),

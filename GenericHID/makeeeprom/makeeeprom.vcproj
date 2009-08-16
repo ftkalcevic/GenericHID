@@ -18,7 +18,7 @@
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="2"
+			ConfigurationType="4"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -37,7 +37,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".\GeneratedFiles;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtXml;.\"
+				AdditionalIncludeDirectories="..\include;.\GeneratedFiles;&quot;$(QTDIR)\include&quot;;&quot;.\GeneratedFiles\$(ConfigurationName)&quot;;&quot;$(QTDIR)\include\QtCore&quot;;&quot;$(QTDIR)\include\QtXml&quot;;.\;..\utility"
 				PreprocessorDefinitions="UNICODE,WIN32,QT_THREAD_SUPPORT,QT_NO_DEBUG,NDEBUG,QT_CORE_LIB,QT_XML_LIB,MAKEEEPROM_LIB"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
@@ -56,18 +56,10 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies=" qtmain.lib QtCore4.lib QtXml4.lib"
-				OutputFile="$(OutDir)\$(ProjectName).dll"
-				AdditionalLibraryDirectories="$(QTDIR)\lib"
-				GenerateDebugInformation="false"
-				SubSystem="2"
+				Name="VCLibrarianTool"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -79,12 +71,6 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -92,7 +78,7 @@
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="2"
+			ConfigurationType="4"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -112,7 +98,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\GeneratedFiles;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtXml;.\"
+				AdditionalIncludeDirectories="..\include;.\GeneratedFiles;&quot;$(QTDIR)\include&quot;;&quot;.\GeneratedFiles\$(ConfigurationName)&quot;;&quot;$(QTDIR)\include\QtCore&quot;;&quot;$(QTDIR)\include\QtXml&quot;;.\;..\utility"
 				PreprocessorDefinitions="UNICODE,WIN32,QT_THREAD_SUPPORT,QT_CORE_LIB,QT_XML_LIB,MAKEEEPROM_LIB"
 				RuntimeLibrary="3"
 				TreatWChar_tAsBuiltInType="false"
@@ -131,18 +117,10 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies=" qtmaind.lib QtCored4.lib QtXmld4.lib"
-				OutputFile="$(OutDir)\$(ProjectName).dll"
-				AdditionalLibraryDirectories="$(QTDIR)\lib"
-				GenerateDebugInformation="true"
-				SubSystem="2"
+				Name="VCLibrarianTool"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -152,12 +130,6 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -172,6 +144,98 @@
 			Filter="cpp;cxx;c;def"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath=".\bytebuffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\configuration.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\configurationconfig.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\configurationdevice.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\configurationendpoint.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\configurationhid.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\configurationinterface.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\control.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\controlanalogencoder.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\controlbicolourled.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\controlcounter.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\controldigitalencoder.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\controldirectionalswitch.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\controlkeymatrix.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\controllcd.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\controlled.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\controlpotentiometer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\controlpwm.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\controlrgbled.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\controlrotaryswitch.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\controlswitch.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\controltricolourled.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\hidreportdescriptorbuilder.cpp"
+				>
+			</File>
 			<File
 				RelativePath=".\makeeeprom.cpp"
 				>
@@ -196,12 +260,112 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\stringtable.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\bytebuffer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\configuration.h"
+				>
+			</File>
+			<File
+				RelativePath=".\configurationconfig.h"
+				>
+			</File>
+			<File
+				RelativePath=".\configurationdevice.h"
+				>
+			</File>
+			<File
+				RelativePath=".\configurationendpoint.h"
+				>
+			</File>
+			<File
+				RelativePath=".\configurationhid.h"
+				>
+			</File>
+			<File
+				RelativePath=".\configurationinterface.h"
+				>
+			</File>
+			<File
+				RelativePath=".\control.h"
+				>
+			</File>
+			<File
+				RelativePath=".\controlanalogencoder.h"
+				>
+			</File>
+			<File
+				RelativePath=".\controlbicolourled.h"
+				>
+			</File>
+			<File
+				RelativePath=".\controlcounter.h"
+				>
+			</File>
+			<File
+				RelativePath=".\controldigitalencoder.h"
+				>
+			</File>
+			<File
+				RelativePath=".\controldirectionalswitch.h"
+				>
+			</File>
+			<File
+				RelativePath=".\controlkeymatrix.h"
+				>
+			</File>
+			<File
+				RelativePath=".\controllcd.h"
+				>
+			</File>
+			<File
+				RelativePath=".\controlled.h"
+				>
+			</File>
+			<File
+				RelativePath=".\controlpotentiometer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\controlpwm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\controlrgbled.h"
+				>
+			</File>
+			<File
+				RelativePath=".\controlrotaryswitch.h"
+				>
+			</File>
+			<File
+				RelativePath=".\controlswitch.h"
+				>
+			</File>
+			<File
+				RelativePath=".\controltricolourled.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\deviceconfig.h"
+				>
+			</File>
+			<File
+				RelativePath=".\hidreportdescriptorbuilder.h"
+				>
+			</File>
 			<File
 				RelativePath=".\makeeeprom.h"
 				>
@@ -212,6 +376,14 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\stringtable.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\types.h"
 				>
 			</File>
 		</Filter>

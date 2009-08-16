@@ -22,7 +22,7 @@ namespace ShapeType
 	BiColourLED,
 	TriColourLED,
 	DirSwitch,
-	Timer,
+	Counter,
 	PWM,
 	Power,
 	None,
@@ -76,11 +76,11 @@ public:
 			 const QString &sPortRS, const QString &sPortRW, const QString &sPortE, const QString &sPortD0, const QString &sPortD1, const QString &sPortD2,
 			 const QString &sPortD3, const QString &sPortD4, const QString &sPortD5, const QString &sPortD6, const QString &sPortD7, 
 			 int nAddrRow0, int nAddrRow1, int nAddrRow2, int nAddrRow3 ) const;
-    void MakeLEDControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, const QString &sPort ) const;
+    void MakeLEDControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, const QString &sPort, bool bSource ) const;
     void MakeBiColourControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, const QString &sPortA, const QString &sPortB ) const;
     void MakeRGBControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bSource, const QString &sPortR, const QString &sPortG, const QString &sPortB ) const;
     void MakePWMControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nPeriod, int nResolution, const QString &sPort ) const;
-    void MakeTimerControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nPeriod, int nBits ) const;
+    void MakeCounterControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nPeriod, int nBits ) const;
 
 protected:
     QString m_sShapeName;

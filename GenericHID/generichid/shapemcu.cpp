@@ -131,12 +131,12 @@ void ShapeMCU::MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sP
     XMLUtility::setAttribute( configNode, "BusPowered", GetPropertyValueEnum("Voltage",values,"") != "Self-Powered" );	    // so bus is default
     XMLUtility::setAttribute( configNode, "PowerConsumption", nCurrent );
     XMLUtility::setAttribute( configNode, "5Volts", GetPropertyValueEnum("Voltage",values,"") == "5" );
-    XMLUtility::setAttribute( configNode, "UseUSBKeyLEDs", GetPropertyValueEnum("Use Status LEDs",values,"") );
+    XMLUtility::setAttribute( configNode, "UseStatusLEDs", GetPropertyValueEnum("Use Status LEDs",values,"") );
     XMLUtility::setAttribute( configNode, "UsagePage", GetPropertyValueUsagePage("Usage",values,1) );
     XMLUtility::setAttribute( configNode, "Usage", GetPropertyValueUsage("Usage",values,1) );
     XMLUtility::setAttribute( configNode, "SerialDebug", GetPropertyValueBool("Serial-Debug",values,false) );
     XMLUtility::setAttribute( configNode, "HIDDebug", GetPropertyValueBool("HID-Debug",values,false) );
-    XMLUtility::setAttribute( configNode, "UseLEDs", GetPropertyValueBool("Use LEDs",values,false) );
+    //XMLUtility::setAttribute( configNode, "UseLEDs", GetPropertyValueBool("Use LEDs",values,false) );
     XMLUtility::setAttribute( configNode, "PowerPort", sPowerPin );
 }
 

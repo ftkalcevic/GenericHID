@@ -173,6 +173,6 @@ private:
 #define USAGEPAGE_MAGNETIC_STRIPE_READING_DEVICES   0x8E
 #define USAGEPAGE_CAMERA_CONTROL_PAGE               0x90
 #define USAGEPAGE_ARCADE_PAGE                       0x91
-#define USAGEPAGE_VENDOR_DEFINED                    0xFFFF
+#define USAGEPAGE_VENDOR_DEFINED                    0xFF00
 
 #endif

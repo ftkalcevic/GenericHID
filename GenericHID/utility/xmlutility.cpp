@@ -29,22 +29,133 @@ XMLUtility::~XMLUtility(void)
 {
 }
 
-// Wrapper function to hide the xerces complexity.
-bool XMLUtility::getAttributeString( QDomElement &pNode, const char *sName, QString &sRet )
+static void MakeConversionError( const QDomElement &node, const QString &sAttributeName, const QString &sType, QString *sError )
 {
-    QString name( sName );
-    bool bHasAttribute = pNode.hasAttribute( name );
-    if ( bHasAttribute )
+    if ( sError != NULL )
     {
-	sRet = pNode.attribute( sName );
+	QString sNode = node.nodeName();
+	*sError = QString("Failed to convert attribute '%1' in node <%2> to an %3").arg(sAttributeName,sNode,sType);
+    }
+}
+
+
+static void MakeRangeError( const QDomElement &node, const QString &sAttributeName, int n, int min, int max, QString *sError )
+{
+    if ( sError != NULL )
+    {
+	QString sNode = node.nodeName();
+	*sError = QString("The value for attribute '%1' in node <%2> is out of range.  Got %3, should be from %4 to %5").arg(sAttributeName,sNode).arg(n).arg(min).arg(max);
+    }
+}
+
+bool XMLUtility::getAttributeString( const QDomElement &node, const QString &sAttributeName, QString &s, QString *sError )
+{
+    if ( !node.hasAttribute( sAttributeName) )
+    {
+	QString sNode = node.nodeName();
+	if ( sError != NULL )
+	    *sError = QString("Failed to find attribute '%1' in node <%2>").arg(sAttributeName,sNode);
+	return false;
     }
 
-    return bHasAttribute;
+    s = node.attribute( sAttributeName );
+    return true;
 }
+
+bool XMLUtility::getAttributeUInt( const QDomElement &node, const QString &sAttributeName, unsigned int &n, unsigned int min, unsigned int max, QString *sError )
+{
+    QString sData;
+    if ( !getAttributeString( node, sAttributeName, sData, sError ) )
+	return false;
+
+    bool bOk = false;
+    n = sData.toUInt( &bOk, 0 );
+    if ( bOk )
+    {
+	if ( n >= min && n <= max )
+	    return true;
+
+	MakeRangeError( node, sAttributeName, n, min, max, sError );
+	return false;
+    }
+
+    MakeConversionError( node, sAttributeName, "unsigned int", sError );
+    return false;
+}
+
+bool XMLUtility::getAttributeUShort( const QDomElement &node, const QString &sAttributeName, unsigned short &n, unsigned short min, unsigned short max, QString *sError )
+{
+    QString sData;
+    if ( !getAttributeString( node, sAttributeName, sData, sError ) )
+	return false;
+
+    bool bOk = false;
+    n = sData.toUShort( &bOk, 0 );
+    if ( bOk )
+    {
+	if ( n >= min && n <= max )
+	    return true;
+
+	MakeRangeError( node, sAttributeName, n, min, max, sError );
+	return false;
+    }
+
+    MakeConversionError( node, sAttributeName, "unsigned short", sError );
+    return false;
+}
+
+bool XMLUtility::getAttributeByte( const QDomElement &node, const QString &sAttributeName, unsigned char &n, unsigned char min, unsigned char max, QString *sError )
+{
+    ushort nValue;
+    if ( getAttributeUShort( node, sAttributeName, nValue, min, max, sError ) )
+    {
+	n = nValue;
+	return true;
+    }
+    return false;
+}
+
+bool XMLUtility::getAttributeBool( const QDomElement &node, const QString &sAttributeName, bool &b, QString *sError )
+{
+    QString sData;
+    if ( !getAttributeString( node, sAttributeName, sData, sError ) )
+	return false;
+
+    if ( sData.compare("true", Qt::CaseInsensitive ) == 0 )
+    {
+	b = true;
+	return true;
+    }
+    else if ( sData.compare("false", Qt::CaseInsensitive ) == 0 )
+    {
+	b = false;
+	return true;
+    }
+
+    bool bOk = false;
+    b = sData.toInt( &bOk, 0 ) != 0;
+    if ( bOk )
+	return true;
+
+    MakeConversionError( node, sAttributeName, "unsigned bool", sError );
+    return false;
+}
+
+//bool XMLUtility::getAttributeString( QDomElement &pNode, const char *sName, QString &sRet )
+//{
+//    QString name( sName );
+//    bool bHasAttribute = pNode.hasAttribute( name );
+//    if ( bHasAttribute )
+//    {
+//	sRet = pNode.attribute( sName );
+//    }
+//
+//    return bHasAttribute;
+//}
 
 
 // Utility function to get a string attribute
-QString XMLUtility::getAttribute( QDomElement &pNode, const char *sName, const char *sDefault )
+QString XMLUtility::getAttribute( const QDomElement &pNode, const char *sName, const char *sDefault )
 {
     QString sRet;
     if ( !getAttributeString( pNode, sName, sRet ) )
@@ -53,20 +164,17 @@ QString XMLUtility::getAttribute( QDomElement &pNode, const char *sName, const c
 }
 
 // Utility function to get a string attribute
-QString XMLUtility::getAttribute( QDomElement &pNode, const char *sName, const QString &sDefault )
+QString XMLUtility::getAttribute( const QDomElement &pNode, const char *sName, const QString &sDefault )
 {
     QString sRet;
     if ( !getAttributeString( pNode, sName, sRet ) )
 	sRet = sDefault;
     return sRet;
 }
-
-
-
 
 
 // Utility function to get an integer attribute
-int XMLUtility::getAttribute( QDomElement &pNode, const char *sName, int nDefault )
+int XMLUtility::getAttribute( const QDomElement &pNode, const char *sName, int nDefault )
 {
     int nRet = nDefault;
     QString s;
@@ -81,7 +189,7 @@ int XMLUtility::getAttribute( QDomElement &pNode, const char *sName, int nDefaul
 }
 
 // Utility function to get a double attribute
-double XMLUtility::getAttribute( QDomElement &pNode, const char *sName, double nDefault )
+double XMLUtility::getAttribute( const QDomElement &pNode, const char *sName, double nDefault )
 {
     double nRet = nDefault;
     QString s;
@@ -96,7 +204,7 @@ double XMLUtility::getAttribute( QDomElement &pNode, const char *sName, double n
 }
 
 // Utility function to get a bool attribute.  We accept false/true, 0/not 0
-bool XMLUtility::getAttribute( QDomElement &pNode, const char *sName, bool bDefault )
+bool XMLUtility::getAttribute( const QDomElement &pNode, const char *sName, bool bDefault )
 {
     bool bRet = bDefault;
     QString s;
@@ -119,21 +227,21 @@ bool XMLUtility::getAttribute( QDomElement &pNode, const char *sName, bool bDefa
 
 
 
-QDomElement XMLUtility::firstChildElement(QDomElement &pNode, const char *sTag)
+QDomElement XMLUtility::firstChildElement(const QDomElement &pNode, const char *sTag)
 {
     return pNode.firstChildElement( sTag );
 }
 
 
 
-QDomNodeList XMLUtility::elementsByTagName(QDomElement &pNode, const char *sTag)
+QDomNodeList XMLUtility::elementsByTagName(const QDomElement &pNode, const char *sTag)
 {
     return pNode.elementsByTagName( sTag );
 }
 
 
 
-bool XMLUtility::hasAttribute(QDomElement &pNode, const char *sTag)
+bool XMLUtility::hasAttribute(const QDomElement &pNode, const char *sTag)
 {
     return pNode.hasAttribute( sTag );
 }

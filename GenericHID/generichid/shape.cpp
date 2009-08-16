@@ -46,7 +46,7 @@ namespace ShapeType
         { "bicolourled", BiColourLED },
         { "tricolourled", TriColourLED },
         { "dirswitch", DirSwitch },
-        { "timer", Timer },
+        { "counter", Counter },
         { "pwm", PWM },
         { "power", Power },
     };
@@ -122,7 +122,7 @@ Shape *Shape::CreateFromXML( QDomElement &node )
 	case ShapeType::TriColourLED:	    pShape = new ShapeTriColourLED( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
 	case ShapeType::RGB:		    pShape = new ShapeRGB( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
 	case ShapeType::PWM:		    pShape = new ShapePWM( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::Timer:		    pShape = new ShapeTimer( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
+	case ShapeType::Counter:	    pShape = new ShapeTimer( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
 	case ShapeType::Power:		    pShape = new Shape( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
 	default:
 	    assert( false );
@@ -469,7 +469,7 @@ void Shape::MakeLCDControl( QDomElement &elem, const QString &sName, unsigned sh
 }
 
 
-void Shape::MakeLEDControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, const QString &sPort ) const
+void Shape::MakeLEDControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, const QString &sPort, bool bSource ) const
 {
     QDomElement node = elem.ownerDocument().createElement( "LED" );
     elem.appendChild( node );
@@ -478,6 +478,7 @@ void Shape::MakeLEDControl( QDomElement &elem, const QString &sName, unsigned sh
     XMLUtility::setAttribute( node, "UsagePage", nUsagePage );
     XMLUtility::setAttribute( node, "Usage", nUsage );
     XMLUtility::setAttribute( node, "Port", sPort );
+    XMLUtility::setAttribute( node, "Source", bSource );
 }
 
 void Shape::MakeBiColourControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, const QString &sPortA, const QString &sPortB ) const
@@ -519,9 +520,9 @@ void Shape::MakePWMControl( QDomElement &elem, const QString &sName, unsigned sh
     XMLUtility::setAttribute( node, "Port", sPort );
 }
 
-void Shape::MakeTimerControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nPeriod, int nBits ) const
+void Shape::MakeCounterControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nPeriod, int nBits ) const
 {
-    QDomElement node = elem.ownerDocument().createElement( "Timer" );
+    QDomElement node = elem.ownerDocument().createElement( "Counter" );
     elem.appendChild( node );
 
     XMLUtility::setAttribute( node, "Name", sName );
