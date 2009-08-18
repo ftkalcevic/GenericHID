@@ -1,9 +1,12 @@
 #ifndef _DEVICECONFIG_H_
 #define _DEVICECONFIG_H_
 
+#if defined(_WIN32) || defined(_LINUX)
 #pragma pack(push,1)
 
 #include "types.h"
+
+#endif
 
 enum ControlType
 {
@@ -20,7 +23,8 @@ enum ControlType
     DirectionalSwitch = 10,
     Counter = 11,
     AnalogEncoder = 12,
-    PWMOutput = 13
+    PWMOutput = 13,
+    RGBLED = 14,
 };
 
 struct SControlHeader
@@ -162,7 +166,7 @@ struct SPWMControl
 {
     struct SControlHeader hdr;
     byte Port;
-    ushort Period;
+    unsigned short Period;
     byte Resolution;
 };
 
@@ -258,6 +262,8 @@ struct SApplicationHeader
 #define BOOTLOADER_REPORT 3
 #define MAX_HID_DATA	4096				// 4k of eeprom
 
+#if defined(_WIN32) || defined(_LINUX)
 #pragma pack(pop)
+#endif
 
 #endif
