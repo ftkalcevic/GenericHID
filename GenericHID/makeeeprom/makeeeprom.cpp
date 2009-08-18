@@ -355,14 +355,14 @@ ByteArray MakeEEPROM::makeEEPROM()
 	return ByteArray();
     }
 
-    ATLTRACE("EEPROM Data\n");
-    for (int i = 0; i < eeprom.count(); i++)
-    {
-        if (i % 16 == 0)
-	    ATLTRACE( QString("\n%1  ").arg(i,4,16,QChar('0')).toAscii().constData() );
-        ATLTRACE(QString("%1 ").arg(eeprom[i],4,16,QChar('0')).toAscii().constData());
-    }
-    ATLTRACE("\n");
+    //ATLTRACE("EEPROM Data\n");
+    //for (int i = 0; i < eeprom.count(); i++)
+    //{
+        //if (i % 16 == 0)
+	    //ATLTRACE( QString("\n%1  ").arg(i,4,16,QChar('0')).toAscii().constData() );
+        //ATLTRACE(QString("%1 ").arg(eeprom[i],4,16,QChar('0')).toAscii().constData());
+    //}
+    //ATLTRACE("\n");
 
     return eeprom;
 }

@@ -12,4 +12,5 @@ SUBDIRS += utility/utility.pro \
     dfuprogrammer/dfuprogrammer.pro \
     programmer/programmer.pro \
     clprogram/clprogram.pro \
+    makeeeprom/makeeeprom.pro \
     generichid/generichid.pro

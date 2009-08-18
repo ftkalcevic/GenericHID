@@ -4,10 +4,59 @@
 
 
 #Header files
-HEADERS += ./makeeeprom.h \
-    ./makeeeprom_global.h \
-    ./stdafx.h
+HEADERS += \
+	bytebuffer.h \
+	configurationconfig.h \
+	configurationdevice.h \
+	configurationendpoint.h \
+	configuration.h \
+	configurationhid.h \
+	configurationinterface.h \
+	controlanalogencoder.h \
+	controlbicolourled.h \
+	controlcounter.h \
+	controldigitalencoder.h \
+	controldirectionalswitch.h \
+	control.h \
+	controlkeymatrix.h \
+	controllcd.h \
+	controlled.h \
+	controlpotentiometer.h \
+	controlpwm.h \
+	controlrgbled.h \
+	controlrotaryswitch.h \
+	controlswitch.h \
+	controltricolourled.h \
+	hidreportdescriptorbuilder.h \
+	makeeeprom.h \
+	stdafx.h \
+	stringtable.h
 
 #Source files
-SOURCES += ./makeeeprom.cpp \
-    ./stdafx.cpp
+SOURCES += \
+	bytebuffer.cpp \
+	configurationconfig.cpp \
+	configuration.cpp \
+	configurationdevice.cpp \
+	configurationendpoint.cpp \
+	configurationhid.cpp \
+	configurationinterface.cpp \
+	controlanalogencoder.cpp \
+	controlbicolourled.cpp \
+	controlcounter.cpp \
+	control.cpp \
+	controldigitalencoder.cpp \
+	controldirectionalswitch.cpp \
+	controlkeymatrix.cpp \
+	controllcd.cpp \
+	controlled.cpp \
+	controlpotentiometer.cpp \
+	controlpwm.cpp \
+	controlrgbled.cpp \
+	controlrotaryswitch.cpp \
+	controlswitch.cpp \
+	controltricolourled.cpp \
+	hidreportdescriptorbuilder.cpp \
+	makeeeprom.cpp \
+	stdafx.cpp \
+	stringtable.cpp
