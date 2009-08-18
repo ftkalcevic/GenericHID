@@ -19,7 +19,8 @@ public:
     bool StartProgramming(IntelHexBuffer &memory);
     bool StartVerify(IntelHexBuffer &memory);
     bool EnterApplicationMode(ResetMode::ResetMode mode, unsigned int addr = 0);
-    IntelHexBuffer LoadHex(MemoryType::MemoryType memtype, const QString &sPath);
+    IntelHexBuffer LoadHex(MemoryType::MemoryType memtype, const QString &sBuffer);
+    IntelHexBuffer LoadHexFile(MemoryType::MemoryType memtype, const QString &sPath);
     //const QString &LastError() { return m_sLastError; }
 
     void RegisterCallback( void (*callback)( void *user_data, int percent ), void *user_data )

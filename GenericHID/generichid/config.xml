@@ -19,7 +19,7 @@
 	    <pin rect="  1,235, 31, 25" id="PE5" type="io,int" enabled="false" other="Joystick" />
 	    <pin rect=" 32,235, 31, 25" id="PE4" type="io,int" enabled="false" other="Joystick" />
 	    <pin rect="  1,260, 31, 25" id="PE3" type="io" other="UID" enabled="false"/>
-	    <pin rect=" 32,260, 31, 25" id="PE2" type="io" />
+	    <pin rect=" 32,260, 31, 25" id="PE2" type="io" other="HWB" />
 	    <pin rect="  1,285, 31, 25" id="PE1" type="io" enabled="false" other="Flash" />
 	    <pin rect=" 32,285, 31, 25" id="PE0" type="io" enabled="false" other="Flash" />
 
@@ -90,6 +90,7 @@
 	    <property name="Use Voltage Monitor" description="Use the stock AT90USBKey Voltage Monitor as an analog input." type="bool" default="false"/>
 	    <property name="Use Temperature Sensor" description="Use the stock AT90USBKey Temperature Sensor as an analog input." type="bool" default="false"/>
 	    <property name="Use Joystick" description="Use the stock AT90USBKey Joystick as a directional input." type="bool" default="false"/>
+	    <property name="Use HWB" description="Use the HWB button as an input button." type="bool" default="false"/>
 	    <property name="SerialNo" description="Required unique serial number of the device.  This must be unique between all GenericHID devices or MS-Windows will Blue-Screen if two duplicate devices are plugged in!" type="string" default="1"/>
 	</Shape>
 	<Shape Id="strippedusbkey" Type="at90usb128" Source="false" Image="resources/avrusbkey.png" Icon="resources/avrusbkeyicon.png" width="411" height="453" maxInstances="1" name="Stripped  AT90USB Key Demo board">
@@ -111,7 +112,7 @@
 	    <pin rect="  1,235, 31, 25" id="PE5" type="io,int" />
 	    <pin rect=" 32,235, 31, 25" id="PE4" type="io,int" />
 	    <pin rect="  1,260, 31, 25" id="PE3" type="io" other="UID" enabled="false"/>
-	    <pin rect=" 32,260, 31, 25" id="PE2" type="io" />
+	    <pin rect=" 32,260, 31, 25" id="PE2" type="io" other="HWB" />
 	    <pin rect="  1,285, 31, 25" id="PE1" type="io" />
 	    <pin rect=" 32,285, 31, 25" id="PE0" type="io" />
 
@@ -182,6 +183,7 @@
 	    <property name="Use Voltage Monitor" description="Use the stock AT90USBKey Voltage Monitor as an analog input." type="bool" default="false"/>
 	    <property name="Use Temperature Sensor" description="Use the stock AT90USBKey Temperature Sensor as an analog input." type="bool" default="false"/>
 	    <property name="Use Joystick" description="Use the stock AT90USBKey Joystick as a directional input." type="bool" default="false"/>
+	    <property name="Use HWB" description="Use the HWB button as an input button." type="bool" default="false"/>
 	    <property name="SerialNo" description="Required unique serial number of the device.  This must be unique between all GenericHID devices or MS-Windows will Blue-Screen if two duplicate devices are plugged in!" type="string" default="1"/>
 	</Shape>
 	
@@ -279,7 +281,7 @@
 	    <pin rect="155,152,176,178" id="PF7" type="io,adc" />
 	    <pin rect="1,214,22,240" id="PE0" type="io" />
 	    <pin rect="23,214,44,240" id="PE1" type="io" />
-	    <pin rect="45,214,66,240" id="PE2" type="io" />
+	    <pin rect="45,214,66,240" id="PE2" type="io" other="HWB" />
 	    <pin rect="67,214,88,240" id="PE3" type="io" />
 	    <pin rect="89,214,110,240" id="PE4" type="io,int" />
 	    <pin rect="111,214,132,240" id="PE5" type="io,int" />
@@ -505,10 +507,10 @@
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
 	    <property name="Usage" description="HID usage of the control." type="usage" default="1:57"/>
 	    <property name="Directions" description="The number of directions." type="enum" default="4">
-		<enum name="2 - N/S"/>
-		<enum name="2 - W/E"/>
-		<enum name="4"/>
-		<enum name="8"/>
+		<enum name="2way NS"/>
+		<enum name="2way WE"/>
+		<enum name="4way"/>
+		<enum name="8way"/>
 	    </property>
 	    <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
 	    <property name="Debounce" description="Waits for the mechanical switch stop bouncing before registering a switch closure." type="bool" default="true"/>

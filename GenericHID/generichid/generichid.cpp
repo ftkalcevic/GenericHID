@@ -2,6 +2,7 @@
 #include "generichid.h"
 #include "programdlg.h"
 #include "dragtoolbutton.h"
+#include "makeeeprom.h"
 
 const char * const CONFIGDATA_FILE = "config.xml";
 const int HELP_WINDOW_HEIGHT = 30;
@@ -391,10 +392,37 @@ void GenericHID::onMicrocontrollerProgram()
     QString s = m_pScene->MakeDeviceXML();
     if ( s.isEmpty() )
     {
+	// todo
+	return;
     }
 
     // make eeprom
+    MakeEEPROM eeprom;
+    if ( !eeprom.loadXML( s ) )
+    {
+	QMessageBox::critical( this, "Error", eeprom.lastError() );
+	return;
+    }
+
+    ByteArray buf = eeprom.makeEEPROM();
+    if ( buf.isEmpty() )
+    {
+	QMessageBox::critical( this, "Error", eeprom.lastError() );
+	return;
+    }
+
+    QString sIntelHex = MakeEEPROM::MakeIntelHexFormat( buf );
+
     // program
+    ProgramDlg dlg(this);
+    dlg.setEEPROM( sIntelHex );
+#ifdef _WIN32
+	dlg.setFirmwareFile( "D:\\Projects\\GenericHID\\MyUSB\\Demos\\Joystick\\Joystick.hex");
+#else
+	dlg.setFirmwareFile( "/home/frankt/src/Joystick.hex");
+#endif	
+
+    dlg.exec();
 }
 
 void GenericHID::onMicrocontrollerExport()
@@ -402,7 +430,46 @@ void GenericHID::onMicrocontrollerExport()
     RetreiveProperties();
 
     // Verify
+    QString sError;
+    if ( !m_pScene->VerifyShapes( sError ) )
+    {
+	QMessageBox msg(QMessageBox::Critical, "Errors Found", "Errors were found processing the device configuration", QMessageBox::Ok, this );
+	msg.setDetailedText( sError );
+	msg.exec();
+	return;
+    }
     // make xml
+    QString s = m_pScene->MakeDeviceXML();
+    if ( s.isEmpty() )
+    {
+	// todo
+	return;
+    }
+
+    // Save
+    for (;;)
+    {
+	QString sFilename = QFileDialog::getSaveFileName( this, "Save microcontroller configuration description", m_sLastExportFile, QString("Microcontroller Config Description file (*.mcd);;All files (*)") );
+	if ( sFilename.isEmpty() || sFilename.isNull() )
+	    return;
+
+	QFileInfo fi(sFilename);
+	if ( fi.suffix().isEmpty() )
+	    sFilename.append( ".mcd" );
+
+	QFile file(sFilename.toLatin1().constData());
+	if ( !file.open( QIODevice::WriteOnly | QIODevice::Truncate ) )
+	{
+	    QMessageBox::critical( this, "Can't save", QString("Failed to save file '%1':%2").arg(sFilename).arg(file.errorString()) );
+	}
+	else
+	{
+	    m_sLastExportFile = sFilename;
+	    file.write( s.toLatin1() );
+	    file.close();
+	    break;
+	}
+    }
 }
 
 void GenericHID::onMicrocontrollerImportAndProgram()
@@ -410,8 +477,6 @@ void GenericHID::onMicrocontrollerImportAndProgram()
     // load xml
     // make eeprom
     // program
-    ProgramDlg dlg(this);
-    dlg.exec();
 }
 
 // A shape has been dragged from the tool bar and dropped on the scene's view.
@@ -535,6 +600,10 @@ void GenericHID::ProcessCommandline()
 
 todo
     - allow multiple wires on an mcu pin (eg LCD, pwm
+    - HWB as input button
+    HWB pin has pullup
+    - test all controls 
+    - test panel
  */
 
 

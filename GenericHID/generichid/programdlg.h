@@ -21,6 +21,8 @@ class ProgramDlg : public QDialog
 public:
     ProgramDlg(QWidget *parent = 0);
     ~ProgramDlg();
+    void setEEPROM( const QString &sIntelFormat );
+    void setFirmwareFile( const QString &sFilename );
 
 public slots:
     void updateDeviceStatus();
@@ -38,6 +40,8 @@ private:
     QTimer m_timer;
     bool m_bMultipleWarning;
     ProgrammingStatusDlg *m_pStatusDlg;
+    QString m_sEeprom;
+    QString m_sFirmwareFile;
 
     void SetMode( bool bDevice, bool bBootloader, bool bHID);
     bool FindDevices( int &nGenericHIDs, int &nAt90DFUs );

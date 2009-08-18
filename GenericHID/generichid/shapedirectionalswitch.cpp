@@ -19,9 +19,9 @@ bool ShapeDirectionalSwitch::Verify( QString &sErrors, const QList<class PinItem
 
     // We have the Use LEDs property.  Make sure there is nothing on the LED pins, or the Use Status LEDs properties clash
     QString sEnum = GetPropertyValueEnum( "Directions", values, "" );
-    if ( sEnum == "2 - N/S" )
+    if ( sEnum == "2 N/S" )
 	pinsToCheck << "N" << "S";
-    else if ( sEnum == "2 - W/E" )
+    else if ( sEnum == "2 W/E" )
 	pinsToCheck << "W" << "E";
     else if ( sEnum == "4" )
 	pinsToCheck << "N" << "S" << "W" << "E";
@@ -41,7 +41,6 @@ bool ShapeDirectionalSwitch::Verify( QString &sErrors, const QList<class PinItem
 void ShapeDirectionalSwitch::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &pins, const QList<PropertyValue *> &values  ) const
 {
     QString sDirections = GetPropertyValueEnum("sDirections",values,"");
-    int nDirections = sDirections.toInt();
 
     MakeDirectionalSwitchControl( elem, 
 				  GetPropertyValueString("Name",values,""), 
@@ -49,7 +48,7 @@ void ShapeDirectionalSwitch::MakeControlsXML( QDomElement &elem, const QList<cla
 				  GetPropertyValueUsage("Usage",values,1),
 				  GetPropertyValueBool("Pullup",values,true),
 				  GetPropertyValueBool("Debounce",values,true),
-				  nDirections,
+				  sDirections,
 				  GetPropertyValueString("N",values,""),
 				  GetPropertyValueString("S",values,""),
 				  GetPropertyValueString("E",values,""),

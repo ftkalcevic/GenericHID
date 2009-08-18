@@ -35,6 +35,9 @@
 #endif
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
+#include <QFile>
+#include <QBuffer>
+
 #include "inttypes.h"
 #include <stdlib.h>
 #include <string.h>
@@ -150,8 +153,24 @@ static void intel_process_address( struct intel_record *record )
     }
 }
 
+static char *file_gets( char *buffer, int nLen, QIODevice &file)
+{
+    if ( file.read( buffer, nLen - 1 ) != nLen - 1 )
+	return NULL;
+    buffer[nLen-1] = 0;
+    return buffer;
+}
 
-static int intel_read_data( FILE *fp, struct intel_record *record )
+int file_getc( QIODevice &file )
+{
+    char c;
+    if ( file.getChar( &c ) )
+	return c;
+    else
+	return -1;
+}
+
+static int intel_read_data( QIODevice &file, struct intel_record *record )
 {
     int c;
     int status;
@@ -164,7 +183,7 @@ static int intel_read_data( FILE *fp, struct intel_record *record )
      * aaaa - the address in memory
      *   rr - record type
      */
-    if( NULL == fgets(buffer, 10, fp) ) 
+    if( file_gets(buffer, 10,file) == NULL ) 
 	return -1;
     status = sscanf( buffer, ":%02x%02x%02x%02x", &(record->count), &addr_upper, &addr_lower, &(record->type) );
 
@@ -178,7 +197,7 @@ static int intel_read_data( FILE *fp, struct intel_record *record )
     {
         int data = 0;
 
-        if( NULL == fgets(buffer, 3, fp) ) 
+        if( NULL == file_gets(buffer, 3, file) ) 
 	    return -3;
         if( 1 != sscanf(buffer, "%02x", &data) ) 
 	    return -4;
@@ -187,15 +206,15 @@ static int intel_read_data( FILE *fp, struct intel_record *record )
     }
 
     /* Read the checksum */
-    if( NULL == fgets(buffer, 3, fp) ) 
+    if( NULL == file_gets(buffer, 3, file) ) 
 	return -5;
     if( 1 != sscanf(buffer, "%02x", &(record->checksum)) ) 
 	return -6;
 
     /* Chomp the [\r]\n */
-    c = fgetc( fp );
+    c = file_getc( file );
     if( '\r' == c ) {
-        c = fgetc( fp );
+        c = file_getc( file );
     }
     if( '\n' != c ) {
         return -7;
@@ -205,9 +224,9 @@ static int intel_read_data( FILE *fp, struct intel_record *record )
 }
 
 
-static int intel_parse_line( FILE *fp, struct intel_record *record )
+static int intel_parse_line( QIODevice &file, struct intel_record *record )
 {
-    if( 0 != intel_read_data(fp, record) )
+    if( 0 != intel_read_data(file, record) )
         return -1;
 
     switch( intel_validate_line(record) ) {
@@ -225,18 +244,14 @@ static int intel_parse_line( FILE *fp, struct intel_record *record )
     return 0;
 }
 
-QVector<int16_t> intel_hex_to_buffer( const char *filename, unsigned int max_size, unsigned int *usage )
+QVector<int16_t> intel_hex_file_to_buffer( const char *filename, unsigned int max_size, unsigned int *usage )
 {
-    QVector<int16_t> memory;
     FILE *fp = NULL;
-    int failure = 1;
-    struct intel_record record;
-    unsigned int address = 0;
-    unsigned int address_offset = 0;
+    QFile file;
 
-    if( (NULL == filename) || (0 >= max_size)  ) 
+    if( (NULL == filename) ) 
     {
-        ERROR_MSG( "Invalid filename or max_size.\n" );
+        ERROR_MSG( "Invalid filename.\n" );
         goto error;
     }
 
@@ -246,7 +261,11 @@ QVector<int16_t> intel_hex_to_buffer( const char *filename, unsigned int max_siz
     } 
     else 
     {
+#ifdef _WIN32
+        fp = fopen( filename, "rb" );
+#else
         fp = fopen( filename, "r" );
+#endif
         if( NULL == fp ) 
 	{
             ERROR_MSG( "Error opening the file.\n" );
@@ -254,12 +273,54 @@ QVector<int16_t> intel_hex_to_buffer( const char *filename, unsigned int max_siz
         }
     }
 
+    if ( !file.open( fp, QIODevice::ReadOnly ) )
+    {
+        ERROR_MSG( QString("Error opening the file - %1.\n").arg(file.error()) );
+        goto error;
+    }
+    return intel_hex_to_buffer( file, max_size, usage );
+
+error:
+
+    if( NULL != fp ) 
+    {
+	file.close();
+        fclose( fp );
+        fp = NULL;
+    }
+
+    return QVector<int16_t>();
+}
+
+QVector<int16_t> intel_hex_string_to_buffer( const QString &s, unsigned int max_size, unsigned int *usage )
+{
+    QByteArray b = s.toAscii();
+    QBuffer buffer( &b );
+    buffer.open(QIODevice::ReadOnly );
+    return intel_hex_to_buffer( buffer, max_size, usage );
+}
+
+
+QVector<int16_t> intel_hex_to_buffer( QIODevice &file, unsigned int max_size, unsigned int *usage )
+{
+    QVector<int16_t> memory;
+    int failure = 1;
+    struct intel_record record;
+    unsigned int address = 0;
+    unsigned int address_offset = 0;
+
+    if( 0 >= max_size ) 
+    {
+        ERROR_MSG( "Invalid max_size.\n" );
+        goto error;
+    }
+
     memory.fill( -1, max_size );
 
     *usage = 0;
     do 
     {
-        if( 0 != intel_parse_line(fp, &record) ) 
+        if( 0 != intel_parse_line(file, &record) ) 
 	{
             ERROR_MSG( "Error parsing the line.\n" );
             goto error;
@@ -302,11 +363,6 @@ QVector<int16_t> intel_hex_to_buffer( const char *filename, unsigned int max_siz
     failure = 0;
 
 error:
-
-    if( NULL != fp ) {
-        fclose( fp );
-        fp = NULL;
-    }
 
     if ( failure != 0 )
 	memory.clear();

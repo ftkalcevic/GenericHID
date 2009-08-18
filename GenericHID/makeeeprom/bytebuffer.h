@@ -1,6 +1,7 @@
 #ifndef _BYTEBUFFER_H_
 #define _BYTEBUFFER_H_
 
+#include "types.h"
 
 typedef QVector<byte> ByteArray;
 

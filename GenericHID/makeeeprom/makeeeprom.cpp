@@ -16,13 +16,13 @@ const ushort EndpointOutSize = 64;
 #define MAX(a,b)	((a) > (b) ? (a) : (b))
 
 
-makeeeprom::makeeeprom()
+MakeEEPROM::MakeEEPROM()
 {
     m_DeviceConfig = NULL;
     m_ConfigConfig = NULL;
 }
 
-makeeeprom::~makeeeprom()
+MakeEEPROM::~MakeEEPROM()
 {
     if ( m_DeviceConfig != NULL )
 	delete m_DeviceConfig;
@@ -33,7 +33,7 @@ makeeeprom::~makeeeprom()
     m_Controls.clear();
 }
 
-bool makeeeprom::loadFile( const QString &sFile )
+bool MakeEEPROM::loadFile( const QString &sFile )
 {
     QDomDocument doc("GenericHIDDevice");
 
@@ -54,16 +54,19 @@ bool makeeeprom::loadFile( const QString &sFile )
     return loadXML( doc );
 }
 
-bool makeeeprom::loadXML( const QString &sXML )
+bool MakeEEPROM::loadXML( const QString &sXML )
 {
     QDomDocument doc("GenericHIDDevice");
-    if (!doc.setContent(sXML, false, &m_sLastError)) 
+    int nLine, nCol;
+    if (!doc.setContent(sXML, false, &m_sLastError, &nLine, &nCol)) 
+    {
 	return false;
+    }
 
     return loadXML( doc );
 }
 
-bool makeeeprom::loadXML( const QDomDocument &doc )
+bool MakeEEPROM::loadXML( const QDomDocument &doc )
 {
     QDomElement rootElement = doc.firstChildElement( "GenericHIDDevice" );
     if ( rootElement.isNull() )
@@ -106,7 +109,7 @@ bool makeeeprom::loadXML( const QDomDocument &doc )
     return true;
 }
 
-ByteArray makeeeprom::makeEEPROM()
+ByteArray MakeEEPROM::makeEEPROM()
 {
     StringTable table;
 
@@ -172,7 +175,7 @@ ByteArray makeeeprom::makeEEPROM()
     }
 
     byte nLength = (byte)((nBits + 7) / 8);
-    appHeader.ReportLength[1] = nLength;   // report length (id=1)
+    appHeader.ReportLength[1-1] = nLength;   // report length (id=1)
     nMaxInReportLen = MAX(nMaxInReportLen, nLength );
 
 
@@ -202,8 +205,8 @@ ByteArray makeeeprom::makeEEPROM()
 	HIDReport.Output(EDataType::Constant, EVarType::Variable, ERelType::Absolute, EWrapType::NoWrap, ELinearType::Linear, EPreferedType::NoPreferred, ENullPositionType::NoNullPosition, EVolatileType::NonVolatile, EBufferType::BitField);
     }
     nLength = (byte)((nBits + 7) / 8);
-    appHeader.ReportLength[2] = nLength;   // report length (id=2)
-    appHeader.ReportLength[3] = (byte)4;   // report length (id=3)
+    appHeader.ReportLength[2-1] = nLength;   // report length (id=2)
+    appHeader.ReportLength[3-1] = (byte)4;   // report length (id=3)
 
     nMaxOutReportLen = MAX(nMaxOutReportLen,nLength);
     nMaxOutReportLen = MAX(nMaxOutReportLen,4);
@@ -221,7 +224,7 @@ ByteArray makeeeprom::makeEEPROM()
             ApplicationData.AddBuffer(appData);
 
             nLength = (byte)((nBits + 7) / 8);
-            appHeader.ReportLength[nReportId] = nLength;       // report length (id=4+)
+            appHeader.ReportLength[nReportId-1] = nLength;       // report length (id=4+)
 
             nMaxOutReportLen = MAX( nMaxOutReportLen, nLength );
             nReportId++;
@@ -356,10 +359,51 @@ ByteArray makeeeprom::makeEEPROM()
     for (int i = 0; i < eeprom.count(); i++)
     {
         if (i % 16 == 0)
-	    ATLTRACE( QString("\n%1  ").arg(i,16,4,QChar('0')).toAscii().constData() );
-        ATLTRACE(QString("%1 ").arg(eeprom[i],16,4,QChar('0')).toAscii().constData());
+	    ATLTRACE( QString("\n%1  ").arg(i,4,16,QChar('0')).toAscii().constData() );
+        ATLTRACE(QString("%1 ").arg(eeprom[i],4,16,QChar('0')).toAscii().constData());
     }
     ATLTRACE("\n");
 
     return eeprom;
+}
+
+
+
+static QString HexStr(byte b)
+{
+    return QString("%1").arg(b,2,16,QChar('0'));
+}
+static QString HexStr(int b)
+{
+    return QString("%1").arg(b,4,16,QChar('0'));
+}
+
+QString MakeEEPROM::MakeIntelHexFormat( ByteArray &eeprom )
+{
+    QString sb;
+
+    for (int i = 0; i < eeprom.count(); i += 16)
+    {
+        int nLen = eeprom.count() - i;
+        if (nLen > 16)
+            nLen = 16;
+
+        byte nChecksum = 0;
+        QString sOutput = ":";               // record mark
+        sOutput += HexStr((byte)nLen);      // load reclen
+        nChecksum += (byte)nLen;
+        sOutput += HexStr(i);               // offset
+        nChecksum += (byte)(i & 0xff);
+        nChecksum += (byte)((i>>8) & 0xff);
+        sOutput += "00";                    // rectype 00 - data
+        for (int j = 0; j < nLen; j++)
+        {
+            sOutput += HexStr(eeprom[i + j]);   // data
+            nChecksum += eeprom[i + j];
+        }
+        sOutput += HexStr((byte)(1 + ~nChecksum));                        // checksum
+        sb += sOutput + "\n";
+    }
+    sb += ":00000001FF\n";      // EOF
+    return sb;
 }

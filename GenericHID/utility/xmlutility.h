@@ -25,7 +25,8 @@ public:
     XMLUtility(void);
     ~XMLUtility(void);
 
-    static void setAttribute( QDomElement &pNode, const char *sName, const QString sValue );
+    static void setAttribute( QDomElement &pNode, const char *sName, const QString &sValue );
+    static void setAttribute( QDomElement &pNode, const char *sName, const char *sValue );
     static void setAttribute( QDomElement &pNode, const char *sName, int nValue );
     static void setAttribute( QDomElement &pNode, const char *sName, double nValue );
     static void setAttribute( QDomElement &pNode, const char *sName, bool bValue );

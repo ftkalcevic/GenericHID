@@ -237,12 +237,7 @@ void ProgramDlg::onProgram()
 	connect( &pProgrammer, SIGNAL(onUpdateStatus(int)), this, SLOT(onUpdateStatus(int)) );
 	connect( &pProgrammer, SIGNAL(onCompletionStatus(int)), this, SLOT(onCompletionStatus(int)) );
 
-#ifdef _WIN32
-	pProgrammer.StartProgram( "D:\\Projects\\Gecko\\MyUSB\\Demos\\Joystick\\eeprom.hex", "D:\\Projects\\Gecko\\MyUSB\\Demos\\Joystick\\Joystick.hex");
-#else
-	pProgrammer.StartProgram( "/home/frankt/src/eeprom.hex", "/home/frankt/src/Joystick.hex");
-#endif	
-
+	pProgrammer.StartProgram( m_sEeprom, m_sFirmwareFile );
 	pStatusDlg.exec();
 
 	disconnect( &pProgrammer, 0, 0, 0 );
@@ -293,3 +288,15 @@ void ProgramDlg::onCompletionStatus( int nPercentComplete )
     if ( m_pStatusDlg != NULL )
 	m_pStatusDlg->setPercentage( nPercentComplete );
 }
+
+
+void ProgramDlg::setEEPROM( const QString &sIntelFormat )
+{
+    m_sEeprom = sIntelFormat;
+}
+
+void ProgramDlg::setFirmwareFile( const QString &sFilename )
+{
+    m_sFirmwareFile = sFilename;
+}
+

@@ -20,7 +20,7 @@ bool ConfigurationConfig::Load( const QDomElement &elem, QString *sError )
 	return false;
     if ( !XMLUtility::getAttributeUShort( elem, "PowerConsumption", m_nPowerConsumption, 0, 500, sError ) )
 	return false;
-    if ( !XMLUtility::getAttributeBool( elem, "5Volts", m_b5Volts, sError ) )
+    if ( !XMLUtility::getAttributeBool( elem, "is5Volts", m_b5Volts, sError ) )
 	return false;
     QString s;
     if ( !XMLUtility::getAttributeString( elem, "UseStatusLEDs", s, sError ) )

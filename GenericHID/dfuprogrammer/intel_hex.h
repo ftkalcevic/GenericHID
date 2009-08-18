@@ -23,6 +23,7 @@
 
 #include "inttypes.h"
 #include <QVector>
+#include <QIODevice>
 
 /**
  *  Used to read in a file in intel hex format and return a chunck of
@@ -36,6 +37,8 @@
  *          values, and anything else indicates an unused memory location,
  *          NULL on anything other than a success
  */
-QVector<int16_t> intel_hex_to_buffer( const char *filename, unsigned int max_size, unsigned int *usage );
+QVector<int16_t> intel_hex_file_to_buffer( const char *filename, unsigned int max_size, unsigned int *usage );
+QVector<int16_t> intel_hex_to_buffer( QIODevice &file, unsigned int max_size, unsigned int *usage );
+QVector<int16_t> intel_hex_string_to_buffer( const QString &s, unsigned int max_size, unsigned int *usage );
 
 #endif

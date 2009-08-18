@@ -3,17 +3,18 @@
 
 #include "bytebuffer.h"
 
-class makeeeprom
+class MakeEEPROM
 {
 public:
-    makeeeprom();
-    ~makeeeprom();
+    MakeEEPROM();
+    ~MakeEEPROM();
 
     bool loadFile( const QString &sFile );
     bool loadXML( const QString &sXML );
     bool loadXML( const QDomDocument &doc );
     ByteArray makeEEPROM();
     const QString &lastError() const { return m_sLastError; }
+    static QString MakeIntelHexFormat( ByteArray &eeprom );
 
 private:
     QString m_sLastError;

@@ -247,10 +247,14 @@ bool XMLUtility::hasAttribute(const QDomElement &pNode, const char *sTag)
 }
 
 
-void XMLUtility::setAttribute( QDomElement &pNode, const char *sName, const QString sValue )
+void XMLUtility::setAttribute( QDomElement &pNode, const char *sName, const QString &sValue )
 {
     pNode.setAttribute( sName, sValue );
+}
 
+void XMLUtility::setAttribute( QDomElement &pNode, const char *sName, const char *sValue )
+{
+    pNode.setAttribute( sName, sValue );
 }
 
 void XMLUtility::setAttribute( QDomElement &pNode, const char *sName, int nValue )

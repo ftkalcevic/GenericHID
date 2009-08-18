@@ -33,9 +33,9 @@ bool ControlDirectionalSwitch::Load( const QDomElement &elem, QString *sError )
     QString sDir;
     if ( !XMLUtility::getAttributeString( elem, "Directions", sDir, sError ) )
 	return false;
-    if ( sDir.compare( "NS", Qt::CaseInsensitive ) == 0 )
+    if ( sDir.compare( "2way NS", Qt::CaseInsensitive ) == 0 )
 	m_eType = NS;
-    else if ( sDir.compare( "WE", Qt::CaseInsensitive ) == 0 )
+    else if ( sDir.compare( "2way WE", Qt::CaseInsensitive ) == 0 )
 	m_eType = WE;
     else if ( sDir.compare( "4way", Qt::CaseInsensitive ) == 0 )
 	m_eType = _4way;
@@ -158,27 +158,27 @@ ByteArray ControlDirectionalSwitch::GetControlConfig( byte nReportId ) const
     {
 	case NS:
 	    config.Type = DS_NS;
-	    config.Ports = 2;
+	    config.Ports = nPorts;
 	    config.Switches[0].Port = m_nPortN;
 	    config.Switches[1].Port = m_nPortS;
 	    break;
 	case WE:
 	    config.Type = DS_WE;
-	    config.Ports = 2;
+	    config.Ports = nPorts;
 	    config.Switches[0].Port = m_nPortW;
 	    config.Switches[1].Port = m_nPortE;
 	    break;
-	case _8way:
+	case _4way:
 	    config.Type = DS_4way;
-	    config.Ports = 4;
+	    config.Ports = nPorts;
 	    config.Switches[DIRSW_PORTN].Port = m_nPortN;
 	    config.Switches[DIRSW_PORTS].Port = m_nPortS;
 	    config.Switches[DIRSW_PORTE].Port = m_nPortE;
 	    config.Switches[DIRSW_PORTW].Port = m_nPortW;
 	    break;
-	case _4way:
+	case _8way:
 	    config.Type = DS_8way;
-	    config.Ports = 8;
+	    config.Ports = nPorts;
 	    config.Switches[DIRSW_PORTN].Port = m_nPortN;
 	    config.Switches[DIRSW_PORTS].Port = m_nPortS;
 	    config.Switches[DIRSW_PORTE].Port = m_nPortE;

@@ -319,7 +319,7 @@ void Shape::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &pi
 }
 
 
-void Shape::MakeDirectionalSwitchControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bPullup, bool bDebounce, int nDirections, const QString &sNorthPort, const QString &sSouthPort, const QString &sEastPort, const QString &sWestPort, const QString &sNEPort, const QString &sNWPort, const QString &sSEPort, const QString &sSWPort ) const
+void Shape::MakeDirectionalSwitchControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bPullup, bool bDebounce, const QString &sDirections, const QString &sNorthPort, const QString &sSouthPort, const QString &sEastPort, const QString &sWestPort, const QString &sNEPort, const QString &sNWPort, const QString &sSEPort, const QString &sSWPort ) const
 {
     QDomElement node = elem.ownerDocument().createElement( "DirectionalSwitch" );
     elem.appendChild( node );
@@ -329,7 +329,7 @@ void Shape::MakeDirectionalSwitchControl( QDomElement &elem, const QString &sNam
     XMLUtility::setAttribute( node, "Usage", nUsage );
     XMLUtility::setAttribute( node, "Pullup", bPullup );
     XMLUtility::setAttribute( node, "Debounce", bDebounce );
-    XMLUtility::setAttribute( node, "Directons", nDirections );
+    XMLUtility::setAttribute( node, "Directions", sDirections );
     if ( !sNorthPort.isEmpty() ) XMLUtility::setAttribute( node, "PortN", sNorthPort );
     if ( !sSouthPort.isEmpty() ) XMLUtility::setAttribute( node, "PortS", sSouthPort );
     if ( !sEastPort.isEmpty() ) XMLUtility::setAttribute( node, "PortE", sEastPort );

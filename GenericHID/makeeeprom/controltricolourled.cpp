@@ -51,7 +51,7 @@ ByteArray ControlTriColourLED::GetControlConfig( byte nReportId ) const
     struct STricolourLEDControl config;
     memset( &config, 0, sizeof(config) );
 
-    config.hdr.Type = BicolourLED;
+    config.hdr.Type = TricolourLED;
     config.hdr.ReportId = nReportId;
     config.hdr.Length = sizeof(config);
     config.PortA = (byte)m_nPortA;

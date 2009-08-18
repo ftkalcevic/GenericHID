@@ -45,16 +45,16 @@ bool Programmer::Terminate()
     return true;
 }
 
-bool Programmer::Program( const QString &sEepromPath, const QString &sFirmwarePath )
+bool Programmer::Program( const QString &sEeprom, const QString &sFirmwarePath )
 {
     if ( m_programmer == NULL )
 	return false;
 
-    IntelHexBuffer eeprom = m_programmer->LoadHex(MemoryType::EEPROM, sEepromPath);
+    IntelHexBuffer eeprom = m_programmer->LoadHex(MemoryType::EEPROM, sEeprom);
     if ( eeprom.isEmpty() )
 	return false;
 
-    IntelHexBuffer firmware = m_programmer->LoadHex(MemoryType::FLASH, sFirmwarePath);
+    IntelHexBuffer firmware = m_programmer->LoadHexFile(MemoryType::FLASH, sFirmwarePath);
     if ( firmware.isEmpty() )
 	return false;
 

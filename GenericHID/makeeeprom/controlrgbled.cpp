@@ -53,7 +53,7 @@ ByteArray ControlRGBLED::GetControlConfig( byte nReportId ) const
     struct SRGBLEDControl config;
     memset( &config, 0, sizeof(config) );
 
-    config.hdr.Type = BicolourLED;
+    config.hdr.Type = RGBLED;
     config.hdr.ReportId = nReportId;
     config.hdr.Length = sizeof(config);
     config.PortR = (byte)m_nPortR;

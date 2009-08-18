@@ -21,35 +21,42 @@ void HIDReportDescriptorBuilder::AddValue(byte tag)
 void HIDReportDescriptorBuilder::AddValue(byte tag, int n)
 {
     // only send the number of bytes we need to
-    if ((n & 0xFF) == n)
+    int8_t n1 = (int8_t)n;
+    short n2 = (short)n;
+
+    if (n1 == n)
     {
         AddByte((byte)(tag | 1));   // 1 byte
-        AddByte((byte)n);
+        AddByte((byte)n1);
     }
-    else if ((n&0xFFFF) == n)
+    else if (n2 == n)
     {
         AddByte((byte)(tag | 2));   // 2 bytes
-        AddShort((ushort)n);
+        AddShort((ushort)n2);
     }
     else
     {
         AddByte((byte)(tag | 3));   // 4 bytes
         AddArray((byte *)&n,sizeof(n));
     }
+
 }
 
 void HIDReportDescriptorBuilder::AddValue(byte tag, uint n)
 {
     // only send the number of we need to
-    if ((n&0xFF) == n)
+    byte n1 = (byte)n;
+    ushort n2 = (ushort)n;
+
+    if (n1 == n)
     {
         AddByte((byte)(tag | 1));   // 1 byte
-        AddByte((byte)n);
+        AddByte((byte)n1);
     }
-    else if ((n&&0xFFFF) == n)
+    else if (n2 == n)
     {
         AddByte((byte)(tag | 2));   // 2 bytes
-        AddShort((ushort)n);
+        AddShort((ushort)n2);
     }
     else
     {

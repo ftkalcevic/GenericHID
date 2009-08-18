@@ -49,6 +49,7 @@ private:
 
     QString m_sLastFile;
     QString m_sLastFileContents;
+    QString m_sLastExportFile;
     Ui::GenericHIDClass ui;
     ShapeCollection *m_pShapes;
     ShapeScene *m_pScene;

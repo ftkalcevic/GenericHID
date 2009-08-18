@@ -50,7 +50,7 @@ ByteArray ControlPWM::GetControlConfig( byte nReportId ) const
     struct SPWMControl config;
     memset( &config, 0, sizeof(config) );
 
-    config.hdr.Type = BicolourLED;
+    config.hdr.Type = PWMOutput;
     config.hdr.ReportId = nReportId;
     config.hdr.Length = sizeof(config);
     config.Port = (byte)m_nPort;

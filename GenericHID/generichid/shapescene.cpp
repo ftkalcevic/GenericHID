@@ -427,6 +427,13 @@ bool ShapeScene::loadXML( QDomDocument &doc, ShapeCollection *pCol )
     {
 	QDomElement item = shapeNodes.item(i).toElement();
 	ShapeItem *pItem = ShapeItem::CreateFromXML( pCol, m_pEditor, item );
+	assert( pItem != NULL );
+	if ( pItem == NULL )
+	{
+	    // LOG
+	    return false;
+	}
+
 	m_ShapeItems.append( pItem );
 	addItem( pItem );
 	connect( pItem, SIGNAL(itemChange( QGraphicsItem *, QGraphicsItem::GraphicsItemChange, const QVariant & )), this, SLOT(onViewItemChanged( QGraphicsItem *, QGraphicsItem::GraphicsItemChange, const QVariant &)) );

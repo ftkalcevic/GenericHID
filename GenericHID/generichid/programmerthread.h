@@ -11,7 +11,7 @@ class ProgrammerThread : public QThread, public Programmer
 public:
     ProgrammerThread(QObject *parent);
     ~ProgrammerThread();
-    bool StartProgram( const QString &sEepromPath, const QString &sFirmwarePath );
+    bool StartProgram( const QString &sEeprom, const QString &sFirmwarePath );
 
 signals:
     void onUpdateStatus( int n );
@@ -21,7 +21,7 @@ private:
     virtual void UpdateStatus( ProgramState::ProgramState status );
     virtual void CompletionStatus( int nPercentComplete );
     virtual void run();
-    QString m_sEepromPath;
+    QString m_sEeprom;
     QString m_sFirmwarePath;
 };
 

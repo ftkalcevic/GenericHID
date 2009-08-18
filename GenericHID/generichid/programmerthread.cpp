@@ -23,9 +23,9 @@ void ProgrammerThread::CompletionStatus( int nPercentComplete )
 }
 
 
-bool ProgrammerThread::StartProgram( const QString &sEepromPath, const QString &sFirmwarePath )
+bool ProgrammerThread::StartProgram( const QString &sEeprom, const QString &sFirmwarePath )
 {
-    m_sEepromPath = sEepromPath;
+    m_sEeprom = sEeprom;
     m_sFirmwarePath = sFirmwarePath;
 
     start();
@@ -35,5 +35,6 @@ bool ProgrammerThread::StartProgram( const QString &sEepromPath, const QString &
 
 void ProgrammerThread::run()
 {
-    Programmer::Program( m_sEepromPath, m_sFirmwarePath );
+    Programmer::Program( m_sEeprom, m_sFirmwarePath );
+    UpdateStatus( ProgramState::Done );
 }

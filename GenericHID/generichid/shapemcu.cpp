@@ -2,6 +2,7 @@
 #include "shapemcu.h"
 #include "shapeproperties.h"
 #include "shapepropertybool.h"
+#include "usages.h"
 
 
 ShapeMCU::ShapeMCU(QDomElement &node, const QString &sShapeName, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, int nImageWidth, int nImageHeight, const QString &sIconFile, int nMaxInstances, const QString &sDescription)
@@ -130,13 +131,12 @@ void ShapeMCU::MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sP
     
     XMLUtility::setAttribute( configNode, "BusPowered", GetPropertyValueEnum("Voltage",values,"") != "Self-Powered" );	    // so bus is default
     XMLUtility::setAttribute( configNode, "PowerConsumption", nCurrent );
-    XMLUtility::setAttribute( configNode, "5Volts", GetPropertyValueEnum("Voltage",values,"") == "5" );
+    XMLUtility::setAttribute( configNode, "is5Volts", GetPropertyValueEnum("Voltage",values,"") == "5" );
     XMLUtility::setAttribute( configNode, "UseStatusLEDs", GetPropertyValueEnum("Use Status LEDs",values,"") );
     XMLUtility::setAttribute( configNode, "UsagePage", GetPropertyValueUsagePage("Usage",values,1) );
     XMLUtility::setAttribute( configNode, "Usage", GetPropertyValueUsage("Usage",values,1) );
     XMLUtility::setAttribute( configNode, "SerialDebug", GetPropertyValueBool("Serial-Debug",values,false) );
     XMLUtility::setAttribute( configNode, "HIDDebug", GetPropertyValueBool("HID-Debug",values,false) );
-    //XMLUtility::setAttribute( configNode, "UseLEDs", GetPropertyValueBool("Use LEDs",values,false) );
     XMLUtility::setAttribute( configNode, "PowerPort", sPowerPin );
 }
 
@@ -146,6 +146,7 @@ void ShapeMCU::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> 
     bool bTempSensor = GetPropertyValueBool("Use Temperature Sensor",values,false);
     bool bVoltageMonitor = GetPropertyValueBool("Use Voltage Monitor",values,false);
     bool bUseJoystick = GetPropertyValueBool("Use Joystick",values,false);
+    bool bUseHWB  = GetPropertyValueBool("Use HWB",values,false);
     bool bUseLEDs  = GetPropertyValueBool("Use LEDs",values,false);
     QString sUseLEDs  = GetPropertyValueEnum("Use Status LEDs",values,"");
 
@@ -163,8 +164,13 @@ void ShapeMCU::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> 
     if ( bUseJoystick )
     {
 	// make a directional switch plus button
-	MakeDirectionalSwitchControl( elem, "Joystick", 1, 1, true, true, 4, "PB7", "PE5", "PE4", "PB6", "", "", "", "" );
+	MakeDirectionalSwitchControl( elem, "Joystick", USAGEPAGE_GENERIC_DESKTOP_CONTROLS, USAGE_HATSWITCH, true, true, "4way", "PB7", "PE5", "PE4", "PB6", "", "", "", "" );
 	MakeSwitchControl( elem, "JoystickButton", 9, 1, true, true, "PB5" );
+    }
+    if ( bUseJoystick )
+    {
+	// make a directional switch plus button
+	MakeSwitchControl( elem, "HWBButton", 9, 2, false, true, "PE2" );
     }
     if ( bUseLEDs )
     {
