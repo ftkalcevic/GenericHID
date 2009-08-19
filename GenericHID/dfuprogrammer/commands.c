@@ -19,16 +19,16 @@
  */
 
 #include <stdio.h>
-#include <stdint.h>
+#include "inttypes.h"
 #include <string.h>
 
 #include "dfu-bool.h"
-#include "config.h"
 #include "commands.h"
 #include "arguments.h"
 #include "intel_hex.h"
 #include "atmel.h"
 #include "util.h"
+#include "dfuprogrammer.h"
 
 #define COMMAND_DEBUG_THRESHOLD 40
 

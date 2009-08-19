@@ -21,7 +21,8 @@
 #ifndef __COMMANDS_H__
 #define __COMMANDS_H__
 
-#include <stdint.h>
+#include "inttypes.h"
+
 #include "arguments.h"
 #include "dfu-device.h"
 

@@ -19,15 +19,18 @@
  */
 
 #include <stddef.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "inttypes.h"
 
 #include "dfu-bool.h"
 #include "dfu-device.h"
-#include "config.h"
 #include "arguments.h"
+
+#ifdef _WIN32
+#define strcasecmp	_stricmp
+#endif
 
 struct option_mapping_structure {
     const char *name;
@@ -182,7 +185,7 @@ static void usage()
 
     map = target_map;
 
-    fprintf( stderr, PACKAGE_STRING "\n");
+//    fprintf( stderr, PACKAGE_STRING "\n");
     fprintf( stderr, "Usage: dfu-programmer target command [command-options] "
                      "[global-options] [file|data]\n" );
     fprintf( stderr, "targets:\n" );
