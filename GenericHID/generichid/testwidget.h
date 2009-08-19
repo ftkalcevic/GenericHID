@@ -35,6 +35,7 @@ private:
     bool m_bLoading;
     QList<TestItem *> m_pTestItems;
     HIDDataThread *m_pThread;
+    QString m_sLastDevice;
 };
 
 #endif // TESTWIDGET_H

@@ -32,7 +32,7 @@ TestWidget::TestWidget(QWidget *parent)
     QHBoxLayout *select_layout = new QHBoxLayout();
     m_cboDevices = new QComboBox( this );
     m_cboDevices->setSizeAdjustPolicy( QComboBox::SizeAdjustPolicy::AdjustToContents );
-    m_btnRefresh = new QPushButton( this );
+    m_btnRefresh = new QPushButton( "Refresh", this );
     select_layout->addWidget( m_cboDevices );
     select_layout->addWidget( m_btnRefresh );
     select_layout->addSpacerItem( new QSpacerItem( 0, 0, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum ) );
@@ -63,7 +63,6 @@ void TestWidget::Deactivate()
     AutoSet set( &m_bLoading );
 
     DisplayDevice( NULL );
-    m_pActiveDevice = NULL;
     m_cboDevices->clear();
     if ( m_pDevices != NULL )
     {
@@ -113,6 +112,9 @@ void TestWidget::onRefreshPressed()
 {
     AutoSet set( &m_bLoading );
 
+    if ( m_pActiveDevice != NULL )
+	DisplayDevice( NULL );
+
     // reload the device combo
     m_cboDevices->clear();
 
@@ -127,18 +129,29 @@ void TestWidget::onRefreshPressed()
 	return;
     }
 
-    int nSelect = -1;
+    int nSelectGenericHID = -1;
+    int nSelectLastDevice = -1;
     for ( int i = 0; i < m_pDevices->m_Devices.size(); i++ )
     {
 	HIDDevice *pDevice = m_pDevices->m_Devices[i];
+	if ( !m_sLastDevice.isEmpty() && m_sLastDevice == pDevice->SystemId() )
+	    nSelectLastDevice = i;
 	if ( pDevice->VID() == FRANKSWORKSHOP_VID && pDevice->PID() == GENERICHID_PID )
-	    nSelect = i;
+	    nSelectGenericHID = i;
 	m_cboDevices->addItem( MakeDeviceString( pDevice ), QVariant(i) );
     }
     
+    int nSelect;
+    if ( nSelectGenericHID >= 0 )
+	nSelect = nSelectGenericHID;
+    if ( nSelectLastDevice >= 0 )
+	nSelect = nSelectLastDevice;
+
     m_cboDevices->setCurrentIndex( nSelect );
     if ( nSelect >= 0 )
+    {
 	DisplayDevice( m_pDevices->m_Devices[nSelect] );
+    }
 }
 
 
@@ -151,6 +164,8 @@ void TestWidget::DisplayDevice( HIDDevice *pDevice )
     {
 	StopListening();
 	m_pDeviceLayout->clear();   // this clear deletes the widgets.
+	foreach ( TestItem *pItem, m_pTestItems )
+	    delete pItem;
 	m_pTestItems.clear();
 	m_pActiveDevice = NULL;
     }
@@ -185,6 +200,7 @@ void TestWidget::DisplayDevice( HIDDevice *pDevice )
 	}
 	m_pDeviceLayout->invalidate();
 	m_pActiveDevice = pDevice;
+	m_sLastDevice = pDevice->SystemId();
 	StartListening();
     }
 }
@@ -214,6 +230,9 @@ void TestWidget::StopListening()
 
 void TestWidget::onNewData( QVector<byte> data )
 {
+    if ( m_pActiveDevice == NULL )
+	return;
+
     // unpack the data
     byte nReportId = 0;
     if ( m_pActiveDevice->ReportInfo().Reports.size() > 1 )
