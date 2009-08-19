@@ -25,6 +25,7 @@ public slots:
 private:
     void DisplayDevice( class HIDDevice *pDevice );
     void StartListening();
+    void StopListening();
 
     QComboBox *m_cboDevices;
     QPushButton *m_btnRefresh;

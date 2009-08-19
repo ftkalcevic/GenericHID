@@ -65,6 +65,11 @@ ColumnLayout::ColumnLayout(int margin, int hSpacing, int vSpacing)
 
 ColumnLayout::~ColumnLayout()
 {
+    clear();
+}
+
+void ColumnLayout::clear()
+{
     QLayoutItem *item;
     while ((item = takeAt(0)))
 	delete item;

@@ -60,6 +60,8 @@ void TestWidget::Activate()
 
 void TestWidget::Deactivate()
 {
+    AutoSet set( &m_bLoading );
+
     DisplayDevice( NULL );
     m_pActiveDevice = NULL;
     m_cboDevices->clear();
@@ -142,8 +144,15 @@ void TestWidget::onRefreshPressed()
 
 void TestWidget::DisplayDevice( HIDDevice *pDevice )
 {
+    if ( m_pActiveDevice != NULL && pDevice != NULL )
+	DisplayDevice( NULL );
+
     if ( pDevice == NULL )
     {
+	StopListening();
+	m_pDeviceLayout->clear();   // this clear deletes the widgets.
+	m_pTestItems.clear();
+	m_pActiveDevice = NULL;
     }
     else
     {
@@ -175,10 +184,9 @@ void TestWidget::DisplayDevice( HIDDevice *pDevice )
 
 	}
 	m_pDeviceLayout->invalidate();
+	m_pActiveDevice = pDevice;
+	StartListening();
     }
-    m_pActiveDevice = pDevice;
-
-    StartListening();
 }
 
 
@@ -191,6 +199,16 @@ void TestWidget::StartListening()
     connect(m_pThread, SIGNAL(newData( QVector<byte>  )), this, SLOT(onNewData( QVector<byte>  )));
 
     m_pThread->start();
+}
+
+
+void TestWidget::StopListening()
+{
+    assert( m_pThread != NULL );
+    m_pThread->stop();
+    m_pThread->wait( 250 );
+    delete m_pThread;
+    m_pThread = NULL;
 }
 
 

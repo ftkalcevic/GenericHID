@@ -92,6 +92,7 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
     m_sLastFileContents = m_pScene->makeXML();
 
     ui.tabWidget->setCurrentIndex(TAB_DESIGN);
+    connect( ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(onTabChanged(int)) );
 }
 
 
@@ -589,6 +590,14 @@ void GenericHID::ProcessCommandline()
         else
             DoOpen( sFile );
     }
+}
+
+void GenericHID::onTabChanged( int index )
+{
+    if ( index == TAB_DESIGN )
+	ui.testPanel->Deactivate();
+    else if ( index == TAB_TEST )
+	ui.testPanel->Activate();
 }
 
 
