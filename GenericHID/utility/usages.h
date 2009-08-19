@@ -53,7 +53,8 @@ private:
 
 public:
     const std::vector<Usage*> usages() const { return m_Usages; }
-    QString GetUsageString(unsigned short nUsage);
+    QString GetUsageString(unsigned short nUsage) const;
+    const Usage * GetUsage(unsigned short nUsage) const;
 
     unsigned short id() const { return m_nId; }
     const QString &name() const { return m_sName; }
@@ -69,6 +70,7 @@ public:
 
     static void GetUsages( unsigned short nPage, unsigned short nUsage, QString &sPage, QString &sUsage );
     static const std::vector<UsagePage*> &GetUsagesPages() { LoadUsages(); return m_UsagePages; }
+    static const UsagePage *GetUsagePage(unsigned short nPage);
 
 private:
     static std::vector<UsagePage*> m_UsagePages;

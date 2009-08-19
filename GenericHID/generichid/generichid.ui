@@ -18,7 +18,7 @@
     <normaloff>:/GenericHID/ApplicationIcon</normaloff>:/GenericHID/ApplicationIcon</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout">
     <property name="spacing">
      <number>0</number>
     </property>
@@ -26,10 +26,46 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="ShapeGraphicsView" name="graphicsView">
-      <property name="rubberBandSelectionMode">
-       <enum>Qt::ContainsItemShape</enum>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>1</number>
       </property>
+      <widget class="QWidget" name="tabDesign">
+       <attribute name="title">
+        <string>Design</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="margin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="ShapeGraphicsView" name="graphicsView">
+          <property name="rubberBandSelectionMode">
+           <enum>Qt::ContainsItemShape</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabTest">
+       <attribute name="title">
+        <string>Test</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="margin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="TestWidget" name="testPanel" native="true"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -283,6 +319,12 @@
    <class>ShapeGraphicsView</class>
    <extends>QGraphicsView</extends>
    <header>shapegraphicsview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TestWidget</class>
+   <extends>QWidget</extends>
+   <header>testwidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

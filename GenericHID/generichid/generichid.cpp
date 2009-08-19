@@ -7,6 +7,11 @@
 const char * const CONFIGDATA_FILE = "config.xml";
 const int HELP_WINDOW_HEIGHT = 30;
 
+enum
+{   
+    TAB_DESIGN = 0,
+    TAB_TEST = 1
+};
 
 GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
 : QMainWindow(parent, flags)
@@ -85,6 +90,8 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
     // to see if anything has change, we keep the contents of the whole 
     // file we loaded.  We need an empty xml file to start with.
     m_sLastFileContents = m_pScene->makeXML();
+
+    ui.tabWidget->setCurrentIndex(TAB_DESIGN);
 }
 
 
@@ -138,6 +145,7 @@ GenericHID::~GenericHID()
 
 void GenericHID::Clear()
 {
+    m_pScene->clearSelection();
     m_pScene->clear();
 }
 
@@ -604,6 +612,8 @@ todo
     HWB pin has pullup
     - test all controls 
     - test panel
+    - crash on load another in onSelectionChanged
+    - change help to a dock thingy
  */
 
 

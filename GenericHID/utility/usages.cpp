@@ -65,11 +65,20 @@ void UsagePage::AddUsage( Usage *u )
     m_UsageMap[u->id()] = u;
 }
 
-QString UsagePage::GetUsageString(unsigned short nUsage)
+const Usage * UsagePage::GetUsage(unsigned short nUsage) const
 {
-    std::map<unsigned short, Usage*>::iterator it = m_UsageMap.find(nUsage);
+    std::map<unsigned short, Usage*>::const_iterator it = m_UsageMap.find(nUsage);
     if ( it != m_UsageMap.end() )
-	return it->second->name();
+	return it->second;
+    else
+	return NULL;
+}
+
+QString UsagePage::GetUsageString(unsigned short nUsage) const
+{
+    const Usage *usage = GetUsage(nUsage);
+    if ( usage != NULL )
+	return usage->name();
     else
     {
 	return QString().setNum( nUsage );
@@ -85,15 +94,23 @@ Usages::~Usages(void)
 {
 }
 
-void Usages::GetUsages( unsigned short nPage, unsigned short nUsage, QString &sPage, QString &sUsage )
+const UsagePage *Usages::GetUsagePage( unsigned short nPage )
 {
     if ( !m_bInitialised )
 	LoadUsages();
 
     std::map<unsigned short, UsagePage*>::iterator it = m_UsagePageMap.find(nPage);
     if ( it != m_UsagePageMap.end() )
+	return it->second;
+    else
+	return NULL;
+}
+
+void Usages::GetUsages( unsigned short nPage, unsigned short nUsage, QString &sPage, QString &sUsage )
+{
+    const UsagePage *page = GetUsagePage( nPage );
+    if ( page != NULL )
     {
-	UsagePage *page = it->second;
 	sPage = page->name();
 	sUsage = page->GetUsageString(nUsage);
     }

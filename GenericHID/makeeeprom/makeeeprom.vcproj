@@ -371,10 +371,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\makeeeprom_global.h"
-				>
-			</File>
-			<File
 				RelativePath=".\stdafx.h"
 				>
 			</File>

@@ -17,6 +17,10 @@
         <file alias="FileSave" >resources/save.png</file>
         <file alias="FileNew" >resources/new.png</file>
         <file alias="FileOpen" >resources/open.png</file>
+        <file alias="HatDotHi" >resources/hatdothi.bmp</file>
+        <file alias="HatArrow" >resources/hatarrow.bmp</file>
+        <file alias="HatArrowHi" >resources/hatarrowhi.bmp</file>
+        <file alias="HatDot" >resources/hatdot.bmp</file>
     </qresource>
     <qresource prefix="/help" >
         <file alias="led.htm" >resources/help/led.htm</file>

@@ -170,7 +170,7 @@ void ShapeMCU::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> 
     if ( bUseJoystick )
     {
 	// make a directional switch plus button
-	MakeSwitchControl( elem, "HWBButton", 9, 2, false, true, "PE2" );
+	MakeSwitchControl( elem, "HWBButton", 9, 2, true, true, "PE2" );
     }
     if ( bUseLEDs )
     {
