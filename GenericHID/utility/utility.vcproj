@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\libusb-win32-device-bin-0.1.12.1\include&quot;;&quot;$(QTDIR)\include&quot;;&quot;$(QTDIR)\include\QtCore&quot;;&quot;$(QTDIR)\include\QtXml&quot;;..\usbhid;..\utility;..\include;..\hid;&quot;$(InputDir)&quot;"
+				AdditionalIncludeDirectories="&quot;..\libusb-win32-device-bin-0.1.12.1\include&quot;;&quot;$(QTDIR)\include&quot;;&quot;$(QTDIR)\include\QtCore&quot;;&quot;$(QTDIR)\include\QtXml&quot;;..\usbhid;..\utility;..\include;&quot;$(InputDir)&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -103,7 +103,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;..\..\xerces-c-3.0.1-x86-windows-vc-8.0\include&quot;;&quot;..\libusb-win32-device-bin-0.1.12.1\include&quot;;..\utility;..\include"
+				AdditionalIncludeDirectories="&quot;..\libusb-win32-device-bin-0.1.12.1\include&quot;;&quot;$(QTDIR)\include&quot;;&quot;$(QTDIR)\include\QtCore&quot;;&quot;$(QTDIR)\include\QtXml&quot;;..\usbhid;..\utility;..\include;&quot;$(InputDir)&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;XERCES_STATIC_LIBRARY "
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -157,6 +157,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\usages.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\xmlutility.cpp"
 				>
 			</File>
@@ -179,7 +183,46 @@
 				>
 			</File>
 			<File
+				RelativePath=".\usages.h"
+				>
+			</File>
+			<File
 				RelativePath=".\xmlutility.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			>
+			<File
+				RelativePath=".\utility.qrc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Rcc&apos;ing $(InputPath)..."
+						CommandLine="&quot;$(QTDIR)\bin\rcc.exe&quot; -name &quot;$(InputName)&quot; -no-compress &quot;$(InputPath)&quot; -o .\GeneratedFiles\qrc_$(InputName).cpp&#x0D;&#x0A;"
+						AdditionalDependencies="$(InputPath);resources/usages.xml"
+						Outputs=".\GeneratedFiles\qrc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Generated Files"
+			>
+			<File
+				RelativePath=".\generatedfiles\qrc_utility.cpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Resources"
+			>
+			<File
+				RelativePath=".\resources\usages.xml"
 				>
 			</File>
 		</Filter>

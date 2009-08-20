@@ -25,20 +25,29 @@ public:
     XMLUtility(void);
     ~XMLUtility(void);
 
-    static void setAttribute( QDomElement &pNode, const char *sName, const QString sValue );
+    static void setAttribute( QDomElement &pNode, const char *sName, const QString &sValue );
+    static void setAttribute( QDomElement &pNode, const char *sName, const char *sValue );
     static void setAttribute( QDomElement &pNode, const char *sName, int nValue );
     static void setAttribute( QDomElement &pNode, const char *sName, double nValue );
     static void setAttribute( QDomElement &pNode, const char *sName, bool bValue );
 
-    static bool getAttributeString( QDomElement &pNode, const char *sName, QString &s );
-    static QString getAttribute( QDomElement &pNode, const char *sName, const char *sDefault );
-    static int getAttribute( QDomElement &pNode, const char *sName, int nDefault );
-    static double getAttribute( QDomElement &pNode, const char *sName, double nDefault );
-    static bool getAttribute( QDomElement &pNode, const char *sName, bool bDefault );
+    static bool getAttributeByte( const QDomElement &node, const QString &sAttributeName, unsigned char &n, unsigned char min, unsigned char max, QString *sError = NULL );
+    static bool getAttributeUShort( const QDomElement &node, const QString &sAttributeName, unsigned short &n, unsigned short min, unsigned short max, QString *sError = NULL );
+    static bool getAttributeUInt( const QDomElement &node, const QString &sAttributeName, unsigned int &n, unsigned int min, unsigned int max, QString *sError = NULL );
+    static bool getAttributeString( const QDomElement &node, const QString &sAttributeName, QString &s, QString *sError = NULL );
+    static bool getAttributeBool( const QDomElement &node, const QString &sAttributeName, bool &b, QString *sError = NULL );
 
-    static QDomElement firstChildElement(QDomElement &pNode, const char *sTag);
-    static QDomNodeList elementsByTagName(QDomElement &pNode, const char *sTag);
-    static bool hasAttribute(QDomElement &pNode, const char *sTag);
+    static QString getAttribute( const QDomElement &pNode, const char *sName, const QString &sDefault );
+    static QString getAttribute( const QDomElement &pNode, const char *sName, const char *sDefault );
+    static int getAttribute( const QDomElement &pNode, const char *sName, int nDefault );
+    static double getAttribute( const QDomElement &pNode, const char *sName, double nDefault );
+    static bool getAttribute( const QDomElement &pNode, const char *sName, bool bDefault );
+
+
+    
+    static QDomElement firstChildElement(const QDomElement &pNode, const char *sTag);
+    static QDomNodeList elementsByTagName(const QDomElement &pNode, const char *sTag);
+    static bool hasAttribute(const QDomElement &pNode, const char *sTag);
 };
 
 

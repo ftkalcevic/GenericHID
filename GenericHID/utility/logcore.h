@@ -17,11 +17,17 @@
 #ifndef _LOGCORE_H_
 #define _LOGCORE_H_
 
+#ifdef _WIN32
+#pragma warning(push,1)
+#endif
 #include <QMutex>
 #include <QMutexLocker>
 #include <QDateTime>
 #include <QMap>
 #include <QThread>
+#ifdef _WIN32
+#pragma warning(pop)
+#endif
 
 #include "logtypes.h"
 
