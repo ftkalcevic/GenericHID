@@ -4,7 +4,8 @@
 
 
 #Header files
-HEADERS += dragtoolbutton.h \
+HEADERS += columnlayout.h \
+    dragtoolbutton.h \
     editor.h \
     eepromdata.h \
     generichid.h \
@@ -47,10 +48,21 @@ HEADERS += dragtoolbutton.h \
     shapetricolourled.h \
     stdafx.h \
     usagepropertymanager.h \
-    wireitem.h
+    wireitem.h \
+    testinputbutton.h \
+    testinput.h \
+    testinputhatswitch.h \
+    testinputvalue.h \
+    testitem.h \
+    testoutput.h \
+    testoutputlcd.h \
+    testoutputled.h \
+    testoutputvalue.h \
+    testwidget.h
 
 #Source files
-SOURCES += dragtoolbutton.cpp \
+SOURCES += columnlayout.cpp \
+    dragtoolbutton.cpp \
     editor.cpp \
     eepromdata.cpp \
     generichid.cpp \
@@ -94,7 +106,17 @@ SOURCES += dragtoolbutton.cpp \
     shapetricolourled.cpp \
     stdafx.cpp  \
     usagepropertymanager.cpp \
-    wireitem.cpp
+    wireitem.cpp \
+    testinputbutton.cpp \
+    testinput.cpp \
+    testinputhatswitch.cpp \
+    testinputvalue.cpp \
+    testitem.cpp \
+    testoutput.cpp \
+    testoutputlcd.cpp \
+    testoutputled.cpp \
+    testoutputvalue.cpp \
+    testwidget.cpp
 
 #Forms
 FORMS += ./generichid.ui \
