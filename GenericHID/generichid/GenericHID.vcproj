@@ -440,6 +440,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\datatypes.h"
+				>
+			</File>
+			<File
 				RelativePath=".\dragtoolbutton.h"
 				>
 				<FileConfiguration
@@ -1537,13 +1541,6 @@
 							Name="VCCLCompilerTool"
 						/>
 					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\generatedfiles\debug\moc_hatswitchwidget.cpp"
@@ -2332,13 +2329,6 @@
 					RelativePath=".\generatedfiles\Release\moc_testinputbutton.cpp"
 					>
 					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Debug|Win32"
 						ExcludedFromBuild="true"
 						>
@@ -2350,13 +2340,6 @@
 				<File
 					RelativePath=".\generatedfiles\Release\moc_testinputhatswitch.cpp"
 					>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|Win32"
 						ExcludedFromBuild="true"
@@ -2370,13 +2353,6 @@
 					RelativePath=".\generatedfiles\Release\moc_testinputvalue.cpp"
 					>
 					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Debug|Win32"
 						ExcludedFromBuild="true"
 						>
@@ -2388,13 +2364,6 @@
 				<File
 					RelativePath=".\generatedfiles\Release\moc_testitem.cpp"
 					>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|Win32"
 						ExcludedFromBuild="true"
@@ -2432,13 +2401,6 @@
 					RelativePath=".\generatedfiles\Release\moc_testoutputvalue.cpp"
 					>
 					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Debug|Win32"
 						ExcludedFromBuild="true"
 						>
@@ -2450,13 +2412,6 @@
 				<File
 					RelativePath=".\generatedfiles\Release\moc_testwidget.cpp"
 					>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|Win32"
 						ExcludedFromBuild="true"

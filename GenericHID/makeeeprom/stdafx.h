@@ -12,7 +12,7 @@
 
 #include "xmlutility.h"
 
-#include "types.h"
+#include "datatypes.h"
 #include "common.h"
 
 #ifdef _WIN32
