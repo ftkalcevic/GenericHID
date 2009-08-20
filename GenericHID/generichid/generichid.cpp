@@ -623,9 +623,11 @@ todo
     - test panel
     - crash on load another in onSelectionChanged
     - change help to a dock thingy
-    - test
-	- testoutputvalue
-	    - show value
+    - alpha
+	- update firmware
+	- support uploadable fonts
+    - lose the config.xml
+	- make pins configurable
  */
 
 
