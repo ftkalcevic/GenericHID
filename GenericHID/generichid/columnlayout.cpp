@@ -177,6 +177,11 @@ int ColumnLayout::doLayout(const QRect &rect, bool testOnly) const
 	int nextY = y + item->sizeHint().height() + spaceY;
 	if (nextY - spaceY > effectiveRect.bottom() && colWidth > 0) 
 	{
+	    // go back and make the width of each item in this column, the specified width.
+	    foreach (QLayoutItem *item2, itemList) 
+		if ( item2->geometry().x() == x )
+		    item2->setGeometry( QRect(item2->geometry().topLeft(), QSize(colWidth,item2->geometry().height()) ) );
+
 	    y = effectiveRect.y();
 	    x = x + colWidth + spaceX;
 	    nextY = y + item->sizeHint().height() + spaceY;
@@ -189,6 +194,11 @@ int ColumnLayout::doLayout(const QRect &rect, bool testOnly) const
 	y = nextY;
 	colWidth = qMax(colWidth, item->sizeHint().width());
     }
+
+    foreach (QLayoutItem *item2, itemList) 
+	if ( item2->geometry().x() == x )
+	    item2->setGeometry( QRect(item2->geometry().topLeft(), QSize(colWidth,item2->geometry().height()) ) );
+
     return x + colWidth - rect.x() + right;
 }
 

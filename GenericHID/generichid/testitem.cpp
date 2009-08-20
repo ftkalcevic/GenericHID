@@ -76,3 +76,15 @@ TestItem *TestItem::CreateItem( class HIDDevice *pDevice, struct HID_ReportItem_
     }
     return pItem;
 }
+
+
+void TestItem::paintEvent( QPaintEvent * event )
+{
+    event->ignore();
+    QPainter p2( this );
+    //if ( hasFocus() )
+    {
+	p2.drawRect( rect().adjusted(0,0,-1,-1) );
+    }
+
+}

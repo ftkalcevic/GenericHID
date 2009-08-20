@@ -3,6 +3,8 @@
 #include "hiddevices.h"
 #include "testinput.h"
 #include "testoutput.h"
+#include "testoutputlcd.h"
+#include "usages.h"
 
 
 class AutoSet
@@ -31,11 +33,11 @@ TestWidget::TestWidget(QWidget *parent)
 
     QHBoxLayout *select_layout = new QHBoxLayout();
     m_cboDevices = new QComboBox( this );
-    m_cboDevices->setSizeAdjustPolicy( QComboBox::SizeAdjustPolicy::AdjustToContents );
+    m_cboDevices->setSizeAdjustPolicy( QComboBox::AdjustToContents );
     m_btnRefresh = new QPushButton( "Refresh", this );
     select_layout->addWidget( m_cboDevices );
     select_layout->addWidget( m_btnRefresh );
-    select_layout->addSpacerItem( new QSpacerItem( 0, 0, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum ) );
+    select_layout->addSpacerItem( new QSpacerItem( 0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
 
     connect( m_cboDevices, SIGNAL(currentIndexChanged( int )), this, SLOT(onDevicesIndexChanged(int)) );
     connect( m_btnRefresh, SIGNAL(pressed()), this, SLOT(onRefreshPressed()) );
@@ -47,6 +49,8 @@ TestWidget::TestWidget(QWidget *parent)
     main_layout->addLayout( m_pDeviceLayout );
 
     setLayout( main_layout );
+
+ //   setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
 }
 
 TestWidget::~TestWidget()
@@ -141,7 +145,7 @@ void TestWidget::onRefreshPressed()
 	m_cboDevices->addItem( MakeDeviceString( pDevice ), QVariant(i) );
     }
     
-    int nSelect;
+    int nSelect=-1;
     if ( nSelectGenericHID >= 0 )
 	nSelect = nSelectGenericHID;
     if ( nSelectLastDevice >= 0 )
@@ -178,6 +182,24 @@ void TestWidget::DisplayDevice( HIDDevice *pDevice )
 	}
 
 	HID_ReportInfo_t &info = pDevice->ReportInfo();
+
+	// Go through collections and find USAGE_PAGE_ALPHANUMERIC_DISPLAY devices
+	for ( int i = 0; i < info.Collections.size(); i++ )
+	{
+	    HID_CollectionPath_t *col = info.Collections[i];
+	    if ( col->UsagePage == USAGEPAGE_ALPHANUMERIC_DISPLAY && col->Usage == USAGE_ALPHANUMERIC_DISPLAY )
+	    {
+		TestOutputLCD *pLCD = new TestOutputLCD( pDevice, col );
+		if ( pLCD != NULL )
+		{
+		    m_pTestItems.append( pLCD );	
+		    m_pDeviceLayout->addWidget( pLCD );	
+
+		    //connect( pOut, SIGNAL(valueChanged(int)), this, SLOT(onValueChanged(int)) );
+		}
+	    }
+	}
+
 	for ( int i = 0; i < info.ReportItems.size(); i++ )
 	{
 	    HID_ReportItem_t *pReportItem = info.ReportItems[i];
@@ -196,8 +218,8 @@ void TestWidget::DisplayDevice( HIDDevice *pDevice )
 		}
 
 	    }
-
 	}
+
 	m_pDeviceLayout->invalidate();
 	m_pActiveDevice = pDevice;
 	m_sLastDevice = pDevice->SystemId();

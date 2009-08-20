@@ -11,8 +11,10 @@ TestOutputValue::TestOutputValue(const QString &sName, struct HID_ReportItem_t *
     QSlider *slider = new QSlider(Qt::Horizontal);
     slider->setRange( pHIDItem->Attributes.LogicalMinimum, pHIDItem->Attributes.LogicalMaximum );
     QLabel *name = new QLabel( sName );
-    layout->addWidget( slider );
     layout->addWidget( name );
+    layout->addWidget( slider );
+    m_lblValue = new QLabel( "0" );
+    layout->addWidget( m_lblValue );
 
     connect( slider, SIGNAL(valueChanged(int)), this, SLOT(onSliderValueChanged(int)) );
 
@@ -27,4 +29,6 @@ void TestOutputValue::onSliderValueChanged(int nNewValue)
 {
     m_nValue = nNewValue;
     emit valueChanged(m_nReportId);
+
+    m_lblValue->setText( QString::number(m_nValue) );
 }

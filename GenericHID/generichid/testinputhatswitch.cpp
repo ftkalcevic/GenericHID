@@ -10,14 +10,14 @@ TestInputHatSwitch::TestInputHatSwitch(const QString &sName, struct HID_ReportIt
     m_nMin = pHIDItem->Attributes.LogicalMinimum;
     m_nMax = pHIDItem->Attributes.LogicalMaximum;
 
-    QHBoxLayout *layout = new QHBoxLayout();
+    QVBoxLayout *layout = new QVBoxLayout();
 
     m_pHatswitch = new HatSwitchWidget();
     m_pHatswitch->setMinimumSize( QSize(80,80) );
     QLabel *lblName = new QLabel();
     lblName->setText( sName );
-    layout->addWidget( m_pHatswitch );
     layout->addWidget( lblName );
+    layout->addWidget( m_pHatswitch );
 
     setLayout( layout );
 }

@@ -16,6 +16,12 @@ public:
 private:
     int &m_nValue;
     QProgressBar *m_pbValue;
+    QLabel *m_lblLogical;
+    QLabel *m_lblPhysical;
+    int m_nLogicalMin;
+    int m_nLogicalMax;
+    int m_nPhysicalMin;
+    int m_nPhysicalMax;
 };
 
 #endif // TESTINPUTVALUE_H

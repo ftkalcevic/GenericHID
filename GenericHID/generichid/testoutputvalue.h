@@ -16,6 +16,7 @@ public slots:
 
 private:
     int &m_nValue;
+    QLabel *m_lblValue;
 };
 
 #endif // TESTOUTPUTVALUE_H

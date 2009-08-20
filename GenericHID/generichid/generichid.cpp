@@ -623,6 +623,9 @@ todo
     - test panel
     - crash on load another in onSelectionChanged
     - change help to a dock thingy
+    - test
+	- testoutputvalue
+	    - show value
  */
 
 

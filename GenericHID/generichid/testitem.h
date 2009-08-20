@@ -18,6 +18,7 @@ public:
 
 protected:
     byte m_nReportId;
+    virtual void paintEvent( QPaintEvent * event );
 };
 
 #endif // TESTITEM_H

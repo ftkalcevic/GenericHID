@@ -11,8 +11,8 @@ TestInputButton::TestInputButton(const QString &sName, struct HID_ReportItem_t *
     m_lblStatus->setPixmap( QPixmap(":/GenericHID/redlight") );
     QLabel *lblName = new QLabel();
     lblName->setText( sName );
-    layout->addWidget( m_lblStatus );
     layout->addWidget( lblName );
+    layout->addWidget( m_lblStatus );
 
     setLayout( layout );
 }
