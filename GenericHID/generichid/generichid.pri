@@ -9,6 +9,8 @@ HEADERS += columnlayout.h \
     editor.h \
     eepromdata.h \
     generichid.h \
+    lcdchar.h \
+    lcdwidget.h \
     listeditorfactory.h \
     listpropertymanager.h \
     mru.h \
@@ -66,6 +68,7 @@ SOURCES += columnlayout.cpp \
     editor.cpp \
     eepromdata.cpp \
     generichid.cpp \
+    lcdwidget.cpp \
     listeditorfactory.cpp \
     listpropertymanager.cpp \
     main.cpp \

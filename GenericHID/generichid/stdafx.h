@@ -34,6 +34,7 @@
 
 
 #include "common.h"
+#include "datatypes.h"
 #include "log.h"
 #include "xmlutility.h"
 #include <assert.h>
