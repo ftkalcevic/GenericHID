@@ -213,10 +213,6 @@
 		<Filter
 			Name="Generated Files"
 			>
-			<File
-				RelativePath=".\generatedfiles\qrc_utility.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Resources"
