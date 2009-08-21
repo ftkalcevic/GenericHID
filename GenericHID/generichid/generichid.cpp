@@ -76,14 +76,17 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
     connect( ui.listView, SIGNAL(currentItemChanged(QtBrowserItem *)), this, SLOT(onPropertiesCurrentItemChanged( QtBrowserItem *)) );
     ui.listView->setSplitterPosition( ui.listView->width()/2 );
 
-    ui.txtPropertyHelp->setBackgroundRole( QPalette::Window );
-    QPalette helpPalette( QApplication::palette() );
-    helpPalette.setColor( QPalette::Base, QApplication::palette().color(QPalette::Window) );
-    ui.txtPropertyHelp->setPalette( helpPalette );
-    QList<int> sizes;
-    sizes.push_back( ui.splitter->height() - ui.splitter->handleWidth() - HELP_WINDOW_HEIGHT );
-    sizes.push_back( HELP_WINDOW_HEIGHT );
-    ui.splitter->setSizes( sizes );
+    //ui.txtPropertyHelp->setBackgroundRole( QPalette::Window );
+    //QPalette helpPalette( QApplication::palette() );
+    //helpPalette.setColor( QPalette::Base, QApplication::palette().color(QPalette::Window) );
+    //ui.txtPropertyHelp->setPalette( helpPalette );
+    //QList<int> sizes;
+    //sizes.push_back( ui.splitter->height() - ui.splitter->handleWidth() - HELP_WINDOW_HEIGHT );
+    //sizes.push_back( HELP_WINDOW_HEIGHT );
+    //ui.splitter->setSizes( sizes );
+
+    ui.textBrowser->setSearchPaths( QStringList() << "help" );
+    onPropertiesCurrentItemChanged( NULL );
 
     readSettings();
 
@@ -107,9 +110,9 @@ void GenericHID::writeSettings()
 	else
 	    m_Settings.setValue( QString("application/mru%1").arg(i), "" );
 
-    QList<int> sizes = ui.splitter->sizes();
-    m_Settings.setValue( "window/property-size", sizes[0] );
-    m_Settings.setValue( "window/help-size", sizes[1] );
+    //QList<int> sizes = ui.splitter->sizes();
+    //m_Settings.setValue( "window/property-size", sizes[0] );
+    //m_Settings.setValue( "window/help-size", sizes[1] );
 
     m_Settings.setValue( "window/property-column", ui.listView->splitterPosition() );
 
@@ -131,10 +134,10 @@ void GenericHID::readSettings()
     if ( m_Settings.contains( "window/layout" ) )
 	this->restoreState( m_Settings.value( "window/layout", QByteArray()).toByteArray() );
 
-    QList<int> sizes = ui.splitter->sizes();
-    sizes[0] = m_Settings.value( "window/property-size", sizes[0] ).toInt();
-    sizes[1] = m_Settings.value( "window/help-size", sizes[1] ).toInt();
-    ui.splitter->setSizes( sizes );
+    //QList<int> sizes = ui.splitter->sizes();
+    //sizes[0] = m_Settings.value( "window/property-size", sizes[0] ).toInt();
+    //sizes[1] = m_Settings.value( "window/help-size", sizes[1] ).toInt();
+    //ui.splitter->setSizes( sizes );
 
     ui.listView->setSplitterPosition( m_Settings.value("window/property-column", ui.listView->splitterPosition()).toInt() );
 }
@@ -363,25 +366,49 @@ void GenericHID::closeEvent( QCloseEvent * event )
 
 void GenericHID::onPropertiesCurrentItemChanged( QtBrowserItem * current )
 {
+ //   if ( current == NULL || current->property() == NULL )
+	//ui.txtPropertyHelp->setText( QString() );
+ //   else
+ //   {
+	//QString sText = current->property()->toolTip();
+	//if ( sText.startsWith(QChar(':')) )
+	//{
+	//     QFile file(sText);
+	//     if ( file.open(QIODevice::ReadOnly | QIODevice::Text) )
+	//     {
+	//	 {
+	//	     QTextStream in(&file);
+	//	     sText = in.readAll();
+	//	 }
+	//	 file.close();
+	//     }
+	//}
+	//ui.txtPropertyHelp->setText( QString("<b>%1</b><br>\n%2").arg(current->property()->propertyName()).arg(sText) );
+ //   }
+
     if ( current == NULL || current->property() == NULL )
-	ui.txtPropertyHelp->setText( QString() );
+	ui.textBrowser->setSource( QString("index.htm") );
     else
     {
 	QString sText = current->property()->toolTip();
-	if ( sText.startsWith(QChar(':')) )
+	if ( sText.isEmpty() )
 	{
-	     QFile file(sText);
-	     if ( file.open(QIODevice::ReadOnly | QIODevice::Text) )
-	     {
-		 {
-		     QTextStream in(&file);
-		     sText = in.readAll();
-		 }
-		 file.close();
-	     }
+	    QtBrowserItem * item = current;
+	    while ( (item = item->parent()) != NULL )
+	    {
+		sText = item->property()->toolTip();
+		if ( !sText.isEmpty() )
+		    break;
+	    }
 	}
-	ui.txtPropertyHelp->setText( QString("<b>%1</b><br>\n%2").arg(current->property()->propertyName()).arg(sText) );
+	if ( sText.startsWith(":") )
+	    ui.textBrowser->setSource( sText );
+	else
+	    ui.textBrowser->setText( QString("<b>%1</b><br>\n%2").arg(current->property()->propertyName()).arg(sText) );
     }
+
+
+
 }
 
 void GenericHID::onMicrocontrollerProgram()
@@ -610,24 +637,32 @@ void GenericHID::onTabChanged( int index )
     - binary coded switch
     - LCD 4/8 bit
     - Key matrix  rows x cols
+	- key names
   - PWM
     - mcu attribute
 	- timer 1,2,3
 	- frequency shared between outputs a/b/c on a single timer
+	    - timer configurator 1,2,3
+	    - or, timer object, configuration is based on shared connection object
 
 todo
     - allow multiple wires on an mcu pin (eg LCD, pwm
-    - HWB as input button
-    HWB pin has pullup
     - test all controls 
     - test panel
     - crash on load another in onSelectionChanged
-    - change help to a dock thingy
     - alpha
 	- update firmware
 	- support uploadable fonts
+	- put write data cmd into collection
     - lose the config.xml
 	- make pins configurable
+    - do help
+    - zoom on toolbar
+    - disable things when in test mode
+    - linux libusb 0.1
+    - firmware
+	- port to lufa
+	- honour poll rate (is this a host thing?)
  */
 
 

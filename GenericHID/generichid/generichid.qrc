@@ -22,8 +22,4 @@
         <file alias="HatArrowHi" >resources/hatarrowhi.bmp</file>
         <file alias="HatDot" >resources/hatdot.bmp</file>
     </qresource>
-    <qresource prefix="/help" >
-        <file alias="led.htm" >resources/help/led.htm</file>
-        <file alias="ledsch1.png" >resources/help/ledsch1.png</file>
-    </qresource>
 </RCC>

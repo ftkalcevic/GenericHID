@@ -454,12 +454,12 @@
 	</Shape>
 
 
-	<Shape Id="led" Type="led" Source="true" Image="resources/led.png" Icon="resources/ledicon.png" width="28" height="90" maxInstances="0" name="LED" description=":/help/led.htm">
+	<Shape Id="led" Type="led" Source="true" Image="resources/led.png" Icon="resources/ledicon.png" width="28" height="90" maxInstances="0" name="LED" description=":led.htm">
 	    <pin rect="31,105,15,15" id="In" type="io" />
-	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="8:1000"/>
-	    <property name="Source" description="Does the LED light when the microcontroller outputs a high value &quot;true&quot;, or when the microcontroller pulls the port low  &quot;false&quot;." type="bool" default="true"/>
-	    <property name="Current" description="Current usage of the LED in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="5"/>
+	    <property name="Name" description=":led.htm#Name" type="string"/>
+	    <property name="Usage" description=":led.htm#Usage" type="usage" default="8:1000"/>
+	    <property name="Source" description=":led.htm#Source" type="bool" default="true"/>
+	    <property name="Current" description=":led.htm#Current" type="int" min="0" max="500" default="5"/>
 	</Shape>
 
 	<Shape Id="bicolourled"  Type="bicolourled" Source="true" Image="resources/bicolourled.png" Icon="resources/bicolourledicon.png" width="31" height="81" maxInstances="0" name="2-lead Bicolour LED">
