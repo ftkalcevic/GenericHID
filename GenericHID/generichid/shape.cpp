@@ -102,7 +102,6 @@ Shape *Shape::CreateFromXML( QDomElement &node )
     QString sName = XMLUtility::getAttribute( node, "name", "" );
     QString sDescription = XMLUtility::getAttribute( node, "description", "" );
 
-
     // Create the component
     ShapeType::ShapeType eShapeType = ShapeType::fromString( sType );
     Shape *pShape = NULL;
@@ -179,7 +178,7 @@ bool Shape::CheckPins( QString &sErrors, const QList<class PinItem *> &pins, con
 	int index;
 	if ( (index = findPin( sPin )) >= 0 )
 	{
-	    if ( pins[index]->wire() == NULL )
+	    if ( pins[index]->wires().count() == 0 )
 	    {
 		bSuccess = false;
 		sErrors += QString( "Pin '%1' is not connected on '%2'\n" ).arg(pins[index]->pin()->id()).arg(m_sShapeName);
@@ -199,7 +198,7 @@ bool Shape::CheckNotPins( QString &sErrors, const QList<class PinItem *> &pins, 
 	int index;
 	if ( (index = findPin( sPin )) >= 0 )
 	{
-	    if ( pins[index]->wire() != NULL )
+	    if ( pins[index]->wires().count() != 0 )
 	    {
 		bSuccess = false;
 		sErrors += QString( "Pin '%1' is connected although it is not used on '%2'\n" ).arg(pins[index]->pin()->id()).arg(m_sShapeName);
@@ -226,7 +225,7 @@ bool Shape::Verify( QString &sErrors, const QList<class PinItem *> &pins, const 
     // default implmentation just checks that every pin is connected.  Shapes that don't need this can override
     foreach ( PinItem *pin, pins )
     {
-	if ( pin->wire() == NULL )
+	if ( pin->wires().count() == 0 )
 	{
 	    sErrors += QString( "Pin '%1' is not connected on '%2'\n" ).arg(pin->pin()->id()).arg(m_sShapeName);
 	    bSuccess = false;
@@ -537,12 +536,21 @@ QString Shape::GetPort( QList<PinItem *> pins, const QString &sName  ) const
     for ( int i = 0; i < pins.count(); i++ )
 	if ( pins[i]->pin()->id().compare( sName, Qt::CaseInsensitive ) == 0 )
 	{
-	    if ( pins[i]->wire() == NULL )
+	    if ( pins[i]->wires().count() == 0 )
+	    {
+		assert( false );
 		return QString();
-	    else if ( pins[i]->wire()->pin1() != pins[i] )
-		return pins[i]->wire()->pin1()->pin()->id();
+	    }
+	    else if ( pins[i]->wires()[0]->pin1() != pins[i] )
+	    {
+		assert( pins[i]->wires().count() == 1 );
+		return pins[i]->wires()[0]->pin1()->pin()->id();
+	    }
 	    else
-		return pins[i]->wire()->pin2()->pin()->id();
+	    {
+		assert( pins[i]->wires().count() == 1 );
+		return pins[i]->wires()[0]->pin2()->pin()->id();
+	    }
 	}
     return QString();
 }

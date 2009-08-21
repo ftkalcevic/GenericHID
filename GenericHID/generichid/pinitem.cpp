@@ -7,7 +7,6 @@ PinItem::PinItem( QRectF rc, const Pin *pPin, Editor *pEditor, QGraphicsItem *pa
 : QGraphicsRectItem( rc, parent )
 , m_pEditor( pEditor )
 , m_pPin( pPin )
-, m_pWire( NULL )
 {
     setAcceptHoverEvents( true );
 

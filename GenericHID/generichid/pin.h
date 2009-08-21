@@ -48,7 +48,7 @@ class Shape;
 class Pin
 {
 public:
-    Pin( const Shape *pShape, const QString &sId, PinType::PinType ePinType, const QRect &rect, const QString &sOtherUser, bool bEnabled, PinHAlign::PinHAlign eHAlign, PinVAlign::PinVAlign eVAlign, double dRotate );
+    Pin( const Shape *pShape, const QString &sId, PinType::PinType ePinType, const QRect &rect, const QString &sOtherUser, bool bEnabled, PinHAlign::PinHAlign eHAlign, PinVAlign::PinVAlign eVAlign, double dRotate, bool bShared );
     ~Pin(void);
 
     static Pin *CreateFromXML( QDomElement node, const Shape *pShape );
@@ -61,6 +61,7 @@ public:
     PinVAlign::PinVAlign vAlign() const { return m_eVAlign; }
     double rotate() const { return m_dRotate; }
     const Shape *shape() const { return m_pShape; }
+    bool shared() const { return m_bShared; }
 
 private:
     const Shape *m_pShape;
@@ -72,6 +73,7 @@ private:
     PinHAlign::PinHAlign m_eHAlign;
     PinVAlign::PinVAlign m_eVAlign;
     double m_dRotate;
+    bool m_bShared;
 };
 
 

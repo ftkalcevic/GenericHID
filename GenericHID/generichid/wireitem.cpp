@@ -22,9 +22,9 @@ WireItem::WireItem(PinItem *pPin1, PinItem *pPin2, QGraphicsItem *parent)
     setFlag( QGraphicsItem::ItemIsSelectable);
     MakePolygon();
     if ( m_pPin1 != NULL )
-	m_pPin1->setWire( this );
+	m_pPin1->addWire( this );
     if ( m_pPin2 != NULL )
-	m_pPin2->setWire( this );}
+	m_pPin2->addWire( this );}
 
 WireItem::~WireItem()
 {

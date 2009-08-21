@@ -27,7 +27,7 @@ bool ShapeMCU::Verify( QString &sErrors, const QList<class PinItem *> &pins, con
 	// We have the Use Voltage Monitor property.  Make sure there is nothing on the voltage monitor pin, PF3
 	if ( (index = findPin( "PF3" )) >= 0 )
 	{
-	    if ( pins[index]->wire() != NULL )
+	    if ( pins[index]->wires().count() != 0 )
 	    {
 		bSuccess = false;
 		sErrors += "The 'Use Voltage Monitor' option has been set, but the pin, PF3, is used for something else";
@@ -40,7 +40,7 @@ bool ShapeMCU::Verify( QString &sErrors, const QList<class PinItem *> &pins, con
 	// We have the Use Temperature Sensor property.  Make sure there is nothing on the voltage monitor pin, PF0
 	if ( (index = findPin( "PF0" )) >= 0 )
 	{
-	    if ( pins[index]->wire() != NULL )
+	    if ( pins[index]->wires().count() != 0 )
 	    {
 		bSuccess = false;
 		sErrors += "The 'Use Temperature Sensor' option has been set, but the pin, PF0, is used for something else";
@@ -59,7 +59,7 @@ bool ShapeMCU::Verify( QString &sErrors, const QList<class PinItem *> &pins, con
 	    const char *sPin = joystickPins[i];
 	    if ( (index = findPin( sPin )) >= 0 )
 	    {
-		if ( pins[index]->wire() != NULL )
+		if ( pins[index]->wires().count() != 0 )
 		{
 		    bSuccess = false;
 		    if ( nErrorCount == 0 )
@@ -100,7 +100,7 @@ bool ShapeMCU::Verify( QString &sErrors, const QList<class PinItem *> &pins, con
 	{
 	    if ( (index = findPin( sPin )) >= 0 )
 	    {
-		if ( pins[index]->wire() != NULL )
+		if ( pins[index]->wires().count() != 0 )
 		{
 		    bSuccess = false;
 		    if ( nErrorCount == 0 )

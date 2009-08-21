@@ -430,17 +430,17 @@
 	</Shape>
 
 	<Shape Id="lcd" Type="lcd" Source="true" Image="resources/lcd.png" Icon="resources/lcdicon.png" width="169" height="131" maxInstances="0" name="LCD Alphanumeric Display">
-	    <pin rect="3,83,20,15" id="RS" type="io" />
-	    <pin rect="25,83,25,15" id="R/W" type="io" />
+	    <pin rect="3,83,20,15" id="RS" type="io" shared="true"/>
+	    <pin rect="25,83,25,15" id="R/W" type="io" shared="true" />
 	    <pin rect="52,83,15,15" id="E" type="io" />
-	    <pin rect="69,83,20,15" id="D0" type="io" />
-	    <pin rect="91,83,20,15" id="D1" type="io" />
-	    <pin rect="113,83,20,15" id="D2" type="io" />
-	    <pin rect="135,83,20,15" id="D3" type="io" />
-	    <pin rect="157,83,20,15" id="D4" type="io" />
-	    <pin rect="179,83,20,15" id="D5" type="io" />
-	    <pin rect="201,83,20,15" id="D6" type="io" />
-	    <pin rect="223,83,20,15" id="D7" type="io" />
+	    <pin rect="69,83,20,15" id="D0" type="io" shared="true" />
+	    <pin rect="91,83,20,15" id="D1" type="io" shared="true" />
+	    <pin rect="113,83,20,15" id="D2" type="io" shared="true" />
+	    <pin rect="135,83,20,15" id="D3" type="io" shared="true" />
+	    <pin rect="157,83,20,15" id="D4" type="io" shared="true" />
+	    <pin rect="179,83,20,15" id="D5" type="io" shared="true" />
+	    <pin rect="201,83,20,15" id="D6" type="io" shared="true" />
+	    <pin rect="223,83,20,15" id="D7" type="io" shared="true" />
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
 	    <property name="Usage" description="HID usage of the control." type="usage" default="20:1"/>
 	    <property name="Rows" description="The number of rows on the Display." type="int" min="1" max="4" default="2"/>

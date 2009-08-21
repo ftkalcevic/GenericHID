@@ -98,7 +98,7 @@ namespace PinVAlign
 };
 
 
-Pin::Pin( const Shape *pShape, const QString &sId, PinType::PinType ePinType, const QRect &rect, const QString &sOtherUse, bool bEnabled, PinHAlign::PinHAlign eHAlign, PinVAlign::PinVAlign eVAlign, double dRotate )
+Pin::Pin( const Shape *pShape, const QString &sId, PinType::PinType ePinType, const QRect &rect, const QString &sOtherUse, bool bEnabled, PinHAlign::PinHAlign eHAlign, PinVAlign::PinVAlign eVAlign, double dRotate, bool bShared )
 : m_pShape(pShape)
 , m_sId( sId )
 , m_ePinType( ePinType )
@@ -108,6 +108,7 @@ Pin::Pin( const Shape *pShape, const QString &sId, PinType::PinType ePinType, co
 , m_eHAlign(eHAlign)
 , m_eVAlign(eVAlign)
 , m_dRotate(dRotate)
+, m_bShared(bShared)
 {
     m_geometry = m_geometry.normalized();
 }
@@ -130,6 +131,7 @@ Pin *Pin::CreateFromXML( QDomElement node, const Shape *pShape )
     QString sVAlign = XMLUtility::getAttribute( node, "valign", "center" );
     PinVAlign::PinVAlign eVAlign = PinVAlign::fromString(sVAlign);
     double dRotate = XMLUtility::getAttribute( node, "rotate", 0.0 );
+    bool bShared = XMLUtility::getAttribute( node, "shared", false);
 
     QStringList sCoords = sRect.split( QChar(','), QString::SkipEmptyParts );
     int x1 = 0, y1 = 0, width = 0, height = 0;
@@ -141,6 +143,6 @@ Pin *Pin::CreateFromXML( QDomElement node, const Shape *pShape )
         height = sCoords[3].toInt();
     }
 
-    return new Pin( pShape, sId, ePinType, QRect(QPoint(x1,y1),QSize(width,height)), sOtherUse, bEnabled, eHAlign, eVAlign, dRotate );
+    return new Pin( pShape, sId, ePinType, QRect(QPoint(x1,y1),QSize(width,height)), sOtherUse, bEnabled, eHAlign, eVAlign, dRotate, bShared );
 }
 

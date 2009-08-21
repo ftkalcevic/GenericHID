@@ -70,18 +70,16 @@ void ShapeScene::onViewItemChanged( QGraphicsItem *item, QGraphicsItem::Graphics
 	ShapeItem *pItem = qgraphicsitem_cast<ShapeItem *>(item);
 	UpdateWires( pItem );
 	foreach(PinItem *pPin, pItem->pins())
-	{
-	    if ( pPin->wire() != NULL )
-		pPin->wire()->UpdateEndpoints();
-	}
+	    foreach ( WireItem *pWire, pPin->wires() )
+		pWire->UpdateEndpoints();
     }
 }
 
 void ShapeScene::RemoveWire( WireItem *pItem )
 {
     // Remove wire from pins
-    pItem->pin1()->setWire( NULL );
-    pItem->pin2()->setWire( NULL );
+    pItem->pin1()->removeWire( pItem );
+    pItem->pin2()->removeWire( pItem );
     removeItem(pItem);		    // removeItem relinquishes ownership
     m_WireItems.removeAll(pItem);
     delete pItem;
@@ -91,8 +89,8 @@ void ShapeScene::RemoveShape( ShapeItem *pItem )
 {
     // Remove wires from the shape's pins
     foreach (PinItem *pPin, pItem->pins() )
-	if ( pPin->wire() != NULL )
-	    RemoveWire( pPin->wire() );
+	foreach (WireItem *pWire, pPin->wires() )
+	    RemoveWire( pWire );
     removeItem(pItem);		    // removeItem relinquishes ownership
     m_ShapeItems.removeAll( pItem );
     delete pItem;
@@ -101,10 +99,8 @@ void ShapeScene::RemoveShape( ShapeItem *pItem )
 void ShapeScene::UpdateWires( ShapeItem *pItem )
 {
     foreach(PinItem *pPin, pItem->pins())
-    {
-	if ( pPin->wire() != NULL )
-	    pPin->wire()->UpdateEndpoints();
-    }
+	foreach(WireItem *pWire, pPin->wires() )
+	    pWire->UpdateEndpoints();
 }
 
 PinItem *ShapeScene::PinUnderCursor( QPointF pos )
@@ -148,9 +144,69 @@ void ShapeScene::keyPressEvent( QKeyEvent * keyEvent )
 	foreach ( QGraphicsItem *pItem, Wires )
 	    RemoveWire( qgraphicsitem_cast<WireItem *>(pItem) );
 
-	foreach ( QGraphicsItem *pItem, Shapes )
+	foreach ( QGraphicsItem *pItem, Shapes ) 
 	    RemoveShape( qgraphicsitem_cast<ShapeItem *>(pItem) );
     }
+}
+
+bool CanStartWire( PinItem *pPinItem, QString &sReason )
+{
+    if ( pPinItem == NULL )
+	sReason = "Not a pin";
+    else if ( !pPinItem->pin()->enabled() )
+	sReason = "Pin disabled";
+    else if ( pPinItem->wires().count() == 0 )
+	return true;
+    else if ( pPinItem->parentShape()->shapeData()->source() )
+       sReason = "Can't connect multiple wires to this pin";
+    else
+	return true;
+
+    return false;
+}
+
+bool CanEndWire( PinItem *pFirstPin, PinItem *pSecondPin, QString &sReason )
+{
+    if ( pSecondPin == NULL )
+	sReason = "Not a pin";
+    else if ( !pSecondPin->pin()->enabled() )
+	sReason = "Disabled pin";
+	 //pSecondPin->pin()->shape() != pFirstPin->pin()->shape() && // wiring to myself?
+    else if ( (pSecondPin->pin()->shape()->source() && pFirstPin->pin()->shape()->source()) ||	// Source <-> sink
+	      (!pSecondPin->pin()->shape()->source() && !pFirstPin->pin()->shape()->source()) )
+	sReason = "Can only connect components to MCU boards";
+    else if ( (pSecondPin->pin()->pinType() & pFirstPin->pin()->pinType() ) == 0 )			// next the pin type io/adc/interrupt, etc
+	sReason = "Incompatible pin types";
+    else 
+    {
+	if ( pFirstPin->wires().count() > 0 || pSecondPin->wires().count() > 0 )
+	{
+	    // multi wire connection.  Can only multi wire pin on !source, if source pin is shared()
+	    if ( pFirstPin->wires().count() == 0 )
+	    {
+		if ( pSecondPin->pin()->shape()->source() )
+		    sReason = "Only MCU can have multiple connections on a pin";
+		else if ( !pFirstPin->pin()->shared() )
+		    sReason = "This pin can't have a shared connection";
+		else
+		    return true;
+	    }
+	    else if ( pSecondPin->wires().count() == 0 )
+	    {
+		if ( pFirstPin->pin()->shape()->source() )
+		    sReason = "Only MCU can have multiple connections on a pin";
+		else if ( !pSecondPin->pin()->shared() )
+		    sReason = "This pin can't have a shared connection";
+		else
+		    return true;
+	    }
+	    else
+		sReason = "Too many wires";
+	}
+	else
+	    return true;
+    }
+    return false;
 }
 
 void ShapeScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -165,7 +221,8 @@ void ShapeScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	    {
 		// Find the item we clicked on.  Must be a free pin.
 		PinItem *pPinItem = PinUnderCursor( mouseEvent->scenePos() );
-		if ( pPinItem != NULL && pPinItem->wire() == NULL && pPinItem->pin()->enabled() )
+		QString sReason;
+		if ( CanStartWire( pPinItem, sReason ) )
 		{
 		    m_pEditor->m_pWiringStartPin = pPinItem;
 		    m_pEditor->m_pCurrentWire = new WireItem( pPinItem->mapToScene(pPinItem->boundingRect().center()), mouseEvent->scenePos() );
@@ -211,6 +268,7 @@ void ShapeScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	QGraphicsScene::mousePressEvent(mouseEvent);
     }
 }
+
 
 void ShapeScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
@@ -258,55 +316,61 @@ void ShapeScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 		else if ( m_pEditor->m_pWiringStartPin == NULL ) 
 		{
 		    // First Pin in the link
-		    if ( pPinItem->wire() != NULL )
+		    QString sReason;
+		    if ( CanStartWire(pPinItem,sReason) )
 		    {
-			SetCursor( *m_pEditor->m_curWireNot );	 // already connected
+			SetCursor( *m_pEditor->m_curWire );	 // already connected
 			//ATLTRACE("Pin 1 already connected\n");
 		    }
 		    else
 		    {
-			SetCursor( *m_pEditor->m_curWire );
+			SetCursor( *m_pEditor->m_curWireNot );
 			//ATLTRACE("Pin 1 wire\n");
 		    }
 		}
 		else
 		{
 		    // we are the second pin
-		    if ( pPinItem->wire() != NULL )  // already wired
-		    {
-			SetCursor( *m_pEditor->m_curWireNot );
-			//ATLTRACE("Pin 2 already connected\n");
-		    }
-		    else if ( pPinItem->pin()->shape() == m_pEditor->m_pWiringStartPin->pin()->shape() )
-		    {
-			// todo - this checks the shape, not the shape instance - may not be necessary
-			//        I don't think we can connect to ourselves - sink -> source
-			SetCursor( *m_pEditor->m_curWireNot );
-			//ATLTRACE("Pin 2 can't wire to ourselves\n");
-		    }
+		    QString sReason;
+		    if ( CanEndWire( m_pEditor->m_pWiringStartPin, pPinItem, sReason ) )
+			SetCursor( *m_pEditor->m_curWire );
 		    else
-		    {
-			// check compatibility
-			bool bGood = true;
+			SetCursor( *m_pEditor->m_curWireNot );
+		 //   if ( pPinItem->wire() != NULL )  // already wired
+		 //   {
+			//SetCursor( *m_pEditor->m_curWireNot );
+			////ATLTRACE("Pin 2 already connected\n");
+		 //   }
+		 //   else if ( pPinItem->pin()->shape() == m_pEditor->m_pWiringStartPin->pin()->shape() )
+		 //   {
+			//// todo - this checks the shape, not the shape instance - may not be necessary
+			////        I don't think we can connect to ourselves - sink -> source
+			//SetCursor( *m_pEditor->m_curWireNot );
+			////ATLTRACE("Pin 2 can't wire to ourselves\n");
+		 //   }
+		 //   else
+		 //   {
+			//// check compatibility
+			//bool bGood = true;
 
-			// first the source/sink (can only connect a source to a sink
-			if ( (pPinItem->pin()->shape()->source() && m_pEditor->m_pWiringStartPin->pin()->shape()->source() ) ||
-		             (!pPinItem->pin()->shape()->source() && !m_pEditor->m_pWiringStartPin->pin()->shape()->source() ) )
-			    bGood = false;
+			//// first the source/sink (can only connect a source to a sink
+			//if ( (pPinItem->pin()->shape()->source() && m_pEditor->m_pWiringStartPin->pin()->shape()->source() ) ||
+		 //            (!pPinItem->pin()->shape()->source() && !m_pEditor->m_pWiringStartPin->pin()->shape()->source() ) )
+			//    bGood = false;
 
-			// next the pin type io/adc/interrupt, etc
-			if ( bGood )
-			{
-			    if ( (pPinItem->pin()->pinType() & m_pEditor->m_pWiringStartPin->pin()->pinType() ) == 0 )
-				bGood = false;	// incompatible types
-			}
+			//// next the pin type io/adc/interrupt, etc
+			//if ( bGood )
+			//{
+			//    if ( (pPinItem->pin()->pinType() & m_pEditor->m_pWiringStartPin->pin()->pinType() ) == 0 )
+			//	bGood = false;	// incompatible types
+			//}
 
-			//ATLTRACE("Pin 2 ?????????\n");
-			if ( !bGood )
-			    SetCursor( *m_pEditor->m_curWireNot );
-			else
-			    SetCursor( *m_pEditor->m_curWire );
-		    }
+			////ATLTRACE("Pin 2 ?????????\n");
+			//if ( !bGood )
+			//    SetCursor( *m_pEditor->m_curWireNot );
+			//else
+			//    SetCursor( *m_pEditor->m_curWire );
+		 //   }
 		}
 	    }
 	    else
@@ -347,16 +411,11 @@ void ShapeScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	}
 
 	// this is an ugly copy of the conditions in mouseMoveEvent
-	if ( pSecondPin != NULL &&		// over a pin
-	     pSecondPin->pin()->enabled() &&
-	     pSecondPin->wire() == NULL &&	// already wired ?
-	     pSecondPin->pin()->shape() != m_pEditor->m_pWiringStartPin->pin()->shape() && // wiring to myself?
-	     ( (pSecondPin->pin()->shape()->source() && !m_pEditor->m_pWiringStartPin->pin()->shape()->source()) ||	// Source <-> sink
-               (!pSecondPin->pin()->shape()->source() && m_pEditor->m_pWiringStartPin->pin()->shape()->source()) )  &&	
-	     (pSecondPin->pin()->pinType() & m_pEditor->m_pWiringStartPin->pin()->pinType() ) != 0 )			// next the pin type io/adc/interrupt, etc
+	QString sReason;
+	if ( CanEndWire( m_pEditor->m_pWiringStartPin, pSecondPin, sReason ) )
 	{
-	    m_pEditor->m_pWiringStartPin->setWire( m_pEditor->m_pCurrentWire );
-	    pSecondPin->setWire( m_pEditor->m_pCurrentWire );
+	    m_pEditor->m_pWiringStartPin->addWire( m_pEditor->m_pCurrentWire );
+	    pSecondPin->addWire( m_pEditor->m_pCurrentWire );
 	    m_pEditor->m_pCurrentWire->setPin1(m_pEditor->m_pWiringStartPin);
 	    m_pEditor->m_pCurrentWire->setPin2(pSecondPin);
 	    m_pEditor->m_pCurrentWire->UpdateEndpoints();

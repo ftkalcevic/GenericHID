@@ -15,11 +15,12 @@ public:
 
     enum { Type = UserType + UserTypes::PinItemType };
     int type() const { return Type; }
-    WireItem *wire() const { return m_pWire; }
+    const QList<WireItem *> &wires() const { return m_pWires; }
     const Pin *pin() const { return m_pPin; }
     const class ShapeItem *parentShape() const;
 
-    void setWire( WireItem *pWire ) { m_pWire = pWire; }
+    void addWire( WireItem *pWire ) { assert(pWire); m_pWires.push_back( pWire ); }
+    bool removeWire( WireItem *pWire ) { assert(pWire); return m_pWires.removeOne( pWire ); }
 
 private:
     //virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -27,7 +28,7 @@ private:
     //virtual void mousePressEvent( QGraphicsSceneMouseEvent * event );
     Editor *m_pEditor;
     const Pin *m_pPin;
-    WireItem *m_pWire;
+    QList<WireItem *> m_pWires;
 };
 
 #endif // PINITEM_H

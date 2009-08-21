@@ -646,7 +646,6 @@ void GenericHID::onTabChanged( int index )
 	    - or, timer object, configuration is based on shared connection object
 
 todo
-    - allow multiple wires on an mcu pin (eg LCD, pwm
     - test all controls 
     - test panel
     - crash on load another in onSelectionChanged
