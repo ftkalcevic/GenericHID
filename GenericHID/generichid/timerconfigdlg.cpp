@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "timerconfigdlg.h"
+#include "timercounter.h"
 
 TimerConfigDlg::TimerConfigDlg( int nBits, QStringList &sPrescales, QWidget *parent)
 : QDialog(parent)
@@ -36,16 +37,6 @@ TimerConfigDlg::~TimerConfigDlg()
 {
 }
 
-static QString MakeFreq( double dFreq )
-{
-    if ( dFreq >= 1000000 )
-	return QString("%1MHz").arg(dFreq/1000000.0, 0, 'f', 1 );
-    else if ( dFreq >= 1000 )
-	return QString("%1kHz").arg(dFreq/1000.0, 0, 'f', 1 );
-    else
-	return QString("%1Hz").arg(dFreq, 0, 'f', 1 );
-}
-
 void TimerConfigDlg::ComputeTimer()
 {
     int nPrescale = ui.cboPrescale->currentText().toInt();
@@ -57,7 +48,7 @@ void TimerConfigDlg::ComputeTimer()
     if ( nMode == 0 )	// phase correct
 	dFreq /= 2;
 
-    ui.lblOutputFrequency->setText( MakeFreq( dFreq ) );
+    ui.lblOutputFrequency->setText( TimerCounter::MakeFreq( dFreq ) );
 
     int nBits = 0;
     while ( nTop != 0 )
@@ -111,7 +102,7 @@ void TimerConfigDlg::AutoComputeTimer()
 	}
     }
 
-    ui.lblActualFrequency->setText( MakeFreq( dAutoFrequency ) );
+    ui.lblActualFrequency->setText( TimerCounter::MakeFreq( dAutoFrequency ) );
 
     ui.cboPrescale->setCurrentIndex( ui.cboPrescale->findText( QString::number(nAutoPrescale) ) );
     ui.cboWaveformMode->setCurrentIndex( nAutoMode );
@@ -128,17 +119,10 @@ void TimerConfigDlg::onShowAdvanced()
 
 void TimerConfigDlg::setValue( const QString &sTimerDetails )
 {
-    QStringList s = sTimerDetails.split(",");
-    int nMode = 1;
-    int nPrescaler = 8;
-    int nTop = 100;
-
-    if ( s.count() > 0 )
-	nMode = s[0].toInt();
-    if ( s.count() > 1 )
-	nPrescaler = s[1].toInt();
-    if ( s.count() > 2 )
-	nTop = s[2].toInt();
+    int nMode;
+    int nPrescaler;
+    int nTop;
+    TimerCounter::ExtractDetails( sTimerDetails, nMode, nPrescaler, nTop );
 
     ui.cboPrescale->setCurrentIndex( ui.cboPrescale->findText( QString::number(nPrescaler) ) );
     ui.cboWaveformMode->setCurrentIndex( nMode );

@@ -676,20 +676,10 @@ void GenericHID::onSceneScaleChanged( double d)
     - limit 1
   - PWM
     - mcu attribute
-	- timer 1,2,3
-	    - timer 1,3
-		- 8MHz
-		- 16 bit
-		- phase correct - or faster fast PWM
-		- prescale 1,8,64,256,1024
-	    - timer 2
-		- 8MHz
-		- 8bit
-		- phase correct, fast pwm
-		- prescale 1,8,32,64,128,256,1024
 	- frequency shared between outputs a/b/c on a single timer
-	    - timer configurator 1,2,3
-	    - or, timer object, configuration is based on shared connection object
+	    - add config to xml
+	    - send to MCU
+
 
 todo
     - test all controls 
@@ -707,6 +697,7 @@ todo
     - firmware
 	- port to lufa
 	- honour poll rate (is this a host thing?)
+    - for Timer configuration 0-top, or 0-(top-1)
  */
 
 

@@ -1,6 +1,7 @@
 #ifndef _SHAPEPROPERTY_H_
 #define _SHAPEPROPERTY_H_
 
+#include "timereditorfactory.h"
 
 namespace  PropertyType
 {
@@ -58,9 +59,8 @@ protected:
     static QtBoolPropertyManager *m_boolManager;
     static QtIntPropertyManager *m_intManager;
     static UsagePropertyManager *m_usageManager;
-    static QtStringPropertyManager *m_timerManager;
-    static QtStringPropertyManager *m_timer13Manager;
-    static QtStringPropertyManager *m_timer2Manager;
+    static TimerStringPropertyManager *m_timer13Manager;
+    static TimerStringPropertyManager *m_timer2Manager;
     
     static bool m_bInitialised;
 

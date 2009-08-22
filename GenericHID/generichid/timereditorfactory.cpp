@@ -1,7 +1,16 @@
 #include "stdafx.h"
 #include "timereditorfactory.h"
 #include "timereditwidget.h"
+#include "timercounter.h"
 
+
+QString TimerStringPropertyManager::valueText(const QtProperty *property) const 
+{ 
+    QString sDetails = QtStringPropertyManager::valueText( property ); 
+    return TimerCounter::MakeUserDisplay( sDetails );
+}
+
+    
 // ---------- EditorFactoryPrivate :
 // Base class for editor factory private classes. Manages mapping of properties to editors and vice versa.
 
@@ -91,7 +100,7 @@ void TimerEditorFactoryPrivate::slotSetValue(const QString &value)
         if (itEditor.key() == object) 
 	{
             QtProperty *property = itEditor.value();
-            QtStringPropertyManager *manager = q_ptr->propertyManager(property);
+            TimerStringPropertyManager *manager = q_ptr->propertyManager(property);
             if (!manager)
                 return;
             manager->setValue(property, value);
@@ -101,7 +110,7 @@ void TimerEditorFactoryPrivate::slotSetValue(const QString &value)
 
 
 TimerEditorFactory::TimerEditorFactory(int nBits, QStringList sPrescales, QObject *parent) 
-: QtAbstractEditorFactory<QtStringPropertyManager>(parent)
+: QtAbstractEditorFactory<TimerStringPropertyManager>(parent)
 , d_ptr(new TimerEditorFactoryPrivate())
 , m_nBits( nBits )
 , m_sPrescales( sPrescales )
@@ -116,12 +125,12 @@ TimerEditorFactory::~TimerEditorFactory()
     delete d_ptr;
 }
 
-void TimerEditorFactory::connectPropertyManager(QtStringPropertyManager *manager)
+void TimerEditorFactory::connectPropertyManager(TimerStringPropertyManager *manager)
 {
     connect(manager, SIGNAL(valueChanged(QtProperty*,QString)), this, SLOT(slotPropertyChanged(QtProperty*,QString)));
 }
 
-QWidget *TimerEditorFactory::createEditor(QtStringPropertyManager *manager, QtProperty *property, QWidget *parent)
+QWidget *TimerEditorFactory::createEditor(TimerStringPropertyManager *manager, QtProperty *property, QWidget *parent)
 {
     TimerEditWidget *editor = d_ptr->createEditor(property, parent);
     editor->setValue(manager->value(property));
@@ -133,7 +142,7 @@ QWidget *TimerEditorFactory::createEditor(QtStringPropertyManager *manager, QtPr
     return editor;
 }
 
-void TimerEditorFactory::disconnectPropertyManager(QtStringPropertyManager *manager)
+void TimerEditorFactory::disconnectPropertyManager(TimerStringPropertyManager *manager)
 {
     disconnect(manager, SIGNAL(valueChanged(QtProperty*,QString)), this, SLOT(slotPropertyChanged(QtProperty*,QString)));
 }

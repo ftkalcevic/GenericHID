@@ -6,7 +6,16 @@
 
 class TimerEditorFactoryPrivate;
 
-class TimerEditorFactory : public QtAbstractEditorFactory<QtStringPropertyManager>
+class TimerStringPropertyManager: public QtStringPropertyManager
+{
+    Q_OBJECT
+
+public:
+    TimerStringPropertyManager(QObject *parent=0) : QtStringPropertyManager(parent) {}
+    QString valueText(const QtProperty *property) const;
+};
+
+class TimerEditorFactory : public QtAbstractEditorFactory<TimerStringPropertyManager>
 {
     Q_OBJECT
 
@@ -14,10 +23,10 @@ public:
     TimerEditorFactory(int nBits, QStringList sPrescales, QObject *parent=0);
     ~TimerEditorFactory();
 
-protected:
-    void connectPropertyManager(QtStringPropertyManager *manager);
-    QWidget *createEditor(QtStringPropertyManager *manager, QtProperty *property, QWidget *parent);
-    void disconnectPropertyManager(QtStringPropertyManager *manager);
+public:
+    void connectPropertyManager(TimerStringPropertyManager *manager);
+    QWidget *createEditor(TimerStringPropertyManager *manager, QtProperty *property, QWidget *parent);
+    void disconnectPropertyManager(TimerStringPropertyManager *manager);
 private:
     TimerEditorFactoryPrivate *d_ptr;
     int m_nBits;
@@ -30,6 +39,7 @@ public slots:
     void slotEditorDestroyed(QObject *);
     void slotSetValue(const QString &);
 };
+
 
 #endif // TIMEREDITORFACTORY_H
 

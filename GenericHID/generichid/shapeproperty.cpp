@@ -46,8 +46,8 @@ QtEnumPropertyManager *ShapeProperty::m_enumManager = NULL;
 QtBoolPropertyManager *ShapeProperty::m_boolManager = NULL;
 QtIntPropertyManager *ShapeProperty::m_intManager = NULL;
 UsagePropertyManager *ShapeProperty::m_usageManager = NULL;
-QtStringPropertyManager *ShapeProperty::m_timer13Manager = NULL;
-QtStringPropertyManager *ShapeProperty::m_timer2Manager = NULL;
+TimerStringPropertyManager *ShapeProperty::m_timer13Manager = NULL;
+TimerStringPropertyManager *ShapeProperty::m_timer2Manager = NULL;
 
 bool ShapeProperty::m_bInitialised = false;
 
@@ -88,8 +88,8 @@ void ShapeProperty::Init()
     {
         m_groupManager = new QtGroupPropertyManager();
         m_stringManager = new QtStringPropertyManager();
-	m_timer13Manager  = new QtStringPropertyManager();
-	m_timer2Manager  = new QtStringPropertyManager();
+	m_timer13Manager  = new TimerStringPropertyManager();
+	m_timer2Manager  = new TimerStringPropertyManager();
         m_pointfScaleManager = new QtPointFPropertyManager();
         m_pointfManager = new QtPointFPropertyManager();
         m_doubleManager = new QtDoublePropertyManager();

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "timereditwidget.h"
 #include "timerconfigdlg.h"
+#include "timercounter.h"
 
 
 static inline void setupTreeViewEditorMargin(QLayout *lt)
@@ -32,7 +33,7 @@ TimerEditWidget::TimerEditWidget(QWidget *parent) :
     m_button->installEventFilter(this);
     connect(m_button, SIGNAL(clicked()), this, SLOT(buttonClicked()));
     lt->addWidget(m_button);
-    m_label->setText(m_sTimerDetails);
+    m_label->setText(TimerCounter::MakeUserDisplay(m_sTimerDetails));
 }
 
 void TimerEditWidget::setValue(const QString &s)
@@ -40,7 +41,7 @@ void TimerEditWidget::setValue(const QString &s)
     if (m_sTimerDetails != s) 
     {
         m_sTimerDetails = s;
-        m_label->setText(s);
+        m_label->setText(TimerCounter::MakeUserDisplay(m_sTimerDetails));
     }
 }
 
