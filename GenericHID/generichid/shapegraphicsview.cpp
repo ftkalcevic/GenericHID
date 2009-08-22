@@ -66,4 +66,5 @@ void ShapeGraphicsView::scaleView( double dScale )
     QMatrix m;
     m.scale( m_dViewScale,m_dViewScale );
     setMatrix( m );
+    emit sceneScaleChanged( m_dViewScale );
 }

@@ -92,6 +92,9 @@
 	    <property name="Use Joystick" description="Use the stock AT90USBKey Joystick as a directional input." type="bool" default="false"/>
 	    <property name="Use HWB" description="Use the HWB button as an input button." type="bool" default="false"/>
 	    <property name="SerialNo" description="Required unique serial number of the device.  This must be unique between all GenericHID devices or MS-Windows will Blue-Screen if two duplicate devices are plugged in!" type="string" default="1"/>
+	    <property name="Timer1" description="Timer1 configuration.  Required for PWM timer 1 outputs - PB5(OC1A),PB6(OC1B),PB7(OC1C)" type="timer13" default="1,8,100"/>
+	    <property name="Timer2" description="Timer2 configuration.  Required for PWM timer 2 outputs - PB4(OC2A),PD1(OC2B)" type="timer2" default="1,8,100"/>
+	    <property name="Timer3" description="Timer3 configuration.  Required for PWM timer 3 outputs - PC6(OC3A),PC5(OC3B),PC4(OC3C)" type="timer13" default="1,8,100"/>
 	</Shape>
 	<Shape Id="strippedusbkey" Type="at90usb128" Source="false" Image="resources/avrusbkey.png" Icon="resources/avrusbkeyicon.png" width="411" height="453" maxInstances="1" name="Stripped  AT90USB Key Demo board">
 	    <pin rect="  1, 44, 31, 25" id="Vcc" type="" enabled="false" />

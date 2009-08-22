@@ -16,6 +16,7 @@ public:
 
 signals:
     void dropShapeEvent( const ::Shape *pShape, QPointF pos );
+    void sceneScaleChanged( double d );
 
 private:
     virtual void dropEvent( QDropEvent * event );

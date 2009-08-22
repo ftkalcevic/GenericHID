@@ -27,7 +27,7 @@ public:
     virtual QDomElement WriteXML(QDomElement &node, PropertyValue *) const;
     virtual void getXML(QDomElement &node, PropertyValue *) const;
 
-private:
+protected:
     QString m_sDefault;
 };
 

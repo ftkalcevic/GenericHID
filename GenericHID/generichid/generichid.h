@@ -33,6 +33,9 @@ public slots:
     void onMRUSelected(const QString &sFile);
     void onPropertiesCurrentItemChanged( QtBrowserItem * current );
     void onTabChanged( int index ) ;
+    void onZoomIndexChanged( const QString & text );
+    void onZoomEditTextChanged( const QString & text );
+    void onSceneScaleChanged( double);
 
 private:
     virtual void closeEvent( QCloseEvent * event );
@@ -57,6 +60,7 @@ private:
     ShapeItem *m_pLastSelectedShape;
     QSettings m_Settings;
     MRU m_MRU;
+    QComboBox *m_cboZoom;
 };
 
 #endif // GENERICHID_H

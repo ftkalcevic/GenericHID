@@ -4,7 +4,7 @@
 #include "shapeitem.h"
 
 WireItem::WireItem(QPointF ptStart, QPointF ptEnd, QGraphicsItem *parent)
-: QGraphicsPolygonItem(parent)
+: QGraphicsPathItem(parent)
 , m_ptStart(ptStart)
 , m_ptEnd(ptEnd)
 , m_pPin1( NULL )
@@ -15,7 +15,7 @@ WireItem::WireItem(QPointF ptStart, QPointF ptEnd, QGraphicsItem *parent)
 }
 
 WireItem::WireItem(PinItem *pPin1, PinItem *pPin2, QGraphicsItem *parent)
-: QGraphicsPolygonItem(parent)
+: QGraphicsPathItem(parent)
 , m_pPin1( pPin1 )
 , m_pPin2( pPin2 )
 {
@@ -52,10 +52,17 @@ void WireItem::UpdateEndpoints()
 
 void WireItem::MakePolygon()
 {
-    QVector<QPointF> m_Points(2);
-    m_Points[0] = m_ptStart;
-    m_Points[1] = m_ptEnd;
-    setPolygon( QPolygonF(m_Points) );
+    //QVector<QPointF> m_Points(3);
+    //m_Points[0] = m_ptStart;
+    //m_Points[1] = QPointF(m_ptStart.x(),m_ptEnd.y());
+    //m_Points[2] = m_ptEnd;
+    //setPolygon( QPolygonF(m_Points) );
+
+    QPainterPath path;
+    path.moveTo( m_ptStart );
+    //path.lineTo( QPointF(m_ptStart.x(),m_ptEnd.y()) );
+    path.lineTo( m_ptEnd );
+    setPath( path );
 }
 
 

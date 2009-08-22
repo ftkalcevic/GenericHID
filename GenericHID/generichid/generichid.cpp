@@ -3,6 +3,8 @@
 #include "programdlg.h"
 #include "dragtoolbutton.h"
 #include "makeeeprom.h"
+#include "timerconfigdlg.h"
+
 
 const char * const CONFIGDATA_FILE = "config.xml";
 const int HELP_WINDOW_HEIGHT = 30;
@@ -87,6 +89,16 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
 
     ui.textBrowser->setSearchPaths( QStringList() << "help" );
     onPropertiesCurrentItemChanged( NULL );
+
+    m_cboZoom = new QComboBox();
+    m_cboZoom->addItems( QStringList() << "400%" << "200%" << "150%" << "100%" << "75%" << "50%" );
+    m_cboZoom->setCurrentIndex(3);
+    m_cboZoom->setEditable( true );
+    m_cboZoom->setToolTip( "Zoom" );
+    ui.toolBarEdit->addWidget( m_cboZoom );
+    connect( m_cboZoom, SIGNAL(currentIndexChanged( const QString &)), this, SLOT(onZoomIndexChanged( const QString &)) );
+    connect( m_cboZoom, SIGNAL(editTextChanged ( const QString &)), this, SLOT(onZoomEditTextChanged( const QString &)) );
+    connect( ui.graphicsView, SIGNAL(sceneScaleChanged( double)), this, SLOT(onSceneScaleChanged( double)) );
 
     readSettings();
 
@@ -628,6 +640,28 @@ void GenericHID::onTabChanged( int index )
 }
 
 
+void GenericHID::onZoomIndexChanged( const QString & text )
+{
+    QString s = text;
+    int n = s.indexOf( "%" );
+    if ( n >= 0 )
+	s = s.mid(0,n);
+    bool bOk = false;
+    double d = s.toDouble(&bOk);
+    if ( bOk )
+	ui.graphicsView->scaleView( d/100.0 );
+}
+
+void GenericHID::onZoomEditTextChanged( const QString & text )
+{
+    onZoomIndexChanged( text );
+}
+
+void GenericHID::onSceneScaleChanged( double d)
+{
+    m_cboZoom->setEditText( QString("%1%").arg(d*100,0,'f',0) );
+}
+
 /*
  UI => XML => EEPROM Binary => Program
  Independant Test panel
@@ -638,9 +672,21 @@ void GenericHID::onTabChanged( int index )
     - LCD 4/8 bit
     - Key matrix  rows x cols
 	- key names
+  - Counter
+    - limit 1
   - PWM
     - mcu attribute
 	- timer 1,2,3
+	    - timer 1,3
+		- 8MHz
+		- 16 bit
+		- phase correct - or faster fast PWM
+		- prescale 1,8,64,256,1024
+	    - timer 2
+		- 8MHz
+		- 8bit
+		- phase correct, fast pwm
+		- prescale 1,8,32,64,128,256,1024
 	- frequency shared between outputs a/b/c on a single timer
 	    - timer configurator 1,2,3
 	    - or, timer object, configuration is based on shared connection object
@@ -656,13 +702,14 @@ todo
     - lose the config.xml
 	- make pins configurable
     - do help
-    - zoom on toolbar
     - disable things when in test mode
     - linux libusb 0.1
     - firmware
 	- port to lufa
 	- honour poll rate (is this a host thing?)
  */
+
+
 
 
 

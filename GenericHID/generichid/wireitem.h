@@ -4,7 +4,7 @@
 class PinItem;
 class ShapeItem;
 
-class WireItem : public QObject, public QGraphicsPolygonItem
+class WireItem : public QObject, public QGraphicsPathItem
 {
     Q_OBJECT
 

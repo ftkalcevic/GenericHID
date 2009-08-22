@@ -4,8 +4,10 @@
 #include "shapepropertyenum.h"
 #include "shapepropertyint.h"
 #include "shapepropertystring.h"
+#include "shapepropertytimer.h"
 #include "shapepropertyusage.h"
 #include "listeditorfactory.h"
+#include "timereditorfactory.h"
 
 
 namespace  PropertyType
@@ -21,6 +23,8 @@ namespace  PropertyType
         { Bool, "Bool" },
         { Int, "Int" },
 	{ Usage, "Usage" },
+	{ Timer13, "Timer13" },
+	{ Timer2, "Timer2" },
     };
 
     enum PropertyType fromString( const QString &s )
@@ -30,8 +34,6 @@ namespace  PropertyType
 		return types[i].eType;
 	return None;
     }
-
-
 };
 
 
@@ -44,6 +46,8 @@ QtEnumPropertyManager *ShapeProperty::m_enumManager = NULL;
 QtBoolPropertyManager *ShapeProperty::m_boolManager = NULL;
 QtIntPropertyManager *ShapeProperty::m_intManager = NULL;
 UsagePropertyManager *ShapeProperty::m_usageManager = NULL;
+QtStringPropertyManager *ShapeProperty::m_timer13Manager = NULL;
+QtStringPropertyManager *ShapeProperty::m_timer2Manager = NULL;
 
 bool ShapeProperty::m_bInitialised = false;
 
@@ -63,8 +67,12 @@ void ShapeProperty::SetBrowserFactory( QtAbstractPropertyBrowser *browser )
     ListEditorFactory *comboListFactory = new ListEditorFactory();
     QtCheckBoxFactory *checkBoxFactory = new QtCheckBoxFactory();
     QtSpinBoxFactory *spinBoxFactory = new QtSpinBoxFactory();
+    TimerEditorFactory *timer13Factory = new TimerEditorFactory(16,QStringList()<< "1" << "8" << "64" << "256" << "1024" );
+    TimerEditorFactory *timer2Factory = new TimerEditorFactory(8,QStringList()<< "1" << "8" << "32" << "64" << "128" << "256" << "1024" );
 
     browser->setFactoryForManager(m_stringManager, lineEditFactory);
+    browser->setFactoryForManager(m_timer13Manager, timer13Factory);
+    browser->setFactoryForManager(m_timer2Manager, timer2Factory);
     browser->setFactoryForManager(m_pointfManager->subDoublePropertyManager(), doubleSpinBoxFactory);
     browser->setFactoryForManager(m_pointfScaleManager->subDoublePropertyManager(), doubleSpinBoxFactory);
     browser->setFactoryForManager(m_doubleManager, doubleSpinBoxFactory);
@@ -80,6 +88,8 @@ void ShapeProperty::Init()
     {
         m_groupManager = new QtGroupPropertyManager();
         m_stringManager = new QtStringPropertyManager();
+	m_timer13Manager  = new QtStringPropertyManager();
+	m_timer2Manager  = new QtStringPropertyManager();
         m_pointfScaleManager = new QtPointFPropertyManager();
         m_pointfManager = new QtPointFPropertyManager();
         m_doubleManager = new QtDoublePropertyManager();
@@ -116,6 +126,8 @@ ShapeProperty *ShapeProperty::CreateShapeProperty( QDomElement &node, const QStr
         case PropertyType::Bool:	pProp = new ShapePropertyBool( sName, sDescription ); break;
         case PropertyType::Int:		pProp = new ShapePropertyInt( sName, sDescription ); break;
         case PropertyType::Usage:	pProp = new ShapePropertyUsage( sName, sDescription ); break;
+        case PropertyType::Timer13:	pProp = new ShapePropertyTimer( m_timer13Manager, sName, sDescription ); break;
+        case PropertyType::Timer2:	pProp = new ShapePropertyTimer( m_timer2Manager, sName, sDescription ); break;
 	default:
 	    // problem
 	    break;

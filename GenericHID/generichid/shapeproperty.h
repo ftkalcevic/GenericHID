@@ -11,6 +11,8 @@ namespace  PropertyType
         Bool,
         Int,
         Usage,
+	Timer13,
+	Timer2,
 	None
     };
     extern enum PropertyType fromString( const QString &s );
@@ -56,6 +58,9 @@ protected:
     static QtBoolPropertyManager *m_boolManager;
     static QtIntPropertyManager *m_intManager;
     static UsagePropertyManager *m_usageManager;
+    static QtStringPropertyManager *m_timerManager;
+    static QtStringPropertyManager *m_timer13Manager;
+    static QtStringPropertyManager *m_timer2Manager;
     
     static bool m_bInitialised;
 
