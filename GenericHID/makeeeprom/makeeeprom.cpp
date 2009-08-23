@@ -127,6 +127,8 @@ ByteArray MakeEEPROM::makeEEPROM()
 			       (m_ConfigConfig->is5Volts() ? DEVICE_OPTION_5V : 0 );
     for (int i = 0; i < countof(appHeader.ReportLength); i++)
 	appHeader.ReportLength[i] = 0;
+    for (int i = 0; i < countof(appHeader.timers); i++ )
+	appHeader.timers[i] = m_ConfigConfig->timers()[i];
 
     ByteBuffer ApplicationData;
 

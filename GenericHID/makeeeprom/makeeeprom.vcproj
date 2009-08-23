@@ -359,6 +359,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\datatypes.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\deviceconfig.h"
 				>
 			</File>
@@ -376,10 +380,6 @@
 			</File>
 			<File
 				RelativePath=".\stringtable.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\types.h"
 				>
 			</File>
 		</Filter>

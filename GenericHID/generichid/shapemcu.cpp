@@ -138,6 +138,9 @@ void ShapeMCU::MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sP
     XMLUtility::setAttribute( configNode, "SerialDebug", GetPropertyValueBool("Serial-Debug",values,false) );
     XMLUtility::setAttribute( configNode, "HIDDebug", GetPropertyValueBool("HID-Debug",values,false) );
     XMLUtility::setAttribute( configNode, "PowerPort", sPowerPin );
+    XMLUtility::setAttribute( configNode, "Timer1", GetPropertyValueBool("Timer1",values,false) );
+    XMLUtility::setAttribute( configNode, "Timer2", GetPropertyValueBool("Timer2",values,false) );
+    XMLUtility::setAttribute( configNode, "Timer3", GetPropertyValueBool("Timer3",values,false) );
 }
 
 

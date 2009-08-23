@@ -188,6 +188,9 @@
 	    <property name="Use Joystick" description="Use the stock AT90USBKey Joystick as a directional input." type="bool" default="false"/>
 	    <property name="Use HWB" description="Use the HWB button as an input button." type="bool" default="false"/>
 	    <property name="SerialNo" description="Required unique serial number of the device.  This must be unique between all GenericHID devices or MS-Windows will Blue-Screen if two duplicate devices are plugged in!" type="string" default="1"/>
+	    <property name="Timer1" description="Timer1 configuration.  Required for PWM timer 1 outputs - PB5(OC1A),PB6(OC1B),PB7(OC1C)" type="timer13" default="1,8,100"/>
+	    <property name="Timer2" description="Timer2 configuration.  Required for PWM timer 2 outputs - PB4(OC2A),PD1(OC2B)" type="timer2" default="1,8,100"/>
+	    <property name="Timer3" description="Timer3 configuration.  Required for PWM timer 3 outputs - PC6(OC3A),PC5(OC3B),PC4(OC3C)" type="timer13" default="1,8,100"/>
 	</Shape>
 	
 	
@@ -261,6 +264,9 @@
 		<enum name="None"/>
 	    </property>
 	    <property name="SerialNo" description="Required unique serial number of the device.  This must be unique between all GenericHID devices or MS-Windows will Blue-Screen if two duplicate devices are plugged in!" type="string" default="1"/>
+	    <property name="Timer1" description="Timer1 configuration.  Required for PWM timer 1 outputs - PB5(OC1A),PB6(OC1B),PB7(OC1C)" type="timer13" default="1,8,100"/>
+	    <property name="Timer2" description="Timer2 configuration.  Required for PWM timer 2 outputs - PB4(OC2A),PD1(OC2B)" type="timer2" default="1,8,100"/>
+	    <property name="Timer3" description="Timer3 configuration.  Required for PWM timer 3 outputs - PC6(OC3A),PC5(OC3B),PC4(OC3C)" type="timer13" default="1,8,100"/>
 	</Shape>
 
 
@@ -343,6 +349,9 @@
 		<enum name="None"/>
 	    </property>
 	    <property name="SerialNo" description="Required unique serial number of the device.  This must be unique between all GenericHID devices or MS-Windows will Blue-Screen if two duplicate devices are plugged in!" type="string" default="1"/>
+	    <property name="Timer1" description="Timer1 configuration.  Required for PWM timer 1 outputs - PB5(OC1A),PB6(OC1B),PB7(OC1C)" type="timer13" default="1,8,100"/>
+	    <property name="Timer2" description="Timer2 configuration.  Required for PWM timer 2 outputs - PB4(OC2A),PD1(OC2B)" type="timer2" default="1,8,100"/>
+	    <property name="Timer3" description="Timer3 configuration.  Required for PWM timer 3 outputs - PC6(OC3A),PC5(OC3B),PC4(OC3C)" type="timer13" default="1,8,100"/>
 	</Shape>
 
 
@@ -520,7 +529,7 @@
 	    <property name="Current" description="Current usage of the switch in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
 	</Shape>
 
-	<Shape Id="counter" Type="counter" Source="true" Image="resources/timer.png" Icon="resources/timericon.png" width="47" height="85" maxInstances="0" name="Millisecond Counter">
+	<Shape Id="counter" Type="counter" Source="true" Image="resources/timer.png" Icon="resources/timericon.png" width="47" height="85" maxInstances="1" name="Millisecond Counter">
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
 	    <property name="Usage" description="HID usage of the control." type="usage" default="62500:1"/>
 	    <property name="Period" description="Period of the counter in milliseconds.  Every 'Period' ms, the counter ticks.  Use a large number, eg 500, for a watch dog, or 1 for a ms counter." type="int" min="1" max="65535" default="500"/>

@@ -2,6 +2,7 @@
 #define _CONFIGURATIONCONFIG_H_
 
 #include "configuration.h"
+#include "deviceconfig.h"
 
 class ConfigurationConfig : public Configuration
 {
@@ -32,6 +33,7 @@ public:
     unsigned short usage() const { return m_nUsage; }
     bool is5Volts() const { return m_b5Volts; }
     int powerPort() const { return m_nPowerPort; }
+    const struct TimerConfig *timers() const { return m_Timers; }
 
 private:
     bool m_bBusPowered;
@@ -44,6 +46,7 @@ private:
     unsigned short m_nUsage;
     bool m_b5Volts;
     int m_nPowerPort;
+    struct TimerConfig m_Timers[MAX_TIMERS];
 };
 
 #endif

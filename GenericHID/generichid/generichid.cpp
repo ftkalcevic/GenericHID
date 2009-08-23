@@ -672,13 +672,10 @@ void GenericHID::onSceneScaleChanged( double d)
     - LCD 4/8 bit
     - Key matrix  rows x cols
 	- key names
-  - Counter
-    - limit 1
   - PWM
     - mcu attribute
-	- frequency shared between outputs a/b/c on a single timer
-	    - add config to xml
-	    - send to MCU
+	- send to MCU
+    - need to display the PWM freq, counts in the PWM fields
 
 
 todo

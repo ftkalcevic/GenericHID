@@ -11,6 +11,70 @@ ConfigurationConfig::~ConfigurationConfig(void)
 }
 
 
+// A timer config string is Mode,Prescaler,Top
+// where Mode is 0 - phase correct, 1 - fast pwm
+static bool UnpackTimer( const QDomElement &elem, const QString &sAttrName, struct TimerConfig &timer, bool b16Bit, QString *sError )
+{
+    QString s;
+    if ( !XMLUtility::getAttributeString( elem, sAttrName, s, sError ) )
+	return false;
+
+    QStringList parts = s.split(",");
+    if ( parts.count() != 3 )
+    {
+	if ( sError != NULL )
+	    *sError = QString("Invalid timer format, '%1', for attribute '%2' on node <%3>.  Must be Mode,Prescaler,Top").arg(s).arg(sAttrName).arg(elem.parentNode().nodeName());
+	return false;
+    }
+
+    bool bOk;
+    s = parts[0].trimmed();
+    int nMode = s.toInt(&bOk);
+    if ( !bOk || nMode < 0 || nMode > 1 )
+    {
+	if ( sError != NULL )
+	    *sError = QString("Invalid mode, '%1', for attribute '%2' on node <%3>.  Must be 0 or 1").arg(s).arg(sAttrName).arg(elem.parentNode().nodeName());
+	return false;
+    }
+
+    int nMax;
+    QStringList sPrescales;
+    if ( b16Bit )
+    {
+	nMax = 0xFFFF;
+	sPrescales << "1" << "8" << "64" << "256" << "1024";
+    }
+    else
+    {
+	nMax = 0xFF;
+	sPrescales << "1" << "8" << "32" << "64" << "128" << "256" << "1024";
+    }
+
+    s = parts[1].trimmed();
+    if ( !sPrescales.contains(s) )
+    {
+	if ( sError != NULL )
+	    *sError = QString("Invalid prescale, '%1', for attribute '%2' on node <%3>.  Must be 0 or 1").arg(s).arg(sAttrName).arg(elem.parentNode().nodeName());
+	return false;
+    }
+    int nPrescale = s.toInt();
+
+    s = parts[2].trimmed();
+    int nTop = s.toInt(&bOk);
+    if ( !bOk || nTop < 1 || nTop > nMax )
+    {
+	if ( sError != NULL )
+	    *sError = QString("Invalid Count Top, '%1', for attribute '%2' on node <%3>.  Must be from 1 to %4").arg(s).arg(sAttrName).arg(elem.parentNode().nodeName()).arg(nMax);
+	return false;
+    }
+
+    timer.Mode = nMode;
+    timer.Prescaler = nPrescale;
+    timer.CounterTop = nTop;
+
+    return true;
+}
+
 
 bool ConfigurationConfig::Load( const QDomElement &elem, QString *sError )
 {
@@ -53,6 +117,14 @@ bool ConfigurationConfig::Load( const QDomElement &elem, QString *sError )
     if  ( s.isEmpty() )
 	m_nPowerPort = -1;
     else if ( !MakePort( s, m_nPowerPort, sError ) )
+	return false;
+
+    assert( countof(m_Timers) == 3 );
+    if ( !UnpackTimer( elem, "Timer1", m_Timers[0], true, sError ) )
+	return false;
+    if ( !UnpackTimer( elem, "Timer2", m_Timers[1], false, sError ) )
+	return false;
+    if ( !UnpackTimer( elem, "Timer3", m_Timers[2], true, sError ) )
 	return false;
 
     return true;
