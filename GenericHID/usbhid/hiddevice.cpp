@@ -32,9 +32,13 @@
 #include "hiddevice.h"
 #include "hidparser.h"
 #ifdef _WIN32
-#include "usb.h"
+    #include "usb.h"
 #else
-#include "libusb.h"
+    #ifdef LIBUSB01
+        #include "usb.h"
+    #else
+        #include "libusb.h"
+    #endif
 #endif
 #include "hidtypes.h"
 #include "log.h"
@@ -50,28 +54,32 @@
 #else
     #define TIMEOUT_ERROR	LIBUSB_ERROR_TIMEOUT
 
-    /* HID descriptor */
-    struct usb_hid_descriptor {
-	    u_int8_t  bLength;
-	    u_int8_t  bDescriptorType;
-	    u_int16_t bcdHID;
-	    u_int8_t  bCountryCode;
-	    u_int8_t  bNumDescriptors;
-	    /* u_int8_t  bReportDescriptorType; */
-	    /* u_int16_t wDescriptorLength; */
-	    /* ... */
-    };
+    #ifndef LIBUSB01
+        /* HID descriptor */
+        struct usb_hid_descriptor {
+	        u_int8_t  bLength;
+	        u_int8_t  bDescriptorType;
+	        u_int16_t bcdHID;
+	        u_int8_t  bCountryCode;
+	        u_int8_t  bNumDescriptors;
+	        /* u_int8_t  bReportDescriptorType; */
+	        /* u_int16_t wDescriptorLength; */
+	        /* ... */
+        };
 
-    #define USB_DT_REPORT LIBUSB_DT_REPORT
-    #define USB_TIMEOUT 1000
-    #define USB_ENDPOINT_OUT    LIBUSB_ENDPOINT_OUT
-    #define USB_ENDPOINT_IN	LIBUSB_ENDPOINT_IN
-    #define USB_ENDPOINT_TYPE_INTERRUPT	LIBUSB_TRANSFER_TYPE_INTERRUPT
+        #define USB_DT_REPORT LIBUSB_DT_REPORT
+        #define USB_TIMEOUT 1000
+        #define USB_ENDPOINT_OUT    LIBUSB_ENDPOINT_OUT
+        #define USB_ENDPOINT_IN	LIBUSB_ENDPOINT_IN
+        #define USB_ENDPOINT_TYPE_INTERRUPT	LIBUSB_TRANSFER_TYPE_INTERRUPT
+    #endif
 #endif
 
 
 
 #ifdef _WIN32
+HIDDevice::HIDDevice(struct usb_device *dev, byte nInterface, byte nConfig )
+#elif defined(LIBUSB01)
 HIDDevice::HIDDevice(struct usb_device *dev, byte nInterface, byte nConfig )
 #else
 HIDDevice::HIDDevice(struct libusb_device *dev, byte nInterface, byte nConfig )
@@ -90,7 +98,7 @@ HIDDevice::HIDDevice(struct libusb_device *dev, byte nInterface, byte nConfig )
 , m_pThread( NULL )
 #endif
 {
-#ifndef _WIN32
+#if !defined( _WIN32 ) && !defined(LIBUSB01)
     if ( m_dev != NULL )
 	libusb_ref_device( m_dev );
 #endif
@@ -101,7 +109,7 @@ HIDDevice::~HIDDevice(void)
 #ifdef HAS_ASYNC
     StopThread();
 #endif
-#ifndef _WIN32
+#if !defined( _WIN32 ) && !defined(LIBUSB01)
     if ( m_dev != NULL )
 	libusb_unref_device( m_dev );
 #endif
@@ -130,9 +138,9 @@ bool HIDDevice::PreprocessReportData()
 
 #ifdef _WIN32
     int len = usb_control_msg( m_hDev, USB_ENDPOINT_IN+1, USB_REQ_GET_DESCRIPTOR, (USB_DT_HID << 8) + 0, 0, (char*)buffer, sizeof(buffer), USB_TIMEOUT );
+#elif defined(LIBUSB01)
+    int len = usb_control_msg( m_hDev, USB_ENDPOINT_IN+1, USB_REQ_GET_DESCRIPTOR, (USB_DT_HID << 8) + 0, 0, (char *)buffer, sizeof(buffer), USB_TIMEOUT );
 #else
-    //int len = libusb_get_descriptor( m_hDev, LIBUSB_DT_HID, 0, buffer, sizeof(buffer) );
-    //int len = libusb_control_transfer( m_hDev, LIBUSB_ENDPOINT_IN+1, LIBUSB_REQUEST_GET_DESCRIPTOR, (LIBUSB_DT_HID << 8) + 0, 0, buffer, sizeof(buffer), USB_TIMEOUT );
     int len = libusb_control_transfer( m_hDev, LIBUSB_ENDPOINT_IN+1, LIBUSB_REQUEST_GET_DESCRIPTOR, (LIBUSB_DT_HID << 8) + 0, 0, buffer, sizeof(buffer), USB_TIMEOUT );
 
 #endif
@@ -152,6 +160,8 @@ bool HIDDevice::PreprocessReportData()
 		QVector<byte> pReportDesc( nReportLen );
 
 #ifdef _WIN32
+		len = usb_control_msg( m_hDev, USB_ENDPOINT_IN+1, USB_REQ_GET_DESCRIPTOR, (USB_DT_REPORT << 8) + desc->Descriptor[i].bDescriptorType, 0, (char *)pReportDesc.data(), nReportLen, USB_TIMEOUT );
+#elif defined(LIBUSB01)
 		len = usb_control_msg( m_hDev, USB_ENDPOINT_IN+1, USB_REQ_GET_DESCRIPTOR, (USB_DT_REPORT << 8) + desc->Descriptor[i].bDescriptorType, 0, (char *)pReportDesc.data(), nReportLen, USB_TIMEOUT );
 #else
 		len = libusb_control_transfer( m_hDev, LIBUSB_ENDPOINT_IN+1, LIBUSB_REQUEST_GET_DESCRIPTOR, (USB_DT_REPORT << 8) + desc->Descriptor[i].bDescriptorType, 0, pReportDesc.data(), nReportLen, USB_TIMEOUT );
@@ -212,6 +222,8 @@ QString HIDDevice::GetDescriptorString( unsigned char index )
     // The length of a USB string, in bytes, is stored in a byte, so 256 is the max len (really (256-2)/2 -> packet header and data is Unicode)
     byte buf[256];
 #ifdef _WIN32
+    int n = usb_get_string_simple( m_hDev, index, (char *)buf, sizeof(buf) );
+#elif defined(LIBUSB01)
     int n = usb_get_string_simple( m_hDev, index, (char *)buf, sizeof(buf) );
 #else
     int n = libusb_get_string_descriptor_ascii( m_hDev, index, buf, sizeof(buf) );
@@ -283,7 +295,7 @@ bool HIDDevice::Open()
 	return true;
     }
 
-#ifdef _WIN32
+#if defined( _WIN32 ) || defined(LIBUSB01)
     m_hDev = usb_open(m_dev);
     if ( m_hDev == NULL )
     {
@@ -292,8 +304,8 @@ bool HIDDevice::Open()
 	m_bOpenErrors = true;
 	return false;
     }
-#else
     m_hDev = NULL;
+#else
     int nError = libusb_open(m_dev, &m_hDev);
     if ( nError != 0 )
     {
@@ -331,7 +343,7 @@ bool HIDDevice::Claim()
     // we still need to set it.  lib-usb, on the other hand, only wants the configuration set
     // if it is different and after we've claimed the interface.
 #ifdef _WIN32
-    m_nInterface = m_dev->config->_interface->altsetting->bInterfaceNumber;
+    m_nInterface = m_dev->config->interface->altsetting->bInterfaceNumber;
     LOG_MSG( m_Logger, LogTypes::Debug, QString("Claiming interface '%1': '%2'").arg(m_dev->filename).arg(m_nInterface) );
     m_nClaimed = usb_claim_interface( m_hDev, m_nInterface );
     LOG_MSG( m_Logger, LogTypes::Debug, QString("usb_claim_interface returned: %1").arg(m_nClaimed) );
@@ -382,17 +394,25 @@ bool HIDDevice::Claim()
  //   }
 
     int nCurrentConfig = -1;
+#ifdef LIBUSB01
+    nCurrentConfig = m_dev->config->bConfigurationValue;
+#else
     nError = libusb_get_configuration( m_hDev, &nCurrentConfig );
     if ( nError != 0 )
     {
 	LOG_MSG( m_Logger, LogTypes::Error, QString("Error reading Configuration state: %1").arg(nError) );
     }
     LOG_MSG( m_Logger, LogTypes::Debug, QString("Current configuration %1").arg(nCurrentConfig) );
+#endif
 
     if ( m_nConfig != nCurrentConfig )
     {
         LOG_MSG( m_Logger, LogTypes::Debug, QString("Setting configuration to %1").arg(m_nConfig) );
+#ifdef LIBUSB01
+	nError = usb_set_configuration(m_hDev, m_nConfig);
+#else
 	nError = libusb_set_configuration(m_hDev, m_nConfig);
+#endif
 	if ( nError != 0 )
 	{
 	    LOG_MSG( m_Logger, LogTypes::Warning, QString("Failed to set device configuration %1: '%2'").arg(m_nConfig).arg(nError) );
@@ -401,16 +421,26 @@ bool HIDDevice::Claim()
 	}
     }
 
+#ifdef LIBUSB01
+    m_nClaimed = usb_claim_interface( m_hDev, m_nInterface );
+#else
     m_nClaimed = libusb_claim_interface( m_hDev, m_nInterface );
+#endif
     if ( m_nClaimed != 0 )
     {
 	LOG_MSG( m_Logger, LogTypes::Warning, QString("Failed to claim interface '%1': '%2'").arg(m_nInterface).arg(m_nClaimed) );
 
+#ifndef LIBUSB01
 	nError = libusb_kernel_driver_active( m_hDev, m_nInterface );
 	if ( nError == 1 )
+#endif
 	{
 	    LOG_MSG( m_Logger, LogTypes::Debug, "Kernel driver active.  Trying to force claim." );
+#ifdef LIBUSB01
+	    nError = usb_detach_kernel_driver_np(m_hDev, m_nInterface);
+#else
 	    nError = libusb_detach_kernel_driver(m_hDev, m_nInterface);
+#endif
 	    if ( nError != 0 )
 	    {
 		LOG_MSG( m_Logger, LogTypes::Warning, QString("Failed to force detach kernel driver %1: '%2'").arg(m_nInterface).arg(nError) );
@@ -418,7 +448,11 @@ bool HIDDevice::Claim()
 		return false;
 	    }
 	    LOG_MSG( m_Logger, LogTypes::Debug, QString("Kernel driver detached.  Claiming interface %1").arg(m_nInterface) );
+#ifdef LIBUSB01
+	    m_nClaimed = usb_claim_interface( m_hDev, m_nInterface );
+#else
 	    m_nClaimed = libusb_claim_interface( m_hDev, m_nInterface );
+#endif
 	    if ( m_nClaimed != 0 )
 	    {
 		LOG_MSG( m_Logger, LogTypes::Warning, QString("Failed to claim interface after detaching kernel driver '%1': '%2'").arg(m_nInterface).arg(m_nClaimed) );
@@ -426,12 +460,14 @@ bool HIDDevice::Claim()
 		return false;
 	    }
 	}
+#ifndef LIBUSB01
 	else
 	{
 	    LOG_MSG( m_Logger, LogTypes::Warning, QString("Failed to determine if the kernel driver is active for configuration %1: '%2'").arg(m_nConfig).arg(nError) );
 	    m_bOpenErrors = true;
 	    return false;
 	}
+#endif
     }
     else
     {
@@ -452,7 +488,7 @@ bool HIDDevice::Unclaim()
 
     if ( m_nClaimed == 0 )
     {
-#ifdef _WIN32
+#if defined( _WIN32) || defined(LIBUSB01)
 	int nError = usb_release_interface( m_hDev,  m_nInterface );
 #else
 	int nError = libusb_release_interface( m_hDev,  m_nInterface );
@@ -475,7 +511,7 @@ bool HIDDevice::Close()
 
     if ( m_bOpen )
     {
-#ifdef _WIN32
+#if defined( _WIN32) || defined(LIBUSB01)
 	int nError = usb_close(m_hDev);
 	if ( nError < 0 )
 	{
@@ -496,7 +532,7 @@ bool HIDDevice::Close()
 
 QString HIDDevice::Manufacturer() 
 { 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(LIBUSB01)
     return GetDescriptorString( m_dev->descriptor.iProduct );
 #else
     QString s;
@@ -509,7 +545,7 @@ QString HIDDevice::Manufacturer()
 
 QString HIDDevice::Product()
 { 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(LIBUSB01)
     return GetDescriptorString( m_dev->descriptor.iProduct );
 #else
     QString s;
@@ -522,7 +558,7 @@ QString HIDDevice::Product()
 
 QString HIDDevice::SerialNumber()
 { 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(LIBUSB01)
     return GetDescriptorString( m_dev->descriptor.iSerialNumber );
 #else
     QString s;
@@ -535,7 +571,7 @@ QString HIDDevice::SerialNumber()
 
 unsigned short HIDDevice::VID()
 { 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(LIBUSB01)
     return m_dev->descriptor.idVendor;
 #else
     libusb_device_descriptor desc;
@@ -548,7 +584,7 @@ unsigned short HIDDevice::VID()
 
 unsigned short HIDDevice::PID()
 { 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(LIBUSB01)
     return m_dev->descriptor.idProduct;
 #else
     libusb_device_descriptor desc;
@@ -569,9 +605,13 @@ QString HIDDevice::SystemId()
 	    // for linux, every time the device is removed, it comes back with another devnum, the only thing libusb gives us.
 	    // So, we go looking for a /sys/bus/usb/devices/*/devnum that matches our devnum and use the * part to uniquely identify our bus position
 
-	    LOG_MSG( m_Logger, LogTypes::Debug, QString("Bus %1 Address %2").arg(libusb_get_bus_number(m_dev)).arg(libusb_get_device_address(m_dev)) );
 	    m_sSystemId = QString("?");
+#if defined(LIBUSB01)
+	    int nDeviceNumber = m_dev->devnum;
+#else
+	    LOG_MSG( m_Logger, LogTypes::Debug, QString("Bus %1 Address %2").arg(libusb_get_bus_number(m_dev)).arg(libusb_get_device_address(m_dev)) );
 	    int nDeviceNumber = libusb_get_device_address(m_dev);
+#endif
 
 	    QDir devicesPath("/sys/bus/usb/devices");
 	    QFileInfoList devices = devicesPath.entryInfoList( QDir::Dirs );
@@ -611,7 +651,7 @@ int HIDDevice::InterruptRead( byte *buf, int len, int timeout )
 	    return -1;
     }
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(LIBUSB01)
     int n = usb_interrupt_read( m_hDev, InputEndpoint(), (char *)buf, len, timeout );
 #else
     int transferred = 0;
@@ -639,7 +679,7 @@ bool HIDDevice::GetReport( byte nReportId, HID_ReportItemTypes_t nReportType, by
 
     bool bRet = true;
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(LIBUSB01)
     int len = usb_control_msg( m_hDev, 0xA1, GET_REPORT, ((nReportType+1) << 8) + nReportId, 0, (char*)buf, nBufLen, timeout );
 #else
     int len = libusb_control_transfer( m_hDev, 0xA1, GET_REPORT, ((nReportType+1) << 8) + nReportId, 0, buf, nBufLen, timeout );
@@ -669,7 +709,7 @@ int HIDDevice::InterruptWrite( const byte *buf, int len, int timeout )
 	    return -1;
     }
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(LIBUSB01)
     int n = usb_interrupt_write( m_hDev, OutputEndpoint(), (char *)buf, len, timeout );
 #else
     int transferred = 0;
@@ -700,20 +740,20 @@ byte HIDDevice::InputEndpoint()
 byte HIDDevice::GetEndpoint( byte nDirection, byte nType )
 {
     // search for the correct end-point to output on.
-#ifdef _WIN32
+#if defined(_WIN32) || defined(LIBUSB01)
     assert( m_dev != NULL );
     assert( m_dev->config->bNumInterfaces == 1 );
 
     if ( m_dev != NULL && m_dev->config->bNumInterfaces == 1 )
     {
-	if ( m_dev->config->_interface->num_altsetting > 0 )
+	if ( m_dev->config->interface->num_altsetting > 0 )
 	{
-	    for ( int ep = 0; ep < m_dev->config->_interface->altsetting->bNumEndpoints; ep++ )
+	    for ( int ep = 0; ep < m_dev->config->interface->altsetting->bNumEndpoints; ep++ )
 	    {
-		if ( (m_dev->config->_interface->altsetting->endpoint[ep].bEndpointAddress & USB_ENDPOINT_DIR_MASK) == nDirection &&
-		    (m_dev->config->_interface->altsetting->endpoint[ep].bmAttributes & USB_ENDPOINT_TYPE_MASK) == nType )
+		if ( (m_dev->config->interface->altsetting->endpoint[ep].bEndpointAddress & USB_ENDPOINT_DIR_MASK) == nDirection &&
+		    (m_dev->config->interface->altsetting->endpoint[ep].bmAttributes & USB_ENDPOINT_TYPE_MASK) == nType )
 		{
-		    return m_dev->config->_interface->altsetting->endpoint[ep].bEndpointAddress;
+		    return m_dev->config->interface->altsetting->endpoint[ep].bEndpointAddress;
 		}
 	    }
 	}

@@ -60,7 +60,18 @@ HEADERS += columnlayout.h \
     testoutputlcd.h \
     testoutputled.h \
     testoutputvalue.h \
-    testwidget.h
+    testwidget.h \
+    timerconfigdlg.h \
+    timereditwidget.h \
+    keymatrixeditorfactory.h \
+    shapepropertytimer.h \
+    timereditorfactory.h \
+    keymatrixnamedlg.h \
+    timercounter.h \
+    shapepropertyrcnames.h \
+    keymatrixeditwidget.h \
+    hatswitchwidget.h \
+    hiddatathread.h
 
 #Source files
 SOURCES += columnlayout.cpp \
@@ -119,12 +130,25 @@ SOURCES += columnlayout.cpp \
     testoutputlcd.cpp \
     testoutputled.cpp \
     testoutputvalue.cpp \
-    testwidget.cpp
+    testwidget.cpp \
+    timerconfigdlg.cpp \
+    timereditwidget.cpp \
+    keymatrixeditorfactory.cpp \
+    shapepropertytimer.cpp \
+    timereditorfactory.cpp \
+    keymatrixnamedlg.cpp \
+    timercounter.cpp \
+    shapepropertyrcnames.cpp \
+    keymatrixeditwidget.cpp \
+    hatswitchwidget.cpp \
+    hiddatathread.cpp
 
 #Forms
 FORMS += ./generichid.ui \
       	 ./programdlg.ui \
-	 ./programmingstatusdlg.ui
+	 ./programmingstatusdlg.ui \
+	 ./timerconfigdlg.ui \
+	 ./keymatrixnamedlg.ui
 
 #Resource file(s)
 RESOURCES += ./generichid.qrc

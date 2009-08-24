@@ -35,8 +35,7 @@
 #pragma warning(disable:4251)
 #endif
 
-#ifndef _WIN32
-    #define HAS_ASYNC
+#ifdef HAS_ASYNC
     #include "hiddevicethread.h"
 #endif
 
@@ -46,6 +45,8 @@ class HIDDevice: protected QThread
 {
 public:
 #ifdef _WIN32
+    HIDDevice(struct usb_device *dev, byte nInterface, byte nConfig);
+#elif defined(LIBUSB01)
     HIDDevice(struct usb_device *dev, byte nInterface, byte nConfig);
 #else
     HIDDevice(struct libusb_device *dev, byte nInterface, byte nConfig);
@@ -92,6 +93,9 @@ private:
     QList<QVector<byte> > m_ReceiveBuffer;
     Logger m_Logger;
 #ifdef _WIN32
+    struct usb_device *m_dev;
+    struct usb_dev_handle *m_hDev;
+#elif defined(LIBUSB01)
     struct usb_device *m_dev;
     struct usb_dev_handle *m_hDev;
 #else
