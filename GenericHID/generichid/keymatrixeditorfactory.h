@@ -13,6 +13,7 @@ class KeyMatrixStringPropertyManager: public QtStringPropertyManager
 public:
     KeyMatrixStringPropertyManager(QObject *parent=0) : QtStringPropertyManager(parent) {}
     QString valueText(const QtProperty *property) const;
+    static QString MakeValueText(const QString &s);
 };
 
 class KeyMatrixEditorFactory : public QtAbstractEditorFactory<KeyMatrixStringPropertyManager>

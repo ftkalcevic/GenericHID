@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "keymatrixeditwidget.h"
 #include "keymatrixnamedlg.h"
-
+#include "keymatrixeditorfactory.h"
 
 static inline void setupTreeViewEditorMargin(QLayout *lt)
 {
@@ -32,8 +32,7 @@ KeyMatrixEditWidget::KeyMatrixEditWidget(QWidget *parent) :
     m_button->installEventFilter(this);
     connect(m_button, SIGNAL(clicked()), this, SLOT(buttonClicked()));
     lt->addWidget(m_button);
-//    m_label->setText(TimerCounter::MakeUserDisplay(m_sNames));
-    m_label->setText(m_sNames);
+    m_label->setText(KeyMatrixStringPropertyManager::MakeValueText(m_sNames));
 }
 
 void KeyMatrixEditWidget::setValue(const QString &s)
@@ -41,8 +40,7 @@ void KeyMatrixEditWidget::setValue(const QString &s)
     if (m_sNames != s) 
     {
         m_sNames = s;
-        //m_label->setText(TimerCounter::MakeUserDisplay(m_sNames));
-	m_label->setText(m_sNames);
+        m_label->setText(KeyMatrixStringPropertyManager::MakeValueText(m_sNames));
     }
 }
 

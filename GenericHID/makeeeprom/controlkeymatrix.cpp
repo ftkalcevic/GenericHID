@@ -11,8 +11,6 @@ ControlKeyMatrix::~ControlKeyMatrix(void)
 
 bool ControlKeyMatrix::Load( const QDomElement &elem, QString *sError )
 {
-    if ( !XMLUtility::getAttributeString( elem, "Name", m_sName, sError ) )
-	return false;
     if ( !XMLUtility::getAttributeUShort( elem, "UsagePage", m_nUsagePage, 0, 0xFFFF, sError ) )
 	return false;
     if ( !XMLUtility::getAttributeUShort( elem, "UsageMin", m_nUsageMin, 0, 0xFFFF, sError ) )

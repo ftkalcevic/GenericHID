@@ -390,12 +390,11 @@ void Shape::MakeDigitalEncoderControl( QDomElement &elem, const QString &sName, 
     XMLUtility::setAttribute( node, "PortB", sPortB );
 }
 
-void Shape::MakeKeyMatrixControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsageMin, bool bPullUp, bool bDebounce, const QStringList &rows, const QStringList &cols  ) const
+void Shape::MakeKeyMatrixControl( QDomElement &elem, const QString &sNames, unsigned short nUsagePage, unsigned short nUsageMin, bool bPullUp, bool bDebounce, const QStringList &rows, const QStringList &cols  ) const
 {
     QDomElement node = elem.ownerDocument().createElement( "KeyMatrix" );
     elem.appendChild( node );
 
-    XMLUtility::setAttribute( node, "Name", sName );
     XMLUtility::setAttribute( node, "UsagePage", nUsagePage );
     XMLUtility::setAttribute( node, "UsageMin", nUsageMin );
     XMLUtility::setAttribute( node, "Pullup", bPullUp );
@@ -414,7 +413,31 @@ void Shape::MakeKeyMatrixControl( QDomElement &elem, const QString &sName, unsig
 	node.appendChild( col );
 	XMLUtility::setAttribute( col, "Port", sCol );
     }
+
+    // Names = [r,c]String[r,c]String...
+    QRegExp rx("\\[(\\d+),(\\d+)\\]([^\\[]+)");
+    int pos = 0;
+
+    while ((pos = rx.indexIn(sNames, pos)) != -1) 
+    {
+	int nRow = rx.cap(1).toInt();
+	int nCol = rx.cap(2).toInt();
+	QString sName = rx.cap(3);
+
+	if ( nRow >= 0 && nRow < rows.count() &&
+	     nCol >= 0 && nCol < cols.count() )
+	{
+	    QDomElement key = elem.ownerDocument().createElement( "Key" );
+	    node.appendChild( key );
+	    XMLUtility::setAttribute( key, "Row", nRow );
+	    XMLUtility::setAttribute( key, "Col", nCol );
+	    XMLUtility::setAttribute( key, "Name", sName );
+	}
+
+	pos += rx.matchedLength();
+    }
 }
+
 void Shape::MakeRotarySwitchControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bPullUp, bool bDebounce, bool bEncoded, int nBits, const QStringList &outputs ) const
 {
     QDomElement node = elem.ownerDocument().createElement( "RotarySwitch" );
@@ -538,7 +561,7 @@ QString Shape::GetPort( QList<PinItem *> pins, const QString &sName  ) const
 	{
 	    if ( pins[i]->wires().count() == 0 )
 	    {
-		assert( false );
+		//assert( false );
 		return QString();
 	    }
 	    else if ( pins[i]->wires()[0]->pin1() != pins[i] )

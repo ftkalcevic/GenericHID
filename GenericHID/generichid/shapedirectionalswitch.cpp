@@ -19,13 +19,13 @@ bool ShapeDirectionalSwitch::Verify( QString &sErrors, const QList<class PinItem
 
     // We have the Use LEDs property.  Make sure there is nothing on the LED pins, or the Use Status LEDs properties clash
     QString sEnum = GetPropertyValueEnum( "Directions", values, "" );
-    if ( sEnum == "2 N/S" )
+    if ( sEnum == "2way NS" )
 	pinsToCheck << "N" << "S";
-    else if ( sEnum == "2 W/E" )
+    else if ( sEnum == "2way WE" )
 	pinsToCheck << "W" << "E";
-    else if ( sEnum == "4" )
+    else if ( sEnum == "4way" )
 	pinsToCheck << "N" << "S" << "W" << "E";
-    else if ( sEnum == "8" )
+    else if ( sEnum == "8way" )
 	pinsToCheck << "N" << "S" << "W" << "E" << "NW" << "NE" << "SW" << "SE";
 
     notPinsToCheck.subtract( pinsToCheck );

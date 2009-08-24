@@ -16,7 +16,6 @@ public:
     virtual Control::Type type() const { return Control::Input; }
 
 private:
-    QString m_sName;
     ushort m_nUsagePage;
     ushort m_nUsageMin;
     bool m_bPullup;

@@ -62,7 +62,7 @@ void ShapeKeyMatrix::MakeControlsXML( QDomElement &elem, const QList<class PinIt
 	cols << QString("C%1").arg(i);
 
     MakeKeyMatrixControl( elem, 
-			  GetPropertyValueString("Name",values,""), 
+			  GetPropertyValueString("Key Names",values,""), 
 			  GetPropertyValueUsagePage("Usage",values,1),
 		          GetPropertyValueUsage("Usage",values,1),
 		          GetPropertyValueBool("Pullup",values,true),

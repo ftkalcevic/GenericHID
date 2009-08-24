@@ -382,22 +382,22 @@
 	</Shape>
 	
 	<Shape Id="keymatrix" Type="keymatrix" Source="true" Image="resources/keymatrix.png" Icon="resources/keymatrixicon.png" width="244" height="251" maxInstances="0" name="Key Matrix">
-	    <pin rect="5,11,20,20" id="R1" type="io" />
-	    <pin rect="5,35,20,20" id="R2" type="io" />
-	    <pin rect="5,60,20,20" id="R3" type="io" />
-	    <pin rect="5,85,20,20" id="R4" type="io" />
-	    <pin rect="5,109,20,20" id="R5" type="io" />
-	    <pin rect="5,134,20,20" id="R6" type="io" />
-	    <pin rect="5,159,20,20" id="R7" type="io" />
-	    <pin rect="6,184,20,20" id="R8" type="io" />
-	    <pin rect="46,229,20,20" id="C1" type="io" rotate="-90"/>
-	    <pin rect="71,229,20,20" id="C2" type="io" rotate="-90"/>
-	    <pin rect="96,229,20,20" id="C3" type="io" rotate="-90"/>
-	    <pin rect="121,229,20,20" id="C4" type="io" rotate="-90"/>
-	    <pin rect="145,229,20,20" id="C5" type="io" rotate="-90"/>
-	    <pin rect="170,229,20,20" id="C6" type="io" rotate="-90"/>
-	    <pin rect="195,229,20,20" id="C7" type="io" rotate="-90"/>
-	    <pin rect="219,229,20,20" id="C8" type="io" rotate="-90"/>
+	    <pin rect="5,11,20,20" id="R0" type="io" />
+	    <pin rect="5,35,20,20" id="R1" type="io" />
+	    <pin rect="5,60,20,20" id="R2" type="io" />
+	    <pin rect="5,85,20,20" id="R3" type="io" />
+	    <pin rect="5,109,20,20" id="R4" type="io" />
+	    <pin rect="5,134,20,20" id="R5" type="io" />
+	    <pin rect="5,159,20,20" id="R6" type="io" />
+	    <pin rect="6,184,20,20" id="R7" type="io" />
+	    <pin rect="46,229,20,20" id="C0" type="io" rotate="-90"/>
+	    <pin rect="71,229,20,20" id="C1" type="io" rotate="-90"/>
+	    <pin rect="96,229,20,20" id="C2" type="io" rotate="-90"/>
+	    <pin rect="121,229,20,20" id="C3" type="io" rotate="-90"/>
+	    <pin rect="145,229,20,20" id="C4" type="io" rotate="-90"/>
+	    <pin rect="170,229,20,20" id="C5" type="io" rotate="-90"/>
+	    <pin rect="195,229,20,20" id="C6" type="io" rotate="-90"/>
+	    <pin rect="219,229,20,20" id="C7" type="io" rotate="-90"/>
 	    <property name="UsageMin" description="HID usage of the first key.  Other keys are number consecutively." type="usage" default="9:1"/>
 	    <property name="Rows" description="The number of rows in the matrix." type="int" min="1" max="8" default="4"/>
 	    <property name="Columns" description="The number of columns in the matrix" type="int" min="1" max="8" default="4"/>

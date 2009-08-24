@@ -2,12 +2,23 @@
 #include "keymatrixeditorfactory.h"
 #include "keymatrixeditwidget.h"
 
+QString KeyMatrixStringPropertyManager::MakeValueText(const QString &s)
+{ 
+    QString sDetails = s;
+
+    // strip out the [r,c] bits to make it look pretty.
+    sDetails.replace( QRegExp("\\[\\d+,\\d+\\]"), "," );
+    while ( sDetails.startsWith(",") )
+	sDetails = sDetails.mid(1);
+
+    return sDetails;
+}
 
 QString KeyMatrixStringPropertyManager::valueText(const QtProperty *property) const 
 { 
     QString sDetails = QtStringPropertyManager::valueText( property ); 
-    //return TimerCounter::MakeUserDisplay( sDetails );
-    return sDetails;
+    // strip out the [r,c] bits to make it look pretty.
+    return KeyMatrixStringPropertyManager::MakeValueText( sDetails );
 }
 
     

@@ -11,7 +11,14 @@ KeyMatrixNameDlg::KeyMatrixNameDlg(QWidget *parent)
 
 KeyMatrixNameDlg::~KeyMatrixNameDlg()
 {
+}
 
+QString CleanName( const QString &s )
+{
+    QString sRet = s.trimmed();
+    sRet.replace( "[", "" );
+    sRet.replace( "]", "" );
+    return sRet;
 }
 
 void KeyMatrixNameDlg::setRC( int nRows, int nColumns )
@@ -26,10 +33,10 @@ void KeyMatrixNameDlg::setRC( int nRows, int nColumns )
     ui.tableWidget->setColumnCount(m_nColumns);
 
     for ( int i = 0; i < m_nRows; i++ )
-	ui.tableWidget->setVerticalHeaderItem(i, new QTableWidgetItem(QString("Row %1").arg(i+1)) );
+	ui.tableWidget->setVerticalHeaderItem(i, new QTableWidgetItem(QString("Row %1").arg(i)) );
 
     for ( int i = 0; i < m_nColumns+1; i++ )
-	ui.tableWidget->setHorizontalHeaderItem(i, new QTableWidgetItem(QString("Col %1").arg(i+1)) );
+	ui.tableWidget->setHorizontalHeaderItem(i, new QTableWidgetItem(QString("Col %1").arg(i)) );
 
     for ( int r = 0; r < m_nRows; r++ )
 	for ( int c = 0; c < m_nColumns; c++ )
@@ -48,14 +55,14 @@ void KeyMatrixNameDlg::setValue( const QString &sNames )
 
     while ((pos = rx.indexIn(sNames, pos)) != -1) 
     {
-	int nRow = rx.cap(1).toInt() - 1;
-	int nCol = rx.cap(2).toInt() - 1;
+	int nRow = rx.cap(1).toInt();
+	int nCol = rx.cap(2).toInt();
 	QString sName = rx.cap(3);
 
 	if ( nRow >= 0 && nRow < m_nRows &&
 	     nCol >= 0 && nCol < m_nColumns )
 	{
-	    ui.tableWidget->item(nRow,nCol)->setText( sName );
+	    ui.tableWidget->item(nRow,nCol)->setText( CleanName(sName) );
 	}
 
 	pos += rx.matchedLength();
@@ -72,9 +79,9 @@ QString KeyMatrixNameDlg::value() const
 	for ( int c = 0; c < m_nColumns; c++ )
 	{
 	    QString s = ui.tableWidget->item(r,c)->text();
-	    s = s.trimmed();
+	    s = CleanName(s);
 	    if ( ! s.isEmpty() )
-		sNames += QString("[%1,%2]%3").arg(r+1).arg(c+1).arg(s);
+		sNames += QString("[%1,%2]%3").arg(r).arg(c).arg(s);
 	}
     return sNames;
 }

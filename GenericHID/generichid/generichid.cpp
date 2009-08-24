@@ -368,6 +368,8 @@ void GenericHID::onFileExit()
 
 void GenericHID::closeEvent( QCloseEvent * event )
 {
+    RetreiveProperties();
+
     // check for changes
     if ( !CheckDataChanged() )
     {
@@ -668,7 +670,7 @@ todo
     - test all controls 
     - test panel
     - crash on load another in onSelectionChanged
-    - alpha
+    - alpha display numeric
 	- update firmware
 	- support uploadable fonts
 	- put write data cmd into collection
