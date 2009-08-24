@@ -32,6 +32,7 @@ public slots:
     void onSelectionChanged();
     void onMRUSelected(const QString &sFile);
     void onPropertiesCurrentItemChanged( QtBrowserItem * current );
+    void onPropertiesItemDataChanged( QtBrowserItem * current );
     void onTabChanged( int index ) ;
     void onZoomIndexChanged( const QString & text );
     void onZoomEditTextChanged( const QString & text );

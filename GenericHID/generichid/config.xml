@@ -398,10 +398,10 @@
 	    <pin rect="170,229,20,20" id="C6" type="io" rotate="-90"/>
 	    <pin rect="195,229,20,20" id="C7" type="io" rotate="-90"/>
 	    <pin rect="219,229,20,20" id="C8" type="io" rotate="-90"/>
-	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
 	    <property name="UsageMin" description="HID usage of the first key.  Other keys are number consecutively." type="usage" default="9:1"/>
 	    <property name="Rows" description="The number of rows in the matrix." type="int" min="1" max="8" default="4"/>
 	    <property name="Columns" description="The number of columns in the matrix" type="int" min="1" max="8" default="4"/>
+	    <property name="Key Names" description="The optional user friendly name given to each key." type="keynames"/>
 	    <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
 	    <property name="Debounce" description="Waits for the mechanical switch stop bouncing before registering a switch closure." type="bool" default="true"/>
 	    <property name="Current" description="Current usage of the keymatrix in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>

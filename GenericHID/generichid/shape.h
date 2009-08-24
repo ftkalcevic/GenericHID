@@ -65,6 +65,9 @@ public:
     unsigned short GetPropertyValueUsage( const QString &sName, const QList<class PropertyValue *> &values, int nDefault ) const;
     QString GetPort( QList<PinItem *> pins, const QString &sName  ) const;
 
+    virtual void PropertyChanged( QtBrowserItem *item, QList<PropertyValue *> &values ) const {}
+    virtual void populateProperties( QList<PropertyValue *> &values ) const;
+
     void MakeDirectionalSwitchControl( QDomElement &node, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bPullup, bool bDebounce, const QString &sDirections, const QString &sNorthPort, const QString &sSouthPort, const QString &sEastPort, const QString &sWestPort, const QString &sNEPort, const QString &sNWPort, const QString &sSEPort, const QString &sSWPort ) const;
     void MakePotentiometerControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nBits, const QString &sPort ) const;
     void MakeSwitchControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bPullup, bool bDebounce, const QString &sPort ) const;

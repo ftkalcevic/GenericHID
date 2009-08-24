@@ -202,6 +202,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\keymatrixeditorfactory.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\keymatrixeditwidget.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\keymatrixnamedlg.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\lcdwidget.cpp"
 				>
 			</File>
@@ -319,6 +331,10 @@
 			</File>
 			<File
 				RelativePath=".\shapepropertyint.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\shapepropertyrcnames.cpp"
 				>
 			</File>
 			<File
@@ -570,6 +586,84 @@
 						Name="VCCustomBuildTool"
 						Description="Moc&apos;ing $(InputFileName)..."
 						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;   -DUNICODE -DWIN32 -DQT_THREAD_SUPPORT -DQT_CORE_LIB -DQT_GUI_LIB -DQT_XML_LIB -D -DQT_QTPROPERTYBROWSER_IMPORT -DQT_WEBKIT_LIB  -I&quot;.\..\usbhid\.&quot; -I&quot;.\..\makeeeprom\.&quot; -I&quot;.\GeneratedFiles\.&quot; -I&quot;$(QTDIR)\include\.&quot; -I&quot;.\GeneratedFiles\$(ConfigurationName)\.&quot; -I&quot;$(QTDIR)\include\QtCore\.&quot; -I&quot;$(QTDIR)\include\QtGui\.&quot; -I&quot;$(QTDIR)\include\QtXml\.&quot; -I&quot;.\.&quot; -I&quot;.\..\libusb-win32-device-bin-0.1.12.2\include\.&quot; -I&quot;.\..\utility\.&quot; -I&quot;.\..\include\.&quot; -I&quot;.\..\programmer\.&quot; -I&quot;.\..\qtpropertybrowser-2.5-opensource\src\.&quot; &quot;.\hiddatathread.h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot; &quot;-fstdafx.h&quot; &quot;-f..\..\hiddatathread.h&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="&quot;$(QTDIR)\bin\moc.exe&quot;;$(InputPath)"
+						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\keymatrixeditorfactory.h"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Moc&apos;ing $(InputFileName)..."
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;   -DUNICODE -DWIN32 -DQT_THREAD_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_XML_LIB -D -DQT_QTPROPERTYBROWSER_IMPORT  -I&quot;.\..\usbhid\.&quot; -I&quot;.\..\makeeeprom\.&quot; -I&quot;.\GeneratedFiles\.&quot; -I&quot;$(QTDIR)\include\.&quot; -I&quot;.\GeneratedFiles\$(ConfigurationName)\.&quot; -I&quot;$(QTDIR)\include\QtCore\.&quot; -I&quot;$(QTDIR)\include\QtGui\.&quot; -I&quot;$(QTDIR)\include\QtXml\.&quot; -I&quot;.\.&quot; -I&quot;.\.&quot; -I&quot;.\.&quot; -I&quot;.\..\qtpropertybrowser-2.5-opensource\src\.&quot; -I&quot;.\..\libusb-win32-device-bin-0.1.12.2\include\.&quot; -I&quot;.\..\utility\.&quot; -I&quot;.\..\include\.&quot; -I&quot;.\..\programmer\.&quot; &quot;.\keymatrixeditorfactory.h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot; &quot;-fstdafx.h&quot; &quot;-f..\..\keymatrixeditorfactory.h&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="&quot;$(QTDIR)\bin\moc.exe&quot;;$(InputPath)"
+						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Moc&apos;ing $(InputFileName)..."
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  &quot;$(InputPath)&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot; -D -DQT_CORE_LIB -DQT_GUI_LIB -DQT_QTPROPERTYBROWSER_IMPORT -DQT_THREAD_SUPPORT -DQT_WEBKIT_LIB -DQT_XML_LIB -DUNICODE -DWIN32 -I&quot;$(QTDIR)\include\.&quot; -I&quot;$(QTDIR)\include\QtCore\.&quot; -I&quot;$(QTDIR)\include\QtGui\.&quot; -I&quot;$(QTDIR)\include\QtXml\.&quot; -I&quot;.\.&quot; -I&quot;.\..\include\.&quot; -I&quot;.\..\libusb-win32-device-bin-0.1.12.2\include\.&quot; -I&quot;.\..\makeeeprom\.&quot; -I&quot;.\..\programmer\.&quot; -I&quot;.\..\qtpropertybrowser-2.5-opensource\src\.&quot; -I&quot;.\..\usbhid\.&quot; -I&quot;.\..\utility\.&quot; -I&quot;.\GeneratedFiles\$(ConfigurationName)\.&quot; -I&quot;.\GeneratedFiles\.&quot;  &quot;-fstdafx.h&quot; &quot;-f..\..\keymatrixeditorfactory.h&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="&quot;$(QTDIR)\bin\moc.exe&quot;;$(InputPath)"
+						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\keymatrixeditwidget.h"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Moc&apos;ing $(InputFileName)..."
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;   -DUNICODE -DWIN32 -DQT_THREAD_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_XML_LIB -D -DQT_QTPROPERTYBROWSER_IMPORT  -I&quot;.\..\usbhid\.&quot; -I&quot;.\..\makeeeprom\.&quot; -I&quot;.\GeneratedFiles\.&quot; -I&quot;$(QTDIR)\include\.&quot; -I&quot;.\GeneratedFiles\$(ConfigurationName)\.&quot; -I&quot;$(QTDIR)\include\QtCore\.&quot; -I&quot;$(QTDIR)\include\QtGui\.&quot; -I&quot;$(QTDIR)\include\QtXml\.&quot; -I&quot;.\.&quot; -I&quot;.\.&quot; -I&quot;.\.&quot; -I&quot;.\..\qtpropertybrowser-2.5-opensource\src\.&quot; -I&quot;.\..\libusb-win32-device-bin-0.1.12.2\include\.&quot; -I&quot;.\..\utility\.&quot; -I&quot;.\..\include\.&quot; -I&quot;.\..\programmer\.&quot; &quot;.\keymatrixeditwidget.h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot; &quot;-fstdafx.h&quot; &quot;-f..\..\keymatrixeditwidget.h&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="&quot;$(QTDIR)\bin\moc.exe&quot;;$(InputPath)"
+						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Moc&apos;ing $(InputFileName)..."
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  &quot;$(InputPath)&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot; -D -DQT_CORE_LIB -DQT_GUI_LIB -DQT_QTPROPERTYBROWSER_IMPORT -DQT_THREAD_SUPPORT -DQT_WEBKIT_LIB -DQT_XML_LIB -DUNICODE -DWIN32 -I&quot;$(QTDIR)\include\.&quot; -I&quot;$(QTDIR)\include\QtCore\.&quot; -I&quot;$(QTDIR)\include\QtGui\.&quot; -I&quot;$(QTDIR)\include\QtXml\.&quot; -I&quot;.\.&quot; -I&quot;.\..\include\.&quot; -I&quot;.\..\libusb-win32-device-bin-0.1.12.2\include\.&quot; -I&quot;.\..\makeeeprom\.&quot; -I&quot;.\..\programmer\.&quot; -I&quot;.\..\qtpropertybrowser-2.5-opensource\src\.&quot; -I&quot;.\..\usbhid\.&quot; -I&quot;.\..\utility\.&quot; -I&quot;.\GeneratedFiles\$(ConfigurationName)\.&quot; -I&quot;.\GeneratedFiles\.&quot;  &quot;-fstdafx.h&quot; &quot;-f..\..\keymatrixeditwidget.h&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="&quot;$(QTDIR)\bin\moc.exe&quot;;$(InputPath)"
+						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\keymatrixnamedlg.h"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Moc&apos;ing $(InputFileName)..."
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;   -DUNICODE -DWIN32 -DQT_THREAD_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_XML_LIB -D -DQT_QTPROPERTYBROWSER_IMPORT  -I&quot;.\..\usbhid\.&quot; -I&quot;.\..\makeeeprom\.&quot; -I&quot;.\GeneratedFiles\.&quot; -I&quot;$(QTDIR)\include\.&quot; -I&quot;.\GeneratedFiles\$(ConfigurationName)\.&quot; -I&quot;$(QTDIR)\include\QtCore\.&quot; -I&quot;$(QTDIR)\include\QtGui\.&quot; -I&quot;$(QTDIR)\include\QtXml\.&quot; -I&quot;.\.&quot; -I&quot;.\.&quot; -I&quot;.\.&quot; -I&quot;.\..\qtpropertybrowser-2.5-opensource\src\.&quot; -I&quot;.\..\libusb-win32-device-bin-0.1.12.2\include\.&quot; -I&quot;.\..\utility\.&quot; -I&quot;.\..\include\.&quot; -I&quot;.\..\programmer\.&quot; &quot;.\keymatrixnamedlg.h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot; &quot;-fstdafx.h&quot; &quot;-f..\..\keymatrixnamedlg.h&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="&quot;$(QTDIR)\bin\moc.exe&quot;;$(InputPath)"
+						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Moc&apos;ing $(InputFileName)..."
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  &quot;$(InputPath)&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot; -D -DQT_CORE_LIB -DQT_GUI_LIB -DQT_QTPROPERTYBROWSER_IMPORT -DQT_THREAD_SUPPORT -DQT_WEBKIT_LIB -DQT_XML_LIB -DUNICODE -DWIN32 -I&quot;$(QTDIR)\include\.&quot; -I&quot;$(QTDIR)\include\QtCore\.&quot; -I&quot;$(QTDIR)\include\QtGui\.&quot; -I&quot;$(QTDIR)\include\QtXml\.&quot; -I&quot;.\.&quot; -I&quot;.\..\include\.&quot; -I&quot;.\..\libusb-win32-device-bin-0.1.12.2\include\.&quot; -I&quot;.\..\makeeeprom\.&quot; -I&quot;.\..\programmer\.&quot; -I&quot;.\..\qtpropertybrowser-2.5-opensource\src\.&quot; -I&quot;.\..\usbhid\.&quot; -I&quot;.\..\utility\.&quot; -I&quot;.\GeneratedFiles\$(ConfigurationName)\.&quot; -I&quot;.\GeneratedFiles\.&quot;  &quot;-fstdafx.h&quot; &quot;-f..\..\keymatrixnamedlg.h&quot;&#x0D;&#x0A;"
 						AdditionalDependencies="&quot;$(QTDIR)\bin\moc.exe&quot;;$(InputPath)"
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
 					/>
@@ -957,6 +1051,10 @@
 			</File>
 			<File
 				RelativePath=".\shapepropertyint.h"
+				>
+			</File>
+			<File
+				RelativePath=".\shapepropertyrcnames.h"
 				>
 			</File>
 			<File
@@ -1452,6 +1550,32 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\keymatrixnamedlg.ui"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Uic&apos;ing $(InputFileName)..."
+						CommandLine="&quot;$(QTDIR)\bin\uic.exe&quot; -o &quot;.\GeneratedFiles\ui_$(InputName).h&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="$(QTDIR)\bin\uic.exe"
+						Outputs="&quot;.\GeneratedFiles\ui_$(InputName).h&quot;"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Uic&apos;ing $(InputFileName)..."
+						CommandLine="&quot;$(QTDIR)\bin\uic.exe&quot; -o &quot;.\GeneratedFiles\ui_$(InputName).h&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="$(QTDIR)\bin\uic.exe"
+						Outputs="&quot;.\GeneratedFiles\ui_$(InputName).h&quot;"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\programdlg.ui"
 				>
 				<FileConfiguration
@@ -1559,29 +1683,6 @@
 			SourceControlFiles="false"
 			>
 			<File
-				RelativePath=".\generatedfiles\debug\moc_timereditorfactory.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\generatedfiles\qrc_generichid.cpp"
 				>
 				<FileConfiguration
@@ -1603,6 +1704,10 @@
 			</File>
 			<File
 				RelativePath=".\GeneratedFiles\ui_generichid.h"
+				>
+			</File>
+			<File
+				RelativePath=".\generatedfiles\ui_keymatrixnamedlg.h"
 				>
 			</File>
 			<File
@@ -1687,6 +1792,75 @@
 				</File>
 				<File
 					RelativePath=".\generatedfiles\debug\moc_hiddatathread.cpp"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\generatedfiles\debug\moc_keymatrixeditorfactory.cpp"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\generatedfiles\debug\moc_keymatrixeditwidget.cpp"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\generatedfiles\debug\moc_keymatrixnamedlg.cpp"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -2250,6 +2424,29 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath=".\generatedfiles\debug\moc_timereditorfactory.cpp"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath=".\generatedfiles\debug\moc_timereditwidget.cpp"
 					>
 					<FileConfiguration
@@ -2371,6 +2568,63 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath=".\generatedfiles\Release\moc_keymatrixeditorfactory.cpp"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\generatedfiles\Release\moc_keymatrixeditwidget.cpp"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\generatedfiles\Release\moc_keymatrixnamedlg.cpp"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath=".\generatedfiles\Release\moc_listeditorfactory.cpp"
 					>
 					<FileConfiguration
@@ -2480,6 +2734,13 @@
 				<File
 					RelativePath=".\generatedfiles\Release\moc_shapeitem.cpp"
 					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|Win32"
 						ExcludedFromBuild="true"

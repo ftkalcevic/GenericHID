@@ -70,3 +70,33 @@ void ShapeKeyMatrix::MakeControlsXML( QDomElement &elem, const QList<class PinIt
 		          rows,
 		          cols );
 }
+
+
+void ShapeKeyMatrix::PropertyChanged( QtBrowserItem *item, QList<PropertyValue *> &values ) const
+{
+    // if rows or columns change, update the key names editor
+    QtProperty *prop = item->property();
+    assert( prop != NULL );
+    if ( prop != NULL && prop->propertyName().compare( "Rows", Qt::CaseInsensitive ) == 0 )
+    {
+	int nRows = ShapeProperty::m_intManager->value( prop );
+	ShapeProperty::m_keyMatrixNameFactory->setRows( nRows );
+    }
+    else if ( prop != NULL && prop->propertyName().compare( "Columns", Qt::CaseInsensitive ) == 0 )
+    {
+	int nColumns = ShapeProperty::m_intManager->value( prop );
+	ShapeProperty::m_keyMatrixNameFactory->setColumns( nColumns );
+    }
+}
+
+void ShapeKeyMatrix::populateProperties( QList<PropertyValue *> &values ) const
+{
+    Shape::populateProperties( values );
+    // need to read the row/column values and set the row/column properties of the key names editor
+    int nRows = GetPropertyValueInt( "Rows", values, 0 );
+    int nColumns = GetPropertyValueInt( "Columns", values, 0 );
+
+    ShapeProperty::m_keyMatrixNameFactory->setRows( nRows );
+    ShapeProperty::m_keyMatrixNameFactory->setColumns( nColumns );
+}
+

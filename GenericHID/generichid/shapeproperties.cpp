@@ -50,3 +50,12 @@ int ShapeProperties::find( const QString &sName ) const
 
     return -1;
 }
+
+QtProperty *ShapeProperties::findQt( const QString &sName ) const
+{
+    for ( int i = 0; i < m_QtProperties.count(); i++ )
+	if ( sName.compare( m_QtProperties[i]->propertyName(), Qt::CaseInsensitive ) == 0  )
+	    return m_QtProperties[i];
+
+    return NULL;
+}

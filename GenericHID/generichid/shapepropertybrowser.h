@@ -11,8 +11,15 @@ public:
     ShapePropertyBrowser(QWidget *parent);
     ~ShapePropertyBrowser();
 
-private:
+signals:
+    void itemDataChanged( QtBrowserItem * item );
 
+private:
+    virtual void itemChanged ( QtBrowserItem * item )
+    {
+	QtTreePropertyBrowser::itemChanged( item );
+	emit itemDataChanged( item );
+    }
 };
 
 #endif // SHAPEPROPERTYBROWSER_H

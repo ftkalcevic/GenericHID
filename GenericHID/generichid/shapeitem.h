@@ -28,6 +28,8 @@ public:
     bool Verify( QString &sError ) const;
     void MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sPowerPin ) const;
     void MakeControlsXML( QDomElement &elem ) const;
+    void PropertyChanged( QtBrowserItem * item );
+    void populateProperties();
 
     static ShapeItem *CreateFromXML( ShapeCollection *pCol, Editor *, QDomElement & );
     int current() const;

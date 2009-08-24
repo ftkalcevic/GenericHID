@@ -2,6 +2,7 @@
 #define _SHAPEPROPERTY_H_
 
 #include "timereditorfactory.h"
+#include "keymatrixeditorfactory.h"
 
 namespace  PropertyType
 {
@@ -11,6 +12,7 @@ namespace  PropertyType
         Enum,
         Bool,
         Int,
+	RCNames,
         Usage,
 	Timer13,
 	Timer2,
@@ -47,9 +49,7 @@ public:
     const QString &name() const { return m_sName; }
     const QString &description() const { return m_sDescription; }
 
-protected:
-    virtual bool Configure( QDomElement & /*node*/ ) { return true; }	// Extra configuration
-
+public:
     static QtGroupPropertyManager *m_groupManager;
     static QtStringPropertyManager *m_stringManager;
     static QtPointFPropertyManager *m_pointfScaleManager;
@@ -61,7 +61,13 @@ protected:
     static UsagePropertyManager *m_usageManager;
     static TimerStringPropertyManager *m_timer13Manager;
     static TimerStringPropertyManager *m_timer2Manager;
-    
+    static KeyMatrixStringPropertyManager *m_keyMatrixNameManager;
+
+    static KeyMatrixEditorFactory *m_keyMatrixNameFactory;
+
+protected:
+    virtual bool Configure( QDomElement & /*node*/ ) { return true; }	// Extra configuration
+
     static bool m_bInitialised;
 
     QString m_sName;

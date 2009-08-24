@@ -76,6 +76,8 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
     ui.listView->setRootIsDecorated(false);
     ShapeProperty::SetBrowserFactory( ui.listView );
     connect( ui.listView, SIGNAL(currentItemChanged(QtBrowserItem *)), this, SLOT(onPropertiesCurrentItemChanged( QtBrowserItem *)) );
+    connect( ui.listView, SIGNAL(itemDataChanged(QtBrowserItem *)), this, SLOT(onPropertiesItemDataChanged( QtBrowserItem *)) );
+
     ui.listView->setSplitterPosition( ui.listView->width()/2 );
 
     //ui.txtPropertyHelp->setBackgroundRole( QPalette::Window );
@@ -378,26 +380,7 @@ void GenericHID::closeEvent( QCloseEvent * event )
 
 void GenericHID::onPropertiesCurrentItemChanged( QtBrowserItem * current )
 {
- //   if ( current == NULL || current->property() == NULL )
-	//ui.txtPropertyHelp->setText( QString() );
- //   else
- //   {
-	//QString sText = current->property()->toolTip();
-	//if ( sText.startsWith(QChar(':')) )
-	//{
-	//     QFile file(sText);
-	//     if ( file.open(QIODevice::ReadOnly | QIODevice::Text) )
-	//     {
-	//	 {
-	//	     QTextStream in(&file);
-	//	     sText = in.readAll();
-	//	 }
-	//	 file.close();
-	//     }
-	//}
-	//ui.txtPropertyHelp->setText( QString("<b>%1</b><br>\n%2").arg(current->property()->propertyName()).arg(sText) );
- //   }
-
+    // Set the help text
     if ( current == NULL || current->property() == NULL )
 	ui.textBrowser->setSource( QString("index.htm") );
     else
@@ -418,9 +401,13 @@ void GenericHID::onPropertiesCurrentItemChanged( QtBrowserItem * current )
 	else
 	    ui.textBrowser->setText( QString("<b>%1</b><br>\n%2").arg(current->property()->propertyName()).arg(sText) );
     }
+}
 
-
-
+void GenericHID::onPropertiesItemDataChanged( QtBrowserItem * current )
+{
+    // Changing some properties can effect others, eg Rows,Cols on KeyMatrix, effects the names for each key.
+    if ( m_pLastSelectedShape != NULL )
+	m_pLastSelectedShape->PropertyChanged( current );
 }
 
 void GenericHID::onMicrocontrollerProgram()
@@ -568,7 +555,7 @@ void GenericHID::onSelectionChanged()
         const ShapeProperties &pProps = m_pLastSelectedShape->shapeData()->properties();
         ShapeProperty::SetBrowserFactory( ui.listView );
         ui.listView->addProperty(pProps.topItem());
-        pProps.populate(m_pLastSelectedShape->values());
+        m_pLastSelectedShape->populateProperties();
 	if ( ui.listView->topLevelItems().count() > 0 )
 	    ui.listView->setCurrentItem( ui.listView->topLevelItems()[0] );
     }
@@ -671,7 +658,6 @@ void GenericHID::onSceneScaleChanged( double d)
     - binary coded switch
     - LCD 4/8 bit
     - Key matrix  rows x cols
-	- key names
   - PWM
     - mcu attribute
 	- send to MCU

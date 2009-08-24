@@ -239,3 +239,12 @@ int ShapeItem::current() const
     return m_pShape->GetPropertyValueInt( "Current", m_values, 0 );
 }
 
+void ShapeItem::PropertyChanged( QtBrowserItem * item )
+{
+    m_pShape->PropertyChanged( item, m_values );
+}
+
+void ShapeItem::populateProperties()
+{
+    m_pShape->populateProperties( m_values );
+}

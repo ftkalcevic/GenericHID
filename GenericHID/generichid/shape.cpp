@@ -554,3 +554,10 @@ QString Shape::GetPort( QList<PinItem *> pins, const QString &sName  ) const
 	}
     return QString();
 }
+
+
+void Shape::populateProperties( QList<PropertyValue *> &values ) const
+{
+    m_Properties.populate( values );
+}
+
