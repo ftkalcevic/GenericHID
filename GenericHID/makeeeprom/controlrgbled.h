@@ -17,9 +17,9 @@ public:
 private:
     unsigned short m_nUsagePage;
     unsigned short m_nUsage;
-    int m_nPortR;
-    int m_nPortG;
-    int m_nPortB;
+    byte m_nPortR;
+    byte m_nPortG;
+    byte m_nPortB;
     bool m_bSink;
     QString m_sName;
 };

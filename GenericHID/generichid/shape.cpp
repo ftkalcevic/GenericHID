@@ -291,22 +291,26 @@ QString Shape::GetPropertyValueString( const QString &sName, const QList<class P
 
 unsigned short Shape::GetPropertyValueUsagePage( const QString &sName, const QList<class PropertyValue *> &values, int nDefault ) const
 {
-    QString sUsage = GetPropertyValueString(sName, values, "" );
-    QStringList s = sUsage.split(QChar(':'));
-    if ( s.count() > 0 )
-	return s[0].toUShort();
-    else 
-	return nDefault;
+    PropertyValueUsage *pUsage = dynamic_cast<PropertyValueUsage*>( GetPropertyValue(sName,values) );
+    if ( pUsage != NULL )
+    {
+	QStringList s = pUsage->Value.split(QChar(':'));
+	if ( s.count() > 0 )
+	    return s[0].toUShort();
+    }
+    return nDefault;
 }
 
 unsigned short Shape::GetPropertyValueUsage( const QString &sName, const QList<class PropertyValue *> &values, int nDefault ) const
 {
-    QString sUsage = GetPropertyValueString(sName, values, "" );
-    QStringList s = sUsage.split(QChar(':'));
-    if ( s.count() > 1 )
-	return s[1].toUShort();
-    else 
-	return nDefault;
+    PropertyValueUsage *pUsage = dynamic_cast<PropertyValueUsage*>( GetPropertyValue(sName,values) );
+    if ( pUsage != NULL )
+    {
+	QStringList s = pUsage->Value.split(QChar(':'));
+	if ( s.count() > 1 )
+	    return s[1].toUShort();
+    }
+    return nDefault;
 }
 
 
@@ -450,6 +454,8 @@ void Shape::MakeRotarySwitchControl( QDomElement &elem, const QString &sName, un
     XMLUtility::setAttribute( node, "Pullup", bPullUp );
     XMLUtility::setAttribute( node, "Debounce", bDebounce );
     XMLUtility::setAttribute( node, "Encoded", bEncoded );
+    if ( bEncoded )
+	XMLUtility::setAttribute( node, "Outputs", nBits );
 
     for ( int i = 0; i < outputs.count(); i++ )
     {
@@ -465,7 +471,7 @@ void Shape::MakeLCDControl( QDomElement &elem, const QString &sName, unsigned sh
 			    const QString &sPortD3, const QString &sPortD4, const QString &sPortD5, const QString &sPortD6, const QString &sPortD7, 
 			    int nAddrRow0, int nAddrRow1, int nAddrRow2, int nAddrRow3 ) const
 {
-    QDomElement node = elem.ownerDocument().createElement( "LED" );
+    QDomElement node = elem.ownerDocument().createElement( "LCD" );
     elem.appendChild( node );
 
     XMLUtility::setAttribute( node, "Name", sName );

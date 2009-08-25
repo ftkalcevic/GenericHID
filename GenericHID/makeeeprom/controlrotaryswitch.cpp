@@ -25,23 +25,26 @@ bool ControlRotarySwitch::Load( const QDomElement &elem, QString *sError )
 	return false;
     if ( !XMLUtility::getAttributeBool( elem, "Encoded", m_bEncoded, sError ) )
 	return false;
+    if ( m_bEncoded )
+	if ( !XMLUtility::getAttributeUShort( elem, "Outputs", m_nOutputs, 0, 16, sError ) )
+	    return false;
 
     QDomNodeList pins = XMLUtility::elementsByTagName( elem, "Input" );
     for ( int i = 0; i < pins.count(); i++ )
     {
 	QDomElement pin = pins.item(i).toElement();
-	int nPort;
+	byte nPort;
 	if ( !GetPort( pin, "Port", nPort, sError ) )
 	    return false;
 	byte nBit;
-	if ( !XMLUtility::getAttributeByte( elem, "Bit", nBit, 0, 255, sError ) )
+	if ( !XMLUtility::getAttributeByte( pin, "Bit", nBit, 0, 255, sError ) )
 	    return false;
 	m_Pins.push_back( RotarySwitchPin(nPort,nBit) );
     }
 
     m_nLogicalMax = 0;
     if ( m_bEncoded )
-        m_nLogicalMax = (1 << m_Pins.count())-1;       // binary encoded
+        m_nLogicalMax = m_nOutputs-1;       // binary encoded
     else
         m_nLogicalMax = m_Pins.count() - 1;        // 0..n-1
 
@@ -99,9 +102,9 @@ ByteArray ControlRotarySwitch::GetControlConfig( byte nReportId ) const
     {
 	config.Pins[i].Port = m_Pins[i].m_nPort;
 	if ( m_bEncoded )
-	    config.Pins[i].Bit = 1 << m_Pins[i].m_nBit;	    // Data Bit mask
+	    config.Pins[i].Bit = m_Pins[i].m_nBit;	    // Data Bit mask
 	else
-	    config.Pins[i].Bit = m_Pins[i].m_nBit;
+	    config.Pins[i].Bit = m_Pins[i].m_nBit-1;
 	config.Pins[i].Debounce = 0;
     }
 

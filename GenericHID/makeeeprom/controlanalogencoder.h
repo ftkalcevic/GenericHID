@@ -15,8 +15,8 @@ public:
     virtual Control::Type type() const { return Control::Input; }
 
 private:
-    int m_nPortA;
-    int m_nPortB;
+    byte m_nPortA;
+    byte m_nPortB;
     bool m_bPullupA;
     bool m_bPullupB;
     bool m_bDebounce;

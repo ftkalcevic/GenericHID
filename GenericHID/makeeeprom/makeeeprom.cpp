@@ -118,6 +118,7 @@ ByteArray MakeEEPROM::makeEEPROM()
     // Create application data as we go
     struct SApplicationHeader appHeader;
     memset( &appHeader, 0, sizeof(appHeader) );
+    appHeader.nPowerPort = m_ConfigConfig->powerPort();
     appHeader.nOptions = (m_ConfigConfig->busPowered() ? DEVICE_OPTION_BUS_POWERED : 0 ) |
 			       (m_ConfigConfig->HIDDebug() ? DEVICE_OPTION_HID_DEBUG : 0 ) |
 			       (m_ConfigConfig->serialDebug() ? DEVICE_OPTION_SERIAL_DEBUG : 0 ) |

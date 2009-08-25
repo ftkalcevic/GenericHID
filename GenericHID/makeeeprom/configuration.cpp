@@ -9,7 +9,7 @@ Configuration::~Configuration(void)
 {
 }
 
-bool Configuration::MakePort( const QString &sPort, int &nRet, QString *sError )
+bool Configuration::MakePort( const QString &sPort, byte &nRet, QString *sError )
 {
     // Port string is in the format P[A-F][0-7]
     QString s = sPort.trimmed();
@@ -35,7 +35,7 @@ bool Configuration::MakePort( const QString &sPort, int &nRet, QString *sError )
 }
 
 
-bool Configuration::GetPort( const QDomElement &elem, const QString &sPort, int &nPort, QString *sError )
+bool Configuration::GetPort( const QDomElement &elem, const QString &sPort, byte &nPort, QString *sError )
 {
     QString s;
     if ( !XMLUtility::getAttributeString( elem, sPort, s, sError ) )

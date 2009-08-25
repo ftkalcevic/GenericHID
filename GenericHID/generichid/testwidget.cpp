@@ -242,11 +242,13 @@ void TestWidget::StartListening()
 
 void TestWidget::StopListening()
 {
-    assert( m_pThread != NULL );
-    m_pThread->stop();
-    m_pThread->wait( 250 );
-    delete m_pThread;
-    m_pThread = NULL;
+    if ( m_pThread != NULL )
+    {
+	m_pThread->stop();
+	m_pThread->wait( 250 );
+	delete m_pThread;
+	m_pThread = NULL;
+    }
 }
 
 

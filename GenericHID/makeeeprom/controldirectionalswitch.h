@@ -29,14 +29,14 @@ private:
     ushort m_nUsage;
     bool m_bPullup;
     bool m_bDebounce;
-    int m_nPortNW;
-    int m_nPortNE;
-    int m_nPortSW;
-    int m_nPortSE;
-    int m_nPortN;
-    int m_nPortS;
-    int m_nPortW;
-    int m_nPortE;
+    byte m_nPortNW;
+    byte m_nPortNE;
+    byte m_nPortSW;
+    byte m_nPortSE;
+    byte m_nPortN;
+    byte m_nPortS;
+    byte m_nPortW;
+    byte m_nPortE;
 };
 
 #endif

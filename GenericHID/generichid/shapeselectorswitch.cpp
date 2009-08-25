@@ -36,7 +36,7 @@ bool ShapeSelectorSwitch::Verify( QString &sErrors, const QList<class PinItem *>
 
 void ShapeSelectorSwitch::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &pins, const QList<PropertyValue *> &values  ) const
 {
-    int nBits = GetPropertyValueInt("Bits",values,0);
+    int nBits = GetPropertyValueInt("Outputs",values,0);
     QStringList outputs;
     for ( int i = 0; i < nBits; i++ )
 	outputs << GetPort( pins, QString::number( i+1 ) );

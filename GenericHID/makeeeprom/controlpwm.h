@@ -15,7 +15,7 @@ public:
 private:
     unsigned short m_nUsagePage;
     unsigned short m_nUsage;
-    int m_nPort;
+    byte m_nPort;
     QString m_sName;
     byte m_nBits;
     byte m_nResolution;

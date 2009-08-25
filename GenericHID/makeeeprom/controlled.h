@@ -18,7 +18,7 @@ public:
 private:
     ushort m_nUsagePage;
     ushort m_nUsage;
-    int m_nPort;
+    byte m_nPort;
     bool m_bSink;
     QString m_sName;
 };

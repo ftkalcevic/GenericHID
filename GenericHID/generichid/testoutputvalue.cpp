@@ -10,6 +10,8 @@ TestOutputValue::TestOutputValue(const QString &sName, struct HID_ReportItem_t *
     QHBoxLayout *layout = new QHBoxLayout();
     QSlider *slider = new QSlider(Qt::Horizontal);
     slider->setRange( pHIDItem->Attributes.LogicalMinimum, pHIDItem->Attributes.LogicalMaximum );
+    slider->setSingleStep( 1 );
+    slider->setPageStep( 1 );
     QLabel *name = new QLabel( sName );
     layout->addWidget( name );
     layout->addWidget( slider );

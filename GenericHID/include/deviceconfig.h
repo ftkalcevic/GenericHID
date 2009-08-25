@@ -170,6 +170,10 @@ struct SPWMControl
     uint16_t Resolution;
 };
 
+#define RGB_RED	    0x04
+#define RGB_GREEN   0x02
+#define RGB_BLUE    0x01
+
 struct SRGBLEDControl
 {
     struct SControlHeader hdr;
@@ -255,6 +259,7 @@ struct TimerConfig
 
 struct SApplicationHeader
 {
+    byte nPowerPort;
     byte nOptions;
 	#define DEVICE_OPTION_BUS_POWERED	0x01
 	#define DEVICE_OPTION_USE_USBKEY_LED1	0x02

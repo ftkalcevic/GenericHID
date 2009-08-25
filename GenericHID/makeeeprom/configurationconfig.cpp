@@ -119,7 +119,7 @@ bool ConfigurationConfig::Load( const QDomElement &elem, QString *sError )
     if ( !XMLUtility::getAttributeString( elem, "PowerPort", s, sError ) )
 	return false;
     if  ( s.isEmpty() )
-	m_nPowerPort = -1;
+	m_nPowerPort = 0xFF;
     else if ( !MakePort( s, m_nPowerPort, sError ) )
 	return false;
 

@@ -454,7 +454,7 @@ void GenericHID::onMicrocontrollerProgram()
     ProgramDlg dlg(this);
     dlg.setEEPROM( sIntelHex );
 #ifdef _WIN32
-	dlg.setFirmwareFile( "D:\\Projects\\GenericHID\\MyUSB\\Demos\\Joystick\\Joystick.hex");
+	dlg.setFirmwareFile( "..\\bin\\Joystick.hex");
 #else
 	dlg.setFirmwareFile( "/home/frankt/src/Joystick.hex");
 #endif	

@@ -32,7 +32,7 @@ public:
     unsigned short usagePage() const { return m_nUsagePage; }
     unsigned short usage() const { return m_nUsage; }
     bool is5Volts() const { return m_b5Volts; }
-    int powerPort() const { return m_nPowerPort; }
+    byte powerPort() const { return m_nPowerPort; }
     byte interval() const { return m_nInterval; }
     const struct TimerConfig *timers() const { return m_Timers; }
 
@@ -46,7 +46,7 @@ private:
     unsigned short m_nUsagePage;
     unsigned short m_nUsage;
     bool m_b5Volts;
-    int m_nPowerPort;
+    byte m_nPowerPort;
     byte m_nInterval;
     struct TimerConfig m_Timers[MAX_TIMERS];
 };

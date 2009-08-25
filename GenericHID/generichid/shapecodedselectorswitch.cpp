@@ -41,7 +41,14 @@ bool ShapeCodedSelectorSwitch::Verify( QString &sErrors, const QList<class PinIt
 
 void ShapeCodedSelectorSwitch::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &pins, const QList<PropertyValue *> &values  ) const
 {
-    int nBits = GetPropertyValueInt("Bits",values,0);
+    int nValues = GetPropertyValueInt("Outputs",values,0);
+    int nBits = 0;
+    int nTemp = nValues - 1;
+    while ( nTemp != 0 )
+    {
+	nBits++;
+	nTemp >>= 1;
+    }
     QStringList outputs;
     for ( int i = 0; i < nBits; i++ )
 	outputs << GetPort( pins, QString::number( 1<<i ) );
@@ -53,6 +60,6 @@ void ShapeCodedSelectorSwitch::MakeControlsXML( QDomElement &elem, const QList<c
 			     GetPropertyValueBool("Pullup",values,true),
 			     GetPropertyValueBool("Debounce",values,true),
 			     true,
-			     nBits,
+			     nValues,
 			     outputs );
 }

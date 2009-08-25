@@ -24,7 +24,7 @@ bool ControlKeyMatrix::Load( const QDomElement &elem, QString *sError )
     for ( int i = 0; i < rows.count(); i++ )
     {
 	QDomElement row = rows.item(i).toElement();
-	int nPort;
+	byte nPort;
 	if ( !GetPort( row, "Port", nPort, sError ) )
 	    return false;
 	m_Rows.push_back( nPort );
@@ -34,7 +34,7 @@ bool ControlKeyMatrix::Load( const QDomElement &elem, QString *sError )
     for ( int i = 0; i < cols.count(); i++ )
     {
 	QDomElement col = cols.item(i).toElement();
-	int nPort;
+	byte nPort;
 	if ( !GetPort( col, "Port", nPort, sError ) )
 	    return false;
 	m_Cols.push_back( nPort );

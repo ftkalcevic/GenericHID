@@ -24,7 +24,7 @@ bool ShapeKeyMatrix::Verify( QString &sErrors, const QList<class PinItem *> &pin
 
     for ( int i = 0; i < MAX_ROWS; i++ )
     {
-	QString s = QString("R%1").arg(i+1);
+	QString s = QString("R%1").arg(i);
 	if ( i < nRows )
 	    pinsToCheck << s;
 	else
@@ -33,7 +33,7 @@ bool ShapeKeyMatrix::Verify( QString &sErrors, const QList<class PinItem *> &pin
 
     for ( int i = 0; i < MAX_COLUMNS; i++ )
     {
-	QString s = QString("C%1").arg(i+1);
+	QString s = QString("C%1").arg(i);
 	if ( i < nColumns )
 	    pinsToCheck << s;
 	else
@@ -56,10 +56,10 @@ void ShapeKeyMatrix::MakeControlsXML( QDomElement &elem, const QList<class PinIt
 
     QStringList rows, cols;
     for ( int i = 0; i < nRows; i++ )
-	rows << QString("R%1").arg(i);
+	rows << GetPort(pins, QString("R%1").arg(i) );
 
     for ( int i = 0; i < nCols; i++ )
-	cols << QString("C%1").arg(i);
+	cols << GetPort(pins, QString("C%1").arg(i) );
 
     MakeKeyMatrixControl( elem, 
 			  GetPropertyValueString("Key Names",values,""), 

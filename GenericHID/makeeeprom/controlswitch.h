@@ -16,7 +16,7 @@ public:
     virtual Control::Type type() const { return Control::Input; }
 
 private:
-    int m_nPort;
+    byte m_nPort;
     bool m_bPullup;
     bool m_bDebounce;
     QString m_sName;

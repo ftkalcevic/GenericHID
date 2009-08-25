@@ -16,7 +16,7 @@ public:
     virtual Control::Type type() const { return Control::Input; }
 
 private:
-    int m_nPort;
+    byte m_nPort;
     QString m_sName;
     ushort m_nUsagePage;
     ushort m_nUsage;

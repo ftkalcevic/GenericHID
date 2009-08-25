@@ -32,6 +32,7 @@ private:
     bool m_bEncoded;
     int m_nLogicalMax;
     int m_nReportBits;
+    ushort m_nOutputs;
 };
 
 #endif

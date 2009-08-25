@@ -12,7 +12,7 @@ public:
     virtual bool Load( const QDomElement &elem, QString *sError );
     virtual ByteArray GetHIDReportDescriptor( StringTable &table, int &nBits ) const;
     virtual ByteArray GetControlConfig( byte nReportId ) const;
-    virtual Control::Type type() const { return Control::Output; }
+    virtual Control::Type type() const { return Control::Input; }
 
 private:
     QString m_sName;
