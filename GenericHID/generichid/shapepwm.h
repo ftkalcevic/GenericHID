@@ -9,6 +9,11 @@ public:
     ShapePWM(QDomElement &node, const QString &sShapeName, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, int nImageWidth, int nImageHeight, const QString &sIconFile, int nMaxInstances, const QString &sDescription);
     virtual ~ShapePWM(void);
     virtual void MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &pins, const QList<PropertyValue *> &values  ) const;
+
+    virtual void wireAddedEvent( WireItem *pWire, QList<PropertyValue *> &values ) const;
+    void UpdateTimerDetails( ShapeItem *pItem ) const;
+protected:
+    void UpdateTimerDetails( PinItem *pMCUPin, QList<PropertyValue *> &values ) const;
 };
 
 #endif

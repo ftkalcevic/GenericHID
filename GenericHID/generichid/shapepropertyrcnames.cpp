@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "shapepropertyrcnames.h"
 
-ShapePropertyRCNames::ShapePropertyRCNames( const QString &sName, const QString &sDescription )
-: ShapePropertyString( sName, sDescription )
+ShapePropertyRCNames::ShapePropertyRCNames( const QString &sName, const QString &sDescription, bool bEnabled )
+: ShapePropertyString( sName, sDescription, bEnabled )
 {
 }
 
@@ -15,6 +15,7 @@ QtProperty *ShapePropertyRCNames::getQtProperty()
     QtProperty *pProp = m_keyMatrixNameManager->addProperty( m_sName );
     pProp->setToolTip( m_sDescription );
     pProp->setWhatsThis( m_sDescription );
+    pProp->setEnabled( m_bEnabled );
     return pProp;
 }
 

@@ -36,7 +36,7 @@ void ShapeProperties::populate(const QList<PropertyValue *> &Values) const
 }
 
 
-void ShapeProperties::retreive(const QList<PropertyValue *> &Values) const
+void ShapeProperties::retrieve(const QList<PropertyValue *> &Values) const
 {
     for ( int i = 0; i < m_Properties.count(); i++ )
 	m_Properties[i]->getValue( m_QtProperties[i], Values[i] );

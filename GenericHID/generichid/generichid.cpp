@@ -167,13 +167,12 @@ void GenericHID::Clear()
     m_pScene->clear();
 }
 
-void GenericHID::RetreiveProperties()
+void GenericHID::RetrieveProperties()
 {
     if ( m_pLastSelectedShape != NULL )
     {
 	// write back properties if this shape before trying to save
-        const ShapeProperties &pProps = m_pLastSelectedShape->shapeData()->properties();
-        pProps.retreive(m_pLastSelectedShape->values());
+        m_pLastSelectedShape->retrieveProperties();
     }
 }
 
@@ -277,7 +276,7 @@ bool GenericHID::DoOpen( const QString &sFile )
 
 void GenericHID::onFileSave()
 {
-    RetreiveProperties();
+    RetrieveProperties();
 
     if ( m_sLastFile.isEmpty() )
 	DoSaveAs();
@@ -356,7 +355,7 @@ void GenericHID::updateWindowTitle()
 
 void GenericHID::onFileSaveAs()
 {
-    RetreiveProperties();
+    RetrieveProperties();
 
     DoSaveAs();
 }
@@ -368,7 +367,7 @@ void GenericHID::onFileExit()
 
 void GenericHID::closeEvent( QCloseEvent * event )
 {
-    RetreiveProperties();
+    RetrieveProperties();
 
     // check for changes
     if ( !CheckDataChanged() )
@@ -408,13 +407,14 @@ void GenericHID::onPropertiesCurrentItemChanged( QtBrowserItem * current )
 void GenericHID::onPropertiesItemDataChanged( QtBrowserItem * current )
 {
     // Changing some properties can effect others, eg Rows,Cols on KeyMatrix, effects the names for each key.
+    // Changing timer settings, changes the PWM details
     if ( m_pLastSelectedShape != NULL )
 	m_pLastSelectedShape->PropertyChanged( current );
 }
 
 void GenericHID::onMicrocontrollerProgram()
 {
-    RetreiveProperties();
+    RetrieveProperties();
 
     // Verify
     QString sError;
@@ -464,7 +464,7 @@ void GenericHID::onMicrocontrollerProgram()
 
 void GenericHID::onMicrocontrollerExport()
 {
-    RetreiveProperties();
+    RetrieveProperties();
 
     // Verify
     QString sError;
@@ -542,7 +542,7 @@ void GenericHID::onDropShapeEvent( const ::Shape *pShape, QPointF pos )
 // The current item in the scene's view has changed.
 void GenericHID::onSelectionChanged()
 {
-    RetreiveProperties();
+    RetrieveProperties();
 
     QList<ShapeItem *> selectedShapes;
     foreach ( QGraphicsItem *pItem, m_pScene->selectedItems() )
@@ -660,10 +660,6 @@ void GenericHID::onSceneScaleChanged( double d)
     - binary coded switch
     - LCD 4/8 bit
     - Key matrix  rows x cols
-  - PWM
-    - mcu attribute
-	- send to MCU
-    - need to display the PWM freq, counts in the PWM fields
 
 
 todo
@@ -678,11 +674,10 @@ todo
 	- make pins configurable
     - do help
     - disable things when in test mode
-    - linux libusb 0.1
     - firmware
 	- port to lufa
-	- honour poll rate (is this a host thing?)
     - for Timer configuration 0-top, or 0-(top-1)
+	- also, does value=0 set output to always on in FastPWM
  */
 
 

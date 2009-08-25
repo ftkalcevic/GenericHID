@@ -50,7 +50,7 @@ private:
     void readSettings();
     void Clear();
     bool CheckDataChanged();
-    void RetreiveProperties();
+    void RetrieveProperties();
 
     QString m_sLastFile;
     QString m_sLastFileContents;

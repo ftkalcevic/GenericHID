@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "shapeitem.h"
 #include "pinitem.h"
+#include "shapepwm.h"
 
 ShapeItem::ShapeItem(const Shape *pShape, int id, Editor *pEditor, QGraphicsItem *parent)
 : QGraphicsPixmapItem(QPixmap(pShape->shapeFile()),parent)
@@ -247,4 +248,44 @@ void ShapeItem::PropertyChanged( QtBrowserItem * item )
 void ShapeItem::populateProperties()
 {
     m_pShape->populateProperties( m_values );
+}
+
+
+void ShapeItem::retrieveProperties()
+{
+    m_pShape->retrieveProperties( m_values );
+
+    if ( m_pShape->shapeType() == ShapeType::AT90USB128 ) // MCU property change
+    {
+	// Update pwm components.  
+	foreach ( PinItem *pPin, m_pins )
+	{
+	    foreach ( WireItem *pWire, pPin->wires() )
+	    {
+		ShapeItem *pShapeItem;
+		if ( pWire->pin1()->parentShape()->shapeData()->shapeType() != ShapeType::AT90USB128 )
+		    pShapeItem = pWire->pin1()->parentShape();
+		else
+		    pShapeItem = pWire->pin2()->parentShape();
+
+		if ( pShapeItem->shapeData()->shapeType() == ShapeType::PWM )
+		{
+		    const Shape *pShape = pShapeItem->shapeData();
+		    const ShapePWM *pPWM = dynamic_cast<const ShapePWM *>( pShape );
+		    if ( pPWM != NULL )
+			pPWM->UpdateTimerDetails( pShapeItem );
+		}
+	    }
+	}
+    }
+}
+
+void ShapeItem::wireAddedEvent( WireItem *pWire )
+{
+    m_pShape->wireAddedEvent( pWire, m_values );
+}
+
+QString ShapeItem::GetPropertyValueString( const QString &sName, const QString &sDefault ) const
+{
+    return m_pShape->GetPropertyValueString( sName, m_values, sDefault );
 }

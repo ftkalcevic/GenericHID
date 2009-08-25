@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "shapepropertybool.h"
 
-ShapePropertyBool::ShapePropertyBool( const QString &sName, const QString &sDescription )
-: ShapeProperty( sName, sDescription )
+ShapePropertyBool::ShapePropertyBool( const QString &sName, const QString &sDescription, bool bEnabled )
+: ShapeProperty( sName, sDescription, bEnabled )
 {
 }
 
@@ -15,7 +15,8 @@ QtProperty *ShapePropertyBool::getQtProperty()
 {
     QtProperty *pProp = m_boolManager->addProperty( m_sName );
     pProp->setToolTip( m_sDescription );
-    return pProp;
+    pProp->setEnabled( m_bEnabled );
+   return pProp;
 }
 
 

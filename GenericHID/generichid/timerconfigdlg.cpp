@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "timerconfigdlg.h"
 #include "timercounter.h"
+#include "deviceconfig.h"
 
 TimerConfigDlg::TimerConfigDlg( int nBits, QStringList &sPrescales, QWidget *parent)
 : QDialog(parent)
@@ -45,7 +46,7 @@ void TimerConfigDlg::ComputeTimer()
 
     double dClock = (double)m_nClockFrequency / (double)nPrescale;
     double dFreq = dClock / (double)nTop;
-    if ( nMode == 0 )	// phase correct
+    if ( nMode == TC_MODE_PHASECORRECT )	// phase correct
 	dFreq /= 2;
 
     ui.lblOutputFrequency->setText( TimerCounter::MakeFreq( dFreq ) );
@@ -85,7 +86,7 @@ void TimerConfigDlg::AutoComputeTimer()
 	{
 	    dError = abs(dFreq - dTargetFrequency);
 	    nAutoPrescale = nPrescale;
-	    nAutoMode = 1;
+	    nAutoMode = TC_MODE_FASTPWM;
 	    nAutoTop = nResolution;
 	    dAutoFrequency = dFreq;
 	}
@@ -96,7 +97,7 @@ void TimerConfigDlg::AutoComputeTimer()
 	{
 	    dError = abs(dFreq - dTargetFrequency);
 	    nAutoPrescale = nPrescale;
-	    nAutoMode = 0;
+	    nAutoMode = TC_MODE_PHASECORRECT;
 	    nAutoTop = nResolution;
 	    dAutoFrequency = dFreq;
 	}
@@ -129,7 +130,7 @@ void TimerConfigDlg::setValue( const QString &sTimerDetails )
     ui.spinCounterTop->setValue( nTop );
 
     double dFreq = (double)m_nClockFrequency / (double)nPrescaler / (double)nTop;
-    if ( nMode == 0 )	// phase correct
+    if ( nMode == TC_MODE_PHASECORRECT )	// phase correct
 	dFreq /= 2;
     ui.spinFrequency->setValue(dFreq);
     ui.spinResolution->setValue( nTop);

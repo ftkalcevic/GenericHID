@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "shapepropertyint.h"
 
-ShapePropertyInt::ShapePropertyInt( const QString &sName, const QString &sDescription )
-: ShapeProperty( sName, sDescription )
+ShapePropertyInt::ShapePropertyInt( const QString &sName, const QString &sDescription, bool bEnabled )
+: ShapeProperty( sName, sDescription, bEnabled )
 {
 }
 
@@ -14,6 +14,7 @@ QtProperty *ShapePropertyInt::getQtProperty()
 {
     QtProperty *pProp = m_intManager->addProperty( m_sName );
     pProp->setToolTip( m_sDescription );
+    pProp->setEnabled( m_bEnabled );
     m_intManager->setMinimum( pProp, m_nMin );
     m_intManager->setMaximum( pProp, m_nMax );
     return pProp;

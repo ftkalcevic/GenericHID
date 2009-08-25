@@ -16,7 +16,7 @@ public:
 class ShapePropertyTimer : public ShapePropertyString
 {
 public:
-    ShapePropertyTimer( QtStringPropertyManager *manager, const QString &sName, const QString &sDescription );
+    ShapePropertyTimer( QtStringPropertyManager *manager, const QString &sName, const QString &sDescription, bool bEnabled );
     virtual ~ShapePropertyTimer(void);
 
     virtual PropertyValue *createValue() const { return new PropertyValueTimer(m_sDefault); }

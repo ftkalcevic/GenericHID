@@ -17,7 +17,7 @@ class ShapePropertyBool :
     public ShapeProperty
 {
 public:
-    ShapePropertyBool( const QString &sName, const QString &sDescription );
+    ShapePropertyBool( const QString &sName, const QString &sDescription, bool bEnabled );
     virtual ~ShapePropertyBool(void);
     virtual QtProperty *getQtProperty();
     bool Configure( QDomElement &node );

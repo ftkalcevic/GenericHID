@@ -410,7 +410,6 @@ void ShapeScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	    }
 	}
 
-	// this is an ugly copy of the conditions in mouseMoveEvent
 	QString sReason;
 	if ( CanEndWire( m_pEditor->m_pWiringStartPin, pSecondPin, sReason ) )
 	{
@@ -420,6 +419,10 @@ void ShapeScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	    m_pEditor->m_pCurrentWire->setPin2(pSecondPin);
 	    m_pEditor->m_pCurrentWire->UpdateEndpoints();
 	    m_WireItems.append( m_pEditor->m_pCurrentWire );
+
+	    m_pEditor->m_pWiringStartPin->parentShape()->wireAddedEvent( m_pEditor->m_pCurrentWire );
+	    pSecondPin->parentShape()->wireAddedEvent( m_pEditor->m_pCurrentWire );
+
 	    // add to wire list
 	    m_pEditor->m_pCurrentWire = NULL;
 	    m_pEditor->m_pWiringStartPin = NULL;
@@ -513,6 +516,9 @@ bool ShapeScene::loadXML( QDomDocument &doc, ShapeCollection *pCol )
 	m_WireItems.append( pItem );
 	addItem( pItem );
 	pItem->UpdateEndpoints();
+
+	pItem->pin1()->parentShape()->wireAddedEvent( pItem );
+	pItem->pin2()->parentShape()->wireAddedEvent( pItem );
     }
     return true;
 }

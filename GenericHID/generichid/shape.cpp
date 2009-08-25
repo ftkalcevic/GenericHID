@@ -150,9 +150,10 @@ Shape *Shape::CreateFromXML( QDomElement &node )
 	    QString sPropName = XMLUtility::getAttribute( propertyNode, "name", "" );
 	    QString sPropDescription = XMLUtility::getAttribute( propertyNode, "description", "" );
 	    QString sPropType = XMLUtility::getAttribute( propertyNode, "type", "" );
+	    bool bEnabled = XMLUtility::getAttribute( propertyNode, "enabled", true );
 	    enum PropertyType::PropertyType ePropType = PropertyType::fromString( sPropType );
 
-	    ShapeProperty *pShapeProperty = ShapeProperty::CreateShapeProperty( propertyNode, sPropName, sPropDescription, ePropType );
+	    ShapeProperty *pShapeProperty = ShapeProperty::CreateShapeProperty( propertyNode, sPropName, sPropDescription, ePropType, bEnabled );
 
 	    if ( pShapeProperty != NULL )
 		pShape->m_Properties.add( pShapeProperty );
@@ -529,7 +530,7 @@ void Shape::MakeRGBControl( QDomElement &elem, const QString &sName, unsigned sh
     XMLUtility::setAttribute( node, "PortB", sPortB );
 }
 
-void Shape::MakePWMControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nPeriod, int nResolution, const QString &sPort ) const
+void Shape::MakePWMControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nResolution, const QString &sPort ) const
 {
     QDomElement node = elem.ownerDocument().createElement( "PWM" );
     elem.appendChild( node );
@@ -537,7 +538,6 @@ void Shape::MakePWMControl( QDomElement &elem, const QString &sName, unsigned sh
     XMLUtility::setAttribute( node, "Name", sName );
     XMLUtility::setAttribute( node, "UsagePage", nUsagePage );
     XMLUtility::setAttribute( node, "Usage", nUsage );
-    XMLUtility::setAttribute( node, "Period", nPeriod );
     XMLUtility::setAttribute( node, "Resolution", nResolution );
     XMLUtility::setAttribute( node, "Port", sPort );
 }
@@ -584,3 +584,7 @@ void Shape::populateProperties( QList<PropertyValue *> &values ) const
     m_Properties.populate( values );
 }
 
+void Shape::retrieveProperties( QList<PropertyValue *> &values ) const
+{
+    m_Properties.retrieve( values );
+}

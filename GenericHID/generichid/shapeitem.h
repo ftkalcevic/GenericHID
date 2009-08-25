@@ -30,6 +30,10 @@ public:
     void MakeControlsXML( QDomElement &elem ) const;
     void PropertyChanged( QtBrowserItem * item );
     void populateProperties();
+    void retrieveProperties();
+    void wireAddedEvent( WireItem *pWire );
+
+    QString GetPropertyValueString( const QString &sName, const QString &sDefault ) const;
 
     static ShapeItem *CreateFromXML( ShapeCollection *pCol, Editor *, QDomElement & );
     int current() const;
@@ -47,7 +51,7 @@ private:
     QList<PropertyValue *> m_values;
 
     void DoTransform();
-    virtual QVariant itemChange ( GraphicsItemChange change, const QVariant & value );
+    virtual QVariant itemChange( GraphicsItemChange change, const QVariant & value );
     void CreateProperties();
     bool CreateGraphics();
 };

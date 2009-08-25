@@ -17,6 +17,6 @@ private:
     unsigned short m_nUsage;
     int m_nPort;
     QString m_sName;
-    uint32_t m_nPeriod;
+    byte m_nBits;
     byte m_nResolution;
 };

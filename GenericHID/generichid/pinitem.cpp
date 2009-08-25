@@ -90,15 +90,15 @@ PinItem::~PinItem()
 //}
 
 
-const ShapeItem *PinItem::parentShape() const
+ShapeItem *PinItem::parentShape() const
 {
-    const QGraphicsItem *pParent = parentItem();
+    QGraphicsItem *pParent = parentItem();
 
     assert( pParent != NULL );
     assert( pParent->type() == ShapeItem::Type );
 
     if ( pParent != NULL && pParent->type() == ShapeItem::Type )
-	return 	qgraphicsitem_cast<const ShapeItem *>(pParent);
+	return 	qgraphicsitem_cast<ShapeItem *>(pParent);
 
     return NULL;
 }

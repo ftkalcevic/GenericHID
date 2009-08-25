@@ -17,7 +17,7 @@ class ShapePropertyEnum :
     public ShapeProperty
 {
 public:
-    ShapePropertyEnum( const QString &sName, const QString &sDescription );
+    ShapePropertyEnum( const QString &sName, const QString &sDescription, bool bEnabled );
     virtual ~ShapePropertyEnum(void);
     virtual QtProperty *getQtProperty();
     virtual bool Configure( QDomElement &node );

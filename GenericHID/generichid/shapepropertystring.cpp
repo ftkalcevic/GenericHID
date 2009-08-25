@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "shapepropertystring.h"
 
-ShapePropertyString::ShapePropertyString( const QString &sName, const QString &sDescription )
-: ShapeProperty( sName, sDescription )
+ShapePropertyString::ShapePropertyString( const QString &sName, const QString &sDescription, bool bEnabled )
+: ShapeProperty( sName, sDescription, bEnabled )
 {
 }
 
@@ -16,6 +16,7 @@ QtProperty *ShapePropertyString::getQtProperty()
     QtProperty *pProp = m_stringManager->addProperty( m_sName );
     pProp->setToolTip( m_sDescription );
     pProp->setWhatsThis( m_sDescription );
+    pProp->setEnabled( m_bEnabled );
     return pProp;
 }
 

@@ -84,6 +84,8 @@ bool ConfigurationConfig::Load( const QDomElement &elem, QString *sError )
 	return false;
     if ( !XMLUtility::getAttributeUShort( elem, "PowerConsumption", m_nPowerConsumption, 0, 500, sError ) )
 	return false;
+    if ( !XMLUtility::getAttributeUShort( elem, "Interval", m_nInterval, 1, 255, sError ) )
+	return false;
     if ( !XMLUtility::getAttributeBool( elem, "is5Volts", m_b5Volts, sError ) )
 	return false;
     QString s;
@@ -108,6 +110,8 @@ bool ConfigurationConfig::Load( const QDomElement &elem, QString *sError )
     if ( !XMLUtility::getAttributeBool( elem, "HIDDebug", m_bHIDDebug, sError ) )
 	return false;
     if ( !XMLUtility::getAttributeUShort( elem, "UsagePage", m_nUsagePage, 0, 0xFFFF, sError ) )
+	return false;
+    if ( !XMLUtility::getAttributeUShort( elem, "Usage", m_nUsage, 0, 0xFFFF, sError ) )
 	return false;
     if ( !XMLUtility::getAttributeUShort( elem, "Usage", m_nUsage, 0, 0xFFFF, sError ) )
 	return false;

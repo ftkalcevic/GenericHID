@@ -113,9 +113,10 @@ void ShapeProperty::Init()
 
 
 
-ShapeProperty::ShapeProperty( const QString &sName, const QString &sDescription )
+ShapeProperty::ShapeProperty( const QString &sName, const QString &sDescription, bool bEnabled )
 : m_sName(sName)
 , m_sDescription( sDescription )
+, m_bEnabled( bEnabled )
 {
     Init();
 }
@@ -125,20 +126,20 @@ ShapeProperty::~ShapeProperty(void)
 }
 
 
-ShapeProperty *ShapeProperty::CreateShapeProperty( QDomElement &node, const QString &sName, const QString &sDescription, PropertyType::PropertyType ePropType )
+ShapeProperty *ShapeProperty::CreateShapeProperty( QDomElement &node, const QString &sName, const QString &sDescription, PropertyType::PropertyType ePropType, bool bEnabled )
 {
     ShapeProperty *pProp = NULL;
 
     switch ( ePropType )
     {
-	case PropertyType::String:	pProp = new ShapePropertyString( sName, sDescription ); break;
-        case PropertyType::Enum:	pProp = new ShapePropertyEnum( sName, sDescription ); break;
-        case PropertyType::Bool:	pProp = new ShapePropertyBool( sName, sDescription ); break;
-        case PropertyType::Int:		pProp = new ShapePropertyInt( sName, sDescription ); break;
-        case PropertyType::Usage:	pProp = new ShapePropertyUsage( sName, sDescription ); break;
-        case PropertyType::Timer13:	pProp = new ShapePropertyTimer( m_timer13Manager, sName, sDescription ); break;
-        case PropertyType::Timer2:	pProp = new ShapePropertyTimer( m_timer2Manager, sName, sDescription ); break;
-        case PropertyType::RCNames:	pProp = new ShapePropertyRCNames( sName, sDescription ); break;
+	case PropertyType::String:	pProp = new ShapePropertyString( sName, sDescription, bEnabled ); break;
+        case PropertyType::Enum:	pProp = new ShapePropertyEnum( sName, sDescription, bEnabled ); break;
+        case PropertyType::Bool:	pProp = new ShapePropertyBool( sName, sDescription, bEnabled ); break;
+        case PropertyType::Int:		pProp = new ShapePropertyInt( sName, sDescription, bEnabled ); break;
+        case PropertyType::Usage:	pProp = new ShapePropertyUsage( sName, sDescription, bEnabled ); break;
+        case PropertyType::Timer13:	pProp = new ShapePropertyTimer( m_timer13Manager, sName, sDescription, bEnabled ); break;
+        case PropertyType::Timer2:	pProp = new ShapePropertyTimer( m_timer2Manager, sName, sDescription, bEnabled ); break;
+        case PropertyType::RCNames:	pProp = new ShapePropertyRCNames( sName, sDescription, bEnabled ); break;
 	default:
 	    // problem
 	    assert( false );

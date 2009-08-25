@@ -16,7 +16,7 @@ class ShapePropertyUsage :
     public ShapeProperty
 {
 public:
-    ShapePropertyUsage(const QString &sName, const QString &sDescription);
+    ShapePropertyUsage(const QString &sName, const QString &sDescription, bool bEnabled);
     virtual ~ShapePropertyUsage(void);
     virtual QtProperty *getQtProperty();
     virtual bool Configure( QDomElement &node );

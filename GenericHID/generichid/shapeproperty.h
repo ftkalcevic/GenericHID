@@ -31,11 +31,11 @@ public:
 class ShapeProperty
 {
 protected:
-    ShapeProperty( const QString &sName, const QString &sDescription );
+    ShapeProperty( const QString &sName, const QString &sDescription, bool bEnabled );
 
 public:
     virtual ~ShapeProperty(void);
-    static ShapeProperty *CreateShapeProperty( QDomElement &node, const QString &sName, const QString &sDescription, PropertyType::PropertyType ePropType );
+    static ShapeProperty *CreateShapeProperty( QDomElement &node, const QString &sName, const QString &sDescription, PropertyType::PropertyType ePropType, bool bEnabled );
     static void SetBrowserFactory( QtAbstractPropertyBrowser *browser );
     static void Init();
     static QtProperty *MakeGroupItem( const QString &s );
@@ -48,6 +48,7 @@ public:
 
     const QString &name() const { return m_sName; }
     const QString &description() const { return m_sDescription; }
+    const bool enabled() const { return m_bEnabled; }
 
 public:
     static QtGroupPropertyManager *m_groupManager;
@@ -72,6 +73,7 @@ protected:
 
     QString m_sName;
     QString m_sDescription;
+    bool m_bEnabled;
 };
 
 

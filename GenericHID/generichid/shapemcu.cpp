@@ -131,6 +131,7 @@ void ShapeMCU::MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sP
     
     XMLUtility::setAttribute( configNode, "BusPowered", GetPropertyValueEnum("Voltage",values,"") != "Self-Powered" );	    // so bus is default
     XMLUtility::setAttribute( configNode, "PowerConsumption", nCurrent );
+    XMLUtility::setAttribute( configNode, "Interval", GetPropertyValueInt("Interval",values, 50 ) );
     XMLUtility::setAttribute( configNode, "is5Volts", GetPropertyValueEnum("Voltage",values,"") == "5" );
     XMLUtility::setAttribute( configNode, "UseStatusLEDs", GetPropertyValueEnum("Use Status LEDs",values,"") );
     XMLUtility::setAttribute( configNode, "UsagePage", GetPropertyValueUsagePage("Usage",values,1) );
@@ -138,9 +139,9 @@ void ShapeMCU::MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sP
     XMLUtility::setAttribute( configNode, "SerialDebug", GetPropertyValueBool("Serial-Debug",values,false) );
     XMLUtility::setAttribute( configNode, "HIDDebug", GetPropertyValueBool("HID-Debug",values,false) );
     XMLUtility::setAttribute( configNode, "PowerPort", sPowerPin );
-    XMLUtility::setAttribute( configNode, "Timer1", GetPropertyValueBool("Timer1",values,false) );
-    XMLUtility::setAttribute( configNode, "Timer2", GetPropertyValueBool("Timer2",values,false) );
-    XMLUtility::setAttribute( configNode, "Timer3", GetPropertyValueBool("Timer3",values,false) );
+    XMLUtility::setAttribute( configNode, "Timer1", GetPropertyValueString("Timer1",values,false) );
+    XMLUtility::setAttribute( configNode, "Timer2", GetPropertyValueString("Timer2",values,false) );
+    XMLUtility::setAttribute( configNode, "Timer3", GetPropertyValueString("Timer3",values,false) );
 }
 
 

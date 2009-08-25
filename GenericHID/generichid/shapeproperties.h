@@ -12,7 +12,7 @@ public:
     void add( ShapeProperty *pProperty );
     QtProperty *topItem() const { return m_topItem; }
     void populate(const QList<PropertyValue *> &Values) const;
-    void retreive(const QList<PropertyValue *> &Values) const;
+    void retrieve(const QList<PropertyValue *> &Values) const;
     const QList<ShapeProperty *> &items() const { return m_Properties; }
     int find( const QString &sName ) const;
     QtProperty *findQt( const QString &sName ) const;

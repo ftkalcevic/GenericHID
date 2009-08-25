@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "shapepropertyenum.h"
 
-ShapePropertyEnum::ShapePropertyEnum( const QString &sName, const QString &sDescription )
-: ShapeProperty( sName, sDescription )
+ShapePropertyEnum::ShapePropertyEnum( const QString &sName, const QString &sDescription, bool bEnabled )
+: ShapeProperty( sName, sDescription, bEnabled )
 {
 }
 
@@ -15,6 +15,7 @@ QtProperty *ShapePropertyEnum::getQtProperty()
 {
     QtProperty *pProp = m_enumManager->addProperty(m_sName);
     pProp->setToolTip( m_sDescription );
+    pProp->setEnabled( m_bEnabled );
     m_enumManager->setEnumNames( pProp, m_Enums );
     return pProp;
 }

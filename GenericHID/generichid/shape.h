@@ -67,6 +67,8 @@ public:
 
     virtual void PropertyChanged( QtBrowserItem *item, QList<PropertyValue *> &values ) const {}
     virtual void populateProperties( QList<PropertyValue *> &values ) const;
+    virtual void retrieveProperties( QList<PropertyValue *> &values ) const;
+    virtual void wireAddedEvent( WireItem *pWire, QList<PropertyValue *> &values ) const {}
 
     void MakeDirectionalSwitchControl( QDomElement &node, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bPullup, bool bDebounce, const QString &sDirections, const QString &sNorthPort, const QString &sSouthPort, const QString &sEastPort, const QString &sWestPort, const QString &sNEPort, const QString &sNWPort, const QString &sSEPort, const QString &sSWPort ) const;
     void MakePotentiometerControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nBits, const QString &sPort ) const;
@@ -82,7 +84,7 @@ public:
     void MakeLEDControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, const QString &sPort, bool bSource ) const;
     void MakeBiColourControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, const QString &sPortA, const QString &sPortB ) const;
     void MakeRGBControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bSource, const QString &sPortR, const QString &sPortG, const QString &sPortB ) const;
-    void MakePWMControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nPeriod, int nResolution, const QString &sPort ) const;
+    void MakePWMControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nResolution, const QString &sPort ) const;
     void MakeCounterControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nPeriod, int nBits ) const;
 
 protected:

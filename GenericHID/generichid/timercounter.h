@@ -10,4 +10,5 @@ public:
     static QString MakeUserDisplay( const QString sDetails );
     static void ExtractDetails( const QString sDetails, int &nMode, int &nPrescaler, int &nTop );
     static QString MakeFreq( double dFreq );
+    static double MakeFreq( int nMode, int nPrescaler, int nTop );
 };

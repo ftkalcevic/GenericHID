@@ -16,7 +16,7 @@ public:
 class ShapePropertyRCNames : public ShapePropertyString
 {
 public:
-    ShapePropertyRCNames( const QString &sName, const QString &sDescription );
+    ShapePropertyRCNames( const QString &sName, const QString &sDescription, bool bEnabled );
     virtual ~ShapePropertyRCNames(void);
 
     virtual PropertyValue *createValue() const { return new PropertyValueRCNames(m_sDefault); }

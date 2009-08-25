@@ -17,7 +17,7 @@ public:
     int type() const { return Type; }
     const QList<WireItem *> &wires() const { return m_pWires; }
     const Pin *pin() const { return m_pPin; }
-    const class ShapeItem *parentShape() const;
+    class ShapeItem *parentShape() const;
 
     void addWire( WireItem *pWire ) { assert(pWire); m_pWires.push_back( pWire ); }
     bool removeWire( WireItem *pWire ) { assert(pWire); return m_pWires.removeOne( pWire ); }

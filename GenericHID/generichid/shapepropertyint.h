@@ -17,7 +17,7 @@ class ShapePropertyInt :
     public ShapeProperty
 {
 public:
-    ShapePropertyInt(const QString &sName, const QString &sDescription);
+    ShapePropertyInt(const QString &sName, const QString &sDescription, bool bEnabled);
     virtual ~ShapePropertyInt(void);
     virtual QtProperty *getQtProperty();
     virtual bool Configure( QDomElement &node );

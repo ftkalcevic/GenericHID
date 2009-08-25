@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "shapepropertytimer.h"
 
-ShapePropertyTimer::ShapePropertyTimer( QtStringPropertyManager *manager, const QString &sName, const QString &sDescription )
-: ShapePropertyString( sName, sDescription )
+ShapePropertyTimer::ShapePropertyTimer( QtStringPropertyManager *manager, const QString &sName, const QString &sDescription, bool bEnabled )
+: ShapePropertyString( sName, sDescription, bEnabled )
 , m_pManager( manager )
 {
 }
@@ -16,6 +16,7 @@ QtProperty *ShapePropertyTimer::getQtProperty()
     QtProperty *pProp = m_pManager->addProperty( m_sName );
     pProp->setToolTip( m_sDescription );
     pProp->setWhatsThis( m_sDescription );
+    pProp->setEnabled( m_bEnabled );
     return pProp;
 }
 

@@ -288,10 +288,10 @@ ByteArray MakeEEPROM::makeEEPROM()
     ConfigurationHID HIDConfigure(HIDReport.count());
     ByteBuffer HIDConfig = HIDConfigure.GetReportDescriptor(table);
 
-    ConfigurationEndpoint Endpoint1(true, 1, TransferType::Interrupt, SynchronisationType::NoSync, UsageType::Data, EndpointInSize, 50);
+    ConfigurationEndpoint Endpoint1(true, 1, TransferType::Interrupt, SynchronisationType::NoSync, UsageType::Data, EndpointInSize, m_ConfigConfig->interval());
     ByteBuffer EndpointConfig1 = Endpoint1.GetReportDescriptor(table);
 
-    ConfigurationEndpoint Endpoint2(false, 2, TransferType::Interrupt, SynchronisationType::NoSync, UsageType::Data, EndpointOutSize, 50);
+    ConfigurationEndpoint Endpoint2(false, 2, TransferType::Interrupt, SynchronisationType::NoSync, UsageType::Data, EndpointOutSize, m_ConfigConfig->interval());
     ByteBuffer EndpointConfig2 = Endpoint2.GetReportDescriptor(table);
 
     short nConfigDescLength = (short)(IFaceConfig.count() + HIDConfig.count() + EndpointConfig1.count() + EndpointConfig2.count());

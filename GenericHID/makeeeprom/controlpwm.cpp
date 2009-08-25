@@ -19,10 +19,17 @@ bool ControlPWM::Load( const QDomElement &elem, QString *sError )
 	return false;
     if ( !XMLUtility::getAttributeUShort( elem, "Usage", m_nUsage, 0, 0xFFFF, sError ) )
 	return false;
-    if ( !XMLUtility::getAttributeUInt( elem, "Period", m_nPeriod, 0, 0xFFFFFFFF, sError ) )
+    if ( !XMLUtility::getAttributeByte( elem, "Resolution", m_nResolution, 1, 0xFFFF, sError ) )
 	return false;
-    if ( !XMLUtility::getAttributeByte( elem, "Resolution", m_nResolution, 1, 16, sError ) )
-	return false;
+
+    m_nBits = 0;
+    int nTemp = m_nResolution;
+    while ( nTemp != 0 )
+    {
+	m_nBits++;
+	nTemp >>= 1;
+    }
+
     return true;
 }
 
@@ -33,10 +40,10 @@ ByteArray ControlPWM::GetHIDReportDescriptor( StringTable &table, int &nBits ) c
     Desc.UsagePage(m_nUsagePage);
     Desc.Usage(m_nUsage);
     Desc.LogicalMinimum(0);
-    Desc.LogicalMaximum(1<<m_nResolution);
-    Desc.ReportSize(m_nResolution);
+    Desc.LogicalMaximum(m_nResolution);
+    Desc.ReportSize(m_nBits);
     Desc.ReportCount(1);
-    nBits += m_nResolution;
+    nBits += m_nBits;
     if (m_sName.length() > 0)
         Desc.StringIndex(table[m_sName]);
     Desc.Output(EDataType::Data, EVarType::Variable, ERelType::Absolute, EWrapType::NoWrap, ELinearType::Linear, EPreferedType::NoPreferred, ENullPositionType::NoNullPosition, EVolatileType::NonVolatile, EBufferType::BitField);
@@ -53,9 +60,9 @@ ByteArray ControlPWM::GetControlConfig( byte nReportId ) const
     config.hdr.Type = PWMOutput;
     config.hdr.ReportId = nReportId;
     config.hdr.Length = sizeof(config);
-    config.Port = (byte)m_nPort;
-    config.Period = m_nPeriod;
-    config.Resolution = m_nResolution;
+    config.Port = (byte)m_nPort;			// Port = Portn * 8 + Pin
+    config.Bits = m_nBits;				// number of bits the value occupies in the report
+    config.Resolution = m_nResolution;			// top value (used to validate).
 
     return ByteBuffer((byte *)&config, sizeof(config) );
 }

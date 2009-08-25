@@ -17,7 +17,7 @@ class ShapePropertyString :
     public ShapeProperty
 {
 public:
-    ShapePropertyString(const QString &sName, const QString &sDescription);
+    ShapePropertyString(const QString &sName, const QString &sDescription, bool bEnabled);
     virtual ~ShapePropertyString(void);
     virtual QtProperty *getQtProperty();
     virtual bool Configure( QDomElement &node );
