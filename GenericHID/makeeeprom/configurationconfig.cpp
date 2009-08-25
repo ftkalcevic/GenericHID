@@ -84,7 +84,7 @@ bool ConfigurationConfig::Load( const QDomElement &elem, QString *sError )
 	return false;
     if ( !XMLUtility::getAttributeUShort( elem, "PowerConsumption", m_nPowerConsumption, 0, 500, sError ) )
 	return false;
-    if ( !XMLUtility::getAttributeUShort( elem, "Interval", m_nInterval, 1, 255, sError ) )
+    if ( !XMLUtility::getAttributeByte( elem, "Interval", m_nInterval, 1, 255, sError ) )
 	return false;
     if ( !XMLUtility::getAttributeBool( elem, "is5Volts", m_b5Volts, sError ) )
 	return false;
