@@ -166,8 +166,8 @@ struct SPWMControl
 {
     struct SControlHeader hdr;
     byte Port;
-    unsigned short Period;
-    byte Resolution;
+    byte Bits;
+    uint16_t Resolution;
 };
 
 struct SRGBLEDControl
@@ -247,6 +247,8 @@ struct SDynamicHID
 struct TimerConfig
 {
     byte Mode;
+	#define TC_MODE_PHASECORRECT	0
+	#define TC_MODE_FASTPWM		1
     uint16_t Prescaler;
     uint16_t CounterTop;
 };
