@@ -660,11 +660,12 @@ void GenericHID::onSceneScaleChanged( double d)
     - binary coded switch
     - LCD 4/8 bit
     - Key matrix  rows x cols
-
+ - make wires work better
 
 todo
-    - test all controls 
-    - test panel
+    - test hat switch
+    - test all controls - under linux
+    - test multiple lcds with +5v
     - crash on load another in onSelectionChanged
     - alpha display numeric
 	- update firmware
@@ -676,8 +677,6 @@ todo
     - disable things when in test mode
     - firmware
 	- port to lufa
-    - for Timer configuration 0-top, or 0-(top-1)
-	- also, does value=0 set output to always on in FastPWM
  */
 
 
