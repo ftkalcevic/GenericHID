@@ -69,11 +69,10 @@ void UsagePropertyManager::setValue(QtProperty *property, const QString &val)
     unsigned short nUsage;
     ExtractUsage( val, nUsagePage, nUsage );
 
-    UpdateUsagePages( m_propertyToUsage[property], nUsagePage );
-
     bool settingValue = m_settingValue;
     m_settingValue = true;
     m_listPropertyManager->setValue(m_propertyToUsagePage[property], nUsagePage );
+    UpdateUsagePages( m_propertyToUsage[property], nUsagePage );
     m_listPropertyManager->setValue(m_propertyToUsage[property],  nUsage );
     m_settingValue = settingValue;
 

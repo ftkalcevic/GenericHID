@@ -68,7 +68,7 @@
 	    <pin rect="348, 44, 31, 25" id="Vcc" type="" enabled="false" />
 
 	    <property name="Name" description="The optional user friendly name given to the control." type="string" default="Generic HID Device"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="13:1" />
+	    <property name="Usage" description="HID usage of the control." type="usage" default="1:8" />
 	    <property name="Voltage" description="Is the microcontroller 5v or 3.3v." type="enum" default="3.3">
 		<enum name="5"/>
 		<enum name="3.3"/>
@@ -165,7 +165,7 @@
 	    <pin rect="348, 44, 31, 25" id="Vcc" type="" enabled="false" />
 
 	    <property name="Name" description="The optional user friendly name given to the control." type="string" default="Generic HID Device"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="13:1" />
+	    <property name="Usage" description="HID usage of the control." type="usage" default="1:8" />
 	    <property name="Voltage" description="Is the microcontroller 5v or 3.3v." type="enum" default="3.3">
 		<enum name="5"/>
 		<enum name="3.3"/>
@@ -243,8 +243,8 @@
 
 	    <pin rect="442,225, 31, 25" id="PC0" type="io" />
 	    <pin rect="442,200, 31, 25" id="PC1" type="io" />
-	    <pin rect="473,225, 31, 25" id="PC3" type="io" />
-	    <pin rect="473,200, 31, 25" id="PC2" type="io" />
+	    <pin rect="473,225, 31, 25" id="PC2" type="io" />
+	    <pin rect="473,200, 31, 25" id="PC3" type="io" />
 	    <pin rect="504,225, 31, 25" id="PC4" type="io,pwm" />
 	    <pin rect="504,200, 31, 25" id="PC5" type="io,pwm" />
 	    <pin rect="535,225, 31, 25" id="PC6" type="io,pwm" />
@@ -264,7 +264,7 @@
 	    <pin rect="566,130, 31, 25" id="Vcc" type="" enabled="false" />
 
 	    <property name="Name" description="The optional user friendly name given to the control." type="string" default="Generic HID Device"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="13:1" />
+	    <property name="Usage" description="HID usage of the control." type="usage" default="1:8" />
 	    <property name="Voltage" description="Is the microcontroller 5v or 3.3v." type="enum" default="3.3">
 		<enum name="5"/>
 		<enum name="3.3"/>
@@ -347,8 +347,8 @@
 
 		<pin rect="295,210, 31, 25" id="PC0" type="io" />
 		<pin rect="326,210, 31, 25" id="PC1" type="io" />
-		<pin rect="357,210, 31, 25" id="PC3" type="io" />
-		<pin rect="388,210, 31, 25" id="PC2" type="io" />
+		<pin rect="357,210, 31, 25" id="PC2" type="io" />
+		<pin rect="388,210, 31, 25" id="PC3" type="io" />
 		<pin rect="419,210, 31, 25" id="PC4" type="io,pwm" />
 		<pin rect="450,210, 31, 25" id="PC5" type="io,pwm" />
 		<pin rect="481,210, 31, 25" id="PC6" type="io,pwm" />
@@ -368,7 +368,7 @@
 		<pin rect="574,140, 31, 25" id="Vcc" type="" enabled="false" />
 
 	    <property name="Name" description="The optional user friendly name given to the control." type="string" default="Generic HID Device"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="13:1" />
+	    <property name="Usage" description="HID usage of the control." type="usage" default="1:8" />
 	    <property name="Voltage" description="Is the microcontroller 5v or 3.3v." type="enum" default="3.3">
 		<enum name="5"/>
 		<enum name="3.3"/>

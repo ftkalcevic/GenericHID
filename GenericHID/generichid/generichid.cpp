@@ -661,6 +661,7 @@ void GenericHID::onSceneScaleChanged( double d)
     - LCD 4/8 bit
     - Key matrix  rows x cols
  - make wires work better
+ - import
 
 todo
     - test hat switch
