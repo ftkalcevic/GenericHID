@@ -2,7 +2,7 @@ TEMPLATE = app
 TARGET = GenericHID
 DESTDIR = ./debug
 QT += xml svg xmlpatterns
-CONFIG += debug precompile_header
+CONFIG += debug precompile_header link_prl
 DEFINES += QT_XML_LIB QT_SVG_LIB USING_PCH
 INCLUDEPATH += ./generatedfiles \
     ./generatedfiles/debug \

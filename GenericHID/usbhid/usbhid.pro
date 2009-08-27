@@ -1,6 +1,6 @@
 TEMPLATE = lib
 TARGET = usbhid
-CONFIG += staticlib qt
+CONFIG += staticlib qt create_prl
 include(../build.pro)
 
 CONFIG(debug,debug|release) {

@@ -2,6 +2,8 @@
 #include "generichid.h"
 #include <QtGui/QApplication>
 #include "usb.h"
+#include "logcore.h"
+#include "hiddevices.h"
 
 
 int main(int argc, char *argv[])
@@ -12,8 +14,8 @@ int main(int argc, char *argv[])
     a.setOrganizationName( "FranksWorkshop" );
     a.setOrganizationDomain( "www.franksworkshop.com.au" );
 
-    usb_init();
-    usb_set_debug(255);
+    HIDDevices::Open(false);
+    LogCore::SetLog( false );
     GenericHID w;
     w.show();
     w.ProcessCommandline();
