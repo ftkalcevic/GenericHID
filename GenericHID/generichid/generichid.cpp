@@ -459,7 +459,7 @@ void GenericHID::onMicrocontrollerProgram()
 #ifdef _WIN32
 	dlg.setFirmwareFile( "..\\bin\\Joystick.hex");
 #else
-	dlg.setFirmwareFile( "/home/frankt/src/Joystick.hex");
+	dlg.setFirmwareFile( "../bin/Joystick.hex");
 #endif	
 
     dlg.exec();
