@@ -11,9 +11,10 @@ public:
     virtual ~ControlLCD(void);
 
     virtual bool Load( const QDomElement &elem, QString *sError );
-    virtual ByteArray GetHIDReportDescriptor( StringTable &table, int &nBits ) const;
+    virtual ByteArray GetHIDReportDescriptor( StringTable &table, int &nBits) const { assert(false); return ByteArray();}
+    ByteArray GetHIDReportDescriptor( StringTable &table, int &nBits, int nReportId ) const;
     virtual ByteArray GetControlConfig( byte nReportId ) const;
-    virtual Control::Type type() const { return Control::Output; }
+    virtual Control::Type type() const { return Control::Display; }
 
 private:
     QString m_sName;

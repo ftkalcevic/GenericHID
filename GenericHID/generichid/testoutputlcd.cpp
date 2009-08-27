@@ -139,21 +139,23 @@ void TestOutputLCD::getLCDAttributes( int &nRows, int &nCols )
 
 void TestOutputLCD::LCDWrite( int nRow, int nCol, QString sText )
 {
-    HID_ReportItem_t *pRowItem = FindReportItem( m_pCol, USAGE_ROW );
-    HID_ReportItem_t *pColItem = FindReportItem( m_pCol, USAGE_COLUMN );
+    HID_ReportItem_t *pRowItem = FindReportItem( m_pDevice, m_pCol, REPORT_ITEM_TYPE_Out, USAGEPAGE_ALPHANUMERIC_DISPLAY, USAGE_ROW );
+    HID_ReportItem_t *pColItem = FindReportItem( m_pDevice, m_pCol, REPORT_ITEM_TYPE_Out, USAGEPAGE_ALPHANUMERIC_DISPLAY, USAGE_COLUMN );
+
+    HID_CollectionPath_t *pCollection = pColItem->CollectionPath;
 
     // Find the index to the first data item
     unsigned int nIndex = 0;
-    for ( ; nIndex < m_pCol->ReportItems.size(); nIndex++ )
-	if ( m_pCol->ReportItems[nIndex]->Attributes.Usage == USAGE_DISPLAY_DATA )
+    for ( ; nIndex < pCollection->ReportItems.size(); nIndex++ )
+	if ( pCollection->ReportItems[nIndex]->Attributes.Usage == USAGE_DISPLAY_DATA )
 	    break;
 
     pRowItem->Value = nRow;
     pColItem->Value = nCol;
     for ( int i = 0; i < sText.length() && nIndex+i < (int)m_nCols; i++ )
-	m_pCol->ReportItems[nIndex + i]->Value = sText[i].toAscii();
+	pCollection->ReportItems[nIndex + i]->Value = sText[i].toAscii();
     if ( sText.length() < m_nCols )
-	m_pCol->ReportItems[nIndex + sText.length()]->Value = 0;
+	pCollection->ReportItems[nIndex + sText.length()]->Value = 0;
 
     HID_ReportDetails_t pReportDetails = m_pDevice->ReportInfo().Reports[pRowItem->ReportID];
     int nBufLen = pReportDetails.OutReportLength;

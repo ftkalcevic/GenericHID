@@ -13,6 +13,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C484ED8A-124A-4CF8-96A2-D2F927912051}"
 	ProjectSection(SolutionItems) = preProject
 		GenericHID.vsd = GenericHID.vsd
+		bin\Joystick.hex = bin\Joystick.hex
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Programmer", "programmer\Programmer.vcproj", "{6CBF5015-45DB-4B20-B5B8-84B98E58CB12}"

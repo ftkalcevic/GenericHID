@@ -7,6 +7,7 @@
 #include "configurationinterface.h"
 #include "control.h"
 #include "usages.h"
+#include "controllcd.h"
 
 const int MAX_STRINGS = 254;
 const char *SELECT_DFU_MODE = "DFU";
@@ -219,18 +220,19 @@ ByteArray MakeEEPROM::makeEEPROM()
     foreach (Control *c, m_Controls)
 	if (c->type() == Control::Display )
         {
+	    ControlLCD *lcd = dynamic_cast<ControlLCD *>( c );
             nBits = 0;
-            ByteBuffer descData = c->GetHIDReportDescriptor(table, nBits);
+            ByteBuffer descData = lcd->GetHIDReportDescriptor(table, nBits, nReportId);
             ByteBuffer appData = c->GetControlConfig(nReportId);
-            HIDReport.ReportID(nReportId);
             HIDReport.AddBuffer(descData);
             ApplicationData.AddBuffer(appData);
 
             nLength = (byte)((nBits + 7) / 8);
-            appHeader.ReportLength[nReportId-1] = nLength;       // report length (id=4+)
+            appHeader.ReportLength[nReportId-1] = nLength;  // report length (id=4+)
+            appHeader.ReportLength[nReportId] = 6;	    // font report length (id=4+)
 
             nMaxOutReportLen = MAX( nMaxOutReportLen, nLength );
-            nReportId++;
+            nReportId += 2;
         }
     HIDReport.EndCollection();
 

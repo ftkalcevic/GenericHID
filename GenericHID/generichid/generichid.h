@@ -51,6 +51,7 @@ private:
     void Clear();
     bool CheckDataChanged();
     void RetrieveProperties();
+    void setMenus( bool bActive );
 
     QString m_sLastFile;
     QString m_sLastFileContents;

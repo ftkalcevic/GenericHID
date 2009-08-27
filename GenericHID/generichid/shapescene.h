@@ -21,6 +21,7 @@ public:
     bool loadXML( QDomDocument &doc, ShapeCollection *pCol );
     bool VerifyShapes( QString &sError ) const;
     QString MakeDeviceXML() const;
+    bool isMouseDown() const { return m_bMouseDown; }
 
 public slots:
     void onViewItemChanged( QGraphicsItem *item, QGraphicsItem::GraphicsItemChange change, const QVariant &value);
@@ -42,6 +43,7 @@ private:
     Editor *m_pEditor;
     QList<ShapeItem *> m_ShapeItems;
     QList<WireItem *> m_WireItems;
+    bool m_bMouseDown;
 };
 
 #endif // SHAPESCENE_H

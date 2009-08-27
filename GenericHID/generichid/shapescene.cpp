@@ -7,6 +7,7 @@
 ShapeScene::ShapeScene( Editor *pEditor, qreal x, qreal y, qreal width, qreal height, QObject * parent )
 : QGraphicsScene( x, y, width, height, parent )
 , m_pEditor(pEditor)
+, m_bMouseDown( false )
 {
 }
 
@@ -213,6 +214,7 @@ void ShapeScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     //ATLTRACE("ShapeScene::mousePressEvent!\n");
     bool bHandled = false;
+    m_bMouseDown = true;
 
     switch ( m_pEditor->m_eEditMode )
     {
@@ -396,6 +398,7 @@ void ShapeScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void ShapeScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+    m_bMouseDown = false;
     if ( m_pEditor->m_eEditMode == EditMode::Wiring && m_pEditor->m_pCurrentWire != NULL )
     {
 	//ATLTRACE("Finished wiring!\n");

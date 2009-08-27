@@ -25,6 +25,7 @@ enum ControlType
     AnalogEncoder = 12,
     PWMOutput = 13,
     RGBLED = 14,
+    LCDFont = 15
 };
 
 struct SControlHeader
@@ -146,6 +147,10 @@ struct SLCDControl
     byte RowAddr[4];		// Start of each row
 };
 
+struct SLCDFontControl
+{
+    struct SControlHeader hdr;
+};
 
 struct SLEDControl
 {

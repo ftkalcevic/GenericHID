@@ -62,15 +62,19 @@ bool ControlLCD::Load( const QDomElement &elem, QString *sError )
 }
 
 
-ByteArray ControlLCD::GetHIDReportDescriptor( StringTable &table, int &nBits ) const
+ByteArray ControlLCD::GetHIDReportDescriptor( StringTable &table, int &nBits, int nReportId ) const
 {
     HIDReportDescriptorBuilder Desc;
 
-    // The report to display text - row, col, data
-    Desc.UsagePage(m_nUsagePage);
-    Desc.Usage(m_nUsage);
+    Desc.ReportID(nReportId);
+    Desc.UsagePage(USAGEPAGE_ALPHANUMERIC_DISPLAY);
+    Desc.Usage(USAGE_ALPHANUMERIC_DISPLAY);
     if (!m_sName.isEmpty())
 	Desc.StringIndex(table[m_sName]);
+    Desc.Collection(CollectionType::Logical);
+
+    // The report to display text - row, col, data
+    Desc.Usage(USAGE_CHARACTER_REPORT);
     Desc.Collection(CollectionType::Logical);
 
     Desc.Usage(USAGE_COLUMN);                       // column
@@ -96,10 +100,10 @@ ByteArray ControlLCD::GetHIDReportDescriptor( StringTable &table, int &nBits ) c
     Desc.ReportCount(m_nCols);
     nBits += 8 * m_nCols;
     Desc.Output(EDataType::Data, EVarType::Variable, ERelType::Absolute, EWrapType::NoWrap, ELinearType::Linear, EPreferedType::NoPreferred, ENullPositionType::NoNullPosition, EVolatileType::NonVolatile, EBufferType::Buffered);
+    Desc.EndCollection();
 
 
     // row, col, attributes
-    Desc.UsagePage(USAGEPAGE_ALPHANUMERIC_DISPLAY);	// alpha numeric display
     Desc.Usage(USAGE_DISPLAY_ATTRIBUTES_REPORT);        // display attributes report
     Desc.Collection(CollectionType::Logical);
     Desc.Usage(USAGE_ROWS);				// Rows
@@ -110,6 +114,22 @@ ByteArray ControlLCD::GetHIDReportDescriptor( StringTable &table, int &nBits ) c
     Desc.ReportCount(2);
     Desc.Feature(EDataType::Constant, EVarType::Variable, ERelType::Absolute, EWrapType::NoWrap, ELinearType::Linear, EPreferedType::NoPreferred, ENullPositionType::NoNullPosition, EVolatileType::NonVolatile, EBufferType::BitField);
     Desc.EndCollection();
+
+    // Font change report
+    Desc.ReportID(nReportId+1);
+    Desc.Usage(USAGE_FONT_REPORT);
+    Desc.Collection(CollectionType::Logical);
+    Desc.LogicalMinimum(0);
+    Desc.LogicalMaximum(7);
+    Desc.ReportSize(8);
+    Desc.ReportCount(1);
+    Desc.Usage(USAGE_DISPLAY_DATA);
+    Desc.Output(EDataType::Data, EVarType::Variable, ERelType::Absolute, EWrapType::NoWrap, ELinearType::Linear, EPreferedType::NoPreferred, ENullPositionType::NoNullPosition, EVolatileType::NonVolatile, EBufferType::BitField );
+    Desc.ReportCount(5);	    //	Assumes a 5x7 font, 35 bits
+    Desc.Usage(USAGE_FONT_DATA);
+    Desc.Output(EDataType::Data, EVarType::Variable, ERelType::Absolute, EWrapType::NoWrap, ELinearType::Linear, EPreferedType::NoPreferred, ENullPositionType::NoNullPosition, EVolatileType::NonVolatile, EBufferType::Buffered );	//Font data
+    Desc.EndCollection();
+
 
     Desc.EndCollection();
 
@@ -144,5 +164,13 @@ ByteArray ControlLCD::GetControlConfig( byte nReportId ) const
     config.RowAddr[2] = m_nAddrRow2;
     config.RowAddr[3] = m_nAddrRow3;
 
-    return ByteBuffer((byte *)&config, sizeof(config) );
+    struct SLCDFontControl font;
+    font.hdr.Type = LCDFont;
+    font.hdr.ReportId = nReportId+1;
+    font.hdr.Length = sizeof(config);
+
+    ByteBuffer retBuf((byte *)&config, sizeof(config) );
+    retBuf.AddBuffer( ByteBuffer((byte *)&font, sizeof(font) ) );
+
+    return retBuf;
 }

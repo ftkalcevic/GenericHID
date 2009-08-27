@@ -169,6 +169,7 @@ void GenericHID::Clear()
 
 void GenericHID::RetrieveProperties()
 {
+    ui.tabWidget->setCurrentIndex(TAB_DESIGN);
     if ( m_pLastSelectedShape != NULL )
     {
 	// write back properties if this shape before trying to save
@@ -179,6 +180,8 @@ void GenericHID::RetrieveProperties()
 
 bool GenericHID::CheckDataChanged()
 {
+    ui.tabWidget->setCurrentIndex(TAB_DESIGN);
+
     QString s = m_pScene->makeXML();
     if ( s != m_sLastFileContents )
     {
@@ -623,11 +626,24 @@ void GenericHID::ProcessCommandline()
 void GenericHID::onTabChanged( int index )
 {
     if ( index == TAB_DESIGN )
+    {
 	ui.testPanel->Deactivate();
+	setMenus( true );
+    }
     else if ( index == TAB_TEST )
+    {
+	m_pScene->clearSelection();
+	setMenus( false );
 	ui.testPanel->Activate();
+    }
 }
 
+void GenericHID::setMenus( bool bActive )
+{
+    ui.actionExport->setEnabled( bActive );
+    ui.actionImport_and_Program->setEnabled( bActive );
+    ui.actionProgram->setEnabled( bActive );
+}
 
 void GenericHID::onZoomIndexChanged( const QString & text )
 {
@@ -662,7 +678,11 @@ void GenericHID::onSceneScaleChanged( double d)
     - Key matrix  rows x cols
  - make wires work better
  - import
-
+ - verify this!
+    1.)The sum of all IOL, for ports A0-A7, G2, C4-C7 should not exceed 100 mA.
+    2.)The sum of all IOL, for ports C0-C3, G0-G1, D0-D7 should not exceed 100 mA.
+    3.)The sum of all IOL, for ports G3-G5, B0-B7, E0-E7 should not exceed 100 mA.
+    4.)The sum of all IOL, for ports F0-F7 should not exceed 100 mA.
 todo
     - test hat switch
     - test all controls - under linux

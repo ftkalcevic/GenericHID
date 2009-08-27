@@ -498,7 +498,7 @@
 	    <pin rect="201,83,20,15" id="D6" type="io" shared="true" />
 	    <pin rect="223,83,20,15" id="D7" type="io" shared="true" />
 	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="20:1"/>
+	    <property name="Usage" description="HID usage of the control." type="usage" default="20:1" enabled="false"/>
 	    <property name="Rows" description="The number of rows on the Display." type="int" min="1" max="4" default="2"/>
 	    <property name="Columns" description="The number of columns on the Display." type="int" min="8" max="40" default="20"/>
 	    <property name="8 Bit" description="The number of data lines to connect to the LCD.  If true 8 bits are used.  If false, only 4 bits, data lines D4-D7 are used." type="bool" default="false"/>
