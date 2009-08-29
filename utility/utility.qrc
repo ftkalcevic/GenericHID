@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="/usbhidlib" >
+    <file alias="Usages" >resources/usages.xml</file>
+  </qresource>
+</RCC>
