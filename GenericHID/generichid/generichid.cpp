@@ -4,6 +4,8 @@
 #include "dragtoolbutton.h"
 #include "makeeeprom.h"
 #include "timerconfigdlg.h"
+#include "logcore.h"
+#include "hiddevices.h"
 
 
 const char * const CONFIGDATA_FILE = "config.xml";
@@ -17,6 +19,7 @@ enum
 
 GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
 : QMainWindow(parent, flags)
+, m_Logger(QCoreApplication::applicationName(), "GenericHID" )
 , m_pShapes( NULL )
 , m_pScene( NULL )
 , m_pLastSelectedShape( NULL )
@@ -27,6 +30,12 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
     connect( &m_MRU, SIGNAL(MRUSelected(const QString &)), this, SLOT(onMRUSelected(const QString &)) );
 
     m_pShapes = ShapeCollection::LoadShapeCollection( CONFIGDATA_FILE );
+    if ( m_pShapes == NULL )
+    {
+	// Serious problem if we can't open the config file.
+	LOG_MSG( m_Logger, LogTypes::Error, QString("Failed to load configuraton file '%1'.  Can't continue.").arg(CONFIGDATA_FILE) );
+	close();
+    }
 
     // Load the shapes into the tool box
     foreach ( const Shape *pShape, m_pShapes->shapes() )
@@ -70,7 +79,6 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
     connect( ui.graphicsView, SIGNAL(dropShapeEvent( const ::Shape *, QPointF) ), this, SLOT(onDropShapeEvent( const ::Shape *, QPointF) ) );
     connect( m_pScene, SIGNAL(selectionChanged() ), this, SLOT(onSelectionChanged() ) );
 
-
     ui.listView->setPropertiesWithoutValueMarked(false);
     ui.listView->setResizeMode(QtTreePropertyBrowser::Interactive);
     ui.listView->setRootIsDecorated(false);
@@ -79,15 +87,6 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
     connect( ui.listView, SIGNAL(itemDataChanged(QtBrowserItem *)), this, SLOT(onPropertiesItemDataChanged( QtBrowserItem *)) );
 
     ui.listView->setSplitterPosition( ui.listView->width()/2 );
-
-    //ui.txtPropertyHelp->setBackgroundRole( QPalette::Window );
-    //QPalette helpPalette( QApplication::palette() );
-    //helpPalette.setColor( QPalette::Base, QApplication::palette().color(QPalette::Window) );
-    //ui.txtPropertyHelp->setPalette( helpPalette );
-    //QList<int> sizes;
-    //sizes.push_back( ui.splitter->height() - ui.splitter->handleWidth() - HELP_WINDOW_HEIGHT );
-    //sizes.push_back( HELP_WINDOW_HEIGHT );
-    //ui.splitter->setSizes( sizes );
 
     ui.textBrowser->setSearchPaths( QStringList() << "help" );
     onPropertiesCurrentItemChanged( NULL );
@@ -124,12 +123,7 @@ void GenericHID::writeSettings()
 	else
 	    m_Settings.setValue( QString("application/mru%1").arg(i), "" );
 
-    //QList<int> sizes = ui.splitter->sizes();
-    //m_Settings.setValue( "window/property-size", sizes[0] );
-    //m_Settings.setValue( "window/help-size", sizes[1] );
-
     m_Settings.setValue( "window/property-column", ui.listView->splitterPosition() );
-
     m_Settings.setValue( "window/layout", this->saveState() );
 }
 
@@ -147,12 +141,6 @@ void GenericHID::readSettings()
 
     if ( m_Settings.contains( "window/layout" ) )
 	this->restoreState( m_Settings.value( "window/layout", QByteArray()).toByteArray() );
-
-    //QList<int> sizes = ui.splitter->sizes();
-    //sizes[0] = m_Settings.value( "window/property-size", sizes[0] ).toInt();
-    //sizes[1] = m_Settings.value( "window/help-size", sizes[1] ).toInt();
-    //ui.splitter->setSizes( sizes );
-
     ui.listView->setSplitterPosition( m_Settings.value("window/property-column", ui.listView->splitterPosition()).toInt() );
 }
 
@@ -200,6 +188,36 @@ bool GenericHID::CheckDataChanged()
     }
     return true;
 }
+
+
+void GenericHID::onOptionsDebug()
+{
+    bool debug = ui.actionDebug->isChecked();
+    if ( debug )
+        HIDDevices::Open( 255 );
+    else
+        HIDDevices::Open( 0 );
+
+    LogCore::SetLog(debug);}
+
+
+void GenericHID::onHelpAbout()
+{
+    QMessageBox msg(this);
+    msg.setWindowTitle( "About GenericHID" );
+    msg.setTextFormat( Qt::RichText );
+    msg.setText( QString("<h1><b>GenericHID version %1.%2</b></h1>").arg(VERSION_MAJOR).arg(VERSION_MINOR) );
+    msg.setInformativeText( "<p>DIY HID device builder</p>"
+			    "<p>Copyright (C) 2009 Frank Tkalcevic.</p>"
+			    "<p/>"
+			    "<p>This is free software, and you are welcome to redistribute it under certain conditions.  See the file COPYING, included.</p>"
+			    "<p/>"
+			    "<p>Visit the EMC web site: <a href=\"http://www.linuxcnc.org/\">http://www.linuxcnc.org/</a></p>" );
+    msg.setIcon( QMessageBox::Information );
+    msg.setIconPixmap( QPixmap(":/GenericHID/ApplicationIcon") );
+    msg.exec();
+}
+
 
 void GenericHID::onFileNew()
 {
@@ -289,7 +307,6 @@ void GenericHID::onFileSave()
 
 bool GenericHID::DoSaveAs()
 {
-    // Validate everything
     // Make the xml file to save
     QString s = m_pScene->makeXML();
     if ( s.length() > 0 )
@@ -365,6 +382,7 @@ void GenericHID::onFileSaveAs()
 
 void GenericHID::onFileExit()
 {
+    // Check for changes will be done in the close event
     close();
 }
 
@@ -382,6 +400,7 @@ void GenericHID::closeEvent( QCloseEvent * event )
     writeSettings();
 }
 
+// The current property item is changed.  Update the help box.
 void GenericHID::onPropertiesCurrentItemChanged( QtBrowserItem * current )
 {
     // Set the help text
@@ -432,7 +451,119 @@ void GenericHID::onMicrocontrollerProgram()
     QString s = m_pScene->MakeDeviceXML();
     if ( s.isEmpty() )
     {
-	// todo
+	QMessageBox msg(QMessageBox::Critical, "Errors Found", "Failed to create the device configuration", QMessageBox::Ok, this );
+	msg.exec();
+	return;
+    }
+
+    // make eeprom
+    MakeEEPROM eeprom;
+    if ( !eeprom.loadXML( s ) )
+    {
+	QMessageBox::critical( this, "Error", eeprom.lastError() );
+	return;
+    }
+
+    ByteArray buf = eeprom.makeEEPROM();
+    if ( buf.isEmpty() )
+    {
+	QMessageBox::critical( this, "Error", eeprom.lastError() );
+	return;
+    }
+
+    QString sIntelHex = MakeEEPROM::MakeIntelHexFormat( buf );
+
+    LOG_DEBUG( m_Logger, "Program HexFile - " );
+    LOG_DEBUG( m_Logger, sIntelHex );
+
+    // program
+    ProgramDlg dlg(this);
+    dlg.setEEPROM( sIntelHex );
+#ifdef _WIN32
+	dlg.setFirmwareFile( "..\\bin\\Joystick.hex");
+#else
+	dlg.setFirmwareFile( "../bin/Joystick.hex");
+#endif	
+
+    dlg.exec();
+}
+
+void GenericHID::onMicrocontrollerExport()
+{
+    RetrieveProperties();
+
+    // Verify
+    QString sError;
+    if ( !m_pScene->VerifyShapes( sError ) )
+    {
+	QMessageBox msg(QMessageBox::Critical, "Errors Found", "Errors were found processing the device configuration", QMessageBox::Ok, this );
+	msg.setDetailedText( sError );
+	msg.exec();
+	return;
+    }
+    // make xml
+    QString s = m_pScene->MakeDeviceXML();
+    if ( s.isEmpty() )
+    {
+	QMessageBox msg(QMessageBox::Critical, "Errors Found", "Failed to create the device configuration", QMessageBox::Ok, this );
+	msg.exec();
+	return;
+    }
+
+    // Save
+    for (;;)
+    {
+	QString sFilename = QFileDialog::getSaveFileName( this, "Save microcontroller configuration description", m_sLastExportFile, QString("Microcontroller Config Description file (*.mcd);;All files (*)") );
+	if ( sFilename.isEmpty() || sFilename.isNull() )
+	    return;
+
+	QFileInfo fi(sFilename);
+	if ( fi.suffix().isEmpty() )
+	    sFilename.append( ".mcd" );
+
+	QFile file(sFilename.toLatin1().constData());
+	if ( !file.open( QIODevice::WriteOnly | QIODevice::Truncate ) )
+	{
+	    QMessageBox::critical( this, "Can't save", QString("Failed to save file '%1':%2").arg(sFilename).arg(file.errorString()) );
+	}
+	else
+	{
+	    m_sLastExportFile = sFilename;
+	    file.write( s.toLatin1() );
+	    file.close();
+	    break;
+	}
+    }
+}
+
+void GenericHID::onMicrocontrollerImportAndProgram()
+{
+    // Get the filename
+    QString sFilename = QFileDialog::getOpenFileName( this, "Open GenericHID device", m_sLastExportFile, "Microcontroller Config Description file (*.mcd);;All files (*)" );
+    if ( sFilename.isNull() || sFilename.isEmpty() )
+	return;
+
+    // read the device xml
+    QFile file(sFilename.toAscii().constData());
+    if ( !file.open( QIODevice::ReadOnly | QIODevice::Text ) )
+    {
+	QMessageBox::critical( this, "Can't open", QString("Failed to open file '%1':%2").arg(sFilename).arg(file.errorString()) );
+	return;
+    }
+    m_sLastExportFile = sFilename;
+
+    QString s;
+    {
+	// Unclear on how to close a file when the stream is using it, hence the scope.
+	QTextStream stream(&file);
+	s = stream.readAll();
+    }
+    file.close();
+
+    if ( s.isEmpty() )
+    {
+	QMessageBox msg(QMessageBox::Critical, "Errors Found", QString("Data file '%1' is empty, or failed to read file (%2)").arg(sFilename).arg(file.errorString()), QMessageBox::Ok, this );
+	msg.exec();
 	return;
     }
 
@@ -465,61 +596,8 @@ void GenericHID::onMicrocontrollerProgram()
     dlg.exec();
 }
 
-void GenericHID::onMicrocontrollerExport()
-{
-    RetrieveProperties();
-
-    // Verify
-    QString sError;
-    if ( !m_pScene->VerifyShapes( sError ) )
-    {
-	QMessageBox msg(QMessageBox::Critical, "Errors Found", "Errors were found processing the device configuration", QMessageBox::Ok, this );
-	msg.setDetailedText( sError );
-	msg.exec();
-	return;
-    }
-    // make xml
-    QString s = m_pScene->MakeDeviceXML();
-    if ( s.isEmpty() )
-    {
-	// todo
-	return;
-    }
-
-    // Save
-    for (;;)
-    {
-	QString sFilename = QFileDialog::getSaveFileName( this, "Save microcontroller configuration description", m_sLastExportFile, QString("Microcontroller Config Description file (*.mcd);;All files (*)") );
-	if ( sFilename.isEmpty() || sFilename.isNull() )
-	    return;
-
-	QFileInfo fi(sFilename);
-	if ( fi.suffix().isEmpty() )
-	    sFilename.append( ".mcd" );
-
-	QFile file(sFilename.toLatin1().constData());
-	if ( !file.open( QIODevice::WriteOnly | QIODevice::Truncate ) )
-	{
-	    QMessageBox::critical( this, "Can't save", QString("Failed to save file '%1':%2").arg(sFilename).arg(file.errorString()) );
-	}
-	else
-	{
-	    m_sLastExportFile = sFilename;
-	    file.write( s.toLatin1() );
-	    file.close();
-	    break;
-	}
-    }
-}
-
-void GenericHID::onMicrocontrollerImportAndProgram()
-{
-    // load xml
-    // make eeprom
-    // program
-}
-
 // A shape has been dragged from the tool bar and dropped on the scene's view.
+// TODO - scale shape according to the view's scale
 void GenericHID::onDropShapeEvent( const ::Shape *pShape, QPointF pos )
 {
     // Create a new shape
@@ -571,43 +649,42 @@ void GenericHID::onSelectionChanged()
     }
 }
 
-
+// The rotate tool has now been selected
 void GenericHID::onRotateTool()
 {
-    //ui.graphicsView->unsetCursor();
     SetCursor( *m_curRotateOff, *m_curRotate );
     m_eEditMode = EditMode::Rotate;
 }
 
+// The rotate tool has now been selected
 void GenericHID::onMirrorTool()
 {
-    //ui.graphicsView->unsetCursor();
     SetCursor( *m_curMirrorOff, *m_curMirror );
     m_eEditMode = EditMode::Mirror;
 }
 
+// The pointer tool has now been selected
 void GenericHID::onPointerTool()
 {
-    //ui.graphicsView->unsetCursor();
     SetCursor( *m_curPointer, *m_curPointer );
     m_eEditMode = EditMode::Pointer;
 }
 
+// The wire tool has now been selected
 void GenericHID::onWireLinkTool()
 {
-    //ui.graphicsView->unsetCursor();
     SetCursor( *m_curWireOff, *m_curWire );
     m_eEditMode = EditMode::Wiring;
 }
 
 void GenericHID::SetCursor( QCursor & /*cur1*/, QCursor & /*cur2*/ )
 {
-//    ui.graphicsView->setCursor( cur1 );
-//    ui.graphicsView->viewport()->setCursor( cur1 );
-//    foreach( ShapeInstance *pShape, m_pShapeInstances.instances() )
-//	pShape->item()->setCursor( cur2 );
+    // Nothing done here anymore.  Bugs in the GraphicsScene/View/Item classes
+    // stuffs up the cursor when we change it per item.  This is all now
+    // done in mousemove in the view class.
 }
 
+// We support loading a data file from the command line.
 void GenericHID::ProcessCommandline()
 {
     QStringList args = QCoreApplication::instance()->arguments();
@@ -623,6 +700,8 @@ void GenericHID::ProcessCommandline()
     }
 }
 
+// When the active tab changes, enable/disable the test panel.  We
+// can't maintain ownership of the USB device and program at the same time.
 void GenericHID::onTabChanged( int index )
 {
     if ( index == TAB_DESIGN )
@@ -645,6 +724,7 @@ void GenericHID::setMenus( bool bActive )
     ui.actionProgram->setEnabled( bActive );
 }
 
+// The Zoom combobox has changed. update the view.
 void GenericHID::onZoomIndexChanged( const QString & text )
 {
     QString s = text;
@@ -662,10 +742,15 @@ void GenericHID::onZoomEditTextChanged( const QString & text )
     onZoomIndexChanged( text );
 }
 
+// The scene's zoom has changed.  Update the combo on the tool bar.
 void GenericHID::onSceneScaleChanged( double d)
 {
     m_cboZoom->setEditText( QString("%1%").arg(d*100,0,'f',0) );
 }
+
+
+
+
 
 /*
  UI => XML => EEPROM Binary => Program
@@ -698,6 +783,8 @@ todo
     - disable things when in test mode
     - firmware
 	- port to lufa
+    - error handling and logging
+    - test linux version
  */
 
 

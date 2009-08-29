@@ -29,6 +29,10 @@
 #ifdef ENABLE_LOGGING
 
 #define LOG_MSG( ClassLogger, Type, Msg )   { if ( (ClassLogger).WillLog(Type) ) (ClassLogger).LogMsg( Type, __FILE__, __LINE__, Msg ); }
+#define WILL_LOG( ClassLogger, Type )   ( (ClassLogger).WillLog(Type) )
+
+#define LOG_DEBUG( ClassLogger, Msg )   { if ( (ClassLogger).WillLog(LogTypes::Debug) ) (ClassLogger).LogMsg( LogTypes::Debug, __FILE__, __LINE__, Msg ); }
+#define LOG_ERROR( ClassLogger, Msg )   { if ( (ClassLogger).WillLog(LogTypes::Error) ) (ClassLogger).LogMsg( LogTypes::Error, __FILE__, __LINE__, Msg ); }
 
 
 class Logger

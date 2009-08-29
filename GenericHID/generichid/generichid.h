@@ -24,6 +24,8 @@ public slots:
     void onMicrocontrollerProgram();
     void onMicrocontrollerExport();
     void onMicrocontrollerImportAndProgram();
+    void onOptionsDebug();
+    void onHelpAbout();
     void onDropShapeEvent( const ::Shape *pShape, QPointF pos );
     void onRotateTool();
     void onMirrorTool();
@@ -53,6 +55,7 @@ private:
     void RetrieveProperties();
     void setMenus( bool bActive );
 
+    Logger m_Logger;
     QString m_sLastFile;
     QString m_sLastFileContents;
     QString m_sLastExportFile;
