@@ -14,4 +14,5 @@ SUBDIRS += utility/utility.pro \
     clprogram/clprogram.pro \
     makeeeprom/makeeeprom.pro \
     usbhid/usbhid.pro \
+    qtcommon/qtcommon.pro \
     generichid/generichid.pro

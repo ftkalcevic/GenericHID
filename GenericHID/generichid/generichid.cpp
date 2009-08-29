@@ -35,6 +35,7 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
 	// Serious problem if we can't open the config file.
 	LOG_MSG( m_Logger, LogTypes::Error, QString("Failed to load configuraton file '%1'.  Can't continue.").arg(CONFIGDATA_FILE) );
 	close();
+	return;
     }
 
     // Load the shapes into the tool box
@@ -157,6 +158,9 @@ void GenericHID::Clear()
 
 void GenericHID::RetrieveProperties()
 {
+    if ( ui.tabWidget == NULL )
+	return;
+
     ui.tabWidget->setCurrentIndex(TAB_DESIGN);
     if ( m_pLastSelectedShape != NULL )
     {
@@ -168,6 +172,9 @@ void GenericHID::RetrieveProperties()
 
 bool GenericHID::CheckDataChanged()
 {
+    if ( ui.tabWidget == NULL || m_pScene == NULL )
+	return true;
+
     ui.tabWidget->setCurrentIndex(TAB_DESIGN);
 
     QString s = m_pScene->makeXML();
