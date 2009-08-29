@@ -41,6 +41,13 @@ bool ControlLCD::Load( const QDomElement &elem, QString *sError )
 	if ( !GetPort( elem, "PortD3", m_nPortD3, sError ) )
 	    return false;
     }
+    else
+    {
+	m_nPortD0 = 0;
+	m_nPortD1 = 0;
+	m_nPortD2 = 0;
+	m_nPortD3 = 0;
+    }
     if ( !GetPort( elem, "PortD4", m_nPortD4, sError ) )
 	return false;
     if ( !GetPort( elem, "PortD5", m_nPortD5, sError ) )
