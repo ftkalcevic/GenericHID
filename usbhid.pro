@@ -1,6 +1,6 @@
 TEMPLATE = lib
 TARGET = usbhid
-CONFIG += staticlib qt
+CONFIG += staticlib qt create_prl
 include(../build.pro)
 
 CONFIG(debug,debug|release) {
@@ -11,7 +11,7 @@ DESTDIR=release
 
 QT += xml xmlpatterns
 
-DEFINES += QT_XML_LIB
+DEFINES += QT_XML_LIB LIBUSB01
 
 INCLUDEPATH +=  ./generatedfiles
 CONFIG(debug,debug|release) {
@@ -21,7 +21,7 @@ INCLUDEPATH +=  ./generatedfiles/release
 }
 
 win32:INCLUDEPATH += ../libusb-win32-device-bin-0.1.12.1/include
-unix:INCLUDEPATH += ../libusb-1.0.2/libusb ../utility ../usbhid ../hid ../include
+unix:INCLUDEPATH += ../libusb-0.1.12 ../utility ../usbhid ../hid ../include
     
 DEPENDPATH += .
 CONFIG(debug,debug|release) {

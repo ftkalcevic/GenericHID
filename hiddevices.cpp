@@ -17,7 +17,7 @@
 #include "common.h"
 #include "hiddevices.h"
 #include "hiddevice.h"
-#ifdef _WIN32
+#if defined(_WIN32) || defined(LIBUSB01)
 #include "usb.h"
 #else
 #include "libusb.h"
@@ -33,7 +33,6 @@ HIDDevices::HIDDevices()
 
 HIDDevices::~HIDDevices(void)
 {
-    // todo
 }
 
 bool HIDDevices::Open( int nDebugLevel )
@@ -41,7 +40,7 @@ bool HIDDevices::Open( int nDebugLevel )
     if ( !m_bOpen )
     {
 	m_bOpen = true;
-#ifdef _WIN32
+#if defined(_WIN32) || defined(LIBUSB01)
 	usb_init();
 	usb_set_debug(nDebugLevel);
 #else
@@ -63,7 +62,7 @@ bool HIDDevices::FindHIDDevices()
 	delete m_Devices[i];
     m_Devices.clear();
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(LIBUSB01)
     usb_find_busses();
     usb_find_devices();
     struct usb_bus *busses = usb_get_busses();
@@ -74,10 +73,10 @@ bool HIDDevices::FindHIDDevices()
 	{
 	    /* Check if this device is a HID device */
 	    if ( dev->config != NULL &&
-		dev->config->_interface != NULL &&
-		dev->config->_interface->num_altsetting > 0 &&
-		dev->config->_interface->altsetting != NULL &&
-		dev->config->_interface->altsetting->bInterfaceClass == USB_CLASS_HID )
+		dev->config->interface != NULL &&
+		dev->config->interface->num_altsetting > 0 &&
+		dev->config->interface->altsetting != NULL &&
+		dev->config->interface->altsetting->bInterfaceClass == USB_CLASS_HID )
 	    {
 		HIDDevice *pDevice = new HIDDevice( dev, 0, 0 );
 		m_Devices.push_back( pDevice );

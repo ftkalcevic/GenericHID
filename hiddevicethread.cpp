@@ -21,7 +21,11 @@
 #ifdef _WIN32
 #include "usb.h"
 #else
+#ifdef LIBUSB01
+#include "usb.h"
+#else
 #include "libusb.h"
+#endif
 #include <poll.h>
 #endif
 #include "hidtypes.h"

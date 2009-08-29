@@ -690,36 +690,3 @@ HID_ReportInfo_t::~HID_ReportInfo_t()
     for ( unsigned int i = 0; i < Collections.size(); i++ )
 	delete Collections[i];
 }
-
-
-// Search a collection for a specific report
-HID_ReportItem_t *HID_ReportInfo_t::FindReportItem( HID_CollectionPath_t *pCol, HID_ReportItemTypes_t type, 
-						    unsigned short nCollectionUsagePage, unsigned short nCollectionUsage, 
-						    unsigned short nUsagePage, unsigned short nUsage )
-{
-    // Check collection
-    if ( pCol->UsagePage == nCollectionUsagePage && pCol->Usage == nCollectionUsage )
-    {
-	for ( unsigned int i = 0; i < pCol->ReportItems.size(); i++ )
-	    if ( pCol->ReportItems[i]->ItemType == type && pCol->ReportItems[i]->Attributes.UsagePage == nUsagePage && pCol->ReportItems[i]->Attributes.Usage == nUsage )
-		return pCol->ReportItems[i];
-    }
-
-    // Look for sub collections
-    for ( unsigned int i = 0; i < Collections.size(); i++ )
-    {
-	HID_CollectionPath_t *pSubCol = Collections[i];
-	HID_CollectionPath_t *pTempCol = pSubCol;
-	while ( pTempCol != NULL && pTempCol->Parent != pCol )
-	    pTempCol = pTempCol->Parent;
-	if ( pTempCol != NULL && pSubCol->UsagePage == nCollectionUsagePage && pSubCol->Usage == nCollectionUsage )
-	{
-	    for ( unsigned int i = 0; i < pSubCol->ReportItems.size(); i++ )
-		if ( pSubCol->ReportItems[i]->ItemType == type && pSubCol->ReportItems[i]->Attributes.UsagePage == nUsagePage && pSubCol->ReportItems[i]->Attributes.Usage == nUsage )
-		    return pSubCol->ReportItems[i];
-	}
-    }
-    return NULL;
-}
-
-
