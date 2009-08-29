@@ -11,7 +11,7 @@ DESTDIR=release
 
 QT += xml xmlpatterns
 
-DEFINES += QT_XML_LIB LIBUSB01
+DEFINES += QT_XML_LIB
 
 INCLUDEPATH +=  ./generatedfiles
 CONFIG(debug,debug|release) {
