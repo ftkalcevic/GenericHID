@@ -9,7 +9,7 @@ DESTDIR=debug
 DESTDIR=release
 }
 
-QT += xml xmlpatterns
+QT += xml
 
 DEFINES += QT_XML_LIB
 
