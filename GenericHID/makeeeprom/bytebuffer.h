@@ -18,6 +18,7 @@ public:
     void AddUShort( uint16_t n );
     void AddArray( byte *pBuf, int nLen );
     void AddBuffer( const ByteArray &buf );
+    QString toString() const;
 };
 
 #endif

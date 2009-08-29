@@ -18,6 +18,7 @@ const ushort EndpointOutSize = 64;
 
 
 MakeEEPROM::MakeEEPROM()
+: m_Logger( QCoreApplication::applicationName(), "MakeEEPROM" )
 {
     m_DeviceConfig = NULL;
     m_ConfigConfig = NULL;
@@ -41,6 +42,7 @@ bool MakeEEPROM::loadFile( const QString &sFile )
     QFile file(sFile);
     if (!file.open(QIODevice::ReadOnly))
     {
+	LOG_DEBUG( m_Logger, "Failed to open xml file" );
 	m_sLastError = file.errorString();
 	return false;
     }
@@ -48,6 +50,7 @@ bool MakeEEPROM::loadFile( const QString &sFile )
     if (!doc.setContent(&file, false, &m_sLastError)) 
     {
 	file.close();
+	LOG_DEBUG( m_Logger, "Failed to load xml from file" );
 	return false;
     }
     file.close();
@@ -61,6 +64,7 @@ bool MakeEEPROM::loadXML( const QString &sXML )
     int nLine, nCol;
     if (!doc.setContent(sXML, false, &m_sLastError, &nLine, &nCol)) 
     {
+	LOG_DEBUG( m_Logger, "Failed to load xml string" );
 	return false;
     }
 
@@ -69,10 +73,13 @@ bool MakeEEPROM::loadXML( const QString &sXML )
 
 bool MakeEEPROM::loadXML( const QDomDocument &doc )
 {
+    LOG_DEBUG( m_Logger, "Reading xml" );
+
     QDomElement rootElement = doc.firstChildElement( "GenericHIDDevice" );
     if ( rootElement.isNull() )
     {
 	m_sLastError = "Root node is not 'GenericHIDDevice'";
+        LOG_DEBUG( m_Logger, QString("Failed to process xml - %1").arg(m_sLastError) );
 	return false;
     }
 
@@ -80,21 +87,29 @@ bool MakeEEPROM::loadXML( const QDomDocument &doc )
     if ( elem.isNull() )
     {
 	m_sLastError = "Can't find 'Device' node";
+        LOG_DEBUG( m_Logger, QString("Failed to process xml - %1").arg(m_sLastError) );
 	return false;
     }
     m_DeviceConfig = new ConfigurationDevice();
     if ( !m_DeviceConfig->Load(elem, &m_sLastError) )
+    {
+        LOG_DEBUG( m_Logger, QString("Failed to read device config - %1").arg(m_sLastError) );
 	return false;
+    }
 
     elem = XMLUtility::firstChildElement( rootElement, "Configuration" );
     if ( elem.isNull() )
     {
 	m_sLastError = "Can't find 'Configuration' node";
+        LOG_DEBUG( m_Logger, QString("Failed to process xml - %1").arg(m_sLastError) );
 	return false;
     }
     m_ConfigConfig = new ConfigurationConfig();
     if ( !m_ConfigConfig->Load( elem, &m_sLastError ) )
+    {
+        LOG_DEBUG( m_Logger, QString("Failed to read ConfigConfig- %1").arg(m_sLastError) );
 	return false;
+    }
 
     elem = XMLUtility::firstChildElement( rootElement, "Controls" );
     if ( !elem.isNull() )
@@ -103,15 +118,21 @@ bool MakeEEPROM::loadXML( const QDomDocument &doc )
 	    QDomElement control = elem.childNodes().item(i).toElement();
 	    Control *pControl = Control::MakeControl( control, &m_sLastError );
 	    if ( pControl == NULL )
+	    {
+		LOG_DEBUG( m_Logger, QString("Failed to read data for control <%1> line %2 - %3").arg(elem.nodeName()).arg(elem.lineNumber()).arg(m_sLastError) );
 		return false;
+	    }
 	    m_Controls.push_back( pControl );
 	}
 
+    LOG_DEBUG( m_Logger, "XML Read successfully" );
     return true;
 }
 
 ByteArray MakeEEPROM::makeEEPROM()
 {
+    LOG_DEBUG( m_Logger, "Making EEPROM" );
+
     StringTable table;
 
     // Create the report descriptor first - other descriptors require information.
@@ -343,32 +364,36 @@ ByteArray MakeEEPROM::makeEEPROM()
 
     ByteBuffer eeprom;
     eeprom.AddArray((byte *)&hidData, sizeof(hidData));
+	LOG_DEBUG( m_Logger, QString("Adding SDynamicHID %1").arg(ByteBuffer((byte*)&hidData,sizeof(hidData)).toString()) );
     eeprom.AddBuffer(strTable);
+	LOG_DEBUG( m_Logger, QString("Adding String Table %1").arg(strTable.toString()) );
     eeprom.AddBuffer(HIDReport);
+	LOG_DEBUG( m_Logger, QString("Adding HID Report Descriptor %1").arg(HIDReport.toString()) );
     eeprom.AddBuffer(DeviceConfig);
+	LOG_DEBUG( m_Logger, QString("Adding Device Descriptor %1").arg(DeviceConfig.toString()) );
     eeprom.AddBuffer(ConfigConfig);
+	LOG_DEBUG( m_Logger, QString("Adding Config Descriptor %1").arg(ConfigConfig.toString()) );
     eeprom.AddBuffer(IFaceConfig);
+	LOG_DEBUG( m_Logger, QString("Adding Interface Descriptor %1").arg(IFaceConfig.toString()) );
     eeprom.AddBuffer(HIDConfig);
+	LOG_DEBUG( m_Logger, QString("Adding HID Config Descriptor %1").arg(HIDConfig.toString()) );
     eeprom.AddBuffer(EndpointConfig1);
+	LOG_DEBUG( m_Logger, QString("Adding Endpoint Descriptor1 %1").arg(EndpointConfig1.toString()) );
     eeprom.AddBuffer(EndpointConfig2);
+	LOG_DEBUG( m_Logger, QString("Adding Endpoint Descriptor2 %1").arg(EndpointConfig2.toString()) );
     eeprom.AddArray((byte *)&appHeader,sizeof(appHeader));
+	LOG_DEBUG( m_Logger, QString("Adding Application Header %1").arg(ByteBuffer((byte *)&appHeader,sizeof(appHeader)).toString()) );
     eeprom.AddBuffer(ApplicationData);
+	LOG_DEBUG( m_Logger, QString("Adding Application Data %1").arg(ApplicationData.toString()) );
 
     if ( eeprom.count() > MAX_HID_DATA )
     {
 	m_sLastError = QString("Exceeded the EEPROM size.  %1 > %2").arg(eeprom.count()).arg(MAX_HID_DATA);
+	LOG_DEBUG( m_Logger, m_sLastError );
 	return ByteArray();
     }
 
-    //ATLTRACE("EEPROM Data\n");
-    //for (int i = 0; i < eeprom.count(); i++)
-    //{
-        //if (i % 16 == 0)
-	    //ATLTRACE( QString("\n%1  ").arg(i,4,16,QChar('0')).toAscii().constData() );
-        //ATLTRACE(QString("%1 ").arg(eeprom[i],4,16,QChar('0')).toAscii().constData());
-    //}
-    //ATLTRACE("\n");
-
+    LOG_DEBUG( m_Logger, "Making EEPROM complete" );
     return eeprom;
 }
 

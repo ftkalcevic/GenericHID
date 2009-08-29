@@ -83,7 +83,7 @@ void LogCore::LogMsg( LogTypes::LogTypes type, QDateTime timeStamp, const QStrin
         s.remove( s.length()-1, 1 );
 
     #ifdef _WIN32
-        ATLTRACE2( s.toAscii().constData() ); 
+	OutputDebugStringW( (LPCWSTR)s.utf16() ); 
     #else
         fputs( s.toAscii().constData(), stderr );
         fflush( stderr );

@@ -17,6 +17,7 @@ public:
     static QString MakeIntelHexFormat( ByteArray &eeprom );
 
 private:
+    Logger m_Logger;
     QString m_sLastError;
     class ConfigurationDevice *m_DeviceConfig;
     class ConfigurationConfig *m_ConfigConfig;

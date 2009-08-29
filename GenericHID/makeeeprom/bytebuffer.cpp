@@ -59,3 +59,24 @@ void ByteBuffer::AddBuffer( const ByteArray &buf )
 {
     *this += buf;
 }
+
+
+QString ByteBuffer::toString() const
+{
+    QString sOut = "\n";
+
+    QString sLine;
+    for (int i = 0; i < count(); i++)
+    {
+        if (i % 16 == 0)
+	{
+	    if ( !sLine.isEmpty() )
+		sOut += sLine + "\n";
+	    sLine = QString("%1  ").arg(i,4,16,QChar('0'));
+	}
+	sLine += QString("%1 ").arg(at(i),2,16,QChar('0'));
+    }
+    if ( !sLine.isEmpty() )
+	sOut += sLine + "\n";
+    return sOut;
+}
