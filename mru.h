@@ -20,6 +20,8 @@ public:
     void append( const QString &s );
     int count() const { return m_MRU.count(); }
     QString operator []( int i ) const { if ( i < m_MRU.count() ) return m_MRU[i]; else return QString(); }
+    void setEnabled( bool bEnabled );
+
 signals:
     void MRUSelected(const QString &sFile);
 private slots:

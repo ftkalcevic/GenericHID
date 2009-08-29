@@ -115,3 +115,11 @@ void MRU::setMenu( QMenu *pMenu )
 
     connect( m_pActionGroup, SIGNAL(triggered(QAction*)), this, SLOT(onActionTriggered(QAction*)) );
 }
+
+
+void MRU::setEnabled( bool bEnabled )
+{ 
+    foreach( QAction *pAction, m_Actions )
+	pAction->setEnabled( bEnabled );
+}
+
