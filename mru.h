@@ -1,6 +1,12 @@
 #ifndef _MRU_H_
 #define _MRU_H_
 
+#include <QObject>
+#include <QObject>
+#include <QAction>
+#include <QActionGroup>
+#include <QList>
+
 const int MAX_MRU = 4;
 
 

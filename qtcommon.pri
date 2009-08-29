@@ -5,8 +5,9 @@
 
 #Header files
 HEADERS += ./stdafx.h \
-    ./qtcommon.h
+    ./mru.h
 
 #Source files
 SOURCES += ./stdafx.cpp \
-    ./qtcommon.cpp
+    ./mru.cpp
+
