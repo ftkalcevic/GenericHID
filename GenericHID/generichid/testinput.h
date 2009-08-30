@@ -8,7 +8,7 @@ class TestInput : public TestItem
     Q_OBJECT
 
 public:
-    TestInput(byte nReportId, QWidget *parent);
+    TestInput(const char *sClass, byte nReportId, QWidget *parent);
     virtual ~TestInput();
 
     virtual void Update() = 0;

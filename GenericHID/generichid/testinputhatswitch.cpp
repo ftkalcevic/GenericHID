@@ -4,7 +4,7 @@
 
 
 TestInputHatSwitch::TestInputHatSwitch(const QString &sName, struct HID_ReportItem_t *pHIDItem, QWidget *parent)
-: TestInput(pHIDItem->ReportID,parent)
+: TestInput("TestInputHatSwitch",pHIDItem->ReportID,parent)
 , m_nValue( pHIDItem->Value )
 {
     m_nMin = pHIDItem->Attributes.LogicalMinimum;

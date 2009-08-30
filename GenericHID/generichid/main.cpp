@@ -17,6 +17,8 @@ int main(int argc, char *argv[])
     HIDDevices::Open(false);
     LogCore::SetLog( false );
     GenericHID w;
+    if ( !w.initialised() )
+	return 0;
     w.show();
     w.ProcessCommandline();
     return a.exec();

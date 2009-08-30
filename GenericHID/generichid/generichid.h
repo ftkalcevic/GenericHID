@@ -14,6 +14,7 @@ public:
     GenericHID(QWidget *parent = 0, Qt::WFlags flags = 0);
     ~GenericHID();
     void ProcessCommandline();
+    bool initialised() const { return m_bInitialised; }
 
 public slots:
     void onFileOpen();
@@ -66,6 +67,7 @@ private:
     QSettings m_Settings;
     MRU m_MRU;
     QComboBox *m_cboZoom;
+    bool m_bInitialised;
 };
 
 #endif // GENERICHID_H

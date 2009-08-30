@@ -568,18 +568,21 @@ QString Shape::GetPort( QList<PinItem *> pins, const QString &sName  ) const
 	    if ( pins[i]->wires().count() == 0 )
 	    {
 		//assert( false );
-		return QString();
+		//return QString();
 	    }
 	    else if ( pins[i]->wires()[0]->pin1() != pins[i] )
 	    {
 		assert( pins[i]->wires().count() == 1 );
-		return pins[i]->wires()[0]->pin1()->pin()->id();
+		if ( pins[i]->wires().count() == 1 )
+		    return pins[i]->wires()[0]->pin1()->pin()->id();
 	    }
 	    else
 	    {
 		assert( pins[i]->wires().count() == 1 );
-		return pins[i]->wires()[0]->pin2()->pin()->id();
+		if ( pins[i]->wires().count() == 1 )
+		    return pins[i]->wires()[0]->pin2()->pin()->id();
 	    }
+	    break;
 	}
     return QString();
 }

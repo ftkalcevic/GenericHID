@@ -9,9 +9,10 @@
 #include "testoutputled.h"
 #include "testoutputvalue.h"
 
-TestItem::TestItem(byte nReportId, QWidget *parent)
+TestItem::TestItem(const char *sClass, byte nReportId, QWidget *parent)
 : QWidget(parent)
 , m_nReportId(nReportId) 
+, m_Logger(QCoreApplication::applicationName(), sClass )
 {
 
 }

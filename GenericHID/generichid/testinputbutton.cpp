@@ -3,7 +3,7 @@
 #include "hidparser.h"
 
 TestInputButton::TestInputButton(const QString &sName, struct HID_ReportItem_t *pHIDItem, QWidget *parent)
-: TestInput(pHIDItem->ReportID,parent)
+: TestInput("TestInputButton",pHIDItem->ReportID,parent)
 , m_nValue( pHIDItem->Value )
 {
     QHBoxLayout *layout = new QHBoxLayout();

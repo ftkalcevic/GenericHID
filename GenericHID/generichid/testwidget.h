@@ -27,6 +27,7 @@ private:
     void StartListening();
     void StopListening();
 
+    Logger m_Logger;
     QComboBox *m_cboDevices;
     QPushButton *m_btnRefresh;
     class HIDDevices *m_pDevices;

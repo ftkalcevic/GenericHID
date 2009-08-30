@@ -3,7 +3,7 @@
 #include "hidparser.h"
 
 TestInputValue::TestInputValue(const QString &sName, struct HID_ReportItem_t *pHIDItem, QWidget *parent)
-: TestInput(pHIDItem->ReportID,parent)
+: TestInput("TestInputValue",pHIDItem->ReportID,parent)
 , m_nValue( pHIDItem->Value )
 {
     QGridLayout *layout = new QGridLayout();

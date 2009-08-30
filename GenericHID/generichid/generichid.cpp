@@ -23,6 +23,8 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
 , m_pShapes( NULL )
 , m_pScene( NULL )
 , m_pLastSelectedShape( NULL )
+, m_cboZoom( NULL )
+, m_bInitialised( false )
 {
     ui.setupUi(this);
 
@@ -34,7 +36,6 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
     {
 	// Serious problem if we can't open the config file.
 	LOG_MSG( m_Logger, LogTypes::Error, QString("Failed to load configuraton file '%1'.  Can't continue.").arg(CONFIGDATA_FILE) );
-	close();
 	return;
     }
 
@@ -110,6 +111,8 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
 
     ui.tabWidget->setCurrentIndex(TAB_DESIGN);
     connect( ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(onTabChanged(int)) );
+
+    m_bInitialised = true;
 }
 
 

@@ -8,7 +8,7 @@ class TestOutput : public TestItem
     Q_OBJECT
 
 public:
-    TestOutput(byte nReportId, QWidget *parent = NULL);
+    TestOutput(const char *sClass, byte nReportId, QWidget *parent = NULL);
     virtual ~TestOutput();
     virtual bool isInput() const { return false; }
 
@@ -16,7 +16,6 @@ signals:
     void valueChanged(int nReportId);
 
 private:
-
 };
 
 #endif // TESTOUTPUT_H

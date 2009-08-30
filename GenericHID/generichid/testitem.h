@@ -8,7 +8,7 @@ class TestItem : public QWidget
     Q_OBJECT
 
 public:
-    TestItem(byte m_nReportId, QWidget *parent = NULL);
+    TestItem(const char *sClass, byte m_nReportId, QWidget *parent = NULL);
     virtual ~TestItem();
 
     virtual bool isInput() const = 0;
@@ -19,6 +19,7 @@ public:
 protected:
     byte m_nReportId;
     virtual void paintEvent( QPaintEvent * event );
+    Logger m_Logger;
 };
 
 #endif // TESTITEM_H

@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "testoutput.h"
 
-TestOutput::TestOutput(byte nReportId, QWidget *parent)
-: TestItem(nReportId, parent)
+TestOutput::TestOutput(const char *sClass, byte nReportId, QWidget *parent)
+: TestItem(sClass, nReportId, parent)
 {
 
 }

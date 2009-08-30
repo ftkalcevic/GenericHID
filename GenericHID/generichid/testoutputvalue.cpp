@@ -4,7 +4,7 @@
 
 
 TestOutputValue::TestOutputValue(const QString &sName, struct HID_ReportItem_t *pHIDItem, QWidget *parent)
-: TestOutput(pHIDItem->ReportID,parent)
+: TestOutput("TestOutputValue",pHIDItem->ReportID,parent)
 , m_nValue( pHIDItem->Value )
 {
     QHBoxLayout *layout = new QHBoxLayout();

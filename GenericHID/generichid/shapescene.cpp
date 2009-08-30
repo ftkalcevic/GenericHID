@@ -6,6 +6,7 @@
 
 ShapeScene::ShapeScene( Editor *pEditor, qreal x, qreal y, qreal width, qreal height, QObject * parent )
 : QGraphicsScene( x, y, width, height, parent )
+, m_Logger( QCoreApplication::applicationName(), "ShapeScene" )
 , m_pEditor(pEditor)
 , m_bMouseDown( false )
 {
@@ -338,41 +339,6 @@ void ShapeScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 			SetCursor( *m_pEditor->m_curWire );
 		    else
 			SetCursor( *m_pEditor->m_curWireNot );
-		 //   if ( pPinItem->wire() != NULL )  // already wired
-		 //   {
-			//SetCursor( *m_pEditor->m_curWireNot );
-			////ATLTRACE("Pin 2 already connected\n");
-		 //   }
-		 //   else if ( pPinItem->pin()->shape() == m_pEditor->m_pWiringStartPin->pin()->shape() )
-		 //   {
-			//// todo - this checks the shape, not the shape instance - may not be necessary
-			////        I don't think we can connect to ourselves - sink -> source
-			//SetCursor( *m_pEditor->m_curWireNot );
-			////ATLTRACE("Pin 2 can't wire to ourselves\n");
-		 //   }
-		 //   else
-		 //   {
-			//// check compatibility
-			//bool bGood = true;
-
-			//// first the source/sink (can only connect a source to a sink
-			//if ( (pPinItem->pin()->shape()->source() && m_pEditor->m_pWiringStartPin->pin()->shape()->source() ) ||
-		 //            (!pPinItem->pin()->shape()->source() && !m_pEditor->m_pWiringStartPin->pin()->shape()->source() ) )
-			//    bGood = false;
-
-			//// next the pin type io/adc/interrupt, etc
-			//if ( bGood )
-			//{
-			//    if ( (pPinItem->pin()->pinType() & m_pEditor->m_pWiringStartPin->pin()->pinType() ) == 0 )
-			//	bGood = false;	// incompatible types
-			//}
-
-			////ATLTRACE("Pin 2 ?????????\n");
-			//if ( !bGood )
-			//    SetCursor( *m_pEditor->m_curWireNot );
-			//else
-			//    SetCursor( *m_pEditor->m_curWire );
-		 //   }
 		}
 	    }
 	    else
@@ -476,14 +442,14 @@ bool ShapeScene::loadXML( QDomDocument &doc, ShapeCollection *pCol )
     QDomElement rootElement = doc.firstChildElement( "GenericHID" );
     if ( rootElement.isNull() )
     {
-	//LOG_MSG( logger, LogTypes::Error, "Root node is not 'GenericHID'" );
+	LOG_MSG( m_Logger, LogTypes::Error, "Root node is not 'GenericHID'" );
 	return false;
     }
 
     QDomElement shapesNode = XMLUtility::firstChildElement( rootElement, "Shapes" );
     if ( shapesNode.isNull() )
     {
-	//LOG_MSG( logger, LogTypes::Error, "Can't find 'Shapes' node" );
+	LOG_MSG( m_Logger, LogTypes::Error, "Can't find 'Shapes' node" );
 	return false;
     }
 
@@ -495,7 +461,7 @@ bool ShapeScene::loadXML( QDomDocument &doc, ShapeCollection *pCol )
 	assert( pItem != NULL );
 	if ( pItem == NULL )
 	{
-	    // LOG
+	    LOG_MSG( m_Logger, LogTypes::Error, QString("Failed to load shape %1 on line %2").arg(item.nodeName()).arg(item.lineNumber()) );
 	    return false;
 	}
 
@@ -507,7 +473,7 @@ bool ShapeScene::loadXML( QDomDocument &doc, ShapeCollection *pCol )
     QDomElement wiresNode = XMLUtility::firstChildElement( rootElement, "Wires" );
     if ( wiresNode.isNull() )
     {
-	//LOG_MSG( logger, LogTypes::Error, "Can't find 'Wires' node" );
+	LOG_MSG( m_Logger, LogTypes::Error, "Can't find 'Wires' node" );
 	return false;
     }
 

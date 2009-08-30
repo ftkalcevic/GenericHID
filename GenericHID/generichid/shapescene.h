@@ -40,6 +40,7 @@ private:
     void RemoveShape( ShapeItem *pItem );
     int GetUniqueShapeId();
 
+    Logger m_Logger;
     Editor *m_pEditor;
     QList<ShapeItem *> m_ShapeItems;
     QList<WireItem *> m_WireItems;

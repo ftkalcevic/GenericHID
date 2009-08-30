@@ -24,6 +24,7 @@ public:
 
 TestWidget::TestWidget(QWidget *parent)
 : QWidget(parent)
+, m_Logger(QCoreApplication::applicationName(), "TestWidget" )
 , m_pDevices( NULL )
 , m_pActiveDevice( NULL )
 , m_bLoading( false )
@@ -130,6 +131,7 @@ void TestWidget::onRefreshPressed()
     if ( !m_pDevices->FindHIDDevices() )
     {
 	assert( false ); // todo
+	LOG_MSG(m_Logger, LogTypes::Warning, QString("Failed to retreive list of hid devices") );
 	return;
     }
 

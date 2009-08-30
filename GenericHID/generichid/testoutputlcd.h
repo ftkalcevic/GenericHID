@@ -5,6 +5,7 @@
 #include "lcdwidget.h"
 #include "hidparser.h"
 #include "hiddevice.h"
+#include "hidlcddevice.h"
 
 class TestOutputLCD : public TestOutput
 {
@@ -26,8 +27,7 @@ private:
     LCDWidget *m_pLCD;
     HIDDevice *m_pDevice;
     HID_CollectionPath_t *m_pCol;
-    int m_nRows;
-    int m_nCols;
+    HIDLCDDevice m_LCDDevice;
 };
 
 #endif // TESTOUTPUTLCD_H
