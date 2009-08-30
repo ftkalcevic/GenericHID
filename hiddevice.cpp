@@ -534,7 +534,7 @@ bool HIDDevice::Close()
 QString HIDDevice::Manufacturer()
 {
 #if defined(_WIN32) || defined(LIBUSB01)
-    return GetDescriptorString( m_dev->descriptor.iProduct );
+    return GetDescriptorString( m_dev->descriptor.iManufacturer );
 #else
     QString s;
     libusb_device_descriptor desc;
