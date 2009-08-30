@@ -213,6 +213,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\lcdchar.h"
+				>
+			</File>
+			<File
 				RelativePath=".\lcdwidget.h"
 				>
 				<FileConfiguration
