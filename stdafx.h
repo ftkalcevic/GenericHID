@@ -8,6 +8,7 @@
 #include <QMenu>
 #include <QCoreApplication>
 #include <QPainter>
+#include <QKeyEvent>
 
 #include <assert.h>
 
