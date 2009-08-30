@@ -228,7 +228,7 @@ bool HIDLCDDevice::LCDSendUserFont( byte nCharIndex, const QVector<byte> &data )
     parser.MakeOutputReport( buf.data() + nOffset, (byte)(buf.count() - nOffset), m_pDevice->ReportInfo().ReportItems, nReportId );
 
     // Send the report
-    int nRet = m_pDevice->InterruptWrite( buf.data(), buf.count() + nOffset, USB_TIMEOUT );
+    int nRet = m_pDevice->InterruptWrite( buf.data(), buf.count(), USB_TIMEOUT );
     LOG_MSG( m_Logger, LogTypes::Debug, QString("interrupt write returned %1\n").arg(nRet) );
 
     if ( nRet != buf.count() )
