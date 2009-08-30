@@ -382,6 +382,26 @@
 				</FileConfiguration>
 			</File>
 		</Filter>
+		<Filter
+			Name="Resources"
+			>
+			<File
+				RelativePath=".\resources\hatarrow.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\hatarrowhi.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\hatdot.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\hatdothi.bmp"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 		<Global
