@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "lcdwidget.h"
-#include "hid.h"
 
 const int X_BORDER = 2;
 const int Y_BORDER = 2;
@@ -318,6 +317,13 @@ static void setBit( int r, int c, byte *data, bool bSet )
 	data[c] &= ~(1 << r);
 }
 
+static bool getBit( int cols, int r, int c, const byte *data )
+{
+    int nBit = r * cols + (cols-c-1);
+    int nByte = nBit / 8;
+    nBit &= 0x07;
+    return (data[nByte] & (1 << nBit)) != 0;
+}
 
 void LCDWidget::SetUserFont( byte index, const QVector<byte> &data )
 {
@@ -328,7 +334,7 @@ void LCDWidget::SetUserFont( byte index, const QVector<byte> &data )
 
     for ( int r = 0; r < LCDChar::PIXELS_Y; r++ )
 	for ( int c = 0; c < LCDChar::PIXELS_X; c++ )
-	    setBit( r, c, char_data, LCDFont::GetFontBit( LCDChar::PIXELS_X, r, c, data.data() ) );
+	    setBit( r, c, char_data, getBit( LCDChar::PIXELS_X, r, c, data.data() ) );
 
     if ( m_chars.contains(index) )
     {
