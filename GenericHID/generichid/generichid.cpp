@@ -763,38 +763,29 @@ void GenericHID::onSceneScaleChanged( double d)
 
 
 /*
- UI => XML => EEPROM Binary => Program
- Independant Test panel
-
- new
   - add remove pins as we need them 
     - binary coded switch
     - LCD 4/8 bit
-    - Key matrix  rows x cols
+    - Key matrix  rows x cols 
  - make wires work better
- - import
+    - display error
+    - routing
  - verify this!
     1.)The sum of all IOL, for ports A0-A7, G2, C4-C7 should not exceed 100 mA.
     2.)The sum of all IOL, for ports C0-C3, G0-G1, D0-D7 should not exceed 100 mA.
     3.)The sum of all IOL, for ports G3-G5, B0-B7, E0-E7 should not exceed 100 mA.
     4.)The sum of all IOL, for ports F0-F7 should not exceed 100 mA.
-todo
-    - test hat switch
-    - test all controls - under linux
-    - test multiple lcds with +5v
-    - crash on load another in onSelectionChanged
-    - alpha display numeric
-	- update firmware
-	- support uploadable fonts
-	- put write data cmd into collection
-    - lose the config.xml
-	- make pins configurable
-    - do help
-    - disable things when in test mode
-    - firmware
-	- port to lufa
-    - error handling and logging
-    - test linux version
+- test directional switch
+- test all controls - under linux
+- test multiple lcds with +5v
+- crash on load another in onSelectionChanged
+- lose the config.xml
+- make pins configurable
+- do help
+- firmware
+    - port to lufa
+- error handling and logging
+- test linux version
  */
 
 

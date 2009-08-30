@@ -1,6 +1,6 @@
 ﻿<Config>
     <Shapes>
-	<Shape Id="stockusbkey" Type="at90usb128" Source="false" Image="resources/avrusbkey.png" Icon="resources/avrusbkeyicon.png" width="411" height="453" maxInstances="1" name="Stock AT90USB Key Demo board">
+	<Shape Id="stockusbkey" Type="at90usb128" Source="false" Image="resources/avrusbkey.png" Icon="resources/avrusbkeyicon.png" width="411" height="453" maxInstances="1" name="Stock AT90USBKey Demo board"  description=":stockusbkey.htm">
 	    <pin rect="  1, 44, 31, 25" id="Vcc" type="" enabled="false" />
 	    <pin rect=" 32, 44, 31, 25" id="GND" type="" enabled="false" />
 	    <pin rect="  1, 69, 31, 25" id="PF7" type="io,adc" enabled="false" other="JTAG" />
@@ -67,37 +67,37 @@
 	    <pin rect="379, 44, 31, 25" id="GND" type="" enabled="false" />
 	    <pin rect="348, 44, 31, 25" id="Vcc" type="" enabled="false" />
 
-	    <property name="Name" description="The optional user friendly name given to the control." type="string" default="Generic HID Device"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="1:8" />
-	    <property name="Voltage" description="Is the microcontroller 5v or 3.3v." type="enum" default="3.3">
+	    <property name="Name" description=":stockusbkey.htm#Name" type="string" default="Generic HID Device"/>
+	    <property name="Usage" description=":stockusbkey.htm#Usage" type="usage" default="1:8" />
+	    <property name="Voltage" description=":stockusbkey.htm#Voltage" type="enum" default="3.3">
 		<enum name="5"/>
 		<enum name="3.3"/>
 	    </property>
-	    <property name="Power-Source" description="Is the USB device powered via the USB Bus or does it use an external supply." type="enum" default="Bus-Powered">
+	    <property name="Power-Source" description=":stockusbkey.htm#Power-Source" type="enum" default="Bus-Powered">
 		<enum name="Self-Powered"/>
 		<enum name="Bus-Powered"/>
 	    </property>
-	    <property name="Interval" description="Interval at which the PC polls the HID device for updates.  In milliseconds." type="int" min="0" max="255" default="50"/>
-	    <property name="Serial-Debug" description="Are pins PD2/PD3 as serial RXD/TXD pins for debug output (38400, 8, none, 1)" type="bool" default="false"/>
-	    <property name="HID-Debug" description="Is debug through the HID interface enabled." type="bool" default="false"/>
-	    <property name="Current" description="Current usage of the microcontroller.  Used to estimate the USB power draw." type="int" min="0" max="500" default="100"/>
-	    <property name="Use Status LEDs" description="Use the default AT90USBKey LEDs as indicators of the USB status." type="enum" default="LED1">
+	    <property name="Interval" description=":stockusbkey.htm#Interval" type="int" min="0" max="255" default="50"/>
+	    <property name="Serial-Debug" description=":stockusbkey.htm#Serial-Debug" type="bool" default="false"/>
+	    <property name="HID-Debug" description=":stockusbkey.htm#HID-Debug" type="bool" default="false"/>
+	    <property name="Current" description=":stockusbkey.htm#Current" type="int" min="0" max="500" default="20"/>
+	    <property name="Use Status LEDs" description=":stockusbkey.htm#UseStatusLEDs" type="enum" default="LED1">
 		<enum name="LED1"/>
 		<enum name="LED2"/>
 		<enum name="Both"/>
 		<enum name="None"/>
 	    </property>
-	    <property name="Use LEDs" description="Use the stock AT90USBKey LEDs as device output LEDs.  'Use Status LEDs' must be set to LED1, LED2, or None." type="bool" default="false"/>
-	    <property name="Use Voltage Monitor" description="Use the stock AT90USBKey Voltage Monitor as an analog input." type="bool" default="false"/>
-	    <property name="Use Temperature Sensor" description="Use the stock AT90USBKey Temperature Sensor as an analog input." type="bool" default="false"/>
-	    <property name="Use Joystick" description="Use the stock AT90USBKey Joystick as a directional input." type="bool" default="false"/>
-	    <property name="Use HWB" description="Use the HWB button as an input button." type="bool" default="false"/>
-	    <property name="SerialNo" description="Required unique serial number of the device.  This must be unique between all GenericHID devices or MS-Windows will Blue-Screen if two duplicate devices are plugged in!" type="string" default="1"/>
-	    <property name="Timer1" description="Timer1 configuration.  Required for PWM timer 1 outputs - PB5(OC1A),PB6(OC1B),PB7(OC1C)" type="timer13" default="1,8,100"/>
-	    <property name="Timer2" description="Timer2 configuration.  Required for PWM timer 2 outputs - PB4(OC2A),PD1(OC2B)" type="timer2" default="1,8,100"/>
-	    <property name="Timer3" description="Timer3 configuration.  Required for PWM timer 3 outputs - PC6(OC3A),PC5(OC3B),PC4(OC3C)" type="timer13" default="1,8,100"/>
+	    <property name="Use LEDs" description=":stockusbkey.htm#UseLEDs" type="bool" default="false"/>
+	    <property name="Use Voltage Monitor" description=":stockusbkey.htm#UseVoltageMonitor" type="bool" default="false"/>
+	    <property name="Use Temperature Sensor" description=":stockusbkey.htm#UseTemperatureSensor" type="bool" default="false"/>
+	    <property name="Use Joystick" description=":stockusbkey.htm#UseJoystick" type="bool" default="false"/>
+	    <property name="Use HWB" description=":stockusbkey.htm#UseHWB" type="bool" default="false"/>
+	    <property name="SerialNo" description=":stockusbkey.htm#SerialNo" type="string" default="1"/>
+	    <property name="Timer1" description=":stockusbkey.htm#Timer1" type="timer13" default="1,8,100"/>
+	    <property name="Timer2" description=":stockusbkey.htm#Timer2" type="timer2" default="1,8,100"/>
+	    <property name="Timer3" description=":stockusbkey.htm#Timer3" type="timer13" default="1,8,100"/>
 	</Shape>
-	<Shape Id="strippedusbkey" Type="at90usb128" Source="false" Image="resources/avrusbkey.png" Icon="resources/avrusbkeyicon.png" width="411" height="453" maxInstances="1" name="Stripped  AT90USB Key Demo board">
+	<Shape Id="strippedusbkey" Type="at90usb128" Source="false" Image="resources/avrusbkey.png" Icon="resources/avrusbkeyicon.png" width="411" height="453" maxInstances="1" name="Stripped AT90USBKey Demo board" description=":strippedusbkey.htm">
 	    <pin rect="  1, 44, 31, 25" id="Vcc" type="" enabled="false" />
 	    <pin rect=" 32, 44, 31, 25" id="GND" type="" enabled="false" />
 	    <pin rect="  1, 69, 31, 25" id="PF7" type="io,adc" enabled="false" other="JTAG" />
@@ -196,7 +196,7 @@
 	</Shape>
 	
 	
-	<Shape Id="usbkeywithwings" Type="at90usb128" Source="false" Image="resources/avrusbkey - wings.png" Icon="resources/avrusbkeywingsicon.png" width="658" height="377" maxInstances="1" name="AT90USB Key Demo board with WizBang wings">
+	<Shape Id="usbkeywithwings" Type="at90usb128" Source="false" Image="resources/avrusbkey - wings.png" Icon="resources/avrusbkeywingsicon.png" width="658" height="377" maxInstances="1" name="AT90USBKey Demo board with WizBang wings" description=":usbkeywithwings.htm">
 	    <pin rect=" -28,130, 31, 25" id="Vcc" type="" enabled="false" />
 	    <pin rect=" -28,155, 31, 25" id="GND" type="" enabled="false" />
 	    <pin rect=" -59,130, 31, 25" id="PF7" type="io,adc" enabled="false" other="JTAG" />
@@ -300,7 +300,7 @@
 
 
 
-	<Shape Id="usbkeywithwiredwings" Type="at90usb128" Source="false" Image="resources/avrusbkey - wings.png" Icon="resources/avrusbkeywingsicon.png" width="585" height="377" maxInstances="1" name="AT90USB Key Demo board with WizBang wings and IDC connectors">
+	<Shape Id="usbkeywithwiredwings" Type="at90usb128" Source="false" Image="resources/avrusbkey - wings.png" Icon="resources/avrusbkeywingsicon.png" width="585" height="377" maxInstances="1" name="AT90USBKey Demo board with WizBang wings and IDC connectors" description=":wizbangidc.htm">
 		<pin rect=" 120,140, 31, 25" id="Vcc" type="" enabled="false" />
 		<pin rect="  89,140, 31, 25" id="GND" type="" enabled="false" />
 		<pin rect="  58,140, 31, 25" id="PF7" type="io,adc" enabled="false" other="JTAG" />
