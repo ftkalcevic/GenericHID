@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "lcdwidget.h"
+#include "hid.h"
 
 const int X_BORDER = 2;
 const int Y_BORDER = 2;
@@ -12,6 +13,7 @@ LCDWidget::LCDWidget(QWidget *parent)
     : QWidget(parent)
     , m_nRows( 4 )  // some default
     , m_nCols( 20 ) // some default
+    , m_bReadOnly( false )
 {
     m_bkgBrush = QBrush(QColor(134, 154, 58));
     if ( m_chars.isEmpty() )
@@ -146,12 +148,15 @@ void LCDWidget::paintEvent( QPaintEvent *  )
     p2.setRenderHint( QPainter::SmoothPixmapTransform, true );
     p2.drawImage( QPoint(0,0), img );
 
-    QRectF rcCursorCell( CellQRect(m_cursorPosRow, m_cursorPosCol) );
-    QTransform transform;
-    double scale = (double)img.width() / (double)m_imgLCD.width();
-    transform.scale( scale, scale );
-    rcCursorCell = transform.mapRect( rcCursorCell );
-    p2.fillRect( rcCursorCell, Qt::black );
+    if ( !m_bReadOnly )
+    {
+	QRectF rcCursorCell( CellQRect(m_cursorPosRow, m_cursorPosCol) );
+	QTransform transform;
+	double scale = (double)img.width() / (double)m_imgLCD.width();
+	transform.scale( scale, scale );
+	rcCursorCell = transform.mapRect( rcCursorCell );
+	p2.fillRect( rcCursorCell, Qt::black );
+    }
 
     if ( hasFocus() )
     {
@@ -188,7 +193,7 @@ void LCDWidget::Write( int nRow, int nCol, const QString &str, bool bHighlight )
     for ( int c = 0; c < s.length(); c++ )
     {
         QChar data = s[c];
-        if ( data.isPrint() )
+        if ( m_chars.contains(data.toAscii()) )
         {
             QRect rc = CellQRect( nRow, nCol + c );
             p.fillRect( rc, m_bkgBrush ); 
@@ -244,6 +249,8 @@ QSize LCDWidget::sizeHint() const
 void LCDWidget::keyPressEvent( QKeyEvent * event )
 {
     event->ignore();
+    if ( m_bReadOnly )
+	return;
     switch ( event->key() )
     {
 	case Qt::Key_Home:
@@ -302,3 +309,32 @@ void LCDWidget::keyPressEvent( QKeyEvent * event )
 	update();
 }
 
+
+static void setBit( int r, int c, byte *data, bool bSet )
+{
+    if ( bSet )
+	data[c] |= 1 << r;
+    else
+	data[c] &= ~(1 << r);
+}
+
+
+void LCDWidget::SetUserFont( byte index, const QVector<byte> &data )
+{
+    // for some reason the data in this set is in columns, whereas everything
+    // else is in rows.  We need to convert.
+    byte char_data[5];
+    memset( char_data, 0, sizeof(char_data) );
+
+    for ( int r = 0; r < LCDChar::PIXELS_Y; r++ )
+	for ( int c = 0; c < LCDChar::PIXELS_X; c++ )
+	    setBit( r, c, char_data, LCDFont::GetFontBit( LCDChar::PIXELS_X, r, c, data.data() ) );
+
+    if ( m_chars.contains(index) )
+    {
+	delete m_chars[index&0x7];
+	delete m_chars[index&0x7|0x8];
+    }
+    m_chars[index] = new LCDChar( char_data[0], char_data[1], char_data[2], char_data[3], char_data[4] );
+    m_chars[index|0x8] = new LCDChar( char_data[0], char_data[1], char_data[2], char_data[3], char_data[4] );
+}

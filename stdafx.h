@@ -13,6 +13,7 @@
 #include <assert.h>
 
 #include "common.h"
+#include "datatypes.h"
 
 #endif
 

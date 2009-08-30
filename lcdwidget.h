@@ -15,6 +15,8 @@ public:
     void Erase( int nRow, int nCol, int nLen );
     void Clear();
     void setSize( int nRows, int nCols );
+    void SetUserFont( byte index, const QVector<byte> &data );
+    void setReadOnly( bool bReadOnly) { m_bReadOnly = bReadOnly; }
 
 signals:
     void write( int nRow, int nCol, const QString &s );
@@ -39,6 +41,7 @@ private:
     int m_nCols;
     int m_cursorPosRow;
     int m_cursorPosCol;
+    bool m_bReadOnly;
 };
 
 #endif // LCDWIDGET_H
