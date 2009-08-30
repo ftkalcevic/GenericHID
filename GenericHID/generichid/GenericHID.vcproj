@@ -194,10 +194,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\hatswitchwidget.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\hiddatathread.cpp"
 				>
 			</File>
@@ -211,10 +207,6 @@
 			</File>
 			<File
 				RelativePath=".\keymatrixnamedlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\lcdwidget.cpp"
 				>
 			</File>
 			<File
@@ -540,32 +532,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\hatswitchwidget.h"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;   -DUNICODE -DWIN32 -DQT_THREAD_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_XML_LIB -D -DQT_QTPROPERTYBROWSER_IMPORT  -I&quot;.\..\qtcommon\.&quot; -I&quot;.\..\usbhid\.&quot; -I&quot;.\..\makeeeprom\.&quot; -I&quot;.\GeneratedFiles\.&quot; -I&quot;$(QTDIR)\include\.&quot; -I&quot;.\GeneratedFiles\$(ConfigurationName)\.&quot; -I&quot;$(QTDIR)\include\QtCore\.&quot; -I&quot;$(QTDIR)\include\QtGui\.&quot; -I&quot;$(QTDIR)\include\QtXml\.&quot; -I&quot;.\.&quot; -I&quot;.\..\qtpropertybrowser-2.5-opensource\src\.&quot; -I&quot;.\..\libusb-win32-device-bin-0.1.12.2\include\.&quot; -I&quot;.\..\utility\.&quot; -I&quot;.\..\include\.&quot; -I&quot;.\..\programmer\.&quot; &quot;.\hatswitchwidget.h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot; &quot;-fstdafx.h&quot; &quot;-f..\..\hatswitchwidget.h&quot;&#x0D;&#x0A;"
-						AdditionalDependencies="&quot;$(QTDIR)\bin\moc.exe&quot;;$(InputPath)"
-						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;   -DUNICODE -DWIN32 -DQT_THREAD_SUPPORT -DQT_CORE_LIB -DQT_GUI_LIB -DQT_XML_LIB -D -DQT_QTPROPERTYBROWSER_IMPORT -DQT_WEBKIT_LIB  -I&quot;.\..\usbhid\.&quot; -I&quot;.\..\qtcommon\.&quot; -I&quot;.\..\makeeeprom\.&quot; -I&quot;.\GeneratedFiles\.&quot; -I&quot;$(QTDIR)\include\.&quot; -I&quot;.\GeneratedFiles\$(ConfigurationName)\.&quot; -I&quot;$(QTDIR)\include\QtCore\.&quot; -I&quot;$(QTDIR)\include\QtGui\.&quot; -I&quot;$(QTDIR)\include\QtXml\.&quot; -I&quot;.\.&quot; -I&quot;.\..\libusb-win32-device-bin-0.1.12.2\include\.&quot; -I&quot;.\..\utility\.&quot; -I&quot;.\..\include\.&quot; -I&quot;.\..\programmer\.&quot; -I&quot;.\..\qtpropertybrowser-2.5-opensource\src\.&quot; &quot;.\hatswitchwidget.h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot; &quot;-fstdafx.h&quot; &quot;-f..\..\hatswitchwidget.h&quot;&#x0D;&#x0A;"
-						AdditionalDependencies="&quot;$(QTDIR)\bin\moc.exe&quot;;$(InputPath)"
-						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\hiddatathread.h"
 				>
 				<FileConfiguration
@@ -664,36 +630,6 @@
 						Name="VCCustomBuildTool"
 						Description="Moc&apos;ing $(InputFileName)..."
 						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;   -DUNICODE -DWIN32 -DQT_THREAD_SUPPORT -DQT_CORE_LIB -DQT_GUI_LIB -DQT_XML_LIB -D -DQT_QTPROPERTYBROWSER_IMPORT -DQT_WEBKIT_LIB  -I&quot;.\..\usbhid\.&quot; -I&quot;.\..\qtcommon\.&quot; -I&quot;.\..\makeeeprom\.&quot; -I&quot;.\GeneratedFiles\.&quot; -I&quot;$(QTDIR)\include\.&quot; -I&quot;.\GeneratedFiles\$(ConfigurationName)\.&quot; -I&quot;$(QTDIR)\include\QtCore\.&quot; -I&quot;$(QTDIR)\include\QtGui\.&quot; -I&quot;$(QTDIR)\include\QtXml\.&quot; -I&quot;.\.&quot; -I&quot;.\..\libusb-win32-device-bin-0.1.12.2\include\.&quot; -I&quot;.\..\utility\.&quot; -I&quot;.\..\include\.&quot; -I&quot;.\..\programmer\.&quot; -I&quot;.\..\qtpropertybrowser-2.5-opensource\src\.&quot; &quot;.\keymatrixnamedlg.h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot; &quot;-fstdafx.h&quot; &quot;-f..\..\keymatrixnamedlg.h&quot;&#x0D;&#x0A;"
-						AdditionalDependencies="&quot;$(QTDIR)\bin\moc.exe&quot;;$(InputPath)"
-						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\lcdchar.h"
-				>
-			</File>
-			<File
-				RelativePath=".\lcdwidget.h"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;   -DUNICODE -DWIN32 -DQT_THREAD_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_XML_LIB -D -DQT_QTPROPERTYBROWSER_IMPORT  -I&quot;.\..\qtcommon\.&quot; -I&quot;.\..\usbhid\.&quot; -I&quot;.\..\makeeeprom\.&quot; -I&quot;.\GeneratedFiles\.&quot; -I&quot;$(QTDIR)\include\.&quot; -I&quot;.\GeneratedFiles\$(ConfigurationName)\.&quot; -I&quot;$(QTDIR)\include\QtCore\.&quot; -I&quot;$(QTDIR)\include\QtGui\.&quot; -I&quot;$(QTDIR)\include\QtXml\.&quot; -I&quot;.\.&quot; -I&quot;.\..\qtpropertybrowser-2.5-opensource\src\.&quot; -I&quot;.\..\libusb-win32-device-bin-0.1.12.2\include\.&quot; -I&quot;.\..\utility\.&quot; -I&quot;.\..\include\.&quot; -I&quot;.\..\programmer\.&quot; &quot;.\lcdwidget.h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot; &quot;-fstdafx.h&quot; &quot;-f..\..\lcdwidget.h&quot;&#x0D;&#x0A;"
-						AdditionalDependencies="&quot;$(QTDIR)\bin\moc.exe&quot;;$(InputPath)"
-						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;   -DUNICODE -DWIN32 -DQT_THREAD_SUPPORT -DQT_CORE_LIB -DQT_GUI_LIB -DQT_XML_LIB -D -DQT_QTPROPERTYBROWSER_IMPORT -DQT_WEBKIT_LIB  -I&quot;.\..\usbhid\.&quot; -I&quot;.\..\qtcommon\.&quot; -I&quot;.\..\makeeeprom\.&quot; -I&quot;.\GeneratedFiles\.&quot; -I&quot;$(QTDIR)\include\.&quot; -I&quot;.\GeneratedFiles\$(ConfigurationName)\.&quot; -I&quot;$(QTDIR)\include\QtCore\.&quot; -I&quot;$(QTDIR)\include\QtGui\.&quot; -I&quot;$(QTDIR)\include\QtXml\.&quot; -I&quot;.\.&quot; -I&quot;.\..\libusb-win32-device-bin-0.1.12.2\include\.&quot; -I&quot;.\..\utility\.&quot; -I&quot;.\..\include\.&quot; -I&quot;.\..\programmer\.&quot; -I&quot;.\..\qtpropertybrowser-2.5-opensource\src\.&quot; &quot;.\lcdwidget.h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot; &quot;-fstdafx.h&quot; &quot;-f..\..\lcdwidget.h&quot;&#x0D;&#x0A;"
 						AdditionalDependencies="&quot;$(QTDIR)\bin\moc.exe&quot;;$(InputPath)"
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
 					/>
@@ -1742,29 +1678,6 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\generatedfiles\debug\moc_hatswitchwidget.cpp"
-					>
-					<FileConfiguration
-						Name="Release|Win32"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
 					RelativePath=".\generatedfiles\debug\moc_hiddatathread.cpp"
 					>
 					<FileConfiguration
@@ -1835,29 +1748,6 @@
 				</File>
 				<File
 					RelativePath=".\generatedfiles\debug\moc_keymatrixnamedlg.cpp"
-					>
-					<FileConfiguration
-						Name="Release|Win32"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\generatedfiles\debug\moc_lcdwidget.cpp"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -2502,18 +2392,6 @@
 							Name="VCCLCompilerTool"
 							ObjectFile="$(IntDir)\$(InputName)1.obj"
 							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\generatedfiles\Release\moc_hatswitchwidget.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
 						/>
 					</FileConfiguration>
 				</File>
