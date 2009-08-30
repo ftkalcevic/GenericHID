@@ -6,6 +6,8 @@
 #include <QActionGroup>
 #include <QList>
 #include <QMenu>
+#include <QCoreApplication>
+#include <QPainter>
 
 #include <assert.h>
 
