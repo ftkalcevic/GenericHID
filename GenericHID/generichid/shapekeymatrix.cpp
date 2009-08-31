@@ -65,7 +65,6 @@ void ShapeKeyMatrix::MakeControlsXML( QDomElement &elem, const QList<class PinIt
 			  GetPropertyValueString("Key Names",values,""), 
 			  GetPropertyValueUsagePage("Usage",values,1),
 		          GetPropertyValueUsage("Usage",values,1),
-		          GetPropertyValueBool("Pullup",values,true),
 		          GetPropertyValueBool("Debounce",values,true),
 		          rows,
 		          cols );

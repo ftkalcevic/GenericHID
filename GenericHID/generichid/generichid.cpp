@@ -786,6 +786,8 @@ void GenericHID::onSceneScaleChanged( double d)
     - port to lufa
 - error handling and logging
 - test linux version
+- lcd 8 bit support
+- about box
  */
 
 

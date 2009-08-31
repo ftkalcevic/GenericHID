@@ -15,8 +15,6 @@ bool ControlKeyMatrix::Load( const QDomElement &elem, QString *sError )
 	return false;
     if ( !XMLUtility::getAttributeUShort( elem, "UsageMin", m_nUsageMin, 0, 0xFFFF, sError ) )
 	return false;
-    if ( !XMLUtility::getAttributeBool( elem, "Pullup", m_bPullup, sError ) )
-	return false;
     if ( !XMLUtility::getAttributeBool( elem, "Debounce", m_bDebounce, sError ) )
 	return false;
 
@@ -109,8 +107,7 @@ ByteArray ControlKeyMatrix::GetControlConfig( byte nReportId ) const
     config.hdr.Length = sizeof(config) + m_Rows.count() + m_Cols.count() + m_Rows.count() * m_Cols.count();
     config.Rows = m_Rows.count();
     config.Cols = m_Cols.count();
-    config.Options = (m_bPullup ? (1<<KM_PULLUP) : 0 ) |
-		     (m_bDebounce ? (1<<KM_DEBOUNCE) : 0 );
+    config.Options = (m_bDebounce ? (1<<KM_DEBOUNCE) : 0 );
 
     ByteBuffer buf((byte *)&config, sizeof(config) );
 

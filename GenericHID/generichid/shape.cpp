@@ -395,14 +395,13 @@ void Shape::MakeDigitalEncoderControl( QDomElement &elem, const QString &sName, 
     XMLUtility::setAttribute( node, "PortB", sPortB );
 }
 
-void Shape::MakeKeyMatrixControl( QDomElement &elem, const QString &sNames, unsigned short nUsagePage, unsigned short nUsageMin, bool bPullUp, bool bDebounce, const QStringList &rows, const QStringList &cols  ) const
+void Shape::MakeKeyMatrixControl( QDomElement &elem, const QString &sNames, unsigned short nUsagePage, unsigned short nUsageMin, bool bDebounce, const QStringList &rows, const QStringList &cols  ) const
 {
     QDomElement node = elem.ownerDocument().createElement( "KeyMatrix" );
     elem.appendChild( node );
 
     XMLUtility::setAttribute( node, "UsagePage", nUsagePage );
     XMLUtility::setAttribute( node, "UsageMin", nUsageMin );
-    XMLUtility::setAttribute( node, "Pullup", bPullUp );
     XMLUtility::setAttribute( node, "Debounce", bDebounce );
 
     foreach ( QString sRow, rows )

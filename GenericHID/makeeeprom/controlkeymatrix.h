@@ -18,7 +18,6 @@ public:
 private:
     ushort m_nUsagePage;
     ushort m_nUsageMin;
-    bool m_bPullup;
     bool m_bDebounce;
     QList<int> m_Rows;
     QList<int> m_Cols;

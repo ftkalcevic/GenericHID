@@ -400,32 +400,32 @@
 
 
 
-	<Shape Id="pot" Type="pot" Source="true" Image="resources/potentiometer.png" Icon="resources/potentiometericon.png" width="145" height="89" maxInstances="0" name="Analog Potentiometer">
+	<Shape Id="pot" Type="pot" Source="true" Image="resources/potentiometer.png" Icon="resources/potentiometericon.png" width="145" height="89" maxInstances="0" name="Analog Potentiometer" description=":pot.htm">
 	    <pin rect="2,35,16,16" id="Out" type="adc" valign="above"/>
-	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="1:48"/>
-	    <property name="Bits" description="ADC resolution the Potentiometer is sampled at." type="int" min="1" max="10" default="10"/>
-	    <property name="Current" description="Current usage of the potentiometer in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
+	    <property name="Name" description=":pot.htm#Name" type="string"/>
+	    <property name="Usage" description=":pot.htm#Usage" type="usage" default="1:48"/>
+	    <property name="Bits" description=":pot.htm#Bits" type="int" min="1" max="10" default="10"/>
+	    <property name="Current" description=":pot.htm#Current" type="int" min="0" max="500" default="0"/>
 	</Shape>
 	
-	<Shape Id="digitalencoder" Type="digitalencoder" Source="true" Image="resources/digitalencoder.png" Icon="resources/digitalencodericon.png" width="111" height="176" maxInstances="0" name="Digital Encoder">
+	<Shape Id="digitalencoder" Type="digitalencoder" Source="true" Image="resources/digitalencoder.png" Icon="resources/digitalencodericon.png" width="111" height="176" maxInstances="0" name="Digital Encoder" description=":digitalencoder.htm">
 	    <pin rect="7,160,15,15" id="A" type="int" />
 	    <pin rect="25,160,15,15" id="B" type="int" />
-	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="1:55" />
-	    <property name="Current" description="Current usage of the encoder in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="100"/>
+	    <property name="Name" description=":digitalencoder.htm#Name" type="string"/>
+	    <property name="Usage" description=":digitalencoder.htm#Usage" type="usage" default="1:55" />
+	    <property name="Current" description=":digitalencoder.htm#Current" type="int" min="0" max="500" default="100"/>
 	</Shape>
 	
-	<Shape Id="pushbutton" Type="switch" Source="true" Image="resources/pushbutton.png" Icon="resources/pushbuttonicon.png" width="68" height="103" maxInstances="0" name="Push Button">
+	<Shape Id="pushbutton" Type="switch" Source="true" Image="resources/pushbutton.png" Icon="resources/pushbuttonicon.png" width="68" height="103" maxInstances="0" name="Push Button" description=":button.htm">
 	    <pin rect="12,88,15,15" id="In" type="io" />
-	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="9:1"/>
-	    <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
-	    <property name="Debounce" description="Waits for the mechanical switch stop bouncing before registering a switch closure." type="bool" default="true"/>
-	    <property name="Current" description="Current usage of the switch in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
+	    <property name="Name" description=":button.htm#Name" type="string"/>
+	    <property name="Usage" description=":button.htm#Usage" type="usage" default="9:1"/>
+	    <property name="Pullup" description=":button.htm#Pullup" type="bool" default="true"/>
+	    <property name="Debounce" description=":button.htm#Debounce" type="bool" default="true"/>
+	    <property name="Current" description=":button.htm#Current" type="int" min="0" max="500" default="0"/>
 	</Shape>
 	
-	<Shape Id="keymatrix" Type="keymatrix" Source="true" Image="resources/keymatrix.png" Icon="resources/keymatrixicon.png" width="244" height="251" maxInstances="0" name="Key Matrix">
+	<Shape Id="keymatrix" Type="keymatrix" Source="true" Image="resources/keymatrix.png" Icon="resources/keymatrixicon.png" width="244" height="251" maxInstances="0" name="Key Matrix" description=":keymatrix.htm">
 	    <pin rect="5,11,20,20" id="R0" type="io" />
 	    <pin rect="5,35,20,20" id="R1" type="io" />
 	    <pin rect="5,60,20,20" id="R2" type="io" />
@@ -442,16 +442,15 @@
 	    <pin rect="170,229,20,20" id="C5" type="io" rotate="-90"/>
 	    <pin rect="195,229,20,20" id="C6" type="io" rotate="-90"/>
 	    <pin rect="219,229,20,20" id="C7" type="io" rotate="-90"/>
-	    <property name="UsageMin" description="HID usage of the first key.  Other keys are number consecutively." type="usage" default="9:1"/>
-	    <property name="Rows" description="The number of rows in the matrix." type="int" min="1" max="8" default="4"/>
-	    <property name="Columns" description="The number of columns in the matrix" type="int" min="1" max="8" default="4"/>
-	    <property name="Key Names" description="The optional user friendly name given to each key." type="keynames"/>
-	    <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
-	    <property name="Debounce" description="Waits for the mechanical switch stop bouncing before registering a switch closure." type="bool" default="true"/>
-	    <property name="Current" description="Current usage of the keymatrix in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
+	    <property name="UsageMin" description="keymatrix.htm#UsageMin" type="usage" default="9:1"/>
+	    <property name="Rows" description="keymatrix.htm#Rows" type="int" min="1" max="8" default="4"/>
+	    <property name="Columns" description="keymatrix.htm#Columns" type="int" min="1" max="8" default="4"/>
+	    <property name="Key Names" description="keymatrix.htm#KeyNames" type="keynames"/>
+	    <property name="Debounce" description="keymatrix.htm#Debounce" type="bool" default="true"/>
+	    <property name="Current" description="keymatrix.htm#Current" type="int" min="0" max="500" default="0"/>
 	</Shape>
 
-	<Shape Id="rotaryswitch" Type="rotaryswitch" Source="true" Image="resources/rotaryswitch.png" Icon="resources/rotaryswitchicon.png" width="128" height="328" maxInstances="0" name="Rotary Selector Switch">
+	<Shape Id="rotaryswitch" Type="rotaryswitch" Source="true" Image="resources/rotaryswitch.png" Icon="resources/rotaryswitchicon.png" width="128" height="328" maxInstances="0" name="Rotary Selector Switch" description=":rotaryswitch.htm">
 	    <pin rect="3,215,23,18" id="1" type="io" />
 	    <pin rect="33,215,23,18" id="4" type="io" />
 	    <pin rect="63,215,23,18" id="7" type="io" />
@@ -464,28 +463,28 @@
 	    <pin rect="53,255,23,18" id="6" type="io" />
 	    <pin rect="83,255,23,18" id="9" type="io" />
 	    <pin rect="113,255,23,18" id="12" type="io" />
-	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="9:1"/>
-	    <property name="Outputs" description="The number of outputs on the selector switch." type="int" min="2" max="12" default="4"/>
-	    <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
-	    <property name="Debounce" description="Waits for the mechanical switch stop bouncing before registering a switch closure." type="bool" default="true"/>
-	    <property name="Current" description="Current usage of the switch in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
+	    <property name="Name" description=":rotaryswitch.htm#Name" type="string"/>
+	    <property name="Usage" description=":rotaryswitch.htm#Usage" type="usage" default="9:1"/>
+	    <property name="Outputs" description=":rotaryswitch.htm#Outputs" type="int" min="2" max="12" default="4"/>
+	    <property name="Pullup" description=":rotaryswitch.htm#Pullup" type="bool" default="true"/>
+	    <property name="Debounce" description=":rotaryswitch.htm#Debounce" type="bool" default="true"/>
+	    <property name="Current" description=":rotaryswitch.htm#Current" type="int" min="0" max="500" default="0"/>
 	</Shape>
 
-	<Shape Id="codedrotaryswitch" Type="codedrotaryswitch" Source="true" Image="resources/codedrotaryswitch.png" Icon="resources/codedrotaryswitchicon.png" width="63" height="87" maxInstances="0" name="Coded Rotary Switch">
+	<Shape Id="codedrotaryswitch" Type="codedrotaryswitch" Source="true" Image="resources/codedrotaryswitch.png" Icon="resources/codedrotaryswitchicon.png" width="63" height="87" maxInstances="0" name="Coded Rotary Switch" description=":codedrotaryswitch.htm">
 	    <pin rect="1,90,13,13" id="1" type="io" />
 	    <pin rect="17,90,13,13" id="2" type="io" />
 	    <pin rect="33,90,13,13" id="4" type="io" />
 	    <pin rect="49,90,13,13" id="8" type="io" />
-	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="9:1"/>
-	    <property name="Outputs" description="The number of outputs on the selector switch. This is the values that can be represented, not pins." type="int" min="2" max="16" default="4"/>
-	    <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
-	    <property name="Debounce" description="Waits for the mechanical switch stop bouncing before registering a switch closure." type="bool" default="true"/>
-	    <property name="Current" description="Current usage of the switch in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
+	    <property name="Name" description=":codedrotaryswitch.htm#Name" type="string"/>
+	    <property name="Usage" description=":codedrotaryswitch.htm#Usage" type="usage" default="9:1"/>
+	    <property name="Outputs" description=":codedrotaryswitch.htm#Outputs" type="int" min="2" max="16" default="4"/>
+	    <property name="Pullup" description=":codedrotaryswitch.htm#Pullup" type="bool" default="true"/>
+	    <property name="Debounce" description=":codedrotaryswitch.htm#Debounce" type="bool" default="true"/>
+	    <property name="Current" description=":codedrotaryswitch.htm#Current" type="int" min="0" max="500" default="0"/>
 	</Shape>
 
-	<Shape Id="lcd" Type="lcd" Source="true" Image="resources/lcd.png" Icon="resources/lcdicon.png" width="169" height="131" maxInstances="0" name="LCD Alphanumeric Display">
+	<Shape Id="lcd" Type="lcd" Source="true" Image="resources/lcd.png" Icon="resources/lcdicon.png" width="169" height="131" maxInstances="0" name="LCD Alphanumeric Display" description=":lcd.htm">
 	    <pin rect="3,83,20,15" id="RS" type="io" shared="true"/>
 	    <pin rect="25,83,25,15" id="R/W" type="io" shared="true" />
 	    <pin rect="52,83,15,15" id="E" type="io" />
@@ -497,16 +496,16 @@
 	    <pin rect="179,83,20,15" id="D5" type="io" shared="true" />
 	    <pin rect="201,83,20,15" id="D6" type="io" shared="true" />
 	    <pin rect="223,83,20,15" id="D7" type="io" shared="true" />
-	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="20:1" enabled="false"/>
-	    <property name="Rows" description="The number of rows on the Display." type="int" min="1" max="4" default="2"/>
-	    <property name="Columns" description="The number of columns on the Display." type="int" min="8" max="40" default="20"/>
-	    <property name="8 Bit" description="The number of data lines to connect to the LCD.  If true 8 bits are used.  If false, only 4 bits, data lines D4-D7 are used." type="bool" default="false"/>
-	    <property name="Row1Address" description="The start address of row 1." type="int" min="0" max="255" default="0"/>
-	    <property name="Row2Address" description="The start address of row 2." type="int" min="0" max="255" default="64"/>
-	    <property name="Row3Address" description="The start address of row 3." type="int" min="0" max="255" default="20"/>
-	    <property name="Row4Address" description="The start address of row 4." type="int" min="0" max="255" default="84"/>
-	    <property name="Current" description="Current usage of the LCD in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="300"/>
+	    <property name="Name" description=":lcd.htm#NameThe optional user friendly name given to the control." type="string"/>
+	    <property name="Usage" description=":lcd.htm#Usage" type="usage" default="20:1" enabled="false"/>
+	    <property name="Rows" description=":lcd.htm#Rows" type="int" min="1" max="4" default="2"/>
+	    <property name="Columns" description=":lcd.htm#Columns" type="int" min="8" max="40" default="20"/>
+	    <property name="8 Bit" description=":lcd.htm#8Bit" type="bool" default="false"/>
+	    <property name="Row1Address" description=":lcd.htm#Row1Address" type="int" min="0" max="255" default="0"/>
+	    <property name="Row2Address" description=":lcd.htm#Row2Address" type="int" min="0" max="255" default="64"/>
+	    <property name="Row3Address" description=":lcd.htm#Row3Address" type="int" min="0" max="255" default="20"/>
+	    <property name="Row4Address" description=":lcd.htm#Row4Address" type="int" min="0" max="255" default="84"/>
+	    <property name="Current" description=":lcd.htm#Current" type="int" min="0" max="500" default="300"/>
 	</Shape>
 
 
@@ -518,40 +517,40 @@
 	    <property name="Current" description=":led.htm#Current" type="int" min="0" max="500" default="5"/>
 	</Shape>
 
-	<Shape Id="bicolourled"  Type="bicolourled" Source="true" Image="resources/bicolourled.png" Icon="resources/bicolourledicon.png" width="31" height="81" maxInstances="0" name="2-lead Bicolour LED">
+	<Shape Id="bicolourled"  Type="bicolourled" Source="true" Image="resources/bicolourled.png" Icon="resources/bicolourledicon.png" width="31" height="81" maxInstances="0" name="2-lead Bicolour LED" description=":bicolourled.htm">
 	    <pin rect="13,120,14,14" id="1" type="io" />
 	    <pin rect="31,120,14,14" id="2" type="io" />
-	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="8:1"/>
-	    <property name="Current" description="Current usage of the LED in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="5"/>
+	    <property name="Name" description=":bicolourled.htm#Name" type="string"/>
+	    <property name="Usage" description=":bicolourled.htm#Usage" type="usage" default="8:1"/>
+	    <property name="Current" description=":bicolourled.htm#Current" type="int" min="0" max="500" default="5"/>
 	</Shape>
 
-	<Shape Id="tricolourled" Type="tricolourled" Source="true" Image="resources/tricolourled.png" Icon="resources/tricolourledicon.png" width="47" height="85" maxInstances="0" name="3-lead Tricolour LED">
+	<Shape Id="tricolourled" Type="tricolourled" Source="true" Image="resources/tricolourled.png" Icon="resources/tricolourledicon.png" width="47" height="85" maxInstances="0" name="3-lead Tricolour LED" description=":tricolourled.htm">
 	    <pin rect="5,123,14,14" id="1" type="io" />
 	    <pin rect="43,123,14,14" id="2" type="io" />
-	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="8:1"/>
-	    <property name="Current" description="Current usage of the LED in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="10"/>
-	    <property name="Type" description="Whether the anodes or the cathodes of the internal diodes are connected together." type="enum" default="Common Cathode">
+	    <property name="Name" description=":tricolourled.htm#Name" type="string"/>
+	    <property name="Usage" description=":tricolourled.htm#Usage" type="usage" default="8:1"/>
+	    <property name="Type" description=":tricolourled.htm#Type" type="enum" default="Common Cathode">
 		<enum name="Common Cathode"/>
 		<enum name="Common Anode"/>
 	    </property>
+	    <property name="Current" description=":tricolourled.htm#Current" type="int" min="0" max="500" default="10"/>
 	</Shape>
 
-	<Shape Id="rgbled" Type="rgbled" Source="true" Image="resources/rgbled.png" Icon="resources/rgbledicon.png" width="47" height="85" maxInstances="0" name="4-lead RGB LED">
+	<Shape Id="rgbled" Type="rgbled" Source="true" Image="resources/rgbled.png" Icon="resources/rgbledicon.png" width="47" height="85" maxInstances="0" name="4-lead RGB LED" description=":rgbled.htm">
 	    <pin rect="0,123,14,14" id="G" type="io" />
 	    <pin rect="16,123,14,14" id="B" type="io" />
 	    <pin rect="50,123,14,14" id="R" type="io" />
-	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="8:1"/>
-	    <property name="Current" description="Current usage of the LED in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="10"/>
-	    <property name="Type" description="Whether the anodes or the cathodes of the internal diodes are connected together." type="enum" default="Common Cathode">
+	    <property name="Name" description=":rgbled.htm#Name" type="string"/>
+	    <property name="Usage" description=":rgbled.htm#Usage" type="usage" default="8:1"/>
+	    <property name="Type" description=":rgbled.htm#Type" type="enum" default="Common Cathode">
 		<enum name="Common Cathode"/>
 		<enum name="Common Anode"/>
 	    </property>
+	    <property name="Current" description=":rgbled.htm#Current" type="int" min="0" max="500" default="10"/>
 	</Shape>
 
-	<Shape Id="dirswitch" Type="dirswitch" Source="true" Image="resources/directionalswitch.png" Icon="resources/directionalswitchicon.png" width="86" height="171" maxInstances="0" name="n-way Directional Switch (POV hat switch)">
+	<Shape Id="dirswitch" Type="dirswitch" Source="true" Image="resources/directionalswitch.png" Icon="resources/directionalswitchicon.png" width="86" height="171" maxInstances="0" name="n-way Directional Switch (POV hat switch)" description=":dirswitch.htm">
 	    <pin rect="14,100,20,20" id="NW" type="io" />
 	    <pin rect="36,100,20,20" id="N" type="io" />
 	    <pin rect="58,100,20,20" id="NE" type="io" />
@@ -560,32 +559,32 @@
 	    <pin rect="36,144,20,20" id="S" type="io" />
 	    <pin rect="14,144,20,20" id="SW" type="io" />
 	    <pin rect="14,122,20,20" id="W" type="io" />
-	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="1:57"/>
-	    <property name="Directions" description="The number of directions." type="enum" default="4">
+	    <property name="Name" description=":dirswitch.htm#Name" type="string"/>
+	    <property name="Usage" description=":dirswitch.htm#Usage" type="usage" default="1:57"/>
+	    <property name="Directions" description=":dirswitch.htm#Directions" type="enum" default="4">
 		<enum name="2way NS"/>
 		<enum name="2way WE"/>
 		<enum name="4way"/>
 		<enum name="8way"/>
 	    </property>
-	    <property name="Pullup" description="Should the internal pullup resistor of the microcontroller be used.  Normally set to &quot;true&quot; when switching to ground." type="bool" default="true"/>
-	    <property name="Debounce" description="Waits for the mechanical switch stop bouncing before registering a switch closure." type="bool" default="true"/>
-	    <property name="Current" description="Current usage of the switch in mA.  Used to estimate the USB power draw." type="int" min="0" max="500" default="0"/>
+	    <property name="Pullup" description=":dirswitch.htm#Pullup" type="bool" default="true"/>
+	    <property name="Debounce" description=":dirswitch.htm#Debounce" type="bool" default="true"/>
+	    <property name="Current" description=":dirswitch.htm#Current" type="int" min="0" max="500" default="0"/>
 	</Shape>
 
-	<Shape Id="counter" Type="counter" Source="true" Image="resources/timer.png" Icon="resources/timericon.png" width="47" height="85" maxInstances="1" name="Millisecond Counter">
-	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="62500:1"/>
-	    <property name="Period" description="Period of the counter in milliseconds.  Every 'Period' ms, the counter ticks.  Use a large number, eg 500, for a watch dog, or 1 for a ms counter." type="int" min="1" max="65535" default="500"/>
-	    <property name="Counter Bits" description="The size of counter variable.  1-16 bits." type="int" min="1" max="16" default="16"/>
+	<Shape Id="counter" Type="counter" Source="true" Image="resources/timer.png" Icon="resources/timericon.png" width="47" height="85" maxInstances="1" name="Millisecond Counter" description=":counter.htm">
+	    <property name="Name" description=":counter.htm#Name" type="string"/>
+	    <property name="Usage" description=":counter.htm#Usage" type="usage" default="62500:1"/>
+	    <property name="Period" description=":counter.htm#Period" type="int" min="1" max="65535" default="500"/>
+	    <property name="Counter Bits" description=":counter.htm#CounterBits" type="int" min="1" max="16" default="16"/>
 	</Shape>
 
-	<Shape Id="pwm" Type="pwm" Source="true" Image="resources/pwm.png" Icon="resources/pwmicon.png" width="47" height="85" maxInstances="0" name="PWM Output">
-	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
-	    <property name="Usage" description="HID usage of the control." type="usage" default="62500:1"/>
-	    <property name="Frequency" description="The frequency of the PWM output." type="string" enabled="false" />
-	    <property name="Resolution" description="The number of integer subdivisions to the PWM period is divided into." type="int" enabled="false" />
-	    <property name="Timer" description="Which microcontroller timer this output is connected to." type="enum" enabled="false" >
+	<Shape Id="pwm" Type="pwm" Source="true" Image="resources/pwm.png" Icon="resources/pwmicon.png" width="47" height="85" maxInstances="0" name="PWM Output" description=":pwm.htm">
+	    <property name="Name" description=":pwm.htm#Name" type="string"/>
+	    <property name="Usage" description=":pwm.htmUsage" type="usage" default="62500:1"/>
+	    <property name="Frequency" description=":pwm.htm#Frequency" type="string" enabled="false" />
+	    <property name="Resolution" description=":pwm.htm#Resolution" type="int" enabled="false" />
+	    <property name="Timer" description=":pwm.htm#Timer" type="enum" enabled="false" >
 		<enum name="Timer1" />
 		<enum name="Timer2" />
 		<enum name="Timer3" />
@@ -593,8 +592,8 @@
 	    <pin rect="60,70,30,20" id="PWM" type="pwm" />
 	</Shape>
 
-	<Shape Id="power" Type="power" Source="true" Image="resources/power.png" Icon="resources/powericon.png" width="47" height="85" maxInstances="1" name="Vcc Power Switch" description="Used to designate a pin on the microcontroller as a switch to enable high powered devices (devices that take the total current consumption above 100mA, but below 500mA" >
-	    <property name="Name" description="The optional user friendly name given to the control." type="string"/>
+	<Shape Id="power" Type="power" Source="true" Image="resources/power.png" Icon="resources/powericon.png" width="47" height="85" maxInstances="1" name="Vcc Power Switch" description=":power.htm"  >
+	    <property name="Name" description=":power.htm#Name" type="string"/>
 	    <pin rect="55,65,20,20" id="G" type="io" />
 	</Shape>
 	

@@ -1,12 +1,12 @@
 #ifndef _DEVICECONFIG_H_
 #define _DEVICECONFIG_H_
 
-//#if defined(_WIN32) || defined(_LINUX)
+#if defined(_WIN32) || defined(_LINUX)
 #pragma pack(push,1)
 
 #include "datatypes.h"
 
-//#endif
+#endif
 
 enum ControlType
 {
@@ -119,8 +119,7 @@ struct SKeyMatrixControl
     byte Rows;
     byte Cols;
     byte Options;
-	#define KM_PULLUP      0
-	#define KM_DEBOUNCE    1
+	#define KM_DEBOUNCE    0
     byte Data[0];			// row ports (Rows)
 					// column ports (Cols)
 					// debounce buffer (Cols * Rows)
@@ -282,8 +281,8 @@ struct SApplicationHeader
 #define BOOTLOADER_REPORT 3
 #define MAX_HID_DATA	4096				// 4k of eeprom
 
-//#if defined(_WIN32) || defined(_LINUX)
+#if defined(_WIN32) || defined(_LINUX)
 #pragma pack(pop)
-//#endif
+#endif
 
 #endif
