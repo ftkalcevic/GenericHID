@@ -5,9 +5,17 @@
 
 #Header files
 HEADERS += ./stdafx.h \
-    ./mru.h
+    ./mru.h \
+    ./hatswitchwidget.h \
+    ./lcdchar.h \
+    ./lcdwidget.h 
 
 #Source files
 SOURCES += ./stdafx.cpp \
-    ./mru.cpp
+    ./mru.cpp \
+    ./hatswitchwidget.cpp \
+    ./lcdwidget.cpp 
+
+#Resource file(s)
+RESOURCES += qtcommon.qrc
 

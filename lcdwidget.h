@@ -2,7 +2,9 @@
 #define LCDWIDGET_H
 
 #include <QWidget>
+#include <QPainter>
 #include "lcdchar.h"
+#include "datatypes.h"
 
 class LCDWidget : public QWidget
 {

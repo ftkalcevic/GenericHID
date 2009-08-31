@@ -13,7 +13,7 @@ QT += xml
 
 DEFINES += QT_XML_LIB
 
-INCLUDEPATH +=  ./generatedfiles
+INCLUDEPATH +=  ./generatedfiles ../utility
 CONFIG(debug,debug|release) {
 INCLUDEPATH +=  ./generatedfiles/debug
 } else {
