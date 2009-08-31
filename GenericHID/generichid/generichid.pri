@@ -9,8 +9,6 @@ HEADERS += columnlayout.h \
     editor.h \
     eepromdata.h \
     generichid.h \
-    lcdchar.h \
-    lcdwidget.h \
     listeditorfactory.h \
     listpropertymanager.h \
     mru.h \
@@ -70,7 +68,6 @@ HEADERS += columnlayout.h \
     timercounter.h \
     shapepropertyrcnames.h \
     keymatrixeditwidget.h \
-    hatswitchwidget.h \
     hiddatathread.h
 
 #Source files
@@ -79,7 +76,6 @@ SOURCES += columnlayout.cpp \
     editor.cpp \
     eepromdata.cpp \
     generichid.cpp \
-    lcdwidget.cpp \
     listeditorfactory.cpp \
     listpropertymanager.cpp \
     main.cpp \
@@ -140,7 +136,6 @@ SOURCES += columnlayout.cpp \
     timercounter.cpp \
     shapepropertyrcnames.cpp \
     keymatrixeditwidget.cpp \
-    hatswitchwidget.cpp \
     hiddatathread.cpp
 
 #Forms
