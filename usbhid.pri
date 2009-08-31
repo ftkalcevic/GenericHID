@@ -2,6 +2,7 @@
 HEADERS += hiddevice.h \
 	hiddevices.h \
 	hiddevicethread.h \
+	hidlcddevice.h \
 	hidparser.h \
 	hidtypes.h
 
@@ -9,6 +10,7 @@ HEADERS += hiddevice.h \
 SOURCES += hiddevice.cpp \
 	hiddevices.cpp \
 	hiddevicethread.cpp \
+	hidlcddevice.cpp \
 	hidparser.cpp \
 	hidtypes.cpp
 
