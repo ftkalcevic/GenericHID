@@ -1669,13 +1669,6 @@
 							Name="VCCLCompilerTool"
 						/>
 					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\generatedfiles\debug\moc_hiddatathread.cpp"
@@ -3017,6 +3010,10 @@
 			>
 			<File
 				RelativePath=".\config.xml"
+				>
+			</File>
+			<File
+				RelativePath="..\bin\Joystick.hex"
 				>
 			</File>
 		</Filter>
