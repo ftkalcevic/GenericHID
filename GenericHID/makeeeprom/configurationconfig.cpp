@@ -113,8 +113,6 @@ bool ConfigurationConfig::Load( const QDomElement &elem, QString *sError )
 	return false;
     if ( !XMLUtility::getAttributeUShort( elem, "Usage", m_nUsage, 0, 0xFFFF, sError ) )
 	return false;
-    if ( !XMLUtility::getAttributeUShort( elem, "Usage", m_nUsage, 0, 0xFFFF, sError ) )
-	return false;
 
     if ( !XMLUtility::getAttributeString( elem, "PowerPort", s, sError ) )
 	return false;

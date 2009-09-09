@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>KeyMatrixNameDlg</string>
+   <string>Key Matrix Key Name Editor</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

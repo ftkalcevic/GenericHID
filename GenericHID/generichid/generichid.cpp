@@ -778,7 +778,6 @@ void GenericHID::onSceneScaleChanged( double d)
 - test directional switch
 - test all controls - under linux
 - test multiple lcds with +5v
-- crash on load another in onSelectionChanged
 - lose the config.xml
 - make pins configurable
 - do help
@@ -788,6 +787,16 @@ void GenericHID::onSceneScaleChanged( double d)
 - test linux version
 - lcd 8 bit support
 - about box
+- test usages on win and linux
+    - device usage
+    - individual control usage (encoders, mouse, pointer, )
+- win32 debug
+- make c# test routine
+- voltages
+- libusb win32
+- package 
+- install
+- unique serial numbers?
  */
 
 
