@@ -35,10 +35,10 @@ namespace ShapeType
 class Shape
 {
 public:
-    Shape(QDomElement &node, const QString &sShapeName, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, int nImageWidth, int nImageHeight, const QString &sIconFile, int nMaxInstances, const QString &sDescription);
+    Shape(QDomElement &node, const QString &sShapeName, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, const QString &sIconFile, int nMaxInstances, const QString &sDescription);
     virtual ~Shape(void);
 
-    static Shape *CreateFromXML( QDomElement &doc );
+    static Shape *CreateFromXML( QDomElement &doc, QString &sError );
     const QString &iconFile() const { return m_sIconFile; }
     const QString &shapeFile() const  { return m_sImageFile; }
     const QString &id() const  { return m_sShapeId; }

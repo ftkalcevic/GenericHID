@@ -69,8 +69,9 @@ bool ShapeItem::CreateGraphics()
 	}
 	else 
 	{
+	    sToolTip = pPin->id();
 	    if ( !pPin->otherUse().isEmpty() )
-		sToolTip = QString("Used by: ") + pPin->otherUse();
+		sToolTip += QString(", used by: ") + pPin->otherUse();
 	}
 	if ( !sToolTip.isEmpty() )
 	    pPinItem->setToolTip( sToolTip );

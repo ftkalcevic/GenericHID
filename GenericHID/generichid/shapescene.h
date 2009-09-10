@@ -18,7 +18,7 @@ public:
     ShapeItem *CreateNewShape( const Shape *pShape, Editor *pEditor, QPointF pos );
     const QList<ShapeItem *> &shapeItems() const { return m_ShapeItems; }
     QString makeXML();
-    bool loadXML( QDomDocument &doc, ShapeCollection *pCol );
+    bool loadXML( QDomDocument &doc, ShapeCollection *pCol, QString & );
     bool VerifyShapes( QString &sError ) const;
     QString MakeDeviceXML() const;
     bool isMouseDown() const { return m_bMouseDown; }
@@ -26,6 +26,8 @@ public:
 public slots:
     void onViewItemChanged( QGraphicsItem *item, QGraphicsItem::GraphicsItemChange change, const QVariant &value);
     void clear();
+signals:
+    void statusChanged( const QString &sMsg );
 
 private:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
@@ -39,6 +41,7 @@ private:
     void RemoveWire( WireItem *pItem );
     void RemoveShape( ShapeItem *pItem );
     int GetUniqueShapeId();
+    void SetStatusMsg( const QString &sMsg );
 
     Logger m_Logger;
     Editor *m_pEditor;

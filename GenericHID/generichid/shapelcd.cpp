@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "shapelcd.h"
 
-ShapeLCD::ShapeLCD(QDomElement &node, const QString &sShapeName, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, int nImageWidth, int nImageHeight, const QString &sIconFile, int nMaxInstances, const QString &sDescription)
-: Shape(node, sShapeName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription)
+ShapeLCD::ShapeLCD(QDomElement &node, const QString &sShapeName, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, const QString &sIconFile, int nMaxInstances, const QString &sDescription)
+: Shape(node, sShapeName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription)
 {
 }
 
@@ -41,7 +41,7 @@ void ShapeLCD::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> 
 		    GetPropertyValueUsage("Usage",values,1),
 		    GetPropertyValueInt("Rows",values,0),
 		    GetPropertyValueInt("Columns",values,0),
-		    GetPropertyValueInt("8 Bit",values,0),
+		    GetPropertyValueBool("8 Bit",values,0),
 		    GetPort(pins, "RS"),
 		    GetPort(pins, "R/W"),
 		    GetPort(pins, "E"),

@@ -10,7 +10,7 @@ private:
 public:
     virtual ~ShapeCollection(void);
 
-    static ShapeCollection *LoadShapeCollection( const QString &sPath );
+    static ShapeCollection *LoadShapeCollection( const QString &sPath, QString &sError );
     const QList<Shape *> &shapes() { return m_Shapes; }
     const Shape * shape( const QString &sId ) { return m_ShapeMap.contains(sId) ? m_ShapeMap[sId] : NULL; }
 

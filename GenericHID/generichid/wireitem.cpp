@@ -79,7 +79,7 @@ void WireItem::WriteXML( QDomElement &node ) const
 }
 
 
-WireItem *WireItem::CreateFromXML( QList<ShapeItem *> &shapes, QDomElement &node )
+WireItem *WireItem::CreateFromXML( QList<ShapeItem *> &shapes, QDomElement &node, QString &sError )
 {
     WireItem *pWire = NULL;
 
@@ -131,6 +131,19 @@ WireItem *WireItem::CreateFromXML( QList<ShapeItem *> &shapes, QDomElement &node
     if ( pStartPin != NULL && pEndPin != NULL )
     {
 	pWire = new WireItem( pStartPin, pEndPin );
+    }
+    else
+    {
+	sError = "";
+	if ( pStartShape == NULL )
+	    sError += QString("Unable to find start shape '%1' for wire on line %2").arg(nStartShapeId).arg(node.lineNumber());
+	else if ( pStartPin == NULL )
+	    sError += QString("Unable to find start pin '%1' for wire on line %2").arg(sStartPinId).arg(node.lineNumber());
+
+	if ( pEndShape == NULL )
+	    sError += QString("%1Unable to find end shape '%2' for wire on line %3\n").arg(sError.length()>0?"\n":"").arg(nEndShapeId).arg(node.lineNumber());
+	else if ( pEndPin == NULL )
+	    sError += QString("%1Unable to find end pin '%2' for wire on line %3\n").arg(sError.length()>0?"\n":"").arg(sEndPinId).arg(node.lineNumber());
     }
 
 

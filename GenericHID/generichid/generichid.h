@@ -40,6 +40,7 @@ public slots:
     void onZoomIndexChanged( const QString & text );
     void onZoomEditTextChanged( const QString & text );
     void onSceneScaleChanged( double);
+    void onStatusChanged(const QString &s);
 
 private:
     virtual void closeEvent( QCloseEvent * event );

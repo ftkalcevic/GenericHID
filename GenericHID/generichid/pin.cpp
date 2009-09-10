@@ -118,20 +118,30 @@ Pin::~Pin(void)
 }
 
 
-Pin *Pin::CreateFromXML( QDomElement node, const Shape *pShape )
+Pin *Pin::CreateFromXML( QDomElement node, const Shape *pShape, QString &sError )
 {
-    QString sId = XMLUtility::getAttribute( node, "id", "" );
-    QString sRect = XMLUtility::getAttribute( node, "rect", "" );
-    QString sPinType = XMLUtility::getAttribute( node, "type", "" );
-    PinType::PinType ePinType = PinType::fromString(sPinType);
-    QString sOtherUse = XMLUtility::getAttribute( node, "other", "" );
-    bool bEnabled = XMLUtility::getAttribute( node, "enabled", true );
-    QString sHAlign = XMLUtility::getAttribute( node, "halign", "center" );
-    PinHAlign::PinHAlign eHAlign = PinHAlign::fromString(sHAlign);
-    QString sVAlign = XMLUtility::getAttribute( node, "valign", "center" );
-    PinVAlign::PinVAlign eVAlign = PinVAlign::fromString(sVAlign);
-    double dRotate = XMLUtility::getAttribute( node, "rotate", 0.0 );
-    bool bShared = XMLUtility::getAttribute( node, "shared", false);
+    QString sId, sRect, sPinType, sOtherUse, sHAlign, sVAlign;
+    PinType::PinType ePinType;
+    bool bEnabled, bShared;
+    PinHAlign::PinHAlign eHAlign;
+    PinVAlign::PinVAlign eVAlign;
+    double dRotate;
+
+    if ( !XMLUtility::getAttributeString( node, "id", sId, &sError ) )
+	return NULL;
+    if ( !XMLUtility::getAttributeString( node, "rect", sRect, &sError ) )
+	return NULL;
+    if ( !XMLUtility::getAttributeString( node, "type", sPinType, &sError ) )
+	return NULL;
+    ePinType = PinType::fromString(sPinType);
+    sOtherUse = XMLUtility::getAttribute( node, "other", "" );
+    bEnabled = XMLUtility::getAttribute( node, "enabled", true );
+    sHAlign = XMLUtility::getAttribute( node, "halign", "center" );
+    eHAlign = PinHAlign::fromString(sHAlign);
+    sVAlign = XMLUtility::getAttribute( node, "valign", "center" );
+    eVAlign = PinVAlign::fromString(sVAlign);
+    dRotate = XMLUtility::getAttribute( node, "rotate", 0.0 );
+    bShared = XMLUtility::getAttribute( node, "shared", false);
 
     QStringList sCoords = sRect.split( QChar(','), QString::SkipEmptyParts );
     int x1 = 0, y1 = 0, width = 0, height = 0;
@@ -141,6 +151,11 @@ Pin *Pin::CreateFromXML( QDomElement node, const Shape *pShape )
         y1 = sCoords[1].toInt();
         width = sCoords[2].toInt();
         height = sCoords[3].toInt();
+    } 
+    else
+    {
+	sError = QString("Unable to convert '%1' to rectangle on line %2 of config file").arg(sRect).arg(node.lineNumber());
+	return NULL;
     }
 
     return new Pin( pShape, sId, ePinType, QRect(QPoint(x1,y1),QSize(width,height)), sOtherUse, bEnabled, eHAlign, eVAlign, dRotate, bShared );

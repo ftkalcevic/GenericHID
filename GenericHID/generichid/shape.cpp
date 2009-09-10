@@ -68,14 +68,12 @@ namespace ShapeType
     }
 }
 
-Shape::Shape(QDomElement & /*shapeNode*/, const QString &sShapeName, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, int nImageWidth, int nImageHeight, const QString &sIconFile, int nMaxInstances, const QString &sDescription)
+Shape::Shape(QDomElement & /*shapeNode*/, const QString &sShapeName, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, const QString &sIconFile, int nMaxInstances, const QString &sDescription)
 : m_sShapeName( sShapeName )
 , m_eShapeType(eShapeType)
 , m_sShapeId(sShapeId)
 , m_bSource(bSource)
 , m_sImageFile(sImageFile)
-, m_nImageWidth(nImageWidth)
-, m_nImageHeight(nImageHeight)
 , m_sIconFile(sIconFile)
 , m_nMaxInstances(nMaxInstances)
 , m_sDescription(sDescription)
@@ -88,44 +86,49 @@ Shape::~Shape(void)
 }
 
 
-Shape *Shape::CreateFromXML( QDomElement &node )
+Shape *Shape::CreateFromXML( QDomElement &node, QString &sError )
 {
-    // common properties
-    QString sShapeId = XMLUtility::getAttribute( node, "Id", "" );
-    QString sType = XMLUtility::getAttribute( node, "Type", "" );
-    bool bSource = XMLUtility::getAttribute( node, "Source", false);
-    QString sImageFile = XMLUtility::getAttribute( node, "Image", "" );
-    QString sIconFile = XMLUtility::getAttribute( node, "Icon", "" );
-    int nImageWidth = XMLUtility::getAttribute( node, "width", 0 );
-    int nImageHeight = XMLUtility::getAttribute( node, "height", 0 );
-    int nMaxInstances = XMLUtility::getAttribute( node, "maxInstances", 0 );
-    QString sName = XMLUtility::getAttribute( node, "name", "" );
-    QString sDescription = XMLUtility::getAttribute( node, "description", "" );
-
-    // Create the component
-    ShapeType::ShapeType eShapeType = ShapeType::fromString( sType );
     Shape *pShape = NULL;
-    switch ( eShapeType )
+
+    // common properties
+    QString sShapeId, sType, sImageFile, sIconFile, sName, sDescription;
+    bool bSource;
+    unsigned int nMaxInstances;
+
+    if ( XMLUtility::getAttributeString( node, "Id", sShapeId, &sError ) &&
+	 XMLUtility::getAttributeString( node, "Type", sType, &sError ) &&
+	 XMLUtility::getAttributeBool( node, "Source", bSource, &sError ) &&
+	 XMLUtility::getAttributeString( node, "Image", sImageFile, &sError ) &&
+	 XMLUtility::getAttributeString( node, "Icon", sIconFile, &sError ) &&
+	 XMLUtility::getAttributeUInt( node, "maxInstances", nMaxInstances, 0, 0xFFFFFFFF, &sError ) )
     {
-	case ShapeType::AT90USB128:	    pShape = new ShapeMCU( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::DirSwitch:	    pShape = new ShapeDirectionalSwitch( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::KeyMatrix:	    pShape = new ShapeKeyMatrix( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::RotarySwitch:	    pShape = new ShapeSelectorSwitch( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::CodedRotarySwitch:  pShape = new ShapeCodedSelectorSwitch( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::LCD:		    pShape = new ShapeLCD( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::Pot:		    pShape = new ShapePotentiometer( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::DigitalEncoder:	    pShape = new ShapeDigitalEncoder( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::Switch:		    pShape = new ShapeSwitch( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::LED:		    pShape = new ShapeLED( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::BiColourLED:	    pShape = new ShapeBiColourLED( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::TriColourLED:	    pShape = new ShapeTriColourLED( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::RGB:		    pShape = new ShapeRGB( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::PWM:		    pShape = new ShapePWM( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::Counter:	    pShape = new ShapeTimer( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	case ShapeType::Power:		    pShape = new Shape( node, sName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription);    break;
-	default:
-	    assert( false );
-	    break;
+	sName = XMLUtility::getAttribute( node, "name", "" );
+	sDescription = XMLUtility::getAttribute( node, "description", "" );
+
+	// Create the component
+	ShapeType::ShapeType eShapeType = ShapeType::fromString( sType );
+	switch ( eShapeType )
+	{
+	    case ShapeType::AT90USB128:		pShape = new ShapeMCU( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
+	    case ShapeType::DirSwitch:		pShape = new ShapeDirectionalSwitch( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
+	    case ShapeType::KeyMatrix:		pShape = new ShapeKeyMatrix( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
+	    case ShapeType::RotarySwitch:	pShape = new ShapeSelectorSwitch( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
+	    case ShapeType::CodedRotarySwitch:  pShape = new ShapeCodedSelectorSwitch( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
+	    case ShapeType::LCD:		pShape = new ShapeLCD( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
+	    case ShapeType::Pot:		pShape = new ShapePotentiometer( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
+	    case ShapeType::DigitalEncoder:	pShape = new ShapeDigitalEncoder( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
+	    case ShapeType::Switch:		pShape = new ShapeSwitch( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
+	    case ShapeType::LED:		pShape = new ShapeLED( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
+	    case ShapeType::BiColourLED:	pShape = new ShapeBiColourLED( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
+	    case ShapeType::TriColourLED:	pShape = new ShapeTriColourLED( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
+	    case ShapeType::RGB:		pShape = new ShapeRGB( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
+	    case ShapeType::PWM:		pShape = new ShapePWM( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
+	    case ShapeType::Counter:		pShape = new ShapeTimer( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
+	    case ShapeType::Power:		pShape = new Shape( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
+	    default:
+		sError = QString("Unknown shape Type '%1' on line %2 of config.xml").arg(sType).arg(node.lineNumber());
+		break;
+	}
     }
 
     if ( pShape != NULL )
@@ -135,10 +138,15 @@ Shape *Shape::CreateFromXML( QDomElement &node )
 	for ( uint i = 0; i < pinNodes.length(); i++ )
 	{
 	    QDomElement pinNode = pinNodes.item(i).toElement();
-	    Pin *pPin = Pin::CreateFromXML( pinNode, pShape );
+	    Pin *pPin = Pin::CreateFromXML( pinNode, pShape, sError );
 
 	    if ( pPin != NULL )
 		pShape->m_Pins.push_back( pPin );
+	    else
+	    {
+		delete pShape;
+		return NULL;
+	    }
 	}
 
 	// the shapes configurable properties
@@ -147,16 +155,25 @@ Shape *Shape::CreateFromXML( QDomElement &node )
 	{
 	    QDomElement propertyNode = propertyNodes.item(i).toElement();
 
-	    QString sPropName = XMLUtility::getAttribute( propertyNode, "name", "" );
-	    QString sPropDescription = XMLUtility::getAttribute( propertyNode, "description", "" );
-	    QString sPropType = XMLUtility::getAttribute( propertyNode, "type", "" );
-	    bool bEnabled = XMLUtility::getAttribute( propertyNode, "enabled", true );
-	    enum PropertyType::PropertyType ePropType = PropertyType::fromString( sPropType );
+	    ShapeProperty *pShapeProperty = NULL;
+	    QString sPropName, sPropType;
+	    if ( XMLUtility::getAttributeString( propertyNode, "name", sPropName, &sError ) &&
+		 XMLUtility::getAttributeString( propertyNode, "type", sPropType, &sError ) )
+	    {
+		QString sPropDescription = XMLUtility::getAttribute( propertyNode, "description", "" );
+		bool bEnabled = XMLUtility::getAttribute( propertyNode, "enabled", true );
+		enum PropertyType::PropertyType ePropType = PropertyType::fromString( sPropType );
 
-	    ShapeProperty *pShapeProperty = ShapeProperty::CreateShapeProperty( propertyNode, sPropName, sPropDescription, ePropType, bEnabled );
+		pShapeProperty = ShapeProperty::CreateShapeProperty( propertyNode, sPropName, sPropDescription, ePropType, bEnabled, sError );
+	    }
 
 	    if ( pShapeProperty != NULL )
 		pShape->m_Properties.add( pShapeProperty );
+	    else
+	    {
+		delete pShape;
+		return NULL;
+	    }
 	}
     }
     return pShape;

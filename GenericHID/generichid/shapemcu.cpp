@@ -5,8 +5,8 @@
 #include "usages.h"
 
 
-ShapeMCU::ShapeMCU(QDomElement &node, const QString &sShapeName, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, int nImageWidth, int nImageHeight, const QString &sIconFile, int nMaxInstances, const QString &sDescription)
-: Shape(node, sShapeName, eShapeType, sShapeId, bSource, sImageFile, nImageWidth, nImageHeight, sIconFile, nMaxInstances, sDescription)
+ShapeMCU::ShapeMCU(QDomElement &node, const QString &sShapeName, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, const QString &sIconFile, int nMaxInstances, const QString &sDescription)
+: Shape(node, sShapeName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription)
 {
 }
 
@@ -111,6 +111,36 @@ bool ShapeMCU::Verify( QString &sErrors, const QList<class PinItem *> &pins, con
 	    }
 	}
     }
+    else
+    {
+	// Just check the Use Status LEDs property
+	QString sEnum = GetPropertyValueEnum( "Use Status LEDs", values, "" );
+
+	QStringList pinsToCheck;
+	if ( sEnum == "Both" )
+	    pinsToCheck << "PD6" << "PD7" << "PD4" << "PD5";
+	else if ( sEnum == "LED1" )
+	    pinsToCheck << "PD4" << "PD5";
+	else if ( sEnum == "LED2" )
+	    pinsToCheck << "PD6" << "PD7";
+
+	int nErrorCount = 0;
+	foreach ( QString sPin, pinsToCheck )
+	{
+	    if ( (index = findPin( sPin )) >= 0 )
+	    {
+		if ( pins[index]->wires().count() != 0 )
+		{
+		    bSuccess = false;
+		    if ( nErrorCount == 0 )
+			sErrors += "The 'Use Status LEDs' option has been set, but...\n";
+		    sErrors += QString("    the pin, %1, is used for something else").arg(sPin);
+		    nErrorCount++;
+		}
+	    }
+	}
+    }
+
 
     return bSuccess;
 }

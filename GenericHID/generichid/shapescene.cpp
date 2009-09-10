@@ -234,6 +234,7 @@ void ShapeScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 		    bHandled = true;
 		    //ATLTRACE("Wiring!\n");
 		}
+		SetStatusMsg( sReason );
 	    }
 	    break;
 	case EditMode::Mirror:
@@ -339,6 +340,7 @@ void ShapeScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 			SetCursor( *m_pEditor->m_curWire );
 		    else
 			SetCursor( *m_pEditor->m_curWireNot );
+		    SetStatusMsg( sReason );
 		}
 	    }
 	    else
@@ -403,6 +405,7 @@ void ShapeScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	    delete m_pEditor->m_pCurrentWire;
 	    m_pEditor->m_pCurrentWire = NULL;
 	}
+	SetStatusMsg( "" );
     }
     else
 	mouseEvent->ignore();
@@ -437,19 +440,21 @@ QString ShapeScene::makeXML()
     return xml.toString();
 }
 
-bool ShapeScene::loadXML( QDomDocument &doc, ShapeCollection *pCol )
+bool ShapeScene::loadXML( QDomDocument &doc, ShapeCollection *pCol, QString &sError )
 {
     QDomElement rootElement = doc.firstChildElement( "GenericHID" );
     if ( rootElement.isNull() )
     {
-	LOG_MSG( m_Logger, LogTypes::Error, "Root node is not 'GenericHID'" );
+	sError = "Root node is not 'GenericHID'";
+	LOG_MSG( m_Logger, LogTypes::Error, sError );
 	return false;
     }
 
     QDomElement shapesNode = XMLUtility::firstChildElement( rootElement, "Shapes" );
     if ( shapesNode.isNull() )
     {
-	LOG_MSG( m_Logger, LogTypes::Error, "Can't find 'Shapes' node" );
+	sError = "Can't find 'Shapes' node";
+	LOG_MSG( m_Logger, LogTypes::Error, sError );
 	return false;
     }
 
@@ -458,10 +463,11 @@ bool ShapeScene::loadXML( QDomDocument &doc, ShapeCollection *pCol )
     {
 	QDomElement item = shapeNodes.item(i).toElement();
 	ShapeItem *pItem = ShapeItem::CreateFromXML( pCol, m_pEditor, item );
-	assert( pItem != NULL );
+
 	if ( pItem == NULL )
 	{
-	    LOG_MSG( m_Logger, LogTypes::Error, QString("Failed to load shape %1 on line %2").arg(item.nodeName()).arg(item.lineNumber()) );
+	    sError = QString("Failed to load shape on line %1").arg(item.lineNumber());
+	    LOG_MSG( m_Logger, LogTypes::Error, sError );
 	    return false;
 	}
 
@@ -473,7 +479,8 @@ bool ShapeScene::loadXML( QDomDocument &doc, ShapeCollection *pCol )
     QDomElement wiresNode = XMLUtility::firstChildElement( rootElement, "Wires" );
     if ( wiresNode.isNull() )
     {
-	LOG_MSG( m_Logger, LogTypes::Error, "Can't find 'Wires' node" );
+	sError = "Can't find 'Wires' node";
+	LOG_MSG( m_Logger, LogTypes::Error, sError );
 	return false;
     }
 
@@ -481,7 +488,13 @@ bool ShapeScene::loadXML( QDomDocument &doc, ShapeCollection *pCol )
     for ( int i = 0; i < wireNodes.count(); i++ )
     {
 	QDomElement item = wireNodes.item(i).toElement();
-	WireItem *pItem = WireItem::CreateFromXML( m_ShapeItems, item );
+	WireItem *pItem = WireItem::CreateFromXML( m_ShapeItems, item, sError );
+	if ( pItem == NULL )
+	{
+	    LOG_MSG( m_Logger, LogTypes::Error, sError );
+	    return false;
+	}
+
 	m_WireItems.append( pItem );
 	addItem( pItem );
 	pItem->UpdateEndpoints();
@@ -579,4 +592,10 @@ QString ShapeScene::MakeDeviceXML( ) const
     }
 
     return xml.toString();
+}
+
+
+void ShapeScene::SetStatusMsg( const QString &sMsg )
+{
+    emit statusChanged( sMsg );
 }

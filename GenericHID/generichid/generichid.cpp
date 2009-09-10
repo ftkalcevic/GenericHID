@@ -31,11 +31,13 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
     m_MRU.setMenu( ui.menuFile );
     connect( &m_MRU, SIGNAL(MRUSelected(const QString &)), this, SLOT(onMRUSelected(const QString &)) );
 
-    m_pShapes = ShapeCollection::LoadShapeCollection( CONFIGDATA_FILE );
+    QString sError;
+    m_pShapes = ShapeCollection::LoadShapeCollection( CONFIGDATA_FILE, sError );
     if ( m_pShapes == NULL )
     {
 	// Serious problem if we can't open the config file.
-	LOG_MSG( m_Logger, LogTypes::Error, QString("Failed to load configuraton file '%1'.  Can't continue.").arg(CONFIGDATA_FILE) );
+	LOG_MSG( m_Logger, LogTypes::Error, QString("Failed to load configuraton file '%1': %2.  Can't continue.").arg(CONFIGDATA_FILE).arg(sError) );
+	QMessageBox::critical( this, "Error", QString("Failed to load configuraton file '%1': %2.  Can't continue.").arg(CONFIGDATA_FILE).arg(sError) );
 	return;
     }
 
@@ -80,6 +82,7 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
 
     connect( ui.graphicsView, SIGNAL(dropShapeEvent( const ::Shape *, QPointF) ), this, SLOT(onDropShapeEvent( const ::Shape *, QPointF) ) );
     connect( m_pScene, SIGNAL(selectionChanged() ), this, SLOT(onSelectionChanged() ) );
+    connect( m_pScene, SIGNAL(statusChanged(const QString &) ), this, SLOT(onStatusChanged(const QString &) ) );
 
     ui.listView->setPropertiesWithoutValueMarked(false);
     ui.listView->setResizeMode(QtTreePropertyBrowser::Interactive);
@@ -222,7 +225,18 @@ void GenericHID::onHelpAbout()
 			    "<p/>"
 			    "<p>This is free software, and you are welcome to redistribute it under certain conditions.  See the file COPYING, included.</p>"
 			    "<p/>"
-			    "<p>Visit the EMC web site: <a href=\"http://www.linuxcnc.org/\">http://www.linuxcnc.org/</a></p>" );
+			    "<p>Visit the home of Generic HID: <a href=\"http://www.franksworkshop.com.au/\">http://www.franksworkshop.com.au/</a></p>"
+			    "<p>This application is built using...<p>"
+			    "<blockquote>"
+			    "<ul>"
+			    "<li><a href=\"http://www.fourwalledcubicle.com/LUFA.php\">MyUSB/LUFA</a></li>"
+			    "<li><a href=\"http://dfu-programmer.sourceforge.net/\">dfu-programmer</a></li>"
+			    "<li><a href=\"http://www.libusb.org/\">libusb v0.1.12</a></li>"
+			    "<li><a href=\"http://libusb-win32.sourceforge.net/\">libusb-win32 v0.1.12</a></li>"
+			    "<li><a href=\"http://qt.nokia.com/\">Qt</a></li>"
+			    "<li><a href=\"http://qt.nokia.com/products/appdev/add-on-products/catalog/4/Widgets/qtpropertybrowser/\">QtPropertyBrowser</a></li>"
+			    "</ul>"
+			    "</blockquote>" );
     msg.setIcon( QMessageBox::Information );
     msg.setIconPixmap( QPixmap(":/GenericHID/ApplicationIcon") );
     msg.exec();
@@ -278,7 +292,10 @@ bool GenericHID::DoOpen( const QString &sFile )
 
     QFile file( sFile );
     if ( !file.open(QIODevice::ReadOnly) )
+    {
+	QMessageBox::critical( this, "Error opening file", QString("Error opening input file: '%1': %2").arg(sFile).arg(file.errorString()) );
 	return false;
+    }
     QString sXML;
     {
 	QTextStream in(&file);
@@ -298,7 +315,13 @@ bool GenericHID::DoOpen( const QString &sFile )
     }
     m_sLastFileContents = sXML;
 
-    m_pScene->loadXML( doc, m_pShapes );
+    if ( !m_pScene->loadXML( doc, m_pShapes, sError ) )
+    {
+	QMessageBox::critical( this, "Error reading file", QString("Failed to load file '%1': %2").arg(m_sLastFile).arg(sError) );
+	m_sLastFileContents.clear();
+	Clear();
+	return false;
+    }
 
     updateWindowTitle();
     return true;
@@ -759,6 +782,10 @@ void GenericHID::onSceneScaleChanged( double d)
 }
 
 
+void GenericHID::onStatusChanged(const QString &s)
+{
+    ui.statusBar->showMessage( s );
+}
 
 
 
@@ -767,9 +794,9 @@ void GenericHID::onSceneScaleChanged( double d)
     - binary coded switch
     - LCD 4/8 bit
     - Key matrix  rows x cols 
+    - lose the config.xml ?
  - make wires work better
-    - display error
-    - routing
+    - horizontal/vertical routing
  - verify this!
     1.)The sum of all IOL, for ports A0-A7, G2, C4-C7 should not exceed 100 mA.
     2.)The sum of all IOL, for ports C0-C3, G0-G1, D0-D7 should not exceed 100 mA.
@@ -777,26 +804,17 @@ void GenericHID::onSceneScaleChanged( double d)
     4.)The sum of all IOL, for ports F0-F7 should not exceed 100 mA.
 - test directional switch
 - test all controls - under linux
-- test multiple lcds with +5v
-- lose the config.xml
-- make pins configurable
-- do help
 - firmware
     - port to lufa
-- error handling and logging
 - test linux version
-- lcd 8 bit support
-- about box
-- test usages on win and linux
-    - device usage
-    - individual control usage (encoders, mouse, pointer, )
 - win32 debug
 - make c# test routine
-- voltages
 - libusb win32
 - package 
 - install
 - unique serial numbers?
+    - internal serial number?
+
  */
 
 

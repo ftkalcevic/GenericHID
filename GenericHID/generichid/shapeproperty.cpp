@@ -126,7 +126,7 @@ ShapeProperty::~ShapeProperty(void)
 }
 
 
-ShapeProperty *ShapeProperty::CreateShapeProperty( QDomElement &node, const QString &sName, const QString &sDescription, PropertyType::PropertyType ePropType, bool bEnabled )
+ShapeProperty *ShapeProperty::CreateShapeProperty( QDomElement &node, const QString &sName, const QString &sDescription, PropertyType::PropertyType ePropType, bool bEnabled, QString &sError )
 {
     ShapeProperty *pProp = NULL;
 
@@ -141,8 +141,7 @@ ShapeProperty *ShapeProperty::CreateShapeProperty( QDomElement &node, const QStr
         case PropertyType::Timer2:	pProp = new ShapePropertyTimer( m_timer2Manager, sName, sDescription, bEnabled ); break;
         case PropertyType::RCNames:	pProp = new ShapePropertyRCNames( sName, sDescription, bEnabled ); break;
 	default:
-	    // problem
-	    assert( false );
+	    sError = QString( "Unknown property type on line %1 of config file" ).arg(node.lineNumber());
 	    break;
     }
 

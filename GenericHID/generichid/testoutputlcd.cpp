@@ -20,8 +20,10 @@ TestOutputLCD::TestOutputLCD( HIDDevice *pDevice, HID_CollectionPath_t *pCollect
     }
 
     m_pLCD->setSize( m_LCDDevice.rows(), m_LCDDevice.columns() );
-
-    QLabel *label = new QLabel("LCD");
+    QString sName( "LCD" );
+    if ( pCollection->StringIndex != 0 )
+	sName = pDevice->GetDescriptorString( pCollection->StringIndex );
+    QLabel *label = new QLabel(sName);
     QPushButton *button = new QPushButton( "Clear" );
     QLabel * lblSize = new QLabel( QString("%1x%2").arg(m_LCDDevice.rows()).arg(m_LCDDevice.columns()) );
     

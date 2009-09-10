@@ -22,7 +22,7 @@ public:
     void setPin2( PinItem *pPin ) { m_pPin2 = pPin; }
     void UpdateEndpoints();
     void WriteXML( QDomElement &node ) const;
-    static WireItem *CreateFromXML( QList<ShapeItem *> &shapes, QDomElement &node );
+    static WireItem *CreateFromXML( QList<ShapeItem *> &shapes, QDomElement &node, QString &sError );
 
 private:
     void MakePolygon();

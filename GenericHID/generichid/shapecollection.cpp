@@ -13,11 +13,14 @@ ShapeCollection::~ShapeCollection(void)
 }
 
 
-ShapeCollection *ShapeCollection::LoadShapeCollection( const QString &sPath )
+ShapeCollection *ShapeCollection::LoadShapeCollection( const QString &sPath, QString &sError )
 {
     QFile file( sPath );
     if ( !file.open(QIODevice::ReadOnly) )
+    {
+	sError = QString( "Failed to open config file, '%1': %2").arg(sPath).arg(sError);
 	return NULL;
+    }
 
     QDomDocument doc("Config");
     doc.setContent( &file );
@@ -26,14 +29,14 @@ ShapeCollection *ShapeCollection::LoadShapeCollection( const QString &sPath )
     QDomElement pRootElement = doc.firstChildElement( "Config" );
     if ( pRootElement.isNull() )
     {
-	//LOG_MSG( logger, LogTypes::Error, "Root node is not 'Config'" );
+	sError = QString( "Can't find root node <Config> in config file, '%1'").arg(sPath);
 	return NULL;
     }
 
     QDomElement pShapesNode = XMLUtility::firstChildElement( pRootElement, "Shapes" );
     if ( pShapesNode.isNull() )
     {
-	//LOG_MSG( logger, LogTypes::Error, "Can't find 'Shapes' node" );
+	sError = QString( "Can't find root node <Shapes> in config file, '%1'").arg(sPath);
 	return NULL;
     }
 
@@ -42,12 +45,17 @@ ShapeCollection *ShapeCollection::LoadShapeCollection( const QString &sPath )
     for ( uint i = 0; i < pShapes.length(); i++ )
     {
 	QDomElement pShapeNode = pShapes.item(i).toElement();
-	Shape *pShape = Shape::CreateFromXML( pShapeNode );
+	Shape *pShape = Shape::CreateFromXML( pShapeNode, sError );
 
 	if ( pShape != NULL )
 	{
 	    pCol->m_Shapes.push_back( pShape );
 	    pCol->m_ShapeMap.insert( pShape->id(), pShape );
+	}
+	else
+	{
+	    delete pCol;
+	    return NULL;
 	}
     }
 

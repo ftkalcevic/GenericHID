@@ -174,7 +174,7 @@ ByteArray ControlLCD::GetControlConfig( byte nReportId ) const
     struct SLCDFontControl font;
     font.hdr.Type = LCDFont;
     font.hdr.ReportId = nReportId+1;
-    font.hdr.Length = sizeof(config);
+    font.hdr.Length = sizeof(font);
 
     ByteBuffer retBuf((byte *)&config, sizeof(config) );
     retBuf.AddBuffer( ByteBuffer((byte *)&font, sizeof(font) ) );

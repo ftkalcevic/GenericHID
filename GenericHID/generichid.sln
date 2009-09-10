@@ -38,6 +38,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "usbhid", "usbhid\usbhid.vcp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qtcommon", "qtcommon\qtcommon.vcproj", "{EB6451BE-3BF1-4186-A797-4CADCA774441}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "makehelp", "makehelp\makehelp.vcproj", "{1F62220F-2D1E-4015-8D26-415DFC583F86}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -80,6 +82,10 @@ Global
 		{EB6451BE-3BF1-4186-A797-4CADCA774441}.Debug|Win32.Build.0 = Debug|Win32
 		{EB6451BE-3BF1-4186-A797-4CADCA774441}.Release|Win32.ActiveCfg = Release|Win32
 		{EB6451BE-3BF1-4186-A797-4CADCA774441}.Release|Win32.Build.0 = Release|Win32
+		{1F62220F-2D1E-4015-8D26-415DFC583F86}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1F62220F-2D1E-4015-8D26-415DFC583F86}.Debug|Win32.Build.0 = Debug|Win32
+		{1F62220F-2D1E-4015-8D26-415DFC583F86}.Release|Win32.ActiveCfg = Release|Win32
+		{1F62220F-2D1E-4015-8D26-415DFC583F86}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

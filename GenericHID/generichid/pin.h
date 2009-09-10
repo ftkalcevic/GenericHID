@@ -51,7 +51,7 @@ public:
     Pin( const Shape *pShape, const QString &sId, PinType::PinType ePinType, const QRect &rect, const QString &sOtherUser, bool bEnabled, PinHAlign::PinHAlign eHAlign, PinVAlign::PinVAlign eVAlign, double dRotate, bool bShared );
     ~Pin(void);
 
-    static Pin *CreateFromXML( QDomElement node, const Shape *pShape );
+    static Pin *CreateFromXML( QDomElement node, const Shape *pShape, QString &sError );
     const QString &id() const { return m_sId; }
     PinType::PinType pinType() const { return  m_ePinType; }
     const QRect geometry() const { return m_geometry; }
