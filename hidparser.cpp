@@ -384,6 +384,8 @@ int HIDParser::ParseReportData( const uint8_t* ReportData, uint16_t ReportSize, 
 
 		CurrCollectionPath->Type = (uint8_t)UnsignedData( ReportData );
 		CurrCollectionPath->UsagePage = CurrStateTable.UsagePage;
+		CurrCollectionPath->StringIndex = CurrStateTable.StringIndex;
+		CurrStateTable.StringIndex = 0;
 
 		if (!UsageStack.empty())
 		    LastUsage = CurrCollectionPath->Usage = UsageStack.pop();

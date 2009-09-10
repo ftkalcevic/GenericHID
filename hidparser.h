@@ -126,6 +126,7 @@ typedef struct CollectionPath
     uint8_t                     Type;   /**< Collection type (for example "Generic Desktop"). */
     uint16_t			UsagePage;  /**< Collection usage. */
     uint16_t			Usage;  /**< Collection usage. */
+    uint8_t			StringIndex;
     struct CollectionPath*      Parent; /**< Reference to parent collection, or NULL if root collection. */
     std::vector<HID_ReportItem_t *> ReportItems; /**< Collection of reports in this collection */
 } HID_CollectionPath_t;
