@@ -126,7 +126,14 @@ void Usages::LoadUsages()
 {
     if ( m_bInitialised )
         return;
+#ifdef _WIN32
+#pragma warning(push)
+#pragma warning(disable:4127)
+#endif
     Q_INIT_RESOURCE(utility);
+#ifdef _WIN32
+#pragma warning(pop)
+#endif
 
     // Mark initialised even though it may fail to initialise.  No point repeating the same error.
     m_bInitialised = true;
