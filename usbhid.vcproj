@@ -84,7 +84,7 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="1"
-			WholeProgramOptimization="1"
+			WholeProgramOptimization="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -103,6 +103,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				WholeProgramOptimization="false"
 				AdditionalIncludeDirectories="&quot;..\libusb-win32-device-bin-0.1.12.2\include&quot;;&quot;$(QTDIR)\include&quot;;&quot;$(QTDIR)\include\QtCore&quot;;&quot;$(QTDIR)\include\QtXml&quot;;..\usbhid;..\utility;..\include;..\hid;&quot;$(InputDir)&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;XERCES_STATIC_LIBRARY "
 				RuntimeLibrary="2"
