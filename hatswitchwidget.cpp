@@ -21,7 +21,14 @@ HatSwitchWidget::HatSwitchWidget(QWidget *parent)
 : QWidget(parent)
 , m_Logger( QCoreApplication::applicationName().toAscii().constData(), "HatSwitchWidget" )
 {
+#ifdef _WIN32
+#pragma warning(push)
+#pragma warning(disable:4127)
+#endif
     Q_INIT_RESOURCE(qtcommon);
+#ifdef _WIN32
+#pragma warning(pop)
+#endif
 
     m_pDot = new QPixmap( ":/hatswitch/resources/hatdot.bmp" );
     m_pDotHighlight = new QPixmap( ":/hatswitch/resources/hatdothi.bmp" );
