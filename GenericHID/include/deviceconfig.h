@@ -6,6 +6,11 @@
 #include "datatypes.h"
 #endif
 
+#ifdef _WIN32
+#pragma warning(push)
+#pragma warning(disable:4200)
+#endif
+
 enum ControlType
 {
     None = 0,
@@ -278,6 +283,11 @@ struct SApplicationHeader
 #define MAGIC_BOOTLOADER_CODE 0xDF0DF0DF
 #define BOOTLOADER_REPORT 3
 #define MAX_HID_DATA	4096				// 4k of eeprom
+
+#ifdef _WIN32
+#pragma warning(pop)
+#pragma warning(disable:4815)
+#endif
 
 #if defined(_WIN32) || defined(__linux)
 #pragma pack(pop)

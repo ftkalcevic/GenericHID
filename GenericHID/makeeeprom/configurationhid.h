@@ -9,9 +9,9 @@ public:
     ConfigurationHID(int nDescriptorReportLength);
     virtual ~ConfigurationHID(void);
 
-    virtual bool Load( const QDomElement &elem, QString *sError ) { return true; }
+    virtual bool Load( const QDomElement & /*elem*/, QString * /*sError*/ ) { return true; }
     virtual ByteArray GetReportDescriptor(StringTable &table) const;		
-    virtual ByteArray GetControlConfig( byte nReportId ) const  { return ByteArray(); }
+    virtual ByteArray GetControlConfig( byte /*nReportId*/ ) const  { return ByteArray(); }
 private:
     int m_nDescriptorReportLength;
 };

@@ -45,9 +45,9 @@ bool ControlKeyMatrix::Load( const QDomElement &elem, QString *sError )
 
 	byte nRow, nCol;
 	QString sName;
-	if ( !XMLUtility::getAttributeByte( key, "Row", nRow, 0, m_Rows.count()-1, sError ) )
+	if ( !XMLUtility::getAttributeByte( key, "Row", nRow, 0, (byte)(m_Rows.count()-1), sError ) )
 	    return false;
-	if ( !XMLUtility::getAttributeByte( key, "Col", nCol, 0, m_Cols.count()-1, sError ) )
+	if ( !XMLUtility::getAttributeByte( key, "Col", nCol, 0, (byte)(m_Cols.count()-1), sError ) )
 	    return false;
 	if ( !XMLUtility::getAttributeString( key, "Name", sName, sError ) )
 	    return false;
@@ -104,18 +104,18 @@ ByteArray ControlKeyMatrix::GetControlConfig( byte nReportId ) const
 
     config.hdr.Type = KeyMatrix;
     config.hdr.ReportId = nReportId;
-    config.hdr.Length = sizeof(config) + m_Rows.count() + m_Cols.count() + m_Rows.count() * m_Cols.count();
-    config.Rows = m_Rows.count();
-    config.Cols = m_Cols.count();
+    config.hdr.Length = (byte)(sizeof(config) + m_Rows.count() + m_Cols.count() + m_Rows.count() * m_Cols.count());
+    config.Rows = (byte)m_Rows.count();
+    config.Cols = (byte)m_Cols.count();
     config.Options = (m_bDebounce ? (1<<KM_DEBOUNCE) : 0 );
 
     ByteBuffer buf((byte *)&config, sizeof(config) );
 
     // add the ports
     foreach( int port, m_Rows )
-	buf.AddByte( port );
+	buf.AddByte( (byte)port );
     foreach( int port, m_Cols )
-	buf.AddByte( port );
+	buf.AddByte( (byte)port );
 
     // debounce buffers for each key
     for (int i = 0; i < m_Rows.count() * m_Cols.count(); i++)

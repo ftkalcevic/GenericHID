@@ -99,8 +99,8 @@ void UsagePropertyManager::slotEnumChanged(QtProperty *property, int value)	// p
 	// When the usage page changes, update the list of usages
         //QtProperty *propUsagePage = property; 
         QtProperty *propUsage = m_propertyToUsage.value(prop, 0);
-	int nUsagePage = value;
-	int nUsage = m_listPropertyManager->value( propUsage );
+	ushort nUsagePage = (ushort)value;
+	ushort nUsage = (ushort)m_listPropertyManager->value( propUsage );
 	UpdateUsagePages( propUsage, nUsagePage );
 	setValue(prop,QString("%1:%2").arg(nUsagePage).arg(nUsage) );
     }
@@ -108,8 +108,8 @@ void UsagePropertyManager::slotEnumChanged(QtProperty *property, int value)	// p
     {
         QtProperty *propUsagePage = m_propertyToUsagePage.value(prop, 0);
         QtProperty *propUsage = property; 
-	int nUsagePage = m_listPropertyManager->value( propUsagePage );
-	int nUsage = m_listPropertyManager->value( propUsage );
+	ushort nUsagePage = (ushort)m_listPropertyManager->value( propUsagePage );
+	ushort nUsage = (ushort)m_listPropertyManager->value( propUsage );
 	setValue(prop,QString("%1:%2").arg(nUsagePage).arg(nUsage) );
     }
 }

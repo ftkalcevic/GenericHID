@@ -19,7 +19,7 @@ bool ControlPWM::Load( const QDomElement &elem, QString *sError )
 	return false;
     if ( !XMLUtility::getAttributeUShort( elem, "Usage", m_nUsage, 0, 0xFFFF, sError ) )
 	return false;
-    if ( !XMLUtility::getAttributeByte( elem, "Resolution", m_nResolution, 1, 0xFFFF, sError ) )
+    if ( !XMLUtility::getAttributeUShort( elem, "Resolution", m_nResolution, 1, 0xFFFF, sError ) )
 	return false;
 
     m_nBits = 0;

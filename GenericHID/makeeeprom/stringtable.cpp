@@ -48,7 +48,7 @@ ByteArray StringTable::GetDescriptor(ushort nOffsetStart) const
         byte nDescLen = (byte)(2 + s.length() * 2);
 
         offsetsBuf.AddShort(nOffset);
-        nOffset += nDescLen;
+        nOffset = (ushort)(nOffset + nDescLen);
 
         stringBuf.AddByte(nDescLen);
         stringBuf.AddByte(3);     // STRING descriptor type

@@ -18,5 +18,5 @@ private:
     byte m_nPort;
     QString m_sName;
     byte m_nBits;
-    byte m_nResolution;
+    uint16_t m_nResolution;
 };

@@ -71,7 +71,7 @@ void ShapeKeyMatrix::MakeControlsXML( QDomElement &elem, const QList<class PinIt
 }
 
 
-void ShapeKeyMatrix::PropertyChanged( QtBrowserItem *item, QList<PropertyValue *> &values ) const
+void ShapeKeyMatrix::PropertyChanged( QtBrowserItem *item, QList<PropertyValue *> & ) const
 {
     // if rows or columns change, update the key names editor
     QtProperty *prop = item->property();

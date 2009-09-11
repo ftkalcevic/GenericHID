@@ -56,7 +56,7 @@
 				AssemblerListingLocation="debug\"
 				ObjectFile="debug\"
 				ProgramDataBaseFileName=".\"
-				WarningLevel="3"
+				WarningLevel="4"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
 			/>
@@ -134,7 +134,7 @@
 				AssemblerListingLocation="release\"
 				ObjectFile="release\"
 				ProgramDataBaseFileName=".\"
-				WarningLevel="3"
+				WarningLevel="4"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="0"
 			/>

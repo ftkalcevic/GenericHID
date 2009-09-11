@@ -25,10 +25,10 @@
 #include <stddef.h>
 #include <errno.h>
 
+#include "dfucommon.h"
 #include "dfu-device.h"
 #include "dfu.h"
 #include "atmel.h"
-#include "dfucommon.h"
 
 
 /*
@@ -236,7 +236,7 @@ int32_t atmel_read_config( dfu_device_t *device,
             if( result < 0 ) {
                 retVal = result;
             }
-            *ptr = result;
+            *ptr = (int16_t)result;
         }
     }
 
@@ -325,20 +325,20 @@ int32_t atmel_set_fuse( dfu_device_t *device,
     switch( property ) {
         case set_lock:
             for( i = 0; i < 16; i++ ) {
-                buffer[i] = value & (0x0001 << i);
+                buffer[i] = (int16_t)(value & (0x0001 << i));
             }
             numbytes = 16;
             address = 0;
             break;
         case set_epfl:
-            buffer[0] = value & 0x0001;
+            buffer[0] = (int16_t)(value & 0x0001);
             numbytes = 1;
             address = 16;
             break;
         case set_bootprot:
-            buffer[0] = value & 0x0001;
-            buffer[1] = value & 0x0002;
-            buffer[2] = value & 0x0004;
+            buffer[0] = (int16_t)(value & 0x0001);
+            buffer[1] = (int16_t)(value & 0x0002);
+            buffer[2] = (int16_t)(value & 0x0004);
             numbytes = 3;
             address = 17;
             break;
@@ -398,12 +398,12 @@ int32_t atmel_set_fuse( dfu_device_t *device,
             return -1;
 #endif
         case set_isp_io_cond_en:
-            buffer[0] = value & 0x0001;
+            buffer[0] = (int16_t)(value & 0x0001);
             numbytes = 1;
             address = 30;
             break;
         case set_isp_force:
-            buffer[0] = value & 0x0001;
+            buffer[0] = (int16_t)(value & 0x0001);
             numbytes = 1;
             address = 31;
             break;
@@ -492,10 +492,10 @@ static int32_t __atmel_read_page( dfu_device_t *device,
         if( ATMEL_MAX_TRANSFER_SIZE < size ) {
             size = ATMEL_MAX_TRANSFER_SIZE;
         }
-        command[2] = 0xff & (current_start >> 8);
-        command[3] = 0xff & current_start;
-        command[4] = 0xff & ((current_start + size - 1)>> 8);
-        command[5] = 0xff & (current_start + size - 1);
+        command[2] = (uint8_t)(0xff & (current_start >> 8));
+        command[3] = (uint8_t)(0xff & current_start);
+        command[4] = (uint8_t)(0xff & ((current_start + size - 1)>> 8));
+        command[5] = (uint8_t)(0xff & (current_start + size - 1));
 
         if( 6 != dfu_download(device, 6, command) ) {
             ERROR_MSG( "dfu_download failed\n" );
@@ -626,10 +626,10 @@ static int32_t __atmel_blank_check_internal( dfu_device_t *device,
 
     DEBUG_MSG( QString("%1( %2, 0x%3, 0x%3 )\n").arg(__FUNCTION__).arg((int)device).arg(start,8,16,QChar('0')).arg(end,8,16,QChar('0')) );
 
-    command[2] = 0xff & (start >> 8);
-    command[3] = 0xff & start;
-    command[4] = 0xff & (end >> 8);
-    command[5] = 0xff & end;
+    command[2] = (uint8_t)(0xff & (start >> 8));
+    command[3] = (uint8_t)(0xff & start);
+    command[4] = (uint8_t)(0xff & (end >> 8));
+    command[5] = (uint8_t)(0xff & end);
 
     if( 6 != dfu_download(device, 6, command) ) {
         ERROR_MSG( "dfu_download failed.\n" );
@@ -755,7 +755,7 @@ int32_t atmel_reset( dfu_device_t *device )
 
 int32_t atmel_start_app( dfu_device_t *device, uint16_t addr )
 {
-    uint8_t command[5] = { 0x04, 0x03, 0x01, (addr >> 8) & 0xFF, addr & 0xFF };
+    uint8_t command[5] = { 0x04, 0x03, 0x01, (uint8_t)((addr >> 8) & 0xFF), (uint8_t)(addr & 0xFF) };
 
     DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((int)device) );
 
@@ -833,8 +833,8 @@ static int32_t atmel_select_page( dfu_device_t *device,
     if( NULL != device ) {
         if( adc_AVR32 == device->type ) {
             uint8_t command[5] = { 0x06, 0x03, 0x01, 0x00, 0x00 };
-            command[3] = 0xff & (mem_page >> 8);
-            command[4] = 0xff & mem_page;
+            command[3] = (uint8_t)(0xff & (mem_page >> 8));
+            command[4] = (uint8_t)(0xff & mem_page);
 
             if( 5 != dfu_download(device, 5, command) ) {
                 ERROR_MSG( "dfu_download failed.\n" );
@@ -966,7 +966,7 @@ int32_t atmel_flash( dfu_device_t *device,
 
     first = start;
 
-    while( 1 )
+    for (;;)
     {
         uint32_t last = 0;
         int32_t length;
@@ -1071,10 +1071,10 @@ static void atmel_flash_populate_footer( uint8_t *message, uint8_t *footer,
     crc = 0;
 
     /* CRC 4 bytes */
-    footer[0] = 0xff & (crc >> 24);
-    footer[1] = 0xff & (crc >> 16);
-    footer[2] = 0xff & (crc >> 8);
-    footer[3] = 0xff & crc;
+    footer[0] = (uint8_t)(0xff & (crc >> 24));
+    footer[1] = (uint8_t)(0xff & (crc >> 16));
+    footer[2] = (uint8_t)(0xff & (crc >> 8));
+    footer[3] = (uint8_t)(0xff & crc);
 
     /* Length of DFU suffix - always 16. */
     footer[4] = 16;
@@ -1089,16 +1089,16 @@ static void atmel_flash_populate_footer( uint8_t *message, uint8_t *footer,
     footer[9] = 0x10;
 
     /* Vendor ID or 0xFFFF */
-    footer[10] = 0xff & (vendorId >> 8);
-    footer[11] = 0xff & vendorId;
+    footer[10] = (uint8_t)(0xff & (vendorId >> 8));
+    footer[11] = (uint8_t)(0xff & vendorId);
 
     /* Product ID or 0xFFFF */
-    footer[12] = 0xff & (productId >> 8);
-    footer[13] = 0xff & productId;
+    footer[12] = (uint8_t)(0xff & (productId >> 8));
+    footer[13] = (uint8_t)(0xff & productId);
 
     /* BCD Firmware release number or 0xFFFF */
-    footer[14] = 0xff & (bcdFirmware >> 8);
-    footer[15] = 0xff & bcdFirmware;
+    footer[14] = (uint8_t)(0xff & (bcdFirmware >> 8));
+    footer[15] = (uint8_t)(0xff & bcdFirmware);
 }
 
 static void atmel_flash_populate_header( uint8_t *header,
@@ -1114,7 +1114,7 @@ static void atmel_flash_populate_header( uint8_t *header,
     }
 
     /* If we send 1 byte @ 0x0000, the end address will also be 0x0000 */
-    end = start_address + (length - 1);
+    end = (uint16_t)(start_address + (length - 1));
 
     /* Command Identifier */
     header[0] = 0x01;   /* ld_prog_start */
@@ -1123,12 +1123,12 @@ static void atmel_flash_populate_header( uint8_t *header,
     header[1] = ((true == eeprom) ? 0x01 : 0x00);
 
     /* start_address */
-    header[2] = 0xff & (start_address >> 8);
-    header[3] = 0xff & start_address;
+    header[2] = (uint8_t)(0xff & (start_address >> 8));
+    header[3] = (uint8_t)(0xff & start_address);
 
     /* end_address */
-    header[4] = 0xff & (end >> 8);
-    header[5] = 0xff & end;
+    header[4] = (uint8_t)(0xff & (end >> 8));
+    header[5] = (uint8_t)(0xff & end);
 }
 
 static int32_t atmel_flash_block( dfu_device_t *device,
@@ -1222,12 +1222,12 @@ void atmel_print_device_info( FILE *stream, atmel_device_info_t *info )
     fprintf( stream, "%18s: 0x%04x - %d\n", "Device boot ID 1", info->bootID1, info->bootID1 );
     fprintf( stream, "%18s: 0x%04x - %d\n", "Device boot ID 2", info->bootID2, info->bootID2 );
 
-    if( /* device is 8051 based */ 0 ) {
-        fprintf( stream, "%18s: 0x%04x - %d\n", "Device BSB", info->bsb, info->bsb );
-        fprintf( stream, "%18s: 0x%04x - %d\n", "Device SBV", info->sbv, info->sbv );
-        fprintf( stream, "%18s: 0x%04x - %d\n", "Device SSB", info->ssb, info->ssb );
-        fprintf( stream, "%18s: 0x%04x - %d\n", "Device EB", info->eb, info->eb );
-    }
+    //if( /* device is 8051 based */ 0 ) {
+    //    fprintf( stream, "%18s: 0x%04x - %d\n", "Device BSB", info->bsb, info->bsb );
+    //    fprintf( stream, "%18s: 0x%04x - %d\n", "Device SBV", info->sbv, info->sbv );
+    //    fprintf( stream, "%18s: 0x%04x - %d\n", "Device SSB", info->ssb, info->ssb );
+    //    fprintf( stream, "%18s: 0x%04x - %d\n", "Device EB", info->eb, info->eb );
+    //}
 
     fprintf( stream, "%18s: 0x%04x - %d\n", "Manufacturer Code", info->manufacturerCode, info->manufacturerCode );
     fprintf( stream, "%18s: 0x%04x - %d\n", "Family Code", info->familyCode, info->familyCode );

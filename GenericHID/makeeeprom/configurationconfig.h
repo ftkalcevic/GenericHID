@@ -20,7 +20,7 @@ public:
     virtual ~ConfigurationConfig(void);
     virtual bool Load( const QDomElement &elem, QString *sError );
     virtual ByteArray GetReportDescriptor(StringTable &table) const;
-    virtual ByteArray GetControlConfig( byte nReportId ) const { return ByteArray(); }	    // todo: should this be in Configuration?
+    virtual ByteArray GetControlConfig( byte /*nReportId*/ ) const { return ByteArray(); }	    // todo: should this be in Configuration?
 
     void setDescriptorsLength( unsigned short n ) { m_nDescriptorsLength = (unsigned short)(n + DESCRIPTOR_SIZE); } 
     bool busPowered() const { return m_bBusPowered; }

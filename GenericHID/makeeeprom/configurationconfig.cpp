@@ -29,13 +29,14 @@ static bool UnpackTimer( const QDomElement &elem, const QString &sAttrName, stru
 
     bool bOk;
     s = parts[0].trimmed();
-    int nMode = s.toInt(&bOk);
-    if ( !bOk || nMode < 0 || nMode > 1 )
+    int n = s.toInt(&bOk);
+    if ( !bOk || n < 0 || n > 1 )
     {
 	if ( sError != NULL )
 	    *sError = QString("Invalid mode, '%1', for attribute '%2' on node <%3>.  Must be 0 or 1").arg(s).arg(sAttrName).arg(elem.parentNode().nodeName());
 	return false;
     }
+    byte nMode = (byte)n;
 
     int nMax;
     QStringList sPrescales;
@@ -57,16 +58,17 @@ static bool UnpackTimer( const QDomElement &elem, const QString &sAttrName, stru
 	    *sError = QString("Invalid prescale, '%1', for attribute '%2' on node <%3>.  Must be 0 or 1").arg(s).arg(sAttrName).arg(elem.parentNode().nodeName());
 	return false;
     }
-    int nPrescale = s.toInt();
+    uint16_t nPrescale = (uint16_t)s.toInt();
 
     s = parts[2].trimmed();
-    int nTop = s.toInt(&bOk);
-    if ( !bOk || nTop < 1 || nTop > nMax )
+    n = s.toInt(&bOk);
+    if ( !bOk || n < 1 || n > nMax )
     {
 	if ( sError != NULL )
 	    *sError = QString("Invalid Count Top, '%1', for attribute '%2' on node <%3>.  Must be from 1 to %4").arg(s).arg(sAttrName).arg(elem.parentNode().nodeName()).arg(nMax);
 	return false;
     }
+    uint16_t nTop = (uint16_t)n;
 
     timer.Mode = nMode;
     timer.Prescaler = nPrescale;
@@ -133,7 +135,7 @@ bool ConfigurationConfig::Load( const QDomElement &elem, QString *sError )
 }
 
 
-ByteArray ConfigurationConfig::GetReportDescriptor(StringTable &table) const
+ByteArray ConfigurationConfig::GetReportDescriptor(StringTable & /*table*/) const
 {
     ByteBuffer ConfigDescriptor;
 

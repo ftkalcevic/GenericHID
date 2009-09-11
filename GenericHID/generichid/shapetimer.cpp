@@ -11,7 +11,7 @@ ShapeTimer::~ShapeTimer(void)
 }
 
 
-void ShapeTimer::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &pins, const QList<PropertyValue *> &values  ) const
+void ShapeTimer::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &, const QList<PropertyValue *> &values  ) const
 {
     MakeCounterControl( elem, 
 		      GetPropertyValueString("Name",values,""), 

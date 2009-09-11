@@ -175,7 +175,7 @@ void ShapeMCU::MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sP
 }
 
 
-void ShapeMCU::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &pins, const QList<PropertyValue *> &values  ) const
+void ShapeMCU::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &, const QList<PropertyValue *> &values  ) const
 {
     bool bTempSensor = GetPropertyValueBool("Use Temperature Sensor",values,false);
     bool bVoltageMonitor = GetPropertyValueBool("Use Voltage Monitor",values,false);
@@ -201,9 +201,9 @@ void ShapeMCU::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> 
 	MakeDirectionalSwitchControl( elem, "Joystick", USAGEPAGE_GENERIC_DESKTOP_CONTROLS, USAGE_HATSWITCH, true, true, "4way", "PB7", "PE5", "PE4", "PB6", "", "", "", "" );
 	MakeSwitchControl( elem, "JoystickButton", 9, 1, true, true, "PB5" );
     }
-    if ( bUseJoystick )
+    if ( bUseHWB )
     {
-	// make a directional switch plus button
+	// make a button
 	MakeSwitchControl( elem, "HWBButton", 9, 2, true, true, "PE2" );
     }
     if ( bUseLEDs )

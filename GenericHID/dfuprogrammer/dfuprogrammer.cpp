@@ -1,8 +1,8 @@
+#include "dfucommon.h"
 #include "dfuprogrammer.h"
 #include "atmel.h"
 #include "dfu.h"
 #include "intel_hex.h"
-#include "dfucommon.h"
 
 
 struct target_details
@@ -313,7 +313,7 @@ bool DFUProgrammer::EnterApplicationMode(ResetMode::ResetMode mode, unsigned int
     if ( mode == ResetMode::Hard )
 	result = atmel_reset( m_pDFUDevice ); 
     else
-	result = atmel_start_app( m_pDFUDevice, addr );
+	result = atmel_start_app( m_pDFUDevice, (uint16_t)addr );
 
     if ( result != 0 )
 	return false;

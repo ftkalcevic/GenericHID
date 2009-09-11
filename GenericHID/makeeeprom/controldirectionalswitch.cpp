@@ -3,14 +3,14 @@
 
 ControlDirectionalSwitch::ControlDirectionalSwitch(void)
 {
-    m_nPortNW=-1;
-    m_nPortNE=-1;
-    m_nPortSW=-1;
-    m_nPortSW=-1;
-    m_nPortN=-1;
-    m_nPortS=-1;
-    m_nPortW=-1;
-    m_nPortE=-1;
+    m_nPortNW=0xFF;
+    m_nPortNE=0xFF;
+    m_nPortSW=0xFF;
+    m_nPortSW=0xFF;
+    m_nPortN=0xFF;
+    m_nPortS=0xFF;
+    m_nPortW=0xFF;
+    m_nPortE=0xFF;
 }
 
 ControlDirectionalSwitch::~ControlDirectionalSwitch(void)
@@ -150,7 +150,7 @@ ByteArray ControlDirectionalSwitch::GetControlConfig( byte nReportId ) const
 
     config.hdr.Type = DirectionalSwitch;
     config.hdr.ReportId = nReportId;
-    config.hdr.Length = nBufSize;
+    config.hdr.Length = (byte)nBufSize;
     config.Options = (m_bPullup ? (1<<DSW_PULLUP) : 0 ) |
 		     (m_bDebounce ? (1<<DSW_DEBOUNCE) : 0 );
 
@@ -158,19 +158,19 @@ ByteArray ControlDirectionalSwitch::GetControlConfig( byte nReportId ) const
     {
 	case NS:
 	    config.Type = DS_NS;
-	    config.Ports = nPorts;
+	    config.Ports = (byte)nPorts;
 	    config.Switches[0].Port = m_nPortN;
 	    config.Switches[1].Port = m_nPortS;
 	    break;
 	case WE:
 	    config.Type = DS_WE;
-	    config.Ports = nPorts;
+	    config.Ports = (byte)nPorts;
 	    config.Switches[0].Port = m_nPortW;
 	    config.Switches[1].Port = m_nPortE;
 	    break;
 	case _4way:
 	    config.Type = DS_4way;
-	    config.Ports = nPorts;
+	    config.Ports = (byte)nPorts;
 	    config.Switches[DIRSW_PORTN].Port = m_nPortN;
 	    config.Switches[DIRSW_PORTS].Port = m_nPortS;
 	    config.Switches[DIRSW_PORTE].Port = m_nPortE;
@@ -178,7 +178,7 @@ ByteArray ControlDirectionalSwitch::GetControlConfig( byte nReportId ) const
 	    break;
 	case _8way:
 	    config.Type = DS_8way;
-	    config.Ports = nPorts;
+	    config.Ports = (byte)nPorts;
 	    config.Switches[DIRSW_PORTN].Port = m_nPortN;
 	    config.Switches[DIRSW_PORTS].Port = m_nPortS;
 	    config.Switches[DIRSW_PORTE].Port = m_nPortE;

@@ -42,9 +42,9 @@ public:
     ConfigurationEndpoint(bool bInput, byte nEndpointNumber, TransferType::TransferType transType, SynchronisationType::SynchronisationType syncType, UsageType::UsageType useType, ushort nPacketSize, byte nPollInterval);
     virtual ~ConfigurationEndpoint(void);
 
-    virtual bool Load( const QDomElement &elem, QString *sError ) { return true; }
+    virtual bool Load( const QDomElement & /*elem*/, QString * /*sError*/ ) { return true; }
     virtual ByteArray GetReportDescriptor(StringTable &table) const;		
-    virtual ByteArray GetControlConfig( byte nReportId ) const { return ByteArray(); }
+    virtual ByteArray GetControlConfig( byte /*nReportId*/ ) const { return ByteArray(); }
 private:
     bool m_bInput;
     byte m_nEndpointNumber;

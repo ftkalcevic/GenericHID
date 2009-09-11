@@ -81,7 +81,7 @@ void TestWidget::onDevicesIndexChanged( int index )
     if ( m_bLoading )
 	return;
 
-    if ( index < 0 || index > m_pDevices->m_Devices.size() -1 )
+    if ( index < 0 || index > (int)(m_pDevices->m_Devices.size() -1) )
 	DisplayDevice( NULL );
     else
 	DisplayDevice( m_pDevices->m_Devices[index] );
@@ -137,7 +137,7 @@ void TestWidget::onRefreshPressed()
 
     int nSelectGenericHID = -1;
     int nSelectLastDevice = -1;
-    for ( int i = 0; i < m_pDevices->m_Devices.size(); i++ )
+    for ( int i = 0; i < (int)m_pDevices->m_Devices.size(); i++ )
     {
 	HIDDevice *pDevice = m_pDevices->m_Devices[i];
 	if ( !m_sLastDevice.isEmpty() && m_sLastDevice == pDevice->SystemId() )
@@ -186,7 +186,7 @@ void TestWidget::DisplayDevice( HIDDevice *pDevice )
 	HID_ReportInfo_t &info = pDevice->ReportInfo();
 
 	// Go through collections and find USAGE_PAGE_ALPHANUMERIC_DISPLAY devices
-	for ( int i = 0; i < info.Collections.size(); i++ )
+	for ( int i = 0; i < (int)info.Collections.size(); i++ )
 	{
 	    HID_CollectionPath_t *col = info.Collections[i];
 	    if ( col->UsagePage == USAGEPAGE_ALPHANUMERIC_DISPLAY && col->Usage == USAGE_ALPHANUMERIC_DISPLAY )
@@ -202,7 +202,7 @@ void TestWidget::DisplayDevice( HIDDevice *pDevice )
 	    }
 	}
 
-	for ( int i = 0; i < info.ReportItems.size(); i++ )
+	for ( int i = 0; i < (int)info.ReportItems.size(); i++ )
 	{
 	    HID_ReportItem_t *pReportItem = info.ReportItems[i];
 
@@ -285,8 +285,9 @@ void TestWidget::onNewData( QVector<byte> data )
 
 
 
-void TestWidget::onValueChanged(int nReportId)
+void TestWidget::onValueChanged(int _nReportId)
 {
+    byte nReportId = (byte)_nReportId;
     // an output item has changed.  Send the report it belongs to.
     // make a buffer
     int nBufferLen = m_pActiveDevice->ReportInfo().Reports.size() > 1 ? 1 : 0;
@@ -307,6 +308,10 @@ void TestWidget::onValueChanged(int nReportId)
 
     // Send the report
     int nRet = m_pActiveDevice->InterruptWrite( buffer, nBufferLen, USB_TIMEOUT );
+    if ( nRet != nBufferLen )
+    { 
+	LOG_MSG(m_Logger, LogTypes::Warning, QString("Failed to write report.  Expected %1 got %2").arg(nBufferLen).arg(nRet) );
+    }
 
     delete buffer;
 }

@@ -12,7 +12,7 @@ public:
     virtual ~ConfigurationDevice(void);
     virtual bool Load( const QDomElement &elem, QString *sError );
     virtual ByteArray GetReportDescriptor(StringTable &table) const;
-    virtual ByteArray GetControlConfig( byte nReportId ) const { return ByteArray(); }
+    virtual ByteArray GetControlConfig( byte /*nReportId*/ ) const { return ByteArray(); }
 
 private:
     ushort m_nVID;

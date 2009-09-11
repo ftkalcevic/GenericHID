@@ -92,8 +92,8 @@ Shape *Shape::CreateFromXML( QDomElement &node, QString &sError )
 
     // common properties
     QString sShapeId, sType, sImageFile, sIconFile, sName, sDescription;
-    bool bSource;
-    unsigned int nMaxInstances;
+    bool bSource = false;
+    unsigned int nMaxInstances = 0;
 
     if ( XMLUtility::getAttributeString( node, "Id", sShapeId, &sError ) &&
 	 XMLUtility::getAttributeString( node, "Type", sType, &sError ) &&
@@ -236,7 +236,7 @@ int Shape::findPin( const QString &sName ) const
 }
 
 
-bool Shape::Verify( QString &sErrors, const QList<class PinItem *> &pins, const QList<PropertyValue *> &values ) const
+bool Shape::Verify( QString &sErrors, const QList<class PinItem *> &pins, const QList<PropertyValue *> & ) const
 {
     bool bSuccess = true;
 
@@ -315,7 +315,7 @@ unsigned short Shape::GetPropertyValueUsagePage( const QString &sName, const QLi
 	if ( s.count() > 0 )
 	    return s[0].toUShort();
     }
-    return nDefault;
+    return (unsigned short)nDefault;
 }
 
 unsigned short Shape::GetPropertyValueUsage( const QString &sName, const QList<class PropertyValue *> &values, int nDefault ) const
@@ -327,15 +327,15 @@ unsigned short Shape::GetPropertyValueUsage( const QString &sName, const QList<c
 	if ( s.count() > 1 )
 	    return s[1].toUShort();
     }
-    return nDefault;
+    return (unsigned short)nDefault;
 }
 
 
-void Shape::MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sPowerPin, const QList<PropertyValue *> &values  ) const
+void Shape::MakeDeviceXML( QDomElement &, int, const QString &, const QList<PropertyValue *> & ) const
 {
 }
 
-void Shape::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &pins, const QList<PropertyValue *> &values  ) const
+void Shape::MakeControlsXML( QDomElement &, const QList<class PinItem *> &, const QList<PropertyValue *> & ) const
 {
 }
 

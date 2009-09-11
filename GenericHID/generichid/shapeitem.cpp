@@ -83,7 +83,7 @@ bool ShapeItem::CreateGraphics()
 	QTransform rotateTransform;
 	rotateTransform.rotate( pPin->rotate() );
 	QPointF rotated = rotateTransform.map( QPointF(rawSize.width(),rawSize.height()) );
-	QSize size( rotated.x(), rotated.y() );
+	QSize size( (int)rotated.x(), (int)rotated.y() );
 
 	QPointF pos;
 	switch ( pPin->hAlign() )

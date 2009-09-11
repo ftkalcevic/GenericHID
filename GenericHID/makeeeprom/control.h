@@ -22,7 +22,7 @@ public:
 
     virtual Type type() const = 0;
     virtual ByteArray GetHIDReportDescriptor( StringTable &table, int &nBits ) const = 0;	// returns the HID report descriptor data for this control
-    virtual ByteArray GetReportDescriptor(StringTable &table) const { return ByteArray(); }
+    virtual ByteArray GetReportDescriptor(StringTable & /*table*/ ) const { return ByteArray(); }
 };
 
 

@@ -11,7 +11,7 @@ ConfigurationHID::~ConfigurationHID(void)
 }
 
 
-ByteArray ConfigurationHID::GetReportDescriptor(StringTable &table) const
+ByteArray ConfigurationHID::GetReportDescriptor(StringTable & /*table*/) const
 {
     ByteBuffer HIDDescriptor;
 
@@ -21,7 +21,7 @@ ByteArray ConfigurationHID::GetReportDescriptor(StringTable &table) const
     HIDDescriptor.AddByte(0);	    // Country code
     HIDDescriptor.AddByte(1);	    // Number of descriptors (HID report)
     HIDDescriptor.AddByte(0x22);    // HID report type
-    HIDDescriptor.AddShort(m_nDescriptorReportLength);      // HID report length
+    HIDDescriptor.AddShort((uint16_t)m_nDescriptorReportLength);      // HID report length
     HIDDescriptor[0] = (byte)HIDDescriptor.count();
 
     return HIDDescriptor;

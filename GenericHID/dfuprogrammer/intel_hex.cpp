@@ -35,15 +35,13 @@
 #endif
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <QFile>
-#include <QBuffer>
 
+#include "dfucommon.h"
 #include "inttypes.h"
 #include <stdlib.h>
 #include <string.h>
 
 #include "intel_hex.h"
-#include "dfucommon.h"
 
 struct intel_record {
     unsigned int count;
@@ -202,7 +200,7 @@ static int intel_read_data( QIODevice &file, struct intel_record *record )
         if( 1 != sscanf(buffer, "%02x", &data) ) 
 	    return -4;
 
-        record->data[i] = 0xff & data;
+        record->data[i] = (char)(0xff & data);
     }
 
     /* Read the checksum */

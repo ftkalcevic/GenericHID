@@ -323,8 +323,8 @@ ByteArray MakeEEPROM::makeEEPROM()
     ByteBuffer ConfigConfig = m_ConfigConfig->GetReportDescriptor(table);
 
     ByteBuffer strTable = table.GetDescriptor(nOffset);
-    nOffset += (ushort)strTable.count();
-    hidData.nStringCount = table.count();
+    nOffset = (ushort)(nOffset + strTable.count());
+    hidData.nStringCount = (uint16_t)table.count();
     if ( table.count() > MAX_STRINGS )
     {
 	m_sLastError = QString("Exceeded the maximum number of strings that USB supports.  Have %1, Max %2").arg(table.count()).arg(MAX_STRINGS);
@@ -332,35 +332,35 @@ ByteArray MakeEEPROM::makeEEPROM()
     }
 
     hidData.nReportDescriptorOffset = nOffset;
-    hidData.nReportDescriptorLength = HIDReport.count();
-    nOffset += HIDReport.count();
+    hidData.nReportDescriptorLength = (uint16_t)HIDReport.count();
+    nOffset = (ushort)(nOffset + HIDReport.count());
 
     hidData.nDeviceDescriptorOffset = nOffset;
-    hidData.nDeviceDescriptorLength = DeviceConfig.count();
-    nOffset += DeviceConfig.count();
+    hidData.nDeviceDescriptorLength = (uint16_t)DeviceConfig.count();
+    nOffset = (ushort)(nOffset + DeviceConfig.count());
 
     hidData.nConfigDescriptorOffset = nOffset;
-    hidData.nConfigDescriptorLength = ConfigConfig.count() + nConfigDescLength;            // length of config descriptor
+    hidData.nConfigDescriptorLength = (uint16_t)(ConfigConfig.count() + nConfigDescLength);            // length of config descriptor
     ushort nOffsetTemp = nOffset;
-    nOffset += ConfigConfig.count() + IFaceConfig.count();
+    nOffset = (ushort)(nOffset + ConfigConfig.count() + IFaceConfig.count());
 
     hidData.nHIDDescriptorOffset = nOffset;			    // offset to HID descriptor - this is in the middle of the config descriptor
-    hidData.nHIDDescriptorLength = HIDConfig.count();             // length of HID descriptor
-    nOffset = nOffsetTemp + ConfigConfig.count() + nConfigDescLength;
+    hidData.nHIDDescriptorLength = (uint16_t)HIDConfig.count();             // length of HID descriptor
+    nOffset = (ushort)(nOffset + nOffsetTemp + ConfigConfig.count() + nConfigDescLength);
 
     hidData.nApplicationDataOffset = nOffset;                      // offset to application data
 
-    hidData.nBlockLength =	sizeof(hidData) + 
-				strTable.count() + 
-				HIDReport.count() + 
-				DeviceConfig.count() + 
-				ConfigConfig.count() + 
-				IFaceConfig.count() + 
-				HIDConfig.count() + 
-				EndpointConfig1.count() + 
-				EndpointConfig2.count() + 
-				sizeof(appHeader) +
-				ApplicationData.count();
+    hidData.nBlockLength = (uint16_t)( sizeof(hidData) + 
+					strTable.count() + 
+					HIDReport.count() + 
+					DeviceConfig.count() + 
+					ConfigConfig.count() + 
+					IFaceConfig.count() + 
+					HIDConfig.count() + 
+					EndpointConfig1.count() + 
+					EndpointConfig2.count() + 
+					sizeof(appHeader) +
+					ApplicationData.count() );
 
     ByteBuffer eeprom;
     eeprom.AddArray((byte *)&hidData, sizeof(hidData));
@@ -421,15 +421,15 @@ QString MakeEEPROM::MakeIntelHexFormat( ByteArray &eeprom )
         byte nChecksum = 0;
         QString sOutput = ":";               // record mark
         sOutput += HexStr((byte)nLen);      // load reclen
-        nChecksum += (byte)nLen;
+        nChecksum = (byte)(nChecksum + nLen);
         sOutput += HexStr(i);               // offset
-        nChecksum += (byte)(i & 0xff);
-        nChecksum += (byte)((i>>8) & 0xff);
+        nChecksum = (byte)( nChecksum + (i & 0xff));
+        nChecksum = (byte)( nChecksum + ((i>>8) & 0xff) );
         sOutput += "00";                    // rectype 00 - data
         for (int j = 0; j < nLen; j++)
         {
             sOutput += HexStr(eeprom[i + j]);   // data
-            nChecksum += eeprom[i + j];
+            nChecksum = (byte)(nChecksum + eeprom[i + j]);
         }
         sOutput += HexStr((byte)(1 + ~nChecksum));                        // checksum
         sb += sOutput + "\n";

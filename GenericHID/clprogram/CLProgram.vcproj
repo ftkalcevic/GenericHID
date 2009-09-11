@@ -45,6 +45,7 @@
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\$(ConfigurationName)/CLProgram.pch"
+				WarningLevel="4"
 				DebugInformationFormat="0"
 			/>
 			<Tool
@@ -120,6 +121,7 @@
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\$(ConfigurationName)/CLProgram.pch"
+				WarningLevel="4"
 				DebugInformationFormat="3"
 			/>
 			<Tool

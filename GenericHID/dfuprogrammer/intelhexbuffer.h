@@ -3,7 +3,6 @@
 
 #include "dfutypes.h"
 #include "inttypes.h"
-#include <QVector>
 
 class IntelHexBuffer
 {

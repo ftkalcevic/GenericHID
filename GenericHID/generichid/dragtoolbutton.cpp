@@ -26,7 +26,7 @@ void DragToolButton::mousePressEvent(QMouseEvent *event)
 	QPixmap shape(m_pShape->shapeFile());
 	// todo get current view scale
 	double dScale = 1.0;
-	QPixmap scaledShape = shape.scaled( (double)shape.width() * dScale, (double)shape.height() * dScale, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+	QPixmap scaledShape = shape.scaled( (int)((double)shape.width() * dScale), (int)((double)shape.height() * dScale), Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
 	drag->setPixmap( scaledShape );
 
 	drag->exec();

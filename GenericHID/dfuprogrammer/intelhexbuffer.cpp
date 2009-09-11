@@ -1,7 +1,6 @@
-#include <QString>
+#include "dfucommon.h"
 #include "intelhexbuffer.h"
 #include "intel_hex.h"
-#include "dfucommon.h"
 
 
 

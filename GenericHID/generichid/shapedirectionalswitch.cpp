@@ -38,7 +38,7 @@ bool ShapeDirectionalSwitch::Verify( QString &sErrors, const QList<class PinItem
 }
 
 
-void ShapeDirectionalSwitch::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &pins, const QList<PropertyValue *> &values  ) const
+void ShapeDirectionalSwitch::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &, const QList<PropertyValue *> &values  ) const
 {
     QString sDirections = GetPropertyValueEnum("sDirections",values,"");
 

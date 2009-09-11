@@ -24,8 +24,8 @@
 #include <stddef.h>
 #include <usb.h>
 #include <errno.h>
-#include "dfu.h"
 #include "dfucommon.h"
+#include "dfu.h"
 
 Logger g_Logger( "DFUProgrammer", "DFUProgrammer" );
 QString h_sLastError;

@@ -4,7 +4,6 @@
 #include "dfutypes.h"
 #include "inttypes.h"
 #include "intelhexbuffer.h"
-#include <QString>
 
 class DFUProgrammer
 {

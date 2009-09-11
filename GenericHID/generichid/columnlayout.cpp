@@ -71,7 +71,7 @@ ColumnLayout::~ColumnLayout()
 void ColumnLayout::clear()
 {
     QLayoutItem *item;
-    while ((item = takeAt(0)))
+    while ( (item = takeAt(0)) != NULL )
 	delete item;
 }
 

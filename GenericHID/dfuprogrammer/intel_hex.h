@@ -22,8 +22,6 @@
 #define __INTEL_HEX_H__
 
 #include "inttypes.h"
-#include <QVector>
-#include <QIODevice>
 
 /**
  *  Used to read in a file in intel hex format and return a chunck of

@@ -3,6 +3,10 @@
 
 #include <assert.h>
 
+#ifdef _WIN32
+#pragma warning(push, 1)
+#endif
+
 #include <QString>
 #include <QStringList>
 #include <QDomDocument>
@@ -10,6 +14,11 @@
 #include <QByteArray>
 #include <QVector>
 #include <QCoreApplication>
+
+#ifdef _WIN32
+#pragma warning(pop)
+//#pragma warning(disable:4251)
+#endif
 
 #include "xmlutility.h"
 

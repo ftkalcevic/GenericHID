@@ -28,8 +28,6 @@ const char *webText = \
 static void ProcessHelp( const QString &sDestDir, const QString &sFile )
 {
     QString sError;
-    int nLine;
-    int nCol;
 
     QFile file(sFile);
     file.open(QIODevice::ReadOnly);

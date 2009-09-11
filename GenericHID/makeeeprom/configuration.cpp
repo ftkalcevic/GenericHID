@@ -24,7 +24,7 @@ bool Configuration::MakePort( const QString &sPort, byte &nRet, QString *sError 
 	    int nPort = port - 'A';
 	    if ( nPin >= 0 && nPin <= 7 )
 	    {
-		nRet = nPort * 8 + nPin;
+		nRet = (byte)(nPort * 8 + nPin);
 		return true;
 	    }
 	}

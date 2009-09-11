@@ -68,10 +68,10 @@ void TimerConfigDlg::AutoComputeTimer()
     int nResolution = ui.spinResolution->value();
 
     // Brute force search through the combinations to find the closest.
-    int nAutoPrescale;
-    int nAutoMode;
-    int nAutoTop;
-    double dAutoFrequency;
+    int nAutoPrescale=0;
+    int nAutoMode=0;
+    int nAutoTop=0;
+    double dAutoFrequency=0;
 
     double dError = 1000.0 * (double)m_nClockFrequency;
     foreach(QString sPrescale, m_sPrescales )

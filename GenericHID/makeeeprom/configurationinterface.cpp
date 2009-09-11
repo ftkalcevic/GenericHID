@@ -11,7 +11,7 @@ ConfigurationInterface::~ConfigurationInterface(void)
 
 
 
-ByteArray ConfigurationInterface::GetReportDescriptor(StringTable &table) const
+ByteArray ConfigurationInterface::GetReportDescriptor(StringTable & /*table*/) const
 {
     ByteBuffer InterfaceDescriptor;
 

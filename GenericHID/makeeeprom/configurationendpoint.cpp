@@ -19,7 +19,7 @@ ConfigurationEndpoint::~ConfigurationEndpoint(void)
 
 
 
-ByteArray ConfigurationEndpoint::GetReportDescriptor(StringTable &table) const
+ByteArray ConfigurationEndpoint::GetReportDescriptor(StringTable & /*table*/) const
 {
     ByteBuffer EndPointDescriptor;
 

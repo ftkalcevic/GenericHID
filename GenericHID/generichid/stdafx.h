@@ -3,6 +3,7 @@
 
 #ifdef _WIN32
 #include <atlbase.h>
+#pragma warning(push, 1)
 #endif
 
 #include <QtGui>
@@ -32,6 +33,9 @@
 #include "usagepropertymanager.h"
 #include <QtProperty>
 
+#ifdef _WIN32
+#pragma warning(pop)
+#endif
 
 #include "common.h"
 #include "datatypes.h"

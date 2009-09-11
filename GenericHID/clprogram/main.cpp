@@ -1,7 +1,4 @@
 #include "stdafx.h"
-#include <QtCore/QCoreApplication>
-#include <QStringList>
-#include <QString>
 #include "programmer.h"
 
 

@@ -90,9 +90,9 @@ ByteArray ControlRotarySwitch::GetControlConfig( byte nReportId ) const
 
     config.hdr.Type = RotarySwitch;
     config.hdr.ReportId = nReportId;
-    config.hdr.Length = nBufSize;
-    config.PinCount = m_Pins.count();
-    config.ReportSize = m_nReportBits;
+    config.hdr.Length = (byte)nBufSize;
+    config.PinCount = (byte)m_Pins.count();
+    config.ReportSize = (byte)m_nReportBits;
     config.Options = (m_bPullup ? (1<<RSW_PULLUP) : 0 ) |
 		     (m_bDebounce ? (1<<RSW_DEBOUNCE) : 0 ) |
 		     (m_bEncoded ? (1<<RSW_ENCODED) : 0 );
