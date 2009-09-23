@@ -1,6 +1,8 @@
 #ifndef _DFU_COMMON_H_
 #define _DFU_COMMON_H_
 
+#include "inttypes.h"
+
 #ifdef _WIN32
 #pragma warning(push, 1)
 #endif
@@ -27,6 +29,5 @@ extern QString h_sLastError;
 #pragma warning(pop)
 //#pragma warning(disable:4251)
 #endif
-
 
 #endif

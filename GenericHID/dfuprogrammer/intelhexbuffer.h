@@ -20,9 +20,9 @@ public:
 
 private:
     QVector<int16_t> m_HexBuffer;
-    unsigned int m_nUsage;
     unsigned int m_nMaxSize;
     MemoryType::MemoryType m_eMemoryType;
+    unsigned int m_nUsage;
 };
 
 

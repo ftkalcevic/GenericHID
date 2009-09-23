@@ -20,8 +20,8 @@
  *	ISO C99: 7.18 Integer types <stdint.h>
  */
 
-#ifndef _INT_TYPES_H_
-#define _INT_TYPES_H_
+#ifndef _DFU_INT_TYPES_H_
+#define _DFU_INT_TYPES_H_
 
 #ifdef _WIN32
     typedef signed char		int8_t;
@@ -44,3 +44,4 @@
 #endif
 
 #endif 
+

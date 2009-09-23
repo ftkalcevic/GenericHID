@@ -1,9 +1,9 @@
 #include "dfucommon.h"
+#include "inttypes.h"
 #include "dfuprogrammer.h"
 #include "atmel.h"
 #include "dfu.h"
 #include "intel_hex.h"
-
 
 struct target_details
 {
