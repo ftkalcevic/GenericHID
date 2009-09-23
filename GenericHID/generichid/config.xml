@@ -380,6 +380,99 @@
 	</Shape>
 
 
+	<Shape Id="generichid1.0" Type="at90usb128" Source="false" Image="resources/generichid.1.0.png" Icon="resources/generichid.1.0icon.png" maxInstances="1" name="GenericHID 1.0 Custom Board" description=":generichid.1.0.htm">
+	    <pin rect="  1, 44, 31, 25" id="Vcc" type="" enabled="false" />
+	    <pin rect=" 32, 44, 31, 25" id="GND" type="" enabled="false" />
+	    <pin rect="  1, 69, 31, 25" id="PF7" type="io,adc" enabled="false" other="JTAG" />
+	    <pin rect=" 32, 69, 31, 25" id="PF6" type="io,adc" enabled="false" other="JTAG" />
+	    <pin rect="  1, 94, 31, 25" id="PF5" type="io,adc" enabled="false" other="JTAG" />
+	    <pin rect=" 32, 94, 31, 25" id="PF4" type="io,adc" enabled="false" other="JTAG" />
+	    <pin rect="  1,119, 31, 25" id="PF3" type="io,adc" />
+	    <pin rect=" 32,119, 31, 25" id="PF2" type="io,adc" />
+	    <pin rect="  1,144, 31, 25" id="PF1" type="io,adc" />
+	    <pin rect=" 32,144, 31, 25" id="PF0" type="io,adc" />
+
+	    <pin rect="  1,185, 31, 25" id="Vcc" type="" enabled="false" />
+	    <pin rect=" 32,185, 31, 25" id="GND" type="" enabled="false" />
+	    <pin rect="  1,210, 31, 25" id="PE7" type="io,int" />
+	    <pin rect=" 32,210, 31, 25" id="PE6" type="io,int" />
+	    <pin rect="  1,235, 31, 25" id="PE5" type="io,int" />
+	    <pin rect=" 32,235, 31, 25" id="PE4" type="io,int" />
+	    <pin rect="  1,260, 31, 25" id="PE3" type="io" other="UID" />
+	    <pin rect=" 32,260, 31, 25" id="PE2" type="io" other="HWB" />
+	    <pin rect="  1,285, 31, 25" id="PE1" type="io" />
+	    <pin rect=" 32,285, 31, 25" id="PE0" type="io" />
+
+	    <pin rect="  1,327, 31, 25" id="Vcc" type="" enabled="false" />
+	    <pin rect=" 32,327, 31, 25" id="GND" type="" enabled="false" />
+	    <pin rect="  1,352, 31, 25" id="PB7" type="io,int,pwm" />
+	    <pin rect=" 32,352, 31, 25" id="PB6" type="io,int,pwm" />
+	    <pin rect="  1,377, 31, 25" id="PB5" type="io,int,pwm" />
+	    <pin rect=" 32,377, 31, 25" id="PB4" type="io,int,pwm" />
+	    <pin rect="  1,402, 31, 25" id="PB3" type="io,int" />
+	    <pin rect=" 32,402, 31, 25" id="PB2" type="io,int" />
+	    <pin rect="  1,427, 31, 25" id="PB1" type="io,int" />
+	    <pin rect=" 32,427, 31, 25" id="PB0" type="io,int" />
+
+	    <pin rect="379,327, 31, 25" id="GND" type="" enabled="false" />
+	    <pin rect="348,327, 31, 25" id="Vcc" type="" enabled="false" />
+	    <pin rect="379,352, 31, 25" id="PD6" type="io" other="LED2, D5"/>
+	    <pin rect="348,352, 31, 25" id="PD7" type="io" other="LED2, D5"/>
+	    <pin rect="379,377, 31, 25" id="PD4" type="io" other="LED1, D2"/>
+	    <pin rect="348,377, 31, 25" id="PD5" type="io" other="LED1, D2"/>
+	    <pin rect="379,402, 31, 25" id="PD2" type="io,int" />
+	    <pin rect="348,402, 31, 25" id="PD3" type="io,int" />
+	    <pin rect="379,427, 31, 25" id="PD0" type="io,int" />
+	    <pin rect="348,427, 31, 25" id="PD1" type="io,int,pwm" />
+
+	    <pin rect="379,285, 31, 25" id="PC0" type="io" />
+	    <pin rect="348,285, 31, 25" id="PC1" type="io" />
+	    <pin rect="348,260, 31, 25" id="PC3" type="io" />
+	    <pin rect="379,260, 31, 25" id="PC2" type="io" />
+	    <pin rect="379,235, 31, 25" id="PC4" type="io,pwm" />
+	    <pin rect="348,235, 31, 25" id="PC5" type="io,pwm" />
+	    <pin rect="379,210, 31, 25" id="PC6" type="io,pwm" />
+	    <pin rect="348,210, 31, 25" id="PC7" type="io" />
+	    <pin rect="379,185, 31, 25" id="GND" type="" enabled="false" />
+	    <pin rect="348,185, 31, 25" id="Vcc" type="" enabled="false" />
+
+	    <pin rect="348,144, 31, 25" id="PA1" type="io" />
+	    <pin rect="379,144, 31, 25" id="PA0" type="io" />
+	    <pin rect="348,119, 31, 25" id="PA3" type="io" />
+	    <pin rect="379,119, 31, 25" id="PA2" type="io" />
+	    <pin rect="379, 94, 31, 25" id="PA4" type="io" />
+	    <pin rect="348, 94, 31, 25" id="PA5" type="io" />
+	    <pin rect="379, 69, 31, 25" id="PA6" type="io" />
+	    <pin rect="348, 69, 31, 25" id="PA7" type="io" />
+	    <pin rect="379, 44, 31, 25" id="GND" type="" enabled="false" />
+	    <pin rect="348, 44, 31, 25" id="Vcc" type="" enabled="false" />
+
+	    <property name="Name" description=":strippedusbkey.htm#Name" type="string" default="Generic HID Device"/>
+	    <property name="Usage" description=":strippedusbkey.htm#Usage" type="usage" default="1:8" />
+	    <property name="Voltage" description=":strippedusbkey.htm#Voltage" type="enum" default="3.3">
+		<enum name="5"/>
+		<enum name="3.3"/>
+	    </property>
+	    <property name="Power-Source" description=":strippedusbkey.htm#Power-Source" type="enum" default="Bus-Powered">
+		<enum name="Self-Powered"/>
+		<enum name="Bus-Powered"/>
+	    </property>
+	    <property name="Interval" description=":strippedusbkey.htm#Interval" type="int" min="0" max="255" default="50"/>
+	    <property name="Serial-Debug" description=":strippedusbkey.htm#Serial-Debug" type="bool" default="false"/>
+	    <property name="HID-Debug" description=":strippedusbkey.htm#HID-Debug" type="bool" default="false"/>
+	    <property name="Current" description=":strippedusbkey.htm#Current" type="int" min="0" max="500" default="20"/>
+	    <property name="Use Status LEDs" description=":strippedusbkey.htm#UseStatusLEDs" type="enum" default="LED1">
+		<enum name="LED1"/>
+		<enum name="LED2"/>
+		<enum name="Both"/>
+		<enum name="None"/>
+	    </property>
+	    <property name="SerialNo" description=":strippedusbkey.htm#SerialNo" type="string" default="1"/>
+	    <property name="Timer1" description=":strippedusbkey.htm#Timer1" type="timer13" default="1,8,100"/>
+	    <property name="Timer2" description=":strippedusbkey.htm#Timer2" type="timer2" default="1,8,100"/>
+	    <property name="Timer3" description=":strippedusbkey.htm#Timer3" type="timer13" default="1,8,100"/>
+	</Shape>
+
 
 	<Shape Id="pot" Type="pot" Source="true" Image="resources/potentiometer.png" Icon="resources/potentiometericon.png" maxInstances="0" name="Analog Potentiometer" description=":pot.htm">
 	    <pin rect="2,35,16,16" id="Out" type="adc" valign="above"/>
