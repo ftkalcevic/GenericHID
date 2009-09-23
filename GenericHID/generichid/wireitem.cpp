@@ -179,7 +179,7 @@ WireItem *WireItem::CreateFromXML( QList<ShapeItem *> &shapes, QDomElement &node
 
 QPainterPath WireItem::shape() const
 {
-    OutputDebugString( L"get shape\n" );
+    //OutputDebugString( L"get shape\n" );
     return QPainterPath( m_shapePath );
 };
 
@@ -194,6 +194,6 @@ void WireItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * optio
 
 QRectF WireItem::boundingRect() const
 {
-    OutputDebugString( L"get bounding rect\n" );
+    //OutputDebugString( L"get bounding rect\n" );
     return m_rcBounds;
 }
