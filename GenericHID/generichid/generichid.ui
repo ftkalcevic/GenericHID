@@ -28,7 +28,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tabDesign">
        <attribute name="title">
@@ -44,7 +44,7 @@
         <item>
          <widget class="ShapeGraphicsView" name="graphicsView">
           <property name="rubberBandSelectionMode">
-           <enum>Qt::ContainsItemShape</enum>
+           <enum>Qt::IntersectsItemShape</enum>
           </property>
          </widget>
         </item>

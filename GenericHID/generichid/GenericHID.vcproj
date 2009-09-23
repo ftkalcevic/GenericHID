@@ -120,6 +120,7 @@
 				Optimization="0"
 				AdditionalIncludeDirectories="..\usbhid;..\qtcommon;..\makeeeprom;.\GeneratedFiles;&quot;$(QTDIR)\include&quot;;&quot;.\GeneratedFiles\$(ConfigurationName)&quot;;&quot;$(QTDIR)\include\QtCore&quot;;&quot;$(QTDIR)\include\QtGui&quot;;&quot;$(QTDIR)\include\QtXml&quot;;.\;&quot;..\libusb-win32-device-bin-0.1.12.2\include&quot;;..\utility;..\include;..\programmer;&quot;..\qtpropertybrowser-2.5-opensource\src&quot;"
 				PreprocessorDefinitions="UNICODE;WIN32;QT_THREAD_SUPPORT;QT_CORE_LIB;QT_GUI_LIB;QT_XML_LIB;QT_WEBKIT_LIB"
+				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				TreatWChar_tAsBuiltInType="false"
 				UsePrecompiledHeader="2"
@@ -449,6 +450,10 @@
 			</File>
 			<File
 				RelativePath=".\usagepropertymanager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\vector2d.cpp"
 				>
 			</File>
 			<File
@@ -1406,6 +1411,10 @@
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\vector2d.h"
+				>
 			</File>
 			<File
 				RelativePath=".\wireitem.h"
@@ -2565,6 +2574,13 @@
 				<File
 					RelativePath=".\generatedfiles\Release\moc_shapescene.cpp"
 					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|Win32"
 						ExcludedFromBuild="true"

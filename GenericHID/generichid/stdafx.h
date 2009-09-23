@@ -49,7 +49,8 @@ namespace UserTypes
     enum UserTypes
     {
 	PinItemType = 1,
-	ShapeItemType
+	ShapeItemType, 
+	WireItemType
     };
 }
 

@@ -346,7 +346,7 @@ ByteArray MakeEEPROM::makeEEPROM()
 
     hidData.nHIDDescriptorOffset = nOffset;			    // offset to HID descriptor - this is in the middle of the config descriptor
     hidData.nHIDDescriptorLength = (uint16_t)HIDConfig.count();             // length of HID descriptor
-    nOffset = (ushort)(nOffset + nOffsetTemp + ConfigConfig.count() + nConfigDescLength);
+    nOffset = (ushort)(nOffsetTemp + ConfigConfig.count() + nConfigDescLength);
 
     hidData.nApplicationDataOffset = nOffset;                      // offset to application data
 
@@ -386,6 +386,9 @@ ByteArray MakeEEPROM::makeEEPROM()
     eeprom.AddBuffer(ApplicationData);
 	LOG_DEBUG( m_Logger, QString("Adding Application Data %1").arg(ApplicationData.toString()) );
 
+    LOG_DEBUG( m_Logger, QString("EEPROM... %1").arg(eeprom.toString()) );
+
+    assert( eeprom.count() == hidData.nBlockLength );
     if ( eeprom.count() > MAX_HID_DATA )
     {
 	m_sLastError = QString("Exceeded the EEPROM size.  %1 > %2").arg(eeprom.count()).arg(MAX_HID_DATA);

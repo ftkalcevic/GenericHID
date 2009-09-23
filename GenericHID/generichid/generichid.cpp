@@ -666,14 +666,17 @@ void GenericHID::onSelectionChanged()
     if ( selectedShapes.count() == 1 )
     {
         ui.listView->clear();
-	m_pLastSelectedShape = selectedShapes[0];
+	if ( m_pLastSelectedShape != selectedShapes[0] )
+	{
+	    m_pLastSelectedShape = selectedShapes[0];
 
-        const ShapeProperties &pProps = m_pLastSelectedShape->shapeData()->properties();
-        ShapeProperty::SetBrowserFactory( ui.listView );
-        ui.listView->addProperty(pProps.topItem());
-        m_pLastSelectedShape->populateProperties();
-	if ( ui.listView->topLevelItems().count() > 0 )
-	    ui.listView->setCurrentItem( ui.listView->topLevelItems()[0] );
+	    const ShapeProperties &pProps = m_pLastSelectedShape->shapeData()->properties();
+	    ShapeProperty::SetBrowserFactory( ui.listView );
+	    ui.listView->addProperty(pProps.topItem());
+	    m_pLastSelectedShape->populateProperties();
+	    if ( ui.listView->topLevelItems().count() > 0 )
+		ui.listView->setCurrentItem( ui.listView->topLevelItems()[0] );
+	}
     }
     else
     {
@@ -809,8 +812,10 @@ void GenericHID::onStatusChanged(const QString &s)
 - test linux version
 - win32 debug
 - make c# test routine
-- libusb win32
+- test missing libusb win32
 - package 
+    - win32
+	- c runtime?
 - install
 - unique serial numbers?
     - internal serial number?

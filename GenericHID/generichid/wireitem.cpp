@@ -2,9 +2,10 @@
 #include "wireitem.h"
 #include "pinitem.h"
 #include "shapeitem.h"
+#include "vector2d.h"
 
 WireItem::WireItem(QPointF ptStart, QPointF ptEnd, QGraphicsItem *parent)
-: QGraphicsPathItem(parent)
+: QGraphicsItem(parent)
 , m_ptStart(ptStart)
 , m_ptEnd(ptEnd)
 , m_pPin1( NULL )
@@ -15,7 +16,7 @@ WireItem::WireItem(QPointF ptStart, QPointF ptEnd, QGraphicsItem *parent)
 }
 
 WireItem::WireItem(PinItem *pPin1, PinItem *pPin2, QGraphicsItem *parent)
-: QGraphicsPathItem(parent)
+: QGraphicsItem(parent)
 , m_pPin1( pPin1 )
 , m_pPin2( pPin2 )
 {
@@ -52,17 +53,43 @@ void WireItem::UpdateEndpoints()
 
 void WireItem::MakePolygon()
 {
+    prepareGeometryChange();
     //QVector<QPointF> m_Points(3);
     //m_Points[0] = m_ptStart;
     //m_Points[1] = QPointF(m_ptStart.x(),m_ptEnd.y());
     //m_Points[2] = m_ptEnd;
     //setPolygon( QPolygonF(m_Points) );
 
-    QPainterPath path;
-    path.moveTo( m_ptStart );
-    //path.lineTo( QPointF(m_ptStart.x(),m_ptEnd.y()) );
-    path.lineTo( m_ptEnd );
-    setPath( path );
+    //QPainterPath path;
+    //path.moveTo( m_ptStart );
+    ////path.lineTo( QPointF(m_ptStart.x(),m_ptEnd.y()) );
+    //path.lineTo( m_ptEnd );
+    //setPath( path );
+
+    // Make another path which is a rectangle around the line
+    Vector2D v(m_ptStart.x()-m_ptEnd.x(),m_ptStart.y()-m_ptEnd.y());
+    v.Normalise();
+    v.Scale( 2 );
+    Vector2D perp = v.MakePerpendicular(false);
+    perp.Scale( 2 );
+
+    QPointF newStart( m_ptStart );
+    newStart -= v.toPoint();
+    QPointF newEnd( m_ptEnd );
+    newEnd += v.toPoint();
+
+    QVector<QPointF> pointsF;
+    pointsF.push_back( newStart - perp.toPoint() );
+    pointsF.push_back( newStart + perp.toPoint() );
+    pointsF.push_back( newEnd + perp.toPoint() );
+    pointsF.push_back( newEnd - perp.toPoint() );
+    QVector<QPoint> points;
+    foreach ( QPointF pt, pointsF )
+	points.push_back( QPoint((int)pt.x(), (int)pt.y()) );
+
+    QPolygon poly(points);
+    m_rcBounds = poly.boundingRect();
+    m_shapePath.addPolygon( poly );
 }
 
 
@@ -150,3 +177,23 @@ WireItem *WireItem::CreateFromXML( QList<ShapeItem *> &shapes, QDomElement &node
     return pWire;
 }
 
+QPainterPath WireItem::shape() const
+{
+    OutputDebugString( L"get shape\n" );
+    return QPainterPath( m_shapePath );
+};
+
+
+void WireItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * )
+{
+    if ( isSelected() )
+	painter->setPen( Qt::DashLine );
+    painter->drawLine( m_ptStart, m_ptEnd );
+}
+
+
+QRectF WireItem::boundingRect() const
+{
+    OutputDebugString( L"get bounding rect\n" );
+    return m_rcBounds;
+}
