@@ -151,6 +151,9 @@ void ShapeMCU::MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sP
     elem.appendChild( deviceNode );
     QDomElement configNode = elem.ownerDocument().createElement( "Configuration" );
     elem.appendChild( configNode );
+    QString sTempPowerPin = GetPropertyValueString("PowerSwitch", values, "" );
+    if ( !sTempPowerPin.isEmpty() )
+	sTempPowerPin = sPowerPin;
 
     XMLUtility::setAttribute( deviceNode, "VID", FRANKSWORKSHOP_VID );
     XMLUtility::setAttribute( deviceNode, "PID", GENERICHID_PID );
@@ -168,7 +171,7 @@ void ShapeMCU::MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sP
     XMLUtility::setAttribute( configNode, "Usage", GetPropertyValueUsage("Usage",values,1) );
     XMLUtility::setAttribute( configNode, "SerialDebug", GetPropertyValueBool("Serial-Debug",values,false) );
     XMLUtility::setAttribute( configNode, "HIDDebug", GetPropertyValueBool("HID-Debug",values,false) );
-    XMLUtility::setAttribute( configNode, "PowerPort", sPowerPin );
+    XMLUtility::setAttribute( configNode, "PowerPort", sTempPowerPin );
     XMLUtility::setAttribute( configNode, "Timer1", GetPropertyValueString("Timer1",values,false) );
     XMLUtility::setAttribute( configNode, "Timer2", GetPropertyValueString("Timer2",values,false) );
     XMLUtility::setAttribute( configNode, "Timer3", GetPropertyValueString("Timer3",values,false) );
