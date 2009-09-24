@@ -45,6 +45,9 @@ bool ShapeItem::CreateGraphics()
     setZValue(-1);
     setFlag( QGraphicsItem::ItemIsMovable);
     setFlag( QGraphicsItem::ItemIsSelectable);
+    setTransformationMode ( Qt::SmoothTransformation  );
+    setShapeMode( QGraphicsPixmapItem::HeuristicMaskShape );
+
     setBoundingRegionGranularity(0);
 
     // Create the pins

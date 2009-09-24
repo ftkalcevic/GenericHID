@@ -2539,6 +2539,13 @@
 					RelativePath=".\generatedfiles\Release\moc_shapeitem.cpp"
 					>
 					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|Win32"
 						ExcludedFromBuild="true"
 						>
@@ -2841,6 +2848,14 @@
 			</File>
 			<File
 				RelativePath=".\resources\DirectionalSwitchIcon.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\generichid.1.0.png"
+				>
+			</File>
+			<File
+				RelativePath=".\resources\generichid.1.0icon.png"
 				>
 			</File>
 			<File
