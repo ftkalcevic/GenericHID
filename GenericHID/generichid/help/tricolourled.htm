@@ -1,0 +1,44 @@
+<html>
+
+<head>
+<title>Tri-Colour LED</title>
+</head>
+
+<body>
+<h1>Tri-Colour LED</h1>
+<p>This is the second type of LED sometimes called a <a href="bicolourled.htm">bi-colour</a> LED.  It has two independent LEDs in the one package, but with one common leg tied together, 
+make these a three legged LED.&nbsp; None, one or both LEDs can be illuminated, 
+giving 4 states.&nbsp; The schematic of the LED is shown below.</p>
+<p><img border="0" src="triledsch.png" width="196" height="121"></p>
+<p>As shown in the schematic, these <a href="leds.htm">LEDs</a> come in two configurations; common 
+cathode, where the cathodes of the LEDs are connected, and common anode, where 
+the anodes are connected together.</p>
+<p>These LEDs require two <a href="leds.htm#clr">current limiting resistors</a> 
+and two microcontroller pins.&nbsp; A tri-colour LED can be connected to any I/O 
+port.&nbsp; An example a connection is shown below.</p>
+<p><img border="0" src="triledcon.png" width="127" height="196"></p>
+<p>
+</p>
+<h2>Properties</h2>
+
+<h3 id="Name">Name</h3>
+<p>Components can be given an optional name.&nbsp; This is seen in the Test tab.  Not all applications support the name.&nbsp; 
+Hidcomp/hidconfig supports names.</p>
+
+<h3 id="Usage">UsagePage/Usage</h3>
+<p>The UsagePage and Usage of the LED.  See <a href="usages.htm">Usages</a> for more information.</p>
+
+<h3 id="Type">Type</h3>
+<p>Whether the <a href="leds.htm">anodes</a> or the <a href="leds.htm">cathodes</a> of the internal diodes are connected together.</p>
+
+<h3 id="Current">Current</h3>
+<p> Defines the amount of electrical current used by the LED in mA.  This is used to estimate the USB power draw.&nbsp; 
+See the section on <a href="hardware.htm#current">Power</a> for more information.</p>
+
+<h2>See Also</h2>
+<p><a href="led.htm">LED</a>, <a href="bicolourled.htm">Bi-colour LED</a>, 
+<a href="rgbled.htm">RGB LED</a>, <a href="leds.htm">LEDs</a> </p>
+
+</body>
+
+</html>

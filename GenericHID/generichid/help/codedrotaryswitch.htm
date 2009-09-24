@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>Coded Rotary Switch</title>
+</head>
+
+<body>
+<h1>Coded Rotary Switch</h1>
+<p>A coded rotary switch, or coded rotary selector switch, is used to select one 
+of several options.&nbsp; This device is similar to the regular
+<a href="rotaryswitch.htm">rotary switch</a>, except the outputs are binary 
+encoded to save on pin requirements.</p>
+<p>A rotary switch and a coded rotary switch are shown below.</p>
+<p><img border="0" src="codedsch.png" width="454" height="199"></p>
+<p>The obvious difference is the number of pins that are required.&nbsp; Because 
+the coded rotary switch uses binary encoding of the outputs, only 3 pins are 
+required, compared to 8.</p>
+<p>As with the <a href="rotaryswitch.htm">rotary switch</a>, the common leg of 
+the component should be run to ground and the outputs run to Generic HID pins.</p>
+<p>The rotary switch will appear on the HID device as an input with values that 
+range from 0 to outputs - 1.</p>
+<h2>Properties</h2>
+
+<h3 id="Name">Name</h3>
+<p>Components can be given an optional name.&nbsp; This is seen in the Test tab.  Not all applications support the name.&nbsp; 
+Hidcomp/hidconfig supports names.</p>
+
+<h3 id="Usage">UsagePage/Usage</h3>
+<p>The UsagePage and Usage of the Coded Rotary Switch.  See <a href="usages.htm">Usages</a> for more information.</p>
+
+<h3 id="Outputs">Outputs</h3>
+<p>The number of outputs on the selector switch. This is the values that can be represented, not pins.&nbsp; 
+For example, a decimal selector switch has 10 outputs and a hexadecimal selector 
+switch has 16 outputs.&nbsp; Both, however, require 4 I/O pins.</p>
+
+<h3 id="Pullup">Pull-up</h3>
+<p>Selecting this enables the internal pull-up resistor of the microcontroller.  
+This is the normally setting.  See 
+<a href="mechanicalswitches.htm">Mechanical Switches</a> for more information.</p>
+<p></p>
+
+<h3 id="Debounce">Debounce</h3>
+<p>Waits for the mechanical switch stop bouncing before registering a switch closure.&nbsp; 
+See 
+<a href="mechanicalswitches.htm">Mechanical Switches</a> for more information.</p>
+
+<h3 id="Current">Current</h3>
+<p> Defines the amount of electrical current used by the switch in mA.  This is used to estimate the USB power draw.&nbsp; 
+See the section on <a href="power.htm">Power</a> for more information.</p>
+
+<p>Current drawn by switches is usually insignificant and can be set to 0.</p>
+
+</body>
+
+</html>

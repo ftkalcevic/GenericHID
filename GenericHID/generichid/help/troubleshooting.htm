@@ -1,0 +1,70 @@
+<html>
+
+<head>
+<title>Title</title>
+</head>
+
+<body>
+<h1>Trouble Shooting</h1>
+<table border="1" width="100%" id="table1">
+	<tr>
+		<td>Symptom</td>
+		<td>Things to try</td>
+	</tr>
+	<tr>
+		<td>Can't get into programming mode</td>
+		<td>Try the hardware buttons...<ul>
+			<li>Press and hold the HWB button</li>
+			<li>Press and release the RST button</li>
+			<li>Release the HWB button</li>
+		</ul>
+		<p>This should always get into the bootloader firmware.&nbsp; The 
+		bootloader can't be erased unless a hardware programmer erases it.</p>
+		<p>Windows XP can get upset with the device jumping from mode to mode.&nbsp; 
+		It may just be that device isn't being recognised.&nbsp; Try unplugging 
+		it and then plugging it in again.&nbsp; Try a reboot if that doesn't 
+		work.</td>
+	</tr>
+	<tr>
+		<td>Windows XP keeps blue screening</td>
+		<td>I've seen this a couple of times when two identical devices are 
+		plugged in.&nbsp; I even found a knowledge base article about it, saying 
+		it will happen if 2 identical devices are connected, but since then I 
+		haven't been able to reproduce the problem.&nbsp; Maybe it was a Windows 
+		Update.&nbsp; Let me know if it happens to you.&nbsp; The work around is 
+		to give the devices different serial numbers.</td>
+	</tr>
+	<tr>
+		<td>Device doesn't appear in Linux, or Windows reports &quot;Unrecognised 
+		device&quot;.</td>
+		<td>If this occurs after programming the device, there may be bugs in 
+		the firmware.&nbsp; Contact the developer at
+		<a href="http://www.franksworkshop.com.au">www.franksworkshop.com.au</a>.<p>
+		If this happens and you can't get back into boot loader mode, follow the 
+		following instructions...</p>
+		<ul>
+			<li>Disconnect the device.</li>
+			<li>With one hand, press and hold the RST button.</li>
+			<li>With the other hand, press and hold the HWB button.</li>
+			<li>With another hand, connect the device to a different USB port 
+			than was used previously.</li>
+			<li>Release the RST button.</li>
+			<li>Release the HWB button.</li>
+		</ul>
+		<p>When an invalid USB device is connected to windows, the operating 
+		system can get upset and will not allow you to reuse the port.&nbsp; 
+		Using the standard HWB/RST method won't work because windows still 
+		thinks the unrecognised device is plugged in.</td>
+	</tr>
+	<tr>
+		<td>After the device is programmed, it doesn't appear in linux or 
+		windows.</td>
+		<td>If the power requirements for the device are too high for the USB 
+		Port/HUB, the device will just be ignored without any error messages.&nbsp; 
+		For a device that uses a lot of power, make sure you use a powered USB 
+		hub, and the power is connected.</td>
+	</tr>
+</table>
+</body>
+
+</html>

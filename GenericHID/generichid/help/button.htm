@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>Button</title>
+</head>
+
+<body>
+<h1>Button</h1>
+<p>The button control is used to connect simple push buttons and switches to an 
+input.&nbsp; These appear as input buttons on the Generic HID device.&nbsp; The 
+devices can be toggle switches, or push button switches, either momentary, 
+push-on-push-off, toggle, normally open, normally closed or what ever 
+combination.</p>
+<p>Most buttons will be mechanical devices, so a pull-up resistor will probably 
+be needed.&nbsp; See <a href="mechanicalswitches.htm">Mechanical Switches</a> 
+for more information.</p>
+<p>A button can be connected to any I/O pin.</p>
+<p>If the internal pull-up resistor is used (recommended), the switch can be 
+wired directly between the Generic HID pin and ground.</p>
+<p><img border="0" src="buttoninternal.png" width="172" height="167"></p>
+<p>Buttons are good for one or two input buttons.&nbsp; However, each button 
+will take up on I/O port.&nbsp; If you have lots of button inputs, consider the
+<a href="keymatrix.htm">Key Matrix</a>.</p>
+<h2>Properties</h2><h3 id="Name">Name</h3>
+<p>Components can be given an optional name.&nbsp; This is seen in the Test tab.  Not all applications support the name.&nbsp; 
+Hidcomp/hidconfig supports names.</p>
+
+<h3 id="Usage">UsagePage/Usage</h3>
+<p>The UsagePage and Usage of the Button.  See <a href="usages.htm">Usages</a> for more information.</p>
+<p>A button will generally be classified in usage page &quot;button&quot;.&nbsp; The usage 
+is then just a number.</p>
+
+<h3 id="Pullup">Pull Up</h3>
+<p>Selecting this enables the internal pull-up resistor of the microcontroller.  
+This is the normally setting.  See 
+<a href="mechanicalswitches.htm">Mechanical Switches</a> for more information.</p>
+
+<h3 id="Debounce">Debounce</h3>
+<p>Waits for the mechanical switch stop bouncing before registering a switch closure.&nbsp; 
+See 
+<a href="mechanicalswitches.htm">Mechanical Switches</a> for more information.</p>
+
+<h3 id="Current">Current</h3>
+<p> Defines the amount of electrical current used by the switch in mA.  This is used to estimate the USB power draw.&nbsp; 
+See the section on <a href="power.htm">Power</a> for more information.</p>
+<p> Current drawn by switches is usually insignificant and can be set to 0.</p>
+
+</body>
+
+</html>

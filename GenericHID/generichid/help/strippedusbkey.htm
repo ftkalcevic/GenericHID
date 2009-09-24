@@ -1,0 +1,89 @@
+<html>
+
+<head>
+<title>Stripped AT90USBKey Demo board</title>
+</head>
+
+<body>
+<h1>Stripped AT90USBKey Demo board</h1>
+<p>This is a stripped <a href="at90usbkey.htm">AT90USBKey</a> demo board.&nbsp;It 
+has been modified according to the instructions in the section
+<a href="hardware.htm#reclaiming">Reclaiming Pins</a> to free up more pins.</p>
+
+<h2>Properties</h2>
+
+<h3 id="Name">Name</h3>
+<p>The name of the USB HID device that will appear when listed by the host computer.</p>
+
+<h3 id="Usage">UsagePage/Usage</h3>
+<p>The UsagePage and Usage of the Device.  See <a href="usages.htm">Usages</a> for more information.</p>
+<p>Be careful when setting this parameter.  The default setting of
+ <b>Generic Desktop Controls:Multi-axis Controller</b> is fine and 
+ should not need changing.  Setting it to a <b>Mouse</b> or <b>Pointer</b> device
+ may confuse the operating system and the device will not operate as expected.
+ Set it to
+ <b>Generic Desktop Controls:Joystick</b> to make it appear as a game controller.</p>
+
+<h3 id="Voltage">Voltage</h3>
+<p>Is the microcontroller 5v or 3.3v? See <a href="hardware.htm">Hardware Design Decisions</a> for more information.</p>
+
+<h3 id="Power-Source">Power-Source</h3>
+<p>Is the USB device powered via the USB Bus or does it use an external supply. See <a href="hardware.htm">Hardware Design Decisions</a> for more information.</p>
+
+<h3 id="Interval">Interval</h3>
+<p>The interval, in milliseconds, at which the PC polls the HID device 
+for updates.  The smaller the number, the faster the updates and more 
+responsive the device is, at the cost of more CPU power.</p>
+
+<h3 id="Serial-Debug">Serial-Debug</h3>
+<p>Pins PD2/PD3 can be used as RXD/TXD pins for RS232 TTL Serial 
+debug output (38400, 8, none, 1).  This greatly slows down the device
+and generally shouldn't be used.
+</p>
+
+<h3 id="HID-Debug">HID-Debug</h3>
+<p>Enable debugging via the HID interface.  This isn't implemented yet.</p>
+
+<h3 id="Current">Current</h3>
+<p>The current usage of the microcontroller.  Used to estimate the USB power draw.  In milliamps (mA)</p>
+
+<h3 id="UseStatusLEDs">Use Status LEDs</h3>
+<p>Use the default AT90USBKey LEDs as indicators of the USB status.  There are 2 
+<a href="tricolourled.htm">tri-colour LEDs</a>, LED1, LED2 on ports PD4/PD5, PD6/PD7.
+These can be used show the status of the USB connection... </p>
+<table cellpadding=3 id="table1">
+	<tr>
+		<td>Orange</td>
+		<td>Startup</td>
+	</tr>
+	<tr>
+		<td>Red</td>
+		<td>Establishing Connection</td>
+	</tr>
+	<tr>
+		<td>Green</td>
+		<td>Connected and Ready</td>
+	</tr>
+</table>
+
+<h3 id="SerialNo">SerialNo</h3><p>A unique serial number of the device. </p>
+<h3 id="Timer1">Timer1</h3><p>Timer1 configuration.  The Generic HID device
+<a href="pwm.htm">PWM</a> outputs use shared timer resources.&nbsp; Three 
+outputs, PB5(OC1A), PB6(OC1B), PB7(OC1C) are derived from Timer 1.&nbsp; If a 
+PWM output is placed on one of these pins, they will all share the same base 
+frequency and resolution.&nbsp; See <a href="timers.htm">Timers</a> for more 
+information.</p>
+<h3 id="Timer2">Timer2</h3><p>Timer2 configuration.  The Generic HID device
+<a href="pwm.htm">PWM</a> outputs use shared timer resources.&nbsp; Two outputs, PB4(OC2A), 
+and PD1(OC2B) are derived from Timer 2.&nbsp; If a PWM output is placed on one 
+of these pins, they will all share the same base frequency and resolution.&nbsp; 
+See <a href="timers.htm">Timers</a> for more information.</p>
+<h3 id="Timer3">Timer3</h3><p>Timer3 configuration.  The Generic HID device
+<a href="pwm.htm">PWM</a> outputs use shared timer resources.&nbsp; Three 
+outputs, PC6(OC3A), PC5(OC3B), and PC4(OC3C) are derived from Timer 3.&nbsp; If 
+a PWM output is placed on one of these pins, they will all share the same base 
+frequency and resolution.&nbsp; See <a href="timers.htm">Timers</a> for more 
+information.</p>
+</body>
+
+</html>

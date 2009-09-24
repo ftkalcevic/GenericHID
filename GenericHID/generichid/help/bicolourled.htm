@@ -1,0 +1,49 @@
+<html>
+
+<head>
+<title>Bicolour LEDs</title>
+</head>
+
+<body>
+<h1>Bi-Colour LED</h1>
+<p>There are two different types of bicolour LEDs.&nbsp; In my terminology, I 
+call this one bi-colour, and the other <a href="tricolourled.htm">tri-colour</a>.</p>
+<p>A bi-colour LED is a single LED package with two LEDs inside, installed 
+in a loop.&nbsp; The component will have two legs, and will have a clear or 
+frosted lens (plastic bit).</p>
+<p><img border="0" src="biledsch.png" width="128" height="117"></p>
+<p>If current flows in one direction, one LED will light.&nbsp; If the current 
+is reversed, the other LED will light.&nbsp; If no current flows, then obviously 
+no LEDs will light.&nbsp; Both LEDs cannot be lit at the same time.&nbsp; The 
+HID device will represent this LED as an output with 3 states - 0=off, 1=LED1 
+on, 2=LED3 on.&nbsp;&nbsp;&nbsp; A bi-colour LED can be connected to any I/O 
+port.</p>
+<p>The datasheet for this type of LED should have values for V<sub>F</sub> and I<sub>F</sub> for both 
+LEDs.&nbsp; The <a href="leds.htm#clr">current limiting resistor</a> is shared 
+between the two LEDs, so a value must be chosen not to exceed the limit on 
+either LEDs.&nbsp; The bi-colour 
+LED is connected to two microcontroller pins.&nbsp; Don't forget the current 
+limiting resistor.</p>
+<p><img border="0" src="biledcon.png" width="160" height="199"></p>
+<p>
+</p>
+<h2>Properties</h2>
+
+<h3 id="Name">Name</h3>
+<p>Components can be given an optional name.&nbsp; This is seen in the Test tab.  Not all applications support the name.&nbsp; 
+Hidcomp/hidconfig supports names.</p>
+
+<h3 id="Usage">UsagePage/Usage</h3>
+<p>The UsagePage and Usage of the LED.  See <a href="usages.htm">Usages</a> for more information.</p>
+
+<h3 id="Current">Current</h3>
+<p> Defines the amount of electrical current used by the LED in mA.  This is used to estimate the USB power draw.&nbsp; 
+See the section on <a href="hardware.htm#current">Power</a> for more information.</p>
+
+<h2>See Also</h2>
+<p><a href="led.htm">LED</a>, <a href="tricolourled.htm">Tri-colour LED</a>, 
+<a href="rgbled.htm">RGB LED</a>, <a href="leds.htm">LEDs</a> </p>
+
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+<html>
+
+<head>
+<title>Samples</title>
+</head>
+
+<body>
+<h1>Samples</h1>
+
+<h2>CNC Pendant 1</h2>
+<p>This is my first CNC pendant, designed for Mach3.&nbsp; It has many 
+unnecessary controls, but I added them so I can build and test Generic HID.&nbsp; 
+It has both a jog dial and axis joysticks.&nbsp; When I decide which one I like, 
+my next pendant will have them.&nbsp; I have also yet to update my mach3 
+drivers, so I'm using this with my lathe, <a href="http://www.linuxcnc.org/">
+EMC2</a> and <a href="http://www.franksworkshop.com.au/EMC/hidcomp/hidcomp.htm">
+hidcomp</a>.</p>
+<p><img border="0" src="pendant.jpg" width="426" height="548"></p>
+<p>The controls are...</p>
+<table border="1" width="100%" id="table1">
+	<tr>
+		<td colspan="2">Top Row</td>
+	</tr>
+	<tr>
+		<td>Run</td>
+		<td>Momentary illuminated push button.&nbsp; Push this to start 
+		processing the GCode.&nbsp; The switch is illuminated when running.</td>
+	</tr>
+	<tr>
+		<td>Stop</td>
+		<td>Stop the GCode running.</td>
+	</tr>
+	<tr>
+		<td>Step</td>
+		<td>Illuminated push-on push-off button.&nbsp; Enters Mach3 single step 
+		mode.&nbsp; Press Run to step through each line of GCode.</td>
+	</tr>
+	<tr>
+		<td>Tool Change</td>
+		<td>The tool change LED flashes when it is time to change tools.&nbsp; 
+		The LED is a flashing LED.&nbsp; Generic HID doesn't flash.</td>
+	</tr>
+	<tr>
+		<td>Emergency Stop</td>
+		<td>This is the Emergency Stop button.&nbsp; It is a software emergency 
+		stop.&nbsp; It asks Mach3 to stop.&nbsp; It is a twist to release 
+		button.</td>
+	</tr>
+	<tr>
+		<td colspan="2">Second Row</td>
+	</tr>
+	<tr>
+		<td>Tool Retract</td>
+		<td>Retract the tool, measure it on the tool probe, then retract to a 
+		safe height for tool changing.</td>
+	</tr>
+	<tr>
+		<td>Tool Home</td>
+		<td>Touch off the new tool against the tool probe to set its height.</td>
+	</tr>
+	<tr>
+		<td>Home Set</td>
+		<td>Set the Home position where the tool probe is located.</td>
+	</tr>
+	<tr>
+		<td>Goto Zero</td>
+		<td>Move the tool to X0, Y0, then to Z0.</td>
+	</tr>
+	<tr>
+		<td colspan="2">Third rowish</td>
+	</tr>
+	<tr>
+		<td>LCD</td>
+		<td>20x4 LCD display (a compact version from Varitronix, 
+		MDLS-20464B-LV-G-LED04G, purchased from
+		<a href="http://www.digikey.com/">Digikey</a>).&nbsp; The LCD displays 
+		the current tool position, GCode line, errors, tool change information.</td>
+	</tr>
+	<tr>
+		<td>X<sub>0</sub>,Y<sub>0</sub>,Z<sub>0</sub>,A<sub>0</sub>	</td>
+		<td>Buttons to set individual axis positions to zero.</td>
+	</tr>
+	<tr>
+		<td>Spindle Speed</td>
+		<td>Rotary encoder to set the spindle speed (actually spindle override)</td>
+	</tr>
+	<tr>
+		<td>Feed Override</td>
+		<td>Rotary encoder to set the Feed Rate Override.</td>
+	</tr>
+	<tr>
+		<td colspan="2">Fourth Group</td>
+	</tr>
+	<tr>
+		<td>Vel</td>
+		<td>While depressed, the Jog Dial motion is interpreted as a velocity.&nbsp; 
+		This means as soon as the dial stops moving, the axis will stop moving.</td>
+	</tr>
+	<tr>
+		<td>Pulse</td>
+		<td>While depressed, the Jog Dial motion is interpreted as steps.&nbsp; 
+		This means the axis will continue moving until the dialled steps have 
+		been moved.</td>
+	</tr>
+	<tr>
+		<td>Jog Dial</td>
+		<td>The Jog Dial rotary encoder.</td>
+	</tr>
+	<tr>
+		<td>Axis Select</td>
+		<td>The axis select switch.&nbsp; The Jog Dial moves the selected axis.&nbsp; 
+		One of X, Y, Z, A, B, C.</td>
+	</tr>
+	<tr>
+		<td>Scale factor</td>
+		<td>Specifies the scale factor of each tick of the jog dial.&nbsp; One 
+		of x1, x10, x100, x1000.&nbsp; Each unscaled tick is 0.01 mm.</td>
+	</tr>
+	<tr>
+		<td colspan="2">Fifth row</td>
+	</tr>
+	<tr>
+		<td>100%</td>
+		<td>Combined with the joystick movement to scale the value by 100%.</td>
+	</tr>
+	<tr>
+		<td>10%</td>
+		<td>Combined with the joystick movement to scale the value by 10%.</td>
+	</tr>
+	<tr>
+		<td>XY Joystick</td>
+		<td>2 axis joystick to move the x and y axis.&nbsp; Will only move if 
+		either the 100% or 10% buttons are pressed.</td>
+	</tr>
+	<tr>
+		<td>AZ Joystick</td>
+		<td>2 axis joystick to move the a and z axis.&nbsp; Will only move if 
+		either the 100% or 10% buttons are pressed.</td>
+	</tr>
+</table>
+</body>
+
+</html>

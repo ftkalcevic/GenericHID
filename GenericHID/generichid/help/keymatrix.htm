@@ -1,0 +1,62 @@
+<html>
+<head>
+<title>Key Matrix</title>
+</head>
+
+<body>
+<h1>Key Matrix</h1>
+<p>A key matrix is used when lots of keys are needed, or a keypad is being 
+used.</p>
+<p>A key matrix has the following schematic.</p>
+<p><img border="0" src="keymatrixsch.png" width="198" height="257"></p>
+<p>This particular key matrix has 12 keys laid out in a 4 row by 3 column grid.&nbsp; 
+Only connections to each row and column need to be made to the Generic HID.&nbsp; 
+Therefore, only 7 ports are used to enable 12 switches.&nbsp; The more rows and 
+more columns, the bigger the savings.&nbsp; An 8x8 matrix will provide 64 
+buttons, while only using 16 ports.</p>
+<p>Internally, the Generic HID will apply a voltage to one column at a time, 
+then read the status of each row.&nbsp; If a key is pressed, the voltage on the 
+row input pin will different.</p>
+<p>Because of the shared nature of the key matrix, there is a restriction on how 
+many keys can be pressed simultaneously.&nbsp; If two keys on different rows and 
+different columns are pressed, no key will be shown as pressed.&nbsp; The key 
+matrix is best used when it makes sense that only one key is pressed at the same 
+time.&nbsp; If a button is required to be on all the time (toggle switch), or 
+just a button that needs to be used in combination with others, a regular
+<a href="button.htm">button</a> should be used.</p>
+<h2>Properties</h2><h3 id="Name">Name</h3>
+<p>Components can be given an optional name.&nbsp; This is seen in the Test tab.  Not all applications support the name.&nbsp; 
+Hidcomp/hidconfig supports names.</p>
+
+<h3 id="UsageMin">UsageMin</h3>
+<p>HID usage of the first key.  Other keys are number consecutively.  See <a href="usages.htm">Usages</a> for more information.</p>
+
+<h3 id="Rows">Rows</h3>
+<p>The number of rows in the matrix.&nbsp; Note that the display of the key 
+matrix isn't updated when the number of rows is changed.&nbsp; There is also a 
+visual limit of 8 rows.&nbsp; If you need more than 8 rows, you'll need to 
+define the device via an <a href="mcd.htm">.mcd file</a>.</p>
+
+<h3 id="Columns">Columns</h3>
+<p>The number of columns in the matrix. Note that the display of the key matrix 
+isn't updated when the number of columns is changed.&nbsp; There is also a 
+visual limit of 8 columns.&nbsp; If you need more than 8 columns, you'll need to 
+define the device via an <a href="mcd.htm">.mcd file</a></p>
+
+<h3 id="KeyNames">Key Names</h3>
+<p>The optional user friendly name given to each key.&nbsp; This property is 
+edited in a separate dialog.</p>
+
+<h3 id="Debounce">Debounce</h3>
+<p>Waits for the mechanical switch stop bouncing before registering a switch closure.&nbsp; 
+See <a href="mechanicalswitches.htm">Mechanical Switches</a> for more 
+information.</p>
+
+<h3 id="Current">Current</h3>
+<p> Defines the amount of electrical current used by the LED in mA.  This is used to estimate the USB power draw.&nbsp; 
+See the section on <a href="power.htm">Power</a> for more information.&nbsp; A 
+Key matrix uses virtual no current so this field can be set to 0.</p>
+
+</body>
+
+</html>

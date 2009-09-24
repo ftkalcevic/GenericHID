@@ -1,0 +1,234 @@
+<html>
+<head>
+<title>Usages</title>
+</head>
+
+<body>
+<h1>Usages</h1>
+<p>USB HID devices and their components can be given a Usage code.  The Usage code 
+is an optional suggestion to the application on what the control is to be used for.</p>
+<p>A usage code is broken up into two parts: the Usage Page and the Usage.&nbsp; 
+Both are 16-bit numbers (0-65535).&nbsp; Any values can be used, but there are a 
+set of defined values.</p>
+<p>The Usage Page is used to group usages.&nbsp; A set of Usage Pages has been 
+defined by the USB group.&nbsp; These are listed below...</p>
+<table cellpadding=5>
+	<tr>
+		<td>GENERIC_DESKTOP_CONTROLS</td>
+		<td>0x01</td>
+	</tr>
+	<tr>
+		<td>SIMULATION_CONTROLS</td>
+		<td>0x02</td>
+	</tr>
+	<tr>
+		<td>VR_CONTROLS</td>
+		<td>0x03</td>
+	</tr>
+	<tr>
+		<td>SPORT_CONTROLS</td>
+		<td>0x04</td>
+	</tr>
+	<tr>
+		<td>GAME_CONTROLS</td>
+		<td>0x05</td>
+	</tr>
+	<tr>
+		<td>GENERIC_DEVICE_CONTROLS</td>
+		<td>0x06</td>
+	</tr>
+	<tr>
+		<td>KEYBOARD_KEYPAD</td>
+		<td>0x07</td>
+	</tr>
+	<tr>
+		<td>LEDS</td>
+		<td>0x08</td>
+	</tr>
+	<tr>
+		<td>BUTTON</td>
+		<td>0x09</td>
+	</tr>
+	<tr>
+		<td>ORDINAL</td>
+		<td>0x0A</td>
+	</tr>
+	<tr>
+		<td>TELEPHONY</td>
+		<td>0x0B</td>
+	</tr>
+	<tr>
+		<td>CONSUMER</td>
+		<td>0x0C</td>
+	</tr>
+	<tr>
+		<td>DIGITIZER</td>
+		<td>0x0D</td>
+	</tr>
+	<tr>
+		<td>PID_PAGE</td>
+		<td>0x0F</td>
+	</tr>
+	<tr>
+		<td>UNICODE</td>
+		<td>0x10</td>
+	</tr>
+	<tr>
+		<td>ALPHANUMERIC_DISPLAY</td>
+		<td>0x14</td>
+	</tr>
+	<tr>
+		<td>MEDICAL_INSTRUMENTS</td>
+		<td>0x40</td>
+	</tr>
+	<tr>
+		<td>MONITOR_PAGES</td>
+		<td>0x83</td>
+	</tr>
+	<tr>
+		<td>POWER_PAGES</td>
+		<td>0x87</td>
+	</tr>
+	<tr>
+		<td>BAR_CODE_SCANNER_PAGE</td>
+		<td>0x8C</td>
+	</tr>
+	<tr>
+		<td>SCALE_PAGE</td>
+		<td>0x8D</td>
+	</tr>
+	<tr>
+		<td>MAGNETIC_STRIPE_READING_DEVICES</td>
+		<td>0x8E</td>
+	</tr>
+	<tr>
+		<td>CAMERA_CONTROL_PAGE</td>
+		<td>0x90</td>
+	</tr>
+	<tr>
+		<td>ARCADE_PAGE</td>
+		<td>0x91</td>
+	</tr>
+	<tr>
+		<td>VENDOR_DEFINED</td>
+		<td>0xFF00</td>
+	</tr>
+</table>
+<p>Each Usage Page has a collection of Usages.&nbsp; For example, these are Usages for 
+the Usage Page GENERIC_DESKTOP_CONTROLS.</p>
+<table cellpadding=5>
+	<tr>
+		<td>POINTER</td>
+		<td>0x01</td>
+	</tr>
+	<tr>
+		<td>MOUSE</td>
+		<td>0x02</td>
+	</tr>
+	<tr>
+		<td>JOYSTICK</td>
+		<td>0x04</td>
+	</tr>
+	<tr>
+		<td>GAME PAD</td>
+		<td>0x05</td>
+	</tr>
+	<tr>
+		<td>KEYBOARD</td>
+		<td>0x06</td>
+	</tr>
+	<tr>
+		<td>KEYPAD</td>
+		<td>0x07</td>
+	</tr>
+	<tr>
+		<td>X</td>
+		<td>0x30</td>
+	</tr>
+	<tr>
+		<td>Y</td>
+		<td>0x31</td>
+	</tr>
+	<tr>
+		<td>Z</td>
+		<td>0x32</td>
+	</tr>
+	<tr>
+		<td>RX</td>
+		<td>0x33</td>
+	</tr>
+	<tr>
+		<td>RY</td>
+		<td>0x34</td>
+	</tr>
+	<tr>
+		<td>RZ</td>
+		<td>0x35</td>
+	</tr>
+	<tr>
+		<td>SLIDER</td>
+		<td>0x36</td>
+	</tr>
+	<tr>
+		<td>DIAL</td>
+		<td>0x37</td>
+	</tr>
+	<tr>
+		<td>WHEEL</td>
+		<td>0x38</td>
+	</tr>
+	<tr>
+		<td>HATSWITCH</td>
+		<td>0x39</td>
+	</tr>
+	<tr>
+		<td>START</td>
+		<td>0x3D</td>
+	</tr>
+	<tr>
+		<td>SELECT</td>
+		<td>0x3E</td>
+	</tr>
+	<tr>
+		<td>DPAD_UP</td>
+		<td>0x90</td>
+	</tr>
+	<tr>
+		<td>DPAD_DOWN</td>
+		<td>0x91</td>
+	</tr>
+	<tr>
+		<td>DPAD_RIGHT</td>
+		<td>0x92</td>
+	</tr>
+	<tr>
+		<td>DPAD_LEFT</td>
+		<td>0x93</td>
+	</tr>
+</table>
+<p>Generally, it is not important what the Usage Page and Usage are, however 
+there are some exceptions...</p>
+<ul>
+	<li>LCD display modules must have a Usage of 
+	ALPHANUMERIC_DISPLAY:ALPHANUMERIC_DISPLAY otherwise it will not be 
+	identified as a display device.&nbsp; Generic HID will not let this be 
+	changed.</li>
+	<li>A directional switch/hat switch must be called GENERIC_DESKTOP_CONTROLS:HATSWITCH 
+	otherwise the values will not be reinterpreted as a directional angle.</li>
+	<li>To get Windows and other operating systems to recognise the device as a 
+	joystick or game pad, it must be called GENERIC_DESKTOP_CONTROLS:JOYSTICK or GENERIC_DESKTOP_CONTROLS:GAMEPAD.&nbsp; 
+	Windows will also typically want the usage of an axis set X, Y, Z, etc.</li>
+	<li>Avoid using GENERIC_DESKTOP_CONTROLS:MOUSE or GENERIC_DESKTOP_CONTROLS:POINTER 
+	as the usage for a device.&nbsp; The operating system will take control of 
+	the device and interpret actions as mouse moves and button presses.</li>
+</ul>
+<p>The property field for the Usage is displayed as the Usage Page and the 
+Usage.&nbsp; These are two drop down lists that contain the standard Usage Pages 
+and Usages as shown below.</p>
+<p><img border="0" src="usages.png" width="257" height="257"></p>
+<p>It is not necessary to use one of the predefined values.&nbsp; A user defined 
+number may be entered.&nbsp; This is required on some usage pages like LED.<br>
+<br><br>&nbsp;</p>
+</body>
+
+</html>

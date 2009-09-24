@@ -1,0 +1,359 @@
+<html>
+	<head>
+		<title>USB Hardware</title>
+	</head>
+	<body>
+		<h1>USB Hardware</h1>
+		<ol>
+			<li><a href="#usbdevices">USB Devices</a></li>
+			<ol>
+				<li><a href="#at90usbkey">AT90USBKey</a></li>
+				<li><a href="#diyboards">DIY Boards</a></li>
+			</ol>
+			<li><a href="#reclaiming">Reclaiming AT90USBKey Pins</a></li>
+			<li><a href="#design">Hardware Design Decisions</a></li>
+			<ol>
+				<li><a href="#buspowered">Bus or Self Powered</a></li>
+				<li><a href="#voltage">Voltage</a></li>
+				<li><a href="#current">Current</a></li>
+			</ol>
+	</ol>
+<h2 id=usbdevices>USB Devices</h2>
+		<p>Generic HID will work with any at90usb1287 development board 
+		(probably at90usb1286 too, but not tested).&nbsp; The cheapest, although 
+		not easiest to use, is the AT90USBKey.</p>
+		<h3 id=at90usbkey>AT90USB Key</h3>
+		<p>The <a href="at90usbkey.htm">AT90USBKey</a> is made by Atmel as a 
+		demo board to show off the functionality of the at90usb1287.&nbsp; As a 
+		USB demo board it comes with chips to show off the devices ability to 
+		act as joystick, mouse, memory stick, and HID device.&nbsp; The biggest 
+		advantage of the device is its prices, $US30.&nbsp; Its biggest 
+		disadvantage is the headers to access the I/O pins.</p>
+		<p>The photo below is a close up of the AT90USBKey, showing the holes 
+		for the I/O port header on the left, and the holes for the JTAG 
+		programming header on the right.</p>
+		<p><img border="0" src="AVRUSBKeyheader.jpg" width="319" height="189"></p>
+		<p>The JTAG programmer has regular 0.1&quot; x 0.1&quot; pin spacing.&nbsp; These 
+		are common header pins that can be found every where.&nbsp; They are 
+		spaced wide enough that they can be soldered to directly.</p>
+		<p>The I/O pins, however, are another story.&nbsp; As can be seen in the 
+		picture, they are tightly spaced.&nbsp; They use 0.1&quot; x 0.05&quot; pin 
+		spacing and incredibly difficult to solder to directly.&nbsp; Firstly, 
+		the holes are tiny, so you need to use thin wires to be able to thread 
+		them through the holes.&nbsp; I recommend you DONT tin the wires before 
+		inserting them.&nbsp; Strip them, twist the strands, insert, then solder 
+		and trim.&nbsp; Secondly, because they are close together, it is very 
+		easy to bridge two holes with solder.&nbsp; This won't be a problem of 
+		only a few of the pins are used.&nbsp;&nbsp; In my testing, I was using 
+		most of the pins and I made a terrible mess of the soldering.&nbsp; So 
+		what's the solution?</p>
+		<h4>Connectors</h4>
+		<p>Connectors for the AT90USBKey I/O pins are hard to find.&nbsp; When I 
+		first started looking, the only thing I could find were latched 90 
+		degree headers and mating IDC connectors from mouser, #571-5-104069-4 
+		and #571-2-111196-5.&nbsp; The headers are too wide to be placed side by 
+		side, so they must be alternated on each side of the board.&nbsp; The 
+		IDC connectors us 0.025 pitch ribbon cable which is twice as dense as 
+		regular ribbon cable.&nbsp; This option is expensive; $1.30 for the 
+		header, $3.97 for the connector - for 6 ports, 6 x (1.30 + 3.97) = 
+		$31.62 plus some ribbon cable.&nbsp; This is more than the board cost.</p>
+		<p>Below, the picture on the left shows the headers alternating from top 
+		to bottom.&nbsp; The middle picture shows the connectors in place.&nbsp; 
+		The photo on the right shows what I use on the end of the ribbon cable.&nbsp; 
+		I only got as far as prototyping with this combination, so I needed 
+		something to plug into a breadboard.&nbsp; Note the numbering of the I/O 
+		pins is not consecutive.&nbsp; This is because the connector was mounted 
+		on the bottom, not on the top.</p>
+<table cellpadding=5>
+	<tr>
+		<td><img border="0" src="keycon1jpg.jpg" width="360" height="264"></td>
+		<td><img border="0" src="keycon2jpg.jpg" width="314" height="264"></td>
+		<td><img border="0" src="keycon3jpg.jpg" width="302" height="156"></td>
+	</tr>
+</table>
+		<p></p>
+		<p>There are now other sources of pins and headers.&nbsp; Digikey now 
+		sell headers and connectors, but I have not tried them.&nbsp; Is suspect 
+		there will still be a problem inserting them side-by-side.&nbsp; The 
+		problem is usually with the connector, rather than the header.</p>
+<h4 id=wizbang>Wizbang Wings</h4>
+<p>Another option to using the wizbang wings, made by
+<a href="http://www.wizbangdesigns.com">Wizbang Designs</a>.&nbsp; These are 
+small printed circuit boards adaptors that are soldered over the top of the 
+AT90USBKey I/O ports to provide standard 0.1&quot; x 0.1&quot; headers.&nbsp; These are 
+easy to solder to, and accept the standard 0.1&quot; pitch headers and connectors 
+that are available from all good electronics retailers.</p>
+<table cellpadding=5>
+	<tr>
+		<td><img border="0" src="wings1.jpg" width="347" height="257"></td>
+		<td><img border="0" src="wings2.jpg" width="327" height="272"></td>
+		<td><img border="0" src="wings3.jpg" width="382" height="300"></td>
+	</tr>
+</table>
+<p>The image on the left shows the wizbang wings.&nbsp; They come as a set of 6 
+(only 4 shown) in a snap apart board.&nbsp; The middle image shows the wings 
+installed.&nbsp; The image on the right is shows 0.1&quot; pitch headers installed, 
+with a 10 way IDC connector and ribbon cable attached.</p>
+<p>Little PCB &quot;winglets&quot; are still tedious to solder.&nbsp; You need a steady hand, 
+a fine tip 
+	soldering iron, and good eye sight; I have a fine tip soldering iron.&nbsp; 
+But once installed the board is easy to use.</p>
+<p>At the time, the wings cost about $6.00 from memory, however, when I went 
+back to check the prices, the site looked parked.&nbsp; Whispers are the owner 
+is off on a secret international mission somewhere.</p>
+<h3 id=diyboards>DIY Boards</h3>
+<p>Another option is to make your own board. If you can make PCBs and do surface 
+mount soldering, the design of the board is quite simple.&nbsp; </p>
+<h2 id=reclaiming>Reclaiming AT90USBKey Pins</h2>
+<p>Because this is a demo board, there are other peripherals attached to the 
+board.&nbsp; While these parts remain, 22 of 48&nbsp; I/O pins can't be used.&nbsp; 
+By attacking the board with a soldering iron, 17 can be freed.&nbsp; The parts 
+to be removed are usually very small and sensitive, but we don't care; they'll 
+never be replaced.&nbsp; Just get a regular soldering iron, and heat them.&nbsp; 
+If you heat the middle of a small component, like a resistor, the solder on the 
+end will melt and you can just flick the part off the board.&nbsp; The same 
+technique can be used for the memory chips.&nbsp; They are a bit larger, but 
+with enough heat, they will fall off.&nbsp; Beware of the nauseous fumes.&nbsp; 
+Make sure you do this in a well ventilated area.</p>
+<p>When the parts are removed, remove the excess solder with a some de-solder 
+braid.</p>
+
+		<h3>Temperature Sensor</h3>
+		<p>An NTC Thermistor is connected to IO pin PF0.&nbsp; Remove resistors 
+		R27 and R29 to reclaim this pin.</p>
+<p><img border="0" src="removethermistor.jpg" width="453" height="440"></p>
+		<h4>Battery Voltage Monitor</h4>
+		<p>A pair of resistors form a voltage divider used to monitor the 
+		voltage of the external power supply.&nbsp; This is connected to IO pin 
+		PF3.&nbsp; Remove resistors R28 and R30 to get this pin back.</p>
+<p><img border="0" src="removedivider.jpg" width="453" height="440"></p>
+		<h3>Flash Memory</h3>
+		<p>The flash memory must be removed if the voltage of the board is to be 
+		changed to 5 volts.&nbsp; There are 2 flash chips, U2 and U3, and two 
+		resistors, R9 and R10 that must be removed.&nbsp; This will reclaim IO 
+		pins PE0, PE1, PB1, PB2, PB3.</p>
+<p><img border="0" src="removememory.jpg" width="453" height="440"></p>
+		<h3>LEDs</h3>
+		<p>There are three LEDs on the board.&nbsp; One is a single colour LED 
+		that is lit when the board has power.&nbsp; It isn't connected to any IO 
+		pins.&nbsp; This can stay.</p>
+		<p>The other two LEDs are tricolour LEDs that take up two pins each.&nbsp; 
+		These are optional.&nbsp; They can be left to show the board status: 
+		Red: not ready, Green: go.&nbsp; This default functionality allows them 
+		to be used to switch High Power Devices.&nbsp; I chose to leave one as 
+		an indicator.</p>
+		<p>LED1, D2, can be removed to free up IO pins PD4 and PD5.</p>
+<p><img border="0" src="removed2.jpg" width="453" height="440"></p>
+		<p>LED2, D5, can be removed to free up IO pins PD6 and PD7.</p>
+<p><img border="0" src="removed5.jpg" width="453" height="440"></p>
+		<h4>UVCON, PE7</h4>
+		<p>The AT90USBKey has support for switching to a 5 volt bus when running 
+		in host mode.&nbsp; As we never run in host mode, we can reclaim IO pin 
+		PE7 by removing resistor R25.</p>
+<p><img border="0" src="removeuvcon.jpg" width="453" height="440"></p>
+		<h3>Buttons and Joystick</h3>
+		<p>The push buttons and joystick device are switches.&nbsp; When 
+		activated, they short the IO pin to ground.&nbsp; Therefore, if they are 
+		not activated, they will no cause a conflict.&nbsp; There is no need to 
+		unsolder them.&nbsp; The joystick IO pins PB5, PB6, PB7, PE4, PE5 can be 
+		reclaimed.</p>
+		<p>Just a word if caution.&nbsp; There are two buttons on the board.&nbsp; 
+		One is connected to the microcontroller reset pin.&nbsp; There is no 
+		point removing this as the pin can't be reused.&nbsp; The other,&nbsp; 
+		the HWB button, is connected to IO pin PE2.&nbsp; This is the Hardware 
+		Boot Loader button.&nbsp; If you press the Reset button, then the HWB 
+		button, then release the Reset button, then release the HWB button, the 
+		microcontroller will enter USB bootloader mode.&nbsp;&nbsp; It is highly 
+		recommended you leave this button for recovery if the software bootloader 
+		fails.&nbsp; The pin can still be shared, preferably with another 
+		button; something that doesn't change the pin signal unless actioned.</p>
+		<h3>JTAG Interface</h3>
+		<p>The microcontroller has a JTAG interface that is used for programming 
+		and debugging the microcontroller.&nbsp; This interface uses up 4 IO 
+		pins: PF4, PF5, PF6 and PF7.&nbsp; Unfortunately, these pins cannot be 
+		reclaimed without using a JTAG programmer, or an ISP programmer, to 
+		switch off the JTAG interface, by unsetting JTAGEN fuse.</p>
+		<h3>UID</h3>
+
+		<p>The UID pin on the microcontroller, PE3, is used to externally detect 
+		whether the USB is being as a host, or a device.&nbsp; Seeing we are 
+		always a device, we can try and reclaim this pin.&nbsp; I say try, 
+		because the pin is hard wired to USB connector.&nbsp; To reclaim it 
+		safely, the PCB track needs to be cut.&nbsp; This can be done with a 
+		scriber, or a dremel, and a very steady hand.&nbsp; If you are game, cut 
+		the thin track under the highlighted yellow line.</p>
+<p><img border="0" src="removeuid.jpg" width="453" height="440"></p>
+		<h2 id=design>Hardware Design Decisions</h2>
+
+		<p>Before you start programming, soldering and unsoldering, a couple of 
+		important hardware decisions need to be made, or at least kept in mind 
+		about the USB Hardware...</p>
+<ol>
+			<li>It can be bus powered, self powered, or both.&nbsp; </li>
+			<li>It can run off 3.3 volts or 5 volts.</li>
+			<li>It can only draw a maximum of 100mA of current when first 
+			plugged in.</li>
+			<li>It can only draw a maximum of 500mA of current, and this will 
+			usually only be available from a powered USB hub.</li>
+			<li>In addition to the USB current restrictions, the AT90USBKey can 
+			only supply a maximum of 300mA at 3.3 volts.&nbsp; This limitation is due to the 
+			selection of voltage regulator it uses to convert 5 volts to 3.3 
+			volts.</li>
+		</ol>
+		<p>Based on what components you are planning to connect to the key, 
+		following decisions need to be made.</p>
+		<h3 id=buspowered>Bus or Self Powered</h3>
+		<p>The USB key supports being powered via the USB Bus, or via an 
+		external power source.</p>
+		<p>Being Bus Powered means that the microcontroller and all components 
+		connected to the controller are powered by USB power coming from the USB 
+		cable.&nbsp; This is convenient because it means you only need one cable 
+		running back to the computer.&nbsp; However, you are restricted to 3.3 
+		volts 300mA if you use the stock hardware.&nbsp; If you are willing to 
+		hack the hardware, you can get 5 volts, 500mA maximum.&nbsp; You will 
+		probably also need to connect the device to a powered USB hub to get the higher 
+		current.</p>
+		<p>Being self powered means that an external power supply is used to 
+		power the microcontroller and components.&nbsp; This allows more than 5 
+		volts to be used.&nbsp; Fortunately, the AT90USBKey already has the 
+		hardware in place to support self powering.&nbsp; All that is needed is 
+		an external voltage source from 8 volts to 15 volts, connected to the 2 
+		pin power connector.&nbsp; A short adaptor cable is provided with the 
+		AT90USBKey that is normally connected to a 9V battery.&nbsp; This can be 
+		used to connect the external supply.&nbsp; Being self 
+		powered unfortunately means a second power cable must be run to the 
+		board.</p>
+		<p>Bus Powered or Self Powered must be selected in the Properties of the 
+		microcontroller in the Generic HID software.</p>
+		<h3 id=voltage>Voltage</h3>
+		<p>The stock USB Key is configured to run off 3.3 volts.&nbsp; It can be 
+		modified to be run off 5 volts by making modifications to the board.&nbsp; 
+		The voltage regulator can be removed and tracks short circuited so that 
+		the USB Bus voltage, 5 volts, is now the board's power source, V<sub>CC</sub>.&nbsp; 
+		If this is done, the Flash memory must be removed as this only runs up 
+		to 3.6 volts.</p>
+		<p>The USB specification states that the data lines of the USB cable 
+		must be between 3 and 3.5 volts.&nbsp; The AT90USBxxx chip has an 
+		internal voltage regulator that can provide these values if the 
+		microcontroller isn't powered by 3.3 volts.&nbsp; However, this is an 
+		internal configuration of the chip, and must be programmed <b><u>BEFORE</u></b> the 
+		voltages are changed.</p>
+		<p>So when is 3.3 volts enough?&nbsp; It depends on the components 
+		connected to the USB Key.&nbsp; Passive devices like switches and 
+		potentiometers (joysticks), will run fine on 3.3 volts.&nbsp; LEDs will as well.&nbsp; It starts to get tricky with more complicated 
+		devices.&nbsp; The LCD displays I have played with required 5 volts to 
+		run properly, but the logic interface worked fine at 3.3 volts.&nbsp; 
+		The LED backlight for the LCD required 5 volts, and 300mA.&nbsp; The 
+		rotary encoders I used also worked at 3.3 volts, although the 
+		specification sheet said 5 volts.&nbsp; The bottom line; test it.</p>
+		<p><b>To change the device to run off 5 volts (this works for bus powered 
+		and self powered devices)...</b></p>
+		<ol>
+			<li>Use the Generic HID Device software to create an empty 
+		configuration with only the AT90USBkey.&nbsp; </li>
+	<li>Set the device voltage to 5 volts.&nbsp; You can also specify if the 
+		device is bus powered or self powered.</li>
+			<li>Reprogram the device.</li>
+	<li>Un-solder the 3.3v voltage regulator, U4, then place a wire link across pins 1 and 2.&nbsp; The pins are so small 
+		and close together that a blob of solder should suffice. <br>
+	<img border="0" src="removeregulator.jpg" width="453" height="440"></li>
+<li>Un-solder the diode, D3, and replace it with a wire link.&nbsp; <br>
+	<img border="0" src="removediiode.jpg" width="453" height="440"> </li>
+<li>The completed board should look like this...<br>
+<img border="0" src="removedregulator.jpg" width="547" height="382"></li>
+	<li>Done.&nbsp; The device is now 5 volts.&nbsp; Don't forget to remove 
+		the flash memory chips before you power it up again.</li>
+</ol>
+		<h3 id=current>Current</h3>
+		<p>The USB specification limits the current draw from the bus to 100mA 
+		when it is first connected.&nbsp; After the device is recognised by the 
+		host PC and it has completed its handshaking, up to 500mA can be drawn 
+		(or 300mA for a stock AT90USBKey).&nbsp; More then 500mA must be 
+		provided by an external power source.</p>
+		<p>For configurations that require less than 100mA, there is nothing to 
+		do.&nbsp; Connect the components and go.</p>
+		<p>Over 500mA, an external power 
+		supply must provide the power.</p>
+		<p>Devices that draw over 100mA but less than 500mA from the bus are 
+		called High Power Devices in USB speak.&nbsp; These devices must switch 
+		their components power on only after the device has been recognised and 
+		configured.&nbsp; Part of the device to host handshaking sequence 
+		requires the device to upload several pages of configuration 
+		information.&nbsp; This includes if the device is bus powered, and what 
+		the current draw is.&nbsp; If the power requirements are too much for 
+		the host PC, it can choose not to start the device.</p>
+		<p>On my USB Pendant, I implemented this using a P-Channel FET to switch 
+		the high side power to the power hungry devices.&nbsp; The resistor will 
+		keep the FET off while the microcontroller starts up with tri-state IO 
+		pins.&nbsp; When I did it, I piggy backed the circuit on the status 
+		LED2, pin PD7.&nbsp; PD7 (Red LED) is Hi-Z while the microcontroller 
+		initialises, then is set high, to Red, while the device is starting.&nbsp; 
+		If the device starts successfully, the Green LED is enabled and the Red 
+		turned off.&nbsp; Bring the Red LED low, will enable the power.</p>
+		<p><img border="0" src="hipower.png" width="452" height="223"></p>
+		<p>An alternative is the soft-start version, which brings the power on 
+		slowly after the power is enabled...</p>
+		<p><img border="0" src="hipowersoftstart.png" width="448" height="233"></p>
+		<h2>Summary</h2>
+<p>What the?&nbsp; </p>
+<p>How much current do I need?&nbsp; Check the data sheets of each component and 
+add them up.</p>
+<p>How much voltage?&nbsp; Check the voltage requirements of each component.&nbsp; 
+They should all be 3.3v, or all 5v.&nbsp; Mixed 3.3v and 5v can be done, but 
+requires advanced electrical knowledge.</p>
+		<table border="1" width="100%" id="table1">
+			<tr>
+				<th width="30%" colspan="2">
+				<p>I need...</th>
+				<th rowspan="2">Solution</th>
+			</tr>
+			<tr>
+				<th width="10%">Voltage</th>
+				<th width="20%">Current</th>
+			</tr>
+			<tr>
+				<td>3.3</td>
+				<td>&lt; 100mA</td>
+				<td>Nothing to do.&nbsp; Use the stock board.</td>
+			</tr>
+			<tr>
+				<td>3.3</td>
+				<td>&gt; 100mA and &lt; 300mA</td>
+				<td>You need to switch the power to the external components 
+				using a switching circuit like the one above.</td>
+			</tr>
+			<tr>
+				<td>3.3</td>
+				<td>&gt; 300mA</td>
+				<td>The onboard voltage regulator will not provide enough 
+				current at 3.3 volts.&nbsp; You may be able to try a combination 
+				where the microcontroller is bus powered, and the power hungry 
+				devices are powered by an external supply.</td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>&lt; 100mA</td>
+				<td>You need to program the device to tell it is 5 volts.&nbsp; 
+				Then you need to remove the voltage regulator.</td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>&gt; 100mA and &lt; 500mA</td>
+				<td>You need to program the device to tell it is 5 volts.&nbsp; 
+				Then you need to remove the voltage regulator.&nbsp; Finally, you 
+				need to add the switching circuit above to control the power to 
+				the external components.</td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>&gt; 500mA</td>
+				<td>You need to program the device to tell it is 5 volts and 
+				Self Powered.&nbsp; Then you need to remove the voltage regulator.&nbsp; 
+				Then power the device via the external connector.&nbsp; The 
+				external power supply must be a clean 5v regulated supply.</td>
+			</tr>
+		</table>
+
+		<!-- #include file="/analytics.html" -->
+		</body>
+</html>

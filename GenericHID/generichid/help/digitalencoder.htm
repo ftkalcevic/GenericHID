@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>Digital Encoder</title>
+</head>
+
+<body>
+<h1>Digital Encoder</h1>
+<p>A digital encoder is a rotary control that encodes its output as a sequence 
+of pulses.&nbsp; Generic HID supports rotary encoders that output their movement 
+as incremental quadrature code.&nbsp; Digital Encoders typically have the 
+appearance of a panel mount potentiometer, or a machine control dial.</p>
+<p>A Digital Encoder has two outputs, A and B.&nbsp; These make up the 
+&quot;waveform&quot; of a quadrature signal, with the A and B waveforms out of phase by 90&deg;.&nbsp; Only one signal 
+ever changes 
+at a time, and from this, Generic HID can determine if the encoder is moving 
+forward or backward.</p>
+<p><img border="0" src="quad.png" width="328" height="176"></p>
+<p>Digital encoders must be connected to Interrupt ports, that is, one of PE4..7, PB0..7, 
+PD0..3.&nbsp; </p>
+<p>The Generic HID represents the digital encoder as an 8-bit input, with wrap 
+around.&nbsp; This means it will count up to 255, then wrap to 0 (or down to 0, 
+then wrap to 255).&nbsp; It is up to the application using the device to then 
+make use of this information.&nbsp; Hidcomp/hidconfig handles this information 
+correctly.</p>
+<p><i>Care must be taken with the current consumption of digital encoders.&nbsp; 
+The larger industrial encoders can draw 100mA, which can overload a USB device.&nbsp; 
+See the section on <a href="hardware.htm#current">USB Power</a> for more information.</i></p>
+<p>There is currently no support for mechanical encoders.&nbsp; Mechanical 
+encoders are a cheaper version of the digital encoders, that generate the A/B 
+signal through mechanical contacts.&nbsp; They need pull-up resistors and 
+debounce code to work correctly.</p>
+<h2>Properties</h2><h3 id="Name">Name</h3>
+<p>Components can be given an optional name.&nbsp; This is seen in the Test tab.  Not all applications support the name.&nbsp; 
+Hidcomp/hidconfig supports names.</p>
+
+<h3 id="Usage">UsagePage/Usage</h3>
+<p>The UsagePage and Usage of the Digital Encoder.  See <a href="usages.htm">Usages</a> for more information.</p>
+
+<h3 id="Current">Current</h3>
+<p> Defines the amount of electrical current used by the LED in mA.  This is used to estimate the USB power draw.&nbsp; 
+See the section on <a href="power.htm">Power</a> for more information.&nbsp; <i>
+As mentioned above, industrial style dials can use a large amount of current.</i></p>
+
+</body>
+
+</html>

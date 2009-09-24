@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>Potentiometer</title>
+</head>
+
+<body>
+<h1>Potentiometer</h1>
+<p>The potentiometer control is used to connect analog inputs to the HID 
+Device.&nbsp; Usually this will be a potentiometer, but other analog inputs can 
+be connected.&nbsp; An analog input can only be connected to one of the 
+microcontrollers ADC pins, PF0-PF7.</p>
+<p>A potentiometer allows a variable voltage to be generated.&nbsp; They are 
+typically an open resistor connected between the power supply and ground, with a 
+wiper arm that touches the resistor.&nbsp; This creates a voltage divider 
+circuit.&nbsp; When the wiper arm is in the middle, the output is half the 
+voltage.&nbsp; At the top, it is full voltage.&nbsp; At the bottom, 0.&nbsp; Or, 
+50%, 100%, and 0%.&nbsp; The schematic of the potentiometer is shown below.</p>
+<p><img border="0" src="potcon.png" width="124" height="130"></p>
+<p>The most common type of potentiometers are the rotary type.&nbsp; They can be 
+used as they are to provide a volume control style input.&nbsp; Rotary 
+potentiometers are usually found on the axis of joysticks.&nbsp; A two axis 
+joystick will have two independent potentiometers.</p>
+<p>There are also slide potentiometers that have a slider that moves up and 
+down, rather than rotating.</p>
+<p>Don't confuse a rotary/slide potentiometer with a linear/log potentiometer.&nbsp; 
+Linear and Log refer to divider relationship with the wiper position.&nbsp; A 
+Linear potentiometer will a linear relationship, eg 25% turn gives 25% voltage, 
+75% gives 75%.&nbsp; A Log potentiometer gives a logarithmic response, eg 25% 
+turn gives 5% output, 50% gives 10%, 75% give 50%.</p>
+<p>Non-potentiometer devices, such as Hall Effect Joysticks, can be used as an 
+analogue input, as long the voltage range stays within the range of the HID 
+Device's voltage - 0v to 3.3v or 5v.</p>
+<h2>ADC</h2>
+<p>The ADC (Analogue to Digital Converter) of the microcontroller is used to 
+convert the analogue signal to a digital number.&nbsp; Internally, the 
+microcontroller measures the voltage and converts it to a 10 bit number (0 - 1023 (2<sup>10</sup>-1)).&nbsp; 
+The <a href="#Bits">Bits</a> property can then be used to change the precision 
+of the the number.&nbsp; 8 bit resolution (0-255) is generally precise enough. </p>
+<p>The ADC converter samples the voltage about 8,000 times per second and 
+averages 4 samples.</p>
+<h2>Properties</h2><h3 id="Name">Name</h3>
+<p>Components can be given an optional name.&nbsp; This is seen in the Test tab.  Not all applications support the name.&nbsp; 
+Hidcomp/hidconfig supports names.</p>
+
+<h3 id="Usage">UsagePage/Usage</h3>
+<p>The UsagePage and Usage of the Potentiometer.  See <a href="usages.htm">Usages</a> for more information.</p>
+
+<h3 id="Bits">Bits</h3>
+<p>ADC resolution the Potentiometer voltage is returned as.&nbsp; 8 bits returns 
+a value from 0 - 255.&nbsp; 10 bits returns a value from 0 - 1023.</p>
+
+<h3 id="Current">Current</h3>
+<p> Defines the amount of electrical current used by the potentiometer in mA.  This is used to estimate the USB power draw.&nbsp; 
+See the section on <a href="power.htm">Power</a> for more information.</p>
+<p> The current can be calculated by dividing the power supply voltage by the 
+potentiometer resistance.&nbsp; V/R will give the current in amps, so it must be 
+multiplied by 1000 to get mA.</p>
+
+</body>
+
+</html>

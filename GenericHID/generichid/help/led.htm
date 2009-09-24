@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>LED</title>
+</head>
+
+<body>
+<h1>LED</h1>
+<p>The LED control allows an LED (light emitting diode) to be connected to the 
+HID Device.&nbsp; An LED 
+appears as a HID output with an On/Off state.&nbsp; An LED can be connected to 
+any I/O port.</p>
+<p>An LED, with a current limiting resistor, can be wired directly to one of the 
+microcontrollers IO pins.&nbsp; They can be connecting in two different ways: with the microcontroller 
+sourcing current (source) or sinking it (sink).&nbsp; The two schematics show 
+the differences...</p>
+<p><img border="0" src="ledsourcesink.png" width="204" height="162"></p>
+<p>The first circuit shows the microcontroller pin, PD0, sourcing the current.&nbsp; 
+The microcontroller pin switches between 0 volts (ground), and V<sub>CC</sub> (power supply 
+voltage).&nbsp; To light the LED, the microcontroller provides V<sub>CC</sub>, 
+and the current flow from the pin, through the LED and resistor, to ground.</p>
+<p>In the second circuit, the LED will be lit when the microcontroller pin is 
+set to 0 volts.&nbsp; The current run from the power supply, V<sub>CC</sub>, 
+through the LED and resistor, back into microcontroller pin.&nbsp; </p>
+<p>The only difference in the two methods is that sinking may turn on the LED 
+momentarily when 
+the microcontroller is being reset.&nbsp; Otherwise, as long as the microcontroller is 
+told the method, it can make sure On means On.</p>
+<p>
+</p>
+<p>
+For more general information on LEDs, see the section on <a href="leds.htm">LEDs</a>.</p>
+<h2>Properties</h2>
+
+<h3 id="Name">Name</h3>
+<p>Components can be given an optional name.&nbsp; This is seen in the Test tab.  Not all applications support the name.&nbsp; 
+Hidcomp/hidconfig supports names.</p>
+
+<h3 id="Usage">UsagePage/Usage</h3>
+<p>The UsagePage and Usage of the LED.  See <a href="usages.htm">Usages</a> for more information.</p>
+
+<h3 id="Source">Source</h3>
+<p>Defines whether the microcontroller sources or sinks the LED current.  This 
+is described above.</p>
+
+<h3 id="Current">Current</h3>
+<p> Defines the amount of electrical current used by the LED in mA.  This is used to estimate the USB power draw.&nbsp; 
+See the section on <a href="hardware.htm#current">Power</a> for more information.</p>
+
+<h2>See Also</h2>
+<p><a href="bicolourled.htm">Bicolour LED</a>, <a href="tricolourled.htm">Tri-colour LED</a>, 
+<a href="rgbled.htm">RGB LED</a>, <a href="leds.htm">LEDs</a> </p>
+</body>
+
+</html>

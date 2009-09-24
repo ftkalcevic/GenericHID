@@ -1,0 +1,27 @@
+* Wiring diagrams
+	* eg LED + resistor
+	* button
+	* button in a matrix
+	
+* Hacks
+	* a matrix board. matrix v buttons
+	* rotary encoder to coded rotary encoder
+	* LCD contrast
+		* Connectory thing
+	* Examples
+	
+	
+Index	
+
+	- example/walk through/first time
+			- Test panel
+				- windows sluggish
+					- libusb crap, or just me
+					- use MS HID interface
+					- here's .net sample.
+		- otherwise
+			- pick controller
+			- add parts
+			- set properties
+			- program
+			

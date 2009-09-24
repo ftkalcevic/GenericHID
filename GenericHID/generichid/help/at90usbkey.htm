@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>AT90USBKey</title>
+</head>
+
+<body>
+<h1>AT90USBKey</h1>
+<p>The AT90USBKey is a demo board produced by Atmel to show off their wonderful 
+at90usb1287 microcontroller.&nbsp; It is also an inexpensive base to build a HID 
+device.</p>
+<h2>Onboard resources</h2>
+<h3 id="LEDs">LEDs</h3>
+<p>There are two <a href="tricolourled.htm">tri-coloured LEDs</a> on the board.&nbsp; 
+Their default use is to show the board status.&nbsp; They can be used as output 
+values of a HID device.</p>
+<p></p>
+
+<h3 id="Joystick">Joystick</h3>
+<p>A small switched joystick/directional switch/hatswitch with built-in button 
+is included on the board.&nbsp; It can be used as a directional switch and 
+button of a HID devcice.</p>
+<p></p>
+
+<h3 id="Thermistor">Temperature Sensor</h3>
+<p>A Negative Temperature Coefficient (NTC) thermistor, R29, provides an analog temperature 
+reading. A thermistor is a resistor whose resistance changes with temperature.&nbsp; 
+An NTC thermistor's resistance will decrease when the temperature increases.&nbsp; 
+This can appear as an input value on a HID device.</p>
+
+<h3 id="Flash">Data Flash Memory</h3>
+<p>The external flash memory allows the USB Key to be used as a flash drive.&nbsp; 
+This is one of the demo applications that can be loaded on to the USB Key.&nbsp; 
+Data flash is not supported as a HID resource.</p>
+
+<h3 id="hwb">HWB - Hardware Boot Loader Button</h3>
+<p>The HWB button is connected to pin PE2 on the USB Key and is used to force 
+the microcontroller into boot loader mode at start up.&nbsp; If this button is 
+depressed when the microcontroller comes out of reset, either when the reset 
+button is pressed, or the device is powered up, the microcontroller will run the 
+boot loader firmware.&nbsp; Because the HWB functionality is only used at start 
+up, it can then be used for another purpose.&nbsp; However, you must be aware 
+that there is an external pull-up resistor and capacitor connected to the shared 
+pin, restricting it's use to switch devices that can use the pull-up resistor.</p>
+<p><img src="hwb.png" /></p>
+
+
+</body>
+
+</html>

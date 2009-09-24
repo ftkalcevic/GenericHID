@@ -1,0 +1,126 @@
+<html>
+
+<head>
+<title>Timers</title>
+</head>
+
+<body>
+<h1>Timers</h1>
+<p>The microcontroller used by Generic HID, the Atmel AT90USB1287, has built in 
+peripherals called timer/counters.&nbsp; As their name suggests, they can be 
+used as timers, counters, and generators of precisely timed output patterns.&nbsp; 
+Generic HID uses the timer/counters to produce the <a href="pwm.htm">PWM</a> 
+output signals.</p>
+<p>There are 4 timer/counters...</p>
+<table cellpadding=4>
+	<tr>
+		<td><b>Timer</b></td>
+		<td><b>Use</b></td>
+	</tr>
+	<tr>
+		<td>Timer/Counter 0</td>
+		<td>Used internally for timing tasks.&nbsp; Also used to generate the
+		<a href="counter.htm">Counter</a> output.</td>
+	</tr>
+	<tr>
+		<td>Timer/Counter 1</td>
+		<td>Used for PWM output.&nbsp; Timer/Counter 1 generates PWM signals for 
+		outputs PB5, PB6 and PB7.</td>
+	</tr>
+	<tr>
+		<td>Timer/Counter 2</td>
+		<td>Used for PWM output.&nbsp; Timer/Counter 2 generates PWM signals for 
+		outputs PB4 and PD1.</td>
+	</tr>
+	<tr>
+		<td>Timer/Counter 3</td>
+		<td>Used for PWM output.&nbsp; Timer/Counter 3 generates PWM signals for 
+		outputs PC6, PC5 and PC4.</td>
+	</tr>
+</table>
+<p>As can be seen in the table above, individual timer/counter units generate 
+outputs for more than one output pin.&nbsp; Timer/Counter 1, for example, can 
+generate 3 outputs.&nbsp; This means the groups of PWM outputs share the timer 
+settings, in particular, the PWM frequency and the PWM resolution.</p>
+<p><img border="0" src="pwmsignal.png" width="334" height="122"></p>
+<p>The PWM frequency is the rate at which the pulse is repeated.&nbsp; The 
+period, 1/frequency, is the time it takes for one of these cycles.&nbsp; The PWM 
+resolution specifies the number of discrete intervals the PWM period is broken 
+in to.&nbsp; The resolution is used to determine the length of the PWM pulse.&nbsp; 
+In the example above, the PWM resolution is 12.&nbsp; The PWM pulse width is 8 
+(66%).&nbsp; The the higher the resolution, the more fine control there is over the 
+pulse 
+length.&nbsp; Unfortunately, the frequency is related to the resolution.&nbsp;
+</p>
+<p>The Timer Configuration dialog is used to set the parameters that define the 
+Resolution and Frequency.&nbsp; In simple mode, shown below, the required 
+resolution and frequency are entered, and the dialog will try to find the 
+closest match.</p>
+<p><img border="0" src="timerconfigsimple.png" width="442" height="277"></p>
+<p>In Advanced mode,&nbsp; the low level parameters are entered directly to 
+configure the frequency and the resolution.</p>
+<p><img border="0" src="timerconfig.png" width="442" height="277"></p>
+<p>The parameters in the advanced section are...</p>
+<p><b>Clock</b></p>
+<p>The clock speed of the internal microcontoller.&nbsp; This will always be 
+8MHz.</p>
+<p><b>Bits</b></p>
+<p>The size of the timer/counter in bits.&nbsp; Timer/Counter 1 and 
+Timer/Counter 3 are 16 bit timers meaning they can count from 0 to 2<sup>16</sup>-1 
+(65535).&nbsp; Timer/Counter 2 is only 8 bit; it can only count to 2<sup>8</sup>-1 (255).</p>
+<p><b>Mode</b></p>
+<p>Internally, the timer/counters can operate in various modes.&nbsp; Two of the 
+modes, Fast PWM and Phase Correct, are offered as options.</p>
+<p>Fast PWM is a straight forward up counter.&nbsp; It counts to &quot;Counter Top&quot;, 
+then starts again from 0.&nbsp; At 0, the pulse is turned on.&nbsp; It is turned 
+off at the pulse width.&nbsp; This is shown below.</p>
+<p><img border="0" src="fastpwm.png" width="324" height="102"></p>
+<p>Note that Fast PWM has a limitation.&nbsp; It is not possible to set it to 
+always on, that is set pulse width to 100%.&nbsp; It will always be one count 
+short as shown below.</p>
+<p><img border="0" src="fastpwm99.png" width="334" height="122"></p>
+<p>The problem is exaggerated in the image above because the &quot;Counter Top&quot; value 
+is low.&nbsp; This usually wont cause a problem, but if it does, Phase Correct 
+mode can be used.</p>
+<p>Phase Correct mode is an up/down counter.&nbsp; It counts from 0 to &quot;Counter 
+Top&quot;, then counts back down to 0.&nbsp; The PWM pulse is toggled as the counter 
+passes the pulse width mark.&nbsp; This is shown below...</p>
+<p><img border="0" src="phasecorrectpwm.png" width="389" height="122"></p>
+<p>The obvious difference is, given the same Counter Top value, Phase Correct 
+mode will be half the frequency of Fast PWM mode.&nbsp; Phase Correct mode 
+doesn't have the problem of not being able to run at 100%.&nbsp; A 0% pulse 
+width will be all off, and a 100% pulse width will be all on.</p>
+<p><b>Prescale</b></p>
+<p>The prescale is a divisor applied to the system clock.&nbsp; The prescaled 
+clock is then used by the counter to count.</p>
+<p><b>Counter Top</b></p>
+<p>As descibed above, the timer/counters count.&nbsp; They count up to &quot;Counter 
+Top&quot;, then restart, in Fast PWM mode, or count back down in Phase Correct mode.&nbsp; </p>
+<p>Counter Top serves two purposes; it acts as a divisor to set the frequency, 
+and it determines the PWM resolution.</p>
+<p>As a frequency divisor, Counter Top is combined with the prescaler and mode 
+to determine the frequency.&nbsp; The frequency is..</p>
+<table >
+	<tr>
+		<td>Frequency = </td>
+		<td align=center>Clock</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td style="border-color:black; border-left-width: 1px; border-right-width: 1px; border-top-style: solid; border-top-width: 2px; border-bottom-width: 1px">Prescaler * Counter Top * (2 if in Phase Correct Mode)</td>
+	</tr>
+</table>
+<p>The resolution is defined as Counter Top.&nbsp; A Counter Top value of 100, 
+will have a resolution of 100, that is, the generated pulse can be 0%, 1%, 2%, 
+..., 100% of the period wide.</p>
+<p><b>Output Frequency</b></p>
+<p>This is the computed output frequency of the PWM signal, as just discussed.&nbsp; 
+It is the actual frequency that will used, given the current parameters.</p>
+<p><b>Data Bits</b></p>
+<p>Data Bits specifies the size of the output variable that Generic HID exposes.&nbsp; 
+This is the size of the binary variable required to hold the &quot;Counter Top&quot; 
+value.&nbsp; This is just for information.</p>
+
+</body>
+
+</html>

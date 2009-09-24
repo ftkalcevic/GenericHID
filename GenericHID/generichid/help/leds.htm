@@ -1,0 +1,156 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>LEDs</title>
+</head>
+
+<body>
+<h1>LEDs</h1>
+<h2>LEDs 101</h2>
+<p>A Diode is an electronic component that allows current to flow in only one 
+direction.&nbsp; An LED, or Light Emitting Diodes, is a diode that illuminates 
+when sufficient voltage and current is supplied.&nbsp; They are polarised 
+components meaning they have a right and wrong way of being connected.</p>
+<p>The schematic symbol of an LED is shown below.</p>
+<p><img border="0" src="ledsch.png" width="90" height="59"></p>
+<p>The horizontal line is the wire.&nbsp; The triangle and vertical line combine 
+to form the standard symbol of a diode.&nbsp; The two arrows indicate this diode 
+is an LED.&nbsp; The triangle and vertical line indicate the flow of the 
+current.&nbsp; The vertical line indicates a &quot;wall&quot; that the current can't flow 
+back through.&nbsp; <b>A</b> is the anode, and is where the current flows in.&nbsp;
+<b>K</b> is the cathode, where the current flows out.&nbsp; These names come 
+from the days of vacuum tubes. </p>
+<p>To illuminate the LED correctly, a voltage and sufficient current must be 
+applied to the diode.&nbsp; The datasheet of an LED will give some important 
+parameters...</p>
+<table >
+	<col width="30px">
+	<col width="130px">
+	<col>
+	<tr>
+		<td>I<sub>F</sub></td>
+		<td>Forward Current</td>
+		<td>This is the current that runs through the device when it is running.&nbsp; 
+		The maximum I<sub>F</sub> is the continuous current that can run through the device 
+		without damaging it, but when run at this value, it does reduce the life 
+		of the LED. (LEDs dim after time).&nbsp; Don't confuse this with I<sub>FP</sub>, 
+		the peak forward current which can only be applied for a short pulse, 
+		typically 0.1ms.</td>
+	</tr>
+	<tr>
+		<td>V<sub>F</sub></td>
+		<td>Forward Voltage</td>
+		<td>This is amount of voltage that drops across the LED.&nbsp; For 
+		linear devices, like resistors, Ohms law states V=IR, where V is the 
+		voltage, I is the current, and R is the resistance.&nbsp; As the current 
+		through a resistor increases, the voltage across the resistor increases.<p>
+		LEDs, on the other hand, have a pretty constant voltage drop.&nbsp; As 
+		the current changes, V<sub>F</sub> stays about the same.&nbsp; The LED 
+		datasheet will specify the V<sub>F</sub> values for a given I<sub>F</sub> value.&nbsp; Use 
+		these values in calculating the current limiting resistor (see below).</td>
+	</tr>
+</table>
+
+<h2 id="clr">Current Limiting Resistor</h2>
+<p>If an LED was connected directly to a voltage source, we would end up with 
+the following schematic of the circuit.</p>
+<p><img border="0" src="ledsch2.png" width="86" height="162"></p>
+<p>In this circuit, we ignore the resistor (the squiggly line), that is, it's 
+resistance is zero.&nbsp; We can use Ohms V=IR, law to make an equation representing 
+the circuit...</p>
+<p>V<sub>total</sub> = V<sub>F</sub> + R.I</p>
+<p>[The total voltage is the sum of the voltage drops.&nbsp; Also, the current 
+is the same through each component]</p>
+<p>We know the total voltage, V<sub>total</sub>=5 volts.&nbsp; We know the 
+voltage drop across the LED, V<sub>F</sub>=2 volts (from the data sheet), and we 
+know the resistance of our resistor in the circuit R=0 Ohms.&nbsp; Therefore,</p>
+<p>5 = 2 + 0.I</p>
+<p>or</p>
+<p>
+<table>
+	<tr align=center>
+		<td>I = </td>
+		<td style="border-bottom-style: solid; border-bottom-width: 1px">5 - 2</td>
+	</tr>
+	<tr align=center>
+		<td></td>
+		<td>0</td>
+	</tr>
+</table></p>
+<p>The two divided by zero, gives the current, I, as infinite, or at least very 
+large, because there are small resistances in the wires and the power source.&nbsp; 
+What this example is trying to show is that you can't just connect an LED to a 
+power source without some way of controlling the current flow.</p>
+
+<p>By using the first equation, and the Forward Voltage and Forward Current from 
+the LED datasheets, we can calculate the value of resistor we need to limit the 
+current in the circuit.</p>
+<p>
+<table>
+	<tr align=center>
+		<td>R = </td>
+		<td  style="border-color:black; border-bottom-style: solid; border-bottom-width: 1px">V<sub>total</sub> - V<sub>F</sub></td>
+	</tr>
+	<tr align=center>
+		<td></td>
+		<td>I</td>
+	</tr>
+</table></p>
+<p>If V<sub>F</sub>=2, and I<sub>F</sub>=20mA, or 0.020A, we have...</p>
+<p>
+<table id="table1">
+	<tr align=center>
+		<td>R = </td>
+		<td  style="border-color:black; border-bottom-style: solid; border-bottom-width: 1px">5 - 2</td>
+		<td> = 150 Ohms</td>
+	</tr>
+	<tr align=center>
+		<td></td>
+		<td>0.02</td>
+	</tr>
+</table></p>
+<p>A 150 Ohm resistor will give a 20mA current.&nbsp; Note that for most LEDs, 
+20mA is incredibly bright.&nbsp; For panel indicators, a small I<sub>F</sub> of 5mA or less will usually suffice. 
+Also, electronics isn't terribly fussy with parameter value selection.&nbsp; If 
+you don't have a 150 ohm resistor handy, the next higher value should be fine.</p>
+<h2>Maximum Current</h2>
+<p>According to the Atmel datasheets, the maximum current supplied or sunk by any 
+individual pin is 40mA.&nbsp; The total current drawn from port combinations 
+must not be exceeded.&nbsp; These limits are shown in the following table.</p>
+<table>
+	<col>
+	<col align=center  style="padding-left: 5px">
+	<tr>
+		<td align=center><b>Port Group</b></th>
+		<td align=center><b>Maximum Current</b></th>
+	</tr>
+	<tr>
+		<td>PA0..PA7 + PG2 + PC4..PC7</td>
+		<td>100 mA</td>
+	</tr>
+	<tr>
+		<td>PC0..PC3 + PG0..PG1 + PD0..PD7</td>
+		<td>100 mA</td>
+	</tr>
+	<tr>
+		<td>PG3..PG5 + PB0..PB7 + PE0..PE7</td>
+		<td>100 mA</td>
+	</tr>
+	<tr>
+		<td>PF0..PF7</td>
+		<td>100 mA</td>
+	</tr>
+</table>
+<p>
+The total current limit for the microcontroller is 200mA.</p>
+
+<p>However, to ensure a long life, it is recommended that there values are never 
+approached.&nbsp; LEDs can normally be illuminated on very small currents, 
+usually in 1-2mA range.&nbsp; A simple test circuit, or a cheap LED tester will 
+help select a suitable current.&nbsp; Remember, these LEDs are only going to be 
+used as indicators, not room lighting.</p>
+
+</body>
+
+</html>

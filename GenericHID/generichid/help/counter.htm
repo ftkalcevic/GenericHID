@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>Counter</title>
+</head>
+
+<body>
+<h1>Counter</h1>
+<p>The counter is a millisecond counter.&nbsp; It simply counts, a multiple of 
+1ms, and keeps incrementing a counter.&nbsp; It starts when the device is 
+plugged in, and will wrap the counter back to 0 when it overflows.</p>
+<p>The counter is a virtual device.&nbsp; It appears as a USB input value.&nbsp; 
+It doesn't have wire to wire to a pin.</p>
+<p>What is it used for?&nbsp; The counter can be used for a watch dog, updating 
+the counter every 500ms, for example.&nbsp; If the application doesn't receive 
+an update every 500ms, it knows the Generic HID is on longer accessible.&nbsp; 
+This could be useful for CNC pendant controls, that should shut down the system 
+if a fault occurs.</p>
+<p>It can also be used to time between updates.&nbsp; For example, if the 
+counter was set to count every 1ms, it could be used to time the rate of
+<a href="digitalencoder.htm">encoder</a> pulses and determine the velocity of 
+the dial.</p>
+
+<h2>Properties</h2>
+
+<h3 id="Name">Name</h3>
+<p>Components can be given an optional name.&nbsp; This is seen in the Test tab.  Not all applications support the name.&nbsp; 
+Hidcomp/hidconfig supports names.</p>
+
+<h3 id="Usage">UsagePage/Usage</h3>
+<p>The UsagePage and Usage of the Counter.  See <a href="usages.htm">Usages</a> for more information.</p>
+
+<h3 id="Period">Period</h3>
+<p>Period of the counter in milliseconds.  Every 'Period' ms, the counter ticks.  
+Setting it to 1, causes the counter to count milliseconds.&nbsp; Setting to 
+1000, causes it to count in 1 second units.</p>
+
+<h3 id="CounterBits">Counter Bits</h3>
+<p>The size of counter variable.  1-16 bits.&nbsp; A 1 bit counter will toggle 
+between 0 and 1 every &quot;period&quot; milliseconds.&nbsp; A 16 bit counter will count 
+from 0 to 2<sup>16</sup>-1 (65535).&nbsp; At a 1ms period, this causes the 
+number to wrap after 65.535 seconds.</p>
+
+</body>
+
+</html>

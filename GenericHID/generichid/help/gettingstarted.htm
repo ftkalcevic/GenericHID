@@ -1,0 +1,236 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Getting Started</title>
+</head>
+
+<body>
+<h1>Getting Started</h1>
+
+<p>This page is a walk through describing how to connect a AT90USBKey for the 
+first time and setting up a simple HID device. </p>
+
+<ol>
+	<li><a href="#rungenerichid">Run Generic HID</a></li>
+	<li><a href="#select">Select the Microcontroller</a></li>
+	<li><a href="#editproperties">Edit Properties</a></li>
+	<li><a href="#enableitems">Enable Stock Items</a></li>
+	<li><a href="#plugin">Plug in the Device</a></li>
+	<li><a href="#programming">Programming</a></li>
+	<li><a href="#test">Test the Device</a></li>
+</ol>
+
+<h2 id=rungenerichid>Run Generic HID</h2>
+<h3>Windows</h3>
+<p>Launch the Generic HID application, this is generichid.exe in the directory 
+that you unzipped the application.</p>
+<p>If you get such-a-such error, you haven't installed libusb-win32</p>
+<h4>Linux</h4>
+<p>Run generichid.</p>
+<p>&nbsp;</p>
+<p>You should see an empty screen...</p>
+<p><img border="0" src="walkthrough1.png" width="640" height="467"></p>
+<h2 id=select>Select the Microcontroller</h2>
+<p>For this example we are going to use the Stock AT90USBKey.&nbsp; That's the 
+first component in the toolbox.&nbsp; Click on the item and drag it onto the 
+design surface.</p>
+<p><img border="0" src="walkthrough2.png" width="640" height="466"></p>
+<h2 id=editproperties>Edit Properties</h2>
+<p>Click on the Stock AT90USBKey that has just been placed on the design 
+surface.&nbsp; This will select the item and display its properties in the 
+property window.&nbsp; The Help window will show a description of the selected 
+item.</p>
+<p><img border="0" src="walkthrough3.png" width="768" height="739"></p>
+<h2 id=enableitems>Enable Stock Items</h2>
+<p>In this demo, we are only going to enable the stock devices installed on the 
+AT90USBKey.&nbsp; In the properties windows, make the following changes...</p>
+<table cellpadding=5>
+	<tr>
+		<td><b>Property</b></td>
+		<td><b>Change To</b></td>
+	</tr>
+	<tr>
+		<td>Name</td>
+		<td>Funky Device</td>
+	</tr>
+	<tr>
+		<td>Use LEDs</td>
+		<td>True</td>
+	</tr>
+	<tr>
+		<td>Use Voltage Monitor</td>
+		<td>True</td>
+	</tr>
+	<tr>
+		<td>Use Temperature Sensor</td>
+		<td>True</td>
+	</tr>
+	<tr>
+		<td>Use Joystick</td>
+		<td>True</td>
+	</tr>
+	<tr>
+		<td>Use HWB</td>
+		<td>True</td>
+	</tr>
+</table>
+
+<h2 id=plugin>Plug in the Device</h2>
+<p>Plug the device into the system.&nbsp; </p>
+<h3>Using Windows XP</h3>
+<p>Generic HID has only been tested on Windows XP, but should work on newer 
+Windows operating systems.</p>
+<p>When you plug the device in, windows will detect the new device and try to 
+install drivers.&nbsp; This is optional.&nbsp; The AT90USBKey comes 
+preprogrammed as a mouse, a hid device and a flash drive.&nbsp; You may be 
+prompted to install drivers, and then you can play with the device.&nbsp; The flash memory contains online 
+manuals, data sheets and sample code for the at90usb1287 microcontroller. You 
+can save this if you wish, but it is not needed for Generic HID, and most of the 
+data is available on the <a href="http://www.atmel.com/">Atmel website</a>.</p>
+<h3>Using Ubuntu 8.04</h3>
+<p>Generic HID has only been tested using Ubuntu 8.04 (kernel 2.6.24-16), but 
+should work with any linux with udev.</p>
+<p>When the device is plugged in, linux will silently detect the device and load 
+the necessary drivers.&nbsp; You can use the command <code>dmesg</code> to list 
+the system logs and see what has happened.&nbsp; For example...</p>
+<code>
+<p>frankt@linuxpc:~$ dmesg<br>
+[1378539.954506] usb 1-1.4.4.1: new full speed USB device using uhci_hcd and 
+address 28<br>
+[1378540.095368] usb 1-1.4.4.1: configuration #1 chosen from 1 choice<br>
+[1378540.107341] input: ATMEL AVR USB KEY COMPOSITE DEVICE as 
+/devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1.4/1-1.4.4/1-1.4.4.1/1-1.4.4.1:1.0/input/input21<br>
+[1378540.148835] input,hidraw5: USB HID v10.01 Mouse [ATMEL AVR USB KEY 
+COMPOSITE DEVICE] on usb-0000:00:1d.0-1.4.4.1<br>
+[1378540.160307] hiddev96hidraw7: USB HID v10.01 Device [ATMEL AVR USB KEY 
+COMPOSITE DEVICE] on usb-0000:00:1d.0-1.4.4.1<br>
+[1378540.360820] usbcore: registered new interface driver libusual<br>
+[1378540.380720] Initializing USB Mass Storage driver...<br>
+[1378540.385105] scsi4 : SCSI emulation for USB Mass Storage devices<br>
+[1378540.386534] usbcore: registered new interface driver usb-storage<br>
+[1378540.386540] USB Mass Storage support registered.<br>
+[1378540.387730] usb-storage: device found at 28<br>
+[1378540.387733] usb-storage: waiting for device to settle before scanning<br>
+[1378545.378702] usb-storage: device scan complete<br>
+[1378545.381697] scsi 4:0:0:0: Direct-Access ATMEL AT90USB128 M S 0.00 PQ: 0 
+ANSI: 0<br>
+[1378545.387684] sd 4:0:0:0: [sdc] 32768 512-byte hardware sectors (17 MB)<br>
+[1378545.390677] sd 4:0:0:0: [sdc] Write Protect is off<br>
+[1378545.390682] sd 4:0:0:0: [sdc] Mode Sense: 1b 00 00 00<br>
+[1378545.390684] sd 4:0:0:0: [sdc] Assuming drive cache: write through<br>
+[1378545.399660] sd 4:0:0:0: [sdc] 32768 512-byte hardware sectors (17 MB)<br>
+[1378545.402662] sd 4:0:0:0: [sdc] Write Protect is off<br>
+[1378545.402667] sd 4:0:0:0: [sdc] Mode Sense: 1b 00 00 00<br>
+[1378545.402670] sd 4:0:0:0: [sdc] Assuming drive cache: write through<br>
+[1378545.402675] sdc: unknown partition table<br>
+[1378545.491544] sd 4:0:0:0: [sdc] Attached SCSI removable disk<br>
+[1378545.491587] sd 4:0:0:0: Attached scsi generic sg3 type 0<br>
+&nbsp;</p>
+</code>
+<p>
+Being
+a secure operating system, linux will not let just any application directly 
+access a USB device.&nbsp; Permissions must be set so Generic HID can access the 
+device while it is a HID device, and when it is program mode.&nbsp; See this
+<a href="linuxpermissions.htm">section</a> for details on how to set up 
+permissions.</p>
+<h2 id=programming>Programming</h2>
+<p>In Generic HID, select the Microcontroller | Program... menu option.&nbsp; 
+The programming window will appear...</p>
+<p><img border="0" src="walkthrough4.png" width="202" height="237"></p>
+<p>Note that all the lights are red and the buttons are disabled.&nbsp; The 
+AT90USBKey is running in Mouse/HID/Flash Drive mode and the Generic HID software 
+cannot recognise it.&nbsp; For it to be recognised, it needs to either be 
+programmed as a Generic HID, or be running in&nbsp; bootloader mode.</p>
+<p>Normally bootloader mode can be entered just by pressing the &quot;Start 
+Bootloader&quot; button.&nbsp; Because this is the first time we are going to program 
+the device, we need to enter bootloader manually by using the buttons on the 
+board...</p>
+<ol>
+	<li>Press and hold the HWB button</li>
+	<li>Press and release the RST button</li>
+	<li>Release the HWB button</li>
+</ol>
+<p>The device should now enter bootloader mode.&nbsp; This sequence can be used 
+anytime the device appears unresponsive.</p>
+<p>The program window should now detect the device...</p>
+<p><img border="0" src="walkthrough5.png" width="202" height="237"></p>
+<p>Press the Program button.&nbsp; A progress bar will show the programmer in 
+action.</p>
+<p>When the programming is complete press the &quot;Restart Device&quot; button.&nbsp; Now 
+the Generic HID device should be detected.&nbsp; The Program dialog box will now 
+identify the device.&nbsp; If it doesn't, press the RST button on the board, or 
+unplug the device and plug it in again.</p>
+<p><img border="0" src="walkthrough6.png" width="202" height="237"></p>
+<h2 id=test>Test the Device</h2>
+<p>Close the Program dialog box.&nbsp; Then select the Test panel.&nbsp; If the 
+Generic HID device is connected, it will automatically appear...</p>
+<p><img border="0" src="walkthrough7.png" width="701" height="506"></p>
+<p>The Test panel shows the parts on AT90USBKey that appear as a HID items...</p>
+<table cellpadding=5>
+	<tr>
+		<td>DFU</td>
+		<td>This is the way the bootloader is started.&nbsp; Nothing can be done 
+		with this.</td>
+	</tr>
+	<tr>
+		<td>Temperature</td>
+		<td>There is a thermistor on the AT90USBKey - a resistor that changes 
+		value with temperature.&nbsp; It is R29, between the USB connector and 
+		the microcontroller (the larger black square) placing a finger on 
+		it will cause the temperature to rise and the value to go down.</td>
+	</tr>
+	<tr>
+		<td>Voltage</td>
+		<td>The voltage field reports the external battery voltage connected to 
+		the device.&nbsp; Its scaled and converted to an integer and doesn't 
+		move.&nbsp; Divide the number by 22 to get the approximate voltage.&nbsp; 
+		Without an external power supply the floating voltage is meaningless.</td>
+	</tr>
+	<tr>
+		<td>Joystick</td>
+		<td>The joystick on the AT90USBKey is a switched type joystick, or 
+		hatswitch.&nbsp; The joystick is the small black rectangle with white 
+		lever on the end of the board opposite the USB connector.&nbsp; Push the 
+		stick sideways to activate it.</td>
+	</tr>
+	<tr>
+		<td>JoystickButton</td>
+		<td>Pushing down on joystick lever will activate the joystick button</td>
+	</tr>
+	<tr>
+		<td>HWBButton</td>
+		<td>The HWB button can be pressed.&nbsp; It will toggle the Red/Green 
+		software light when it does.</td>
+	</tr>
+	<tr>
+		<td>LED2</td>
+		<td>The colour of LED2 can be changed by moving the slider.&nbsp; There 
+		are 4 different values...<table cellpadding=5>
+			<tr>
+				<td>0</td>
+				<td>Off</td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>Green</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>Red</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>Red-Orange</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<html>
+<head>
+<title>LCD</title>
+</head>
+
+<body>
+<h1>LCD - Character based LCD Display</h1>
+<p>Generic HID supports character based LCD modules that use the common HD44780U 
+or equivalent driver chip (this is most 5x8 or 5x7 character based dot matrix 
+displays).&nbsp; These displays come in sizes from 8x1, up to 20x4 and 40x2.&nbsp; 
+There are 40x4 displays, which are basically two 40x2 displays, and currently, 
+must be treated as two separate displays.</p>
+<p>An LCD has a large number of pins that must be wired to the microcontroller.&nbsp; 
+Any LCD pin can be wired to any microcontroller I/O pin.</p>
+<p>LCDs can work in 4-bit mode or 8-bit mode.&nbsp; In 4-bit mode, only half the 
+number of Data pins are required.&nbsp; LCD I/O pins D0..3 are not needed and 
+should not be connected.&nbsp; Yes, the low numbered pins, 0..3 are the ones not 
+needed.&nbsp; This saves 4 I/O pins, at the slight expense of speed, but it is 
+generally not an issue.</p>
+<p>LCDs are the only components in Generic HID that can share wires.&nbsp; The 
+pins RS, R/W, D0, D1, D2, D3, D4, D5, D6, D7 can be wired to multiple LCD 
+devices forming a data bus.&nbsp; The only pin that can't be shared is the E 
+pin.&nbsp; E is the enable pin.&nbsp; It tells the LCD that data on the bus is 
+for it.&nbsp; This way a large number of LCDs can be wired to Generic HID.</p>
+<p>Here is an example of two LCDs wired in Generic HID...</p>
+<p><img border="0" src="duallcd.png" width="789" height="275"></p>
+<p>Note that the LCD wires are sharing pins on the microcontroller, except for 
+the E pins (red wires).&nbsp; They have their own I/O pins.&nbsp; Also, during 
+testing I found one LCD display that did not work properly when sharing data 
+lines.&nbsp; It had to be separated to make it work properly.</p>
+<p>LCDs are pretty easy to wire up, but there a couple of gotchas.</p>
+<p>First, most LCD displays run on 5 volts.&nbsp; A stock USB Key only provides 
+3.3v.&nbsp; Unless the LCD works with 3.3v, the USB key will need to be modified 
+to provide 5 volts.</p>
+<p>Secondly, the backlight.&nbsp; Most LCDs have some form of backlighting, 
+typically LED.&nbsp; These can draw large amounts of current, sometimes over 
+250mA.&nbsp; A USB device, as described <a href="hardware.htm#current">here</a>, must be 
+careful when drawing this much current.&nbsp; The LED back light must only come 
+on after the USB connection has been successfully established.&nbsp; A method to
+<a href="leds.htm#clr">limit the current must</a> also be used.&nbsp; The 
+backlight current can also be reduced from what is recommended in an LCD 
+datasheet.&nbsp; Backlights that are documented as requiring 250mA, usually run 
+fine on 100mA.&nbsp; Experiment and see.</p>
+<h3>Contrast</h3>
+<p>The pictures above show the wiring that is required to connect an LCD to 
+Generic HID.&nbsp; Apart from the power (V<sub>CC</sub> or V<sub>DD</sub>) and ground (GND or V<sub>SS</sub>) 
+a standard LCD Character Module will have a pin used to set the contrast of the 
+LCD display, V<sub>O</sub>, V<sub>LC</sub> or V<sub>LCD</sub>.&nbsp; This 
+requires a potentiometer wired to this pin and, power and ground.&nbsp; A cheap 
+10k trimmer potentiometer is adequate.&nbsp; Schematically, it should be 
+connected as follows.</p>
+<p><img border="0" src="lcdcontrast.png" width="156" height="145"></p>
+<h2>Properties</h2>
+
+<h3 id="Name">Name</h3>
+<p>Components can be given an optional name.&nbsp; This is seen in the Test tab.  Not all applications support the name.&nbsp; 
+Hidcomp/hidconfig supports names.</p>
+
+<h3 id="Usage">UsagePage/Usage</h3>
+<p>The UsagePage and Usage of the display.  See <a href="usages.htm">Usages</a> for more information.</p>
+<p>Note- for an LCD display, this is fixed and cannot be changed.</p>
+
+<h3 id="Rows">Rows</h3>
+<p>The number of rows on the Display.</p>
+
+<h3 id="Columns">Columns</h3>
+<p>The number of columns on the Display.</p>
+
+<h3 id="8Bit">8 Bit</h3>
+<p>The number of data lines to connect to the LCD.  If true, 8 bits are used (all data lines D0-D7).  If false, only 4 bits, data lines D4-D7, are used.</p>
+
+<h3 id="Row1Address">Row1Address</h3>
+<p>The start address of row 1.</p>
+
+<h3 id="Row2Address">Row2Address</h3>
+<p>The start address of row 2.</p>
+
+<h3 id="Row3Address">Row3Address</h3>
+<p>The start address of row 3.</p>
+
+<h3 id="Row4Address">Row4Address</h3>
+<p>The start address of row 4.</p>
+
+<h3 id="Current">Current</h3>
+<p> Defines the amount of electrical current used by the LED in mA.  This is used to estimate the USB power draw.&nbsp; 
+See the section on <a href="power.htm">Power</a> for more information.</p>
+<p> LCD displays use very little power to display the LCD text, typically 1-2mA.&nbsp; 
+The LCD back light, however, are generally power hogs.</p>
+
+</body>
+
+</html>

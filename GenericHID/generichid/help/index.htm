@@ -1,0 +1,253 @@
+<html>
+<head>
+		<title>Generic HID - DIY USB HID / Joystick / CNC Pendant</title>
+	</head>
+	<body>
+		<h1>Generic HID - DIY USB HID / Joystick / CNC Pendant</h1>
+		<ol>
+			<li><a href="#introduction">Introduction</li></a>
+				<ul>
+					<li><a href="#background">Background</a></li>
+					<li><a href="#credits">Credits</a></li>
+					<li><a href="#download">Download and Install</a></li>
+				</ul>
+			<li><a href="hardware.htm">USB Hardware</a></li>
+			<li><a href="generichid.htm">Using Generic HID</a></li>
+			<li><a href="gettingstarted.htm">Getting Started</a></li>
+			<li><a href="samples.htm">Samples</a></li>
+			<li><a href="troubleshooting.htm">Trouble Shooting</a></li>
+		</ol>
+
+<h2 id=introduction>Introduction</h2>
+<p>Generic HID is a tool that allows anyone to create their own USB HID device.&nbsp; 
+HID is an acronym for Human Interface Device.&nbsp; It is a very general 
+specification that specifies how input and output controls should be configured 
+so any computer can read them.&nbsp; A HID device can be a joystick, game pad, 
+keyboard, mouse, CNC pendant, bar code reader, force feedback device; anything 
+that interacts with a user.</p>
+<p>Generic HID comprises two parts: hardware and configuration software.&nbsp; 
+The hardware can be any Atmel at90usb1287 based board.&nbsp; The cheapest of 
+these this at90usbkey demo board which you can get for about $US30.&nbsp; The 
+software is open sourced and can be downloaded below.&nbsp; It runs on both 
+Linux and Windows&nbsp; By dragging and 
+dropping components, then hooking up the pins with virtual wires, the hardware 
+can be programmed with the configuration.&nbsp; Then just physically hook up the 
+components and viola!&nbsp; A USB HID device!</p>
+<p>The picture below show my first test CNC pendant and the software configuration used 
+to define it.&nbsp; Click on them for large images.</p>
+<table cellpadding=5 >
+	<tr>
+		<td><p><a href="pendant.jpg"><img border="0" src="pendantsmall.jpg" width="170" height="219"></a></td>
+		<td><a href="generichidpendantcapture.png"><img border="0" src="generichidpendantcapturesmall.png" width="350" height="230"></a></td>
+	</tr>
+</table>
+</p>
+<p>So what components does Generic HID support?</p>
+<table cellpadding=5>
+	<tr>
+		<td><b>Item</b></td>
+		<td><b>Maximum<br>
+		Number</b></td>
+		<td><b>Description</b></td>
+	</tr>
+	<tr>
+		<td><a href="at90usbkey.htm">at90usb1287</a></td>
+		<td>1</td>
+		<td>This is the microcontroller that does all the work.&nbsp; It has 48 
+		multi-use I/O pins.&nbsp; Currently this is the only type supported.</td>
+	</tr>
+	<tr>
+		<td><a href="pot.htm">Potentiometer</a></td>
+		<td>8<sup>1</sup></td>
+		<td>A potentiometer is a variable input component, typically found on a 
+		joystick axis, but the term here means any analogue input.</td>
+	</tr>
+	<tr>
+		<td><a href="digitalencoder.htm">Digital Encoder</a></td>
+		<td>8<sup>1</sup></td>
+		<td>An encoder spins like a potentiometer, provides relative movement 
+		information, rather than absolute position.&nbsp; Currently only digital 
+		type encoders are supported.&nbsp; Mechanical devices that require 
+		pull-up resistors and debouncing will not work reliably.</td>
+	</tr>
+	<tr>
+		<td><a href="button.htm">Push Button</a></td>
+		<td>48<sup>1</sup></td>
+		<td>Individual push buttons.</td>
+	</tr>
+	<tr>
+		<td><a href="keymatrix.htm">Key Matrix Buttons</a></td>
+		<td>576<sup>1</sup></td>
+		<td>More individual keys can be added if they are wired up in a matrix.&nbsp; 
+		A matrix with 4 rows and 4 columns, uses 4+4=8 I/O pins and provides 
+		4x4=16 buttons.&nbsp; </td>
+	</tr>
+	<tr>
+		<td><a href="rotaryswitch.htm">Rotary Selector Switches</a></td>
+		<td>24<sup>1</sup></td>
+		<td>Rotary selector switches act like a multi state button.&nbsp; Each 
+		output state takes up 1 I/O pin.</td>
+	</tr>
+	<tr>
+		<td><a href="codedrotaryswitch.htm">Coded Rotary Switch</a></td>
+		<td>48<sup>1</sup></td>
+		<td>Like the rotary selector switch above, but the output is binary 
+		encoded.&nbsp; For example, instead of requiring 4 I/O pins for 4 
+		inputs, the coded switch can encoded the value into 2 binary bits, using 
+		up only 2 I/O pins.</td>
+	</tr>
+	<tr>
+		<td><a href="lcd.htm">LCD</a></td>
+		<td>42<sup>1</sup></td>
+		<td>Simple character based LCD display devices.&nbsp; These come in 
+		various configurations like 8x1, 16x2, 20x4, 40x2.&nbsp; 40x4 displays 
+		are supported as 2 displays.</td>
+	</tr>
+	<tr>
+		<td><a href="led.htm">LED</a></td>
+		<td>48<sup>1</sup></td>
+		<td>LEDs can be used for status indicators.&nbsp; Each LED takes up 1 
+		I/O pin.&nbsp; Beware of the maximum current draw.</td>
+	</tr>
+	<tr>
+		<td><a href="bicolourled.htm">Bi-Colour LED</a></td>
+		<td>24<sup>1</sup></td>
+		<td>These are devices with two LEDs installed in opposite directions in 
+		the one package.&nbsp; They can display 3 states - off, LED1, LED2.</td>
+	</tr>
+	<tr>
+		<td><a href="tricolourled.htm">Tri-Colour LED</a></td>
+		<td>24<sup>1</sup></td>
+		<td>These are devices with two independent LEDs installed in one 
+		package.&nbsp; They can display 4 states - off, LED1, LED2, LED1+LED2.</td>
+	</tr>
+	<tr>
+		<td><a href="rgbled.htm">RGB LED</a></td>
+		<td>16<sup>1</sup></td>
+		<td>These are devices with three independent LEDs installed in one 
+		package, a Red, Green and Blue LED.&nbsp; They can display 8 states.</td>
+	</tr>
+	<tr>
+		<td><a href="dirswitch.htm">Directional Switch</a></td>
+		<td>24<sup>1</sup></td>
+		<td>Also know as hat switches, these are pads, or joysticks, that 
+		indicate direction via switches.&nbsp; They can have 2, 4 or 8 buttons.</td>
+	</tr>
+	<tr>
+		<td><a href="counter.htm">Counter</a></td>
+		<td>1<sup>1</sup></td>
+		<td>One millisecond accurate counter is supported.&nbsp; Examples of its 
+		use are to timestamp updates, or act as a watch dog.</td>
+	</tr>
+	<tr>
+		<td><a href="pwm.htm">PWM</a></td>
+		<td>8<sup>1</sup></td>
+		<td>The at90usb1287 microcontroller supports 8 PWM outputs.&nbsp; These 
+		can be used to drive LEDs at different intensities, eg RGB LEDs to give 
+		true colour, or to modulate a larger loaded, switched by a transistor, 
+		eg the LCD backlight.</td>
+	</tr>
+</table>
+<p><sub>1. Maximums are based on the number of free pins available on the 
+microcontroller.&nbsp; Maximums will be lower if other components are also 
+connected.&nbsp; Maxiumums are also reduced based on the electrical load on the 
+microcontroller.&nbsp; Maximums can be restricted by the 4kB memory limit of the 
+configuration data.&nbsp; Maximums can be restricted by the 64 byte data packet 
+size for total inputs and total outputs. Maximums can be restricted by pins that 
+are unable to be freed.&nbsp; Maximums should be reduced by common sense.</sub></p>
+<h2>Background</h2>
+<p>To be able to remotely control my CNC Mill, I started playing the 
+		simple USB gamepads.&nbsp; Writing my own drivers for Mach3 and EMC allowed me to 
+		configure the gamepad to move each axis with the joysticks, and map the 
+		buttons to CNC functions.&nbsp; I made the driver support acceleration 
+		profiles, which made the joysticks much more useful.</p>
+<p>I played a bit with Contour Design's Shuttle Pro, a USB device that has a few 
+buttons, a jog wheel and a dial.&nbsp; I decided this was cool and wanted those 
+features in my pendant too.&nbsp; And LEDs to show status information.&nbsp; And 
+I wanted an LCD for output.&nbsp; And maybe a buzzer.&nbsp; Since there are no 
+pendants out there that can do that (at least any that I can afford), I decided 
+to build my own.</p>
+<p>At first I looked at disassembling a joystick and a shuttle, and sticking 
+everything in one box.&nbsp; That wouldn't give me the outputs, and I'd have to 
+run two usb cables (or stick a hub in the pendant) so I decided to 
+build from scratch.</p>
+<p>My microcontrollers of choice are the Atmel 8-bit chips.&nbsp; They have a 
+USB capable range, the AT90USBxxx series, available with 8, 16, 64 and 128k flash 
+memories, and versions that supported USB Host or just a device.&nbsp; My 
+original plan was to make my own circuit board, but I wanted this project to be 
+something I could give back to the internet community, so I chose to use the 
+AT90USBKEY as my base.</p>
+<p>The AT90USBKEY is a demo board made by Atmel.&nbsp; It is a small board with 
+an 8MHz AT90USB1287, along with some flash memory, a simple switched joystick, 
+some buttons, LEDs, a temperature sensor and voltage regulators.&nbsp; All I/O 
+ports of the microcontroller are accessible via through-holes on the board 
+(although at a crappy 0.1&quot; x 0.05&quot; pitch).&nbsp; The board isn't bad value 
+either at $30.00 (at <a href="http://www.digikey.com/">Digikey</a> last time I 
+looked, or for even cheaper at <a href="http://www.mouser.com/">Mouser</a>, 
+$29.99) compared to $15.05 for just the AT90USB1287 chip.</p>
+<p>The firmware for the board is configured by uploading data to 
+its EEPROM.&nbsp; The configuration data controls some hardware attributes, but 
+mostly it just defines what component is connected to which I/O pin.&nbsp; The 
+configuration data is made using a GUI application, which can then upload 
+changes to the firmware.&nbsp; As long as the boot loader firmware remains 
+intact, no programming hardware is necessary.</p>
+<h2 id=credits>Credits</h2>
+<p>Generic HID is built using many 3rd party libraries and application source 
+code and demos...</p>
+<table border="1" width="100%" id="table1">
+	<tr>
+		<td><a href="http://www.fourwalledcubicle.com/LUFA.php">MyUSB / LUFA</a></td>
+		<td>The core USB framework is provided by the great work done by 
+		<a href="http://www.fourwalledcubicle.com/">Dean Camera</a> and his
+		<a href="http://www.fourwalledcubicle.com/LUFA.php">LUFA</a> libraries.&nbsp; 
+		It is listed here as MyUSB because that was its name when I started 
+		using it.&nbsp; The Generic HID version is still based around the older 
+		MyUSB.</td>
+	</tr>
+	<tr>
+		<td><a href="http://dfu-programmer.sourceforge.net/">dfu-programmer</a></td>
+	<td>The dfu-programmer is an open source DFU programmer.&nbsp; I originally 
+	planned to use the Atmel flip application to program the firmware.&nbsp; It 
+	worked fine as a library under windows, but was a nightmare to set up and 
+	use under Linux.&nbsp; The dfu-programmer source was hacked and corralled 
+	into a C++ library for Generic HID to use.</td>
+		</tr>
+		<tr>
+			<td><a href="http://www.libusb.org/">libusb v0.1.12</a></td>
+			<td>The low level USB access is done using libusb v0.1.12.&nbsp; 
+			Note - this is the older &quot;legacy release&quot;.&nbsp; This version is 
+			used because it has the same interface as the win32 version.&nbsp; 
+			Using libusb means GenericHID can work on Windows, as well as Linux.
+		</td>
+		</tr>
+		<tr>
+			<td><a href="http://libusb-win32.sourceforge.net/">libusb-win32 
+			v0.1.12</a></td>
+		<td>This is the Win32 version of the libusb library.</td>
+	</tr>
+	<tr>
+		<td><a href="http://qt.nokia.com/">Qt</a></td>
+	<td>Qt is a cross platform application and UI framework, used to provide the 
+	graphics interface.&nbsp; Because I standardised on Qt, I also use the 
+	collection classes, threading classes and the XML DOM classes.</td>
+		</tr>
+		<tr>
+			<td>
+			<a href="http://qt.nokia.com/products/appdev/add-on-products/catalog/4/Widgets/qtpropertybrowser/">
+			QtPropertyBrowser</a></td>
+			<td>This is an additional Library provided by QtSoftware that 
+			implements a property browser class.</td>
+		</tr>
+	</table>
+	<h2 id=download>Download and Installl</h2>
+<pWindows</p>
+<p>*package*</p>
+<p>Windows also requires the libusb-win32 device driver install.&nbsp; </p>
+<p><a href="http://sourceforge.net/projects/libusb-win32/files/">
+libusb-win32-device-bin</a></p>
+<p>libusb32</p>
+<p>Linuxx</p>
+<p>*package*</p>
+<p>*source*</p>
+		</body>
+</html>

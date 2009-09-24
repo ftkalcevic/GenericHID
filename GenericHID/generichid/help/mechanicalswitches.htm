@@ -1,0 +1,55 @@
+<html>
+
+<head>
+<title>Mechanical Switches</title>
+</head>
+
+<body>
+<h1>Mechanical Switches</h1>
+
+<p>Push buttons, switches, rotary selector switches, mechanical encoders, and 
+directional switches are all example of input devices that switch state via a 
+mechanical means.&nbsp; There are a couple of issues that you must be aware of.</p>
+<h2>Detecting the state</h2>
+<p>When a device is connected to a microcontroller input, it must drive the 
+microcontroller pin to 0 volts, or the power supply voltage.&nbsp; These are the 
+good old 0 or 1 binary states.&nbsp; To do this with a mechanical switch, the 
+switch is usually held in one state, then switched to the other as shown below.</p>
+<p><img border="0" src="buttonsch.png" width="104" height="178"></p>
+<p>This circuit shows a pin connected to a switch.&nbsp; Via the resistor, the 
+pin is held at V<sub>CC</sub> (no current flows, so there is no voltage drop, 
+making the voltage at the pin, PB0, V<sub>CC</sub>).</p>
+<p>When the push button is pressed, it make the circuit, setting the pin, PB0 to 
+ground, logic 0.&nbsp; Note that this logic is backwards, (button up = 1, button down = 0) but 
+as long as the microcontroller is aware, it can invert the results.</p>
+<p>The resistor in the above circuit is called a pull-up resistor.&nbsp; It is 
+typically 50k Ohms or more.&nbsp; It 
+pulls the voltage on the pin up to V<sub>CC</sub>.&nbsp; A similar circuit can 
+be made with a pull-down resistor between the button and ground, and measuring 
+the voltage at the switch/button junction.&nbsp; In this case the logic is not 
+inverted.</p>
+<p>So why use a pull-up resistor when it inverts the logic?&nbsp; The 
+microcontroller optionally can connect an internal pull-up resistor to the 
+input.&nbsp; This makes wiring easier.&nbsp; Switches can be wired directly 
+between the I/O pin and ground.</p>
+<p><img border="0" src="buttoninternal.png" width="172" height="167"></p>
+<h2>Debounce</h2>
+<p>When a mechanical switch changes from one position to another, the mechanical 
+contacts can bounce.&nbsp; This causes the electrical state to rapidly jump 
+between states until the mechanical actuator settles.&nbsp; The image below is 
+an oscilloscope's view of a push button debouncing on release.</p>
+<p><img border="0" src="buttonbounceDSO.png" width="595" height="395"></p>
+<p>There are two solutions to this.&nbsp; One is to use an RC 
+(Resistor-Capacitor) filter to smooth out the result.&nbsp; The other, simple 
+solution, is to get the microcontroller to wait until status has settled.&nbsp; 
+In the capture above, the button bounces for about 400us.&nbsp; On the 
+GenericHID, it will wait for 20ms of steady voltage before signaling a change.</p>
+<h2>When not to use Debounce and Pull-ups?</h2>
+<p>If the input device is a digital device, it will not need debouncing and 
+probably wont need a pull-up resistor.&nbsp; Adding debounce will slow the 
+response, and adding a pull-up resistor, may cause incorrect readings.</p>
+<p>&nbsp;</p>
+
+</body>
+
+</html>

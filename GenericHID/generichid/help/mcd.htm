@@ -1,0 +1,1052 @@
+<html>
+
+<head>
+<title>Microcontroller Configuration Description (.mcd) files</title>
+</head>
+
+<body>
+<h1>Microcontroller Configuration Description (MCD) Files</h1>
+<p>Generic HID is a GUI editor that provides a friendly way of generating MCD 
+files.&nbsp; MCD files provide the low level details that describe how buttons 
+and joysticks are connected to the microcontroller and how they appear as a HID 
+device.</p>
+<h2>Structure</h2>
+<p>MCD files are XML files.&nbsp; They have the following required tags.</p>
+<p>
+<code>
+&lt;!DOCTYPE GenericHIDDevice&gt;<br>
+&lt;GenericHIDDevice&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;Device /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;Configuration /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;Controls&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Controls&gt;<br>
+&lt;/GenericHIDDevice&gt;<br>
+</code></p>
+<h2>&lt;GenericHIDDevice&gt;</h2>
+<p>This tag is the root node of the XML tree.&nbsp; It has no attributes.&nbsp; 
+All other nodes are children of this tag.&nbsp; The tag is required.</p>
+<h2>&lt;Device&gt;</h2>
+<p>The device tag describes device attributes.&nbsp; It is a required node.&nbsp; 
+The device attributes are aligned with the USB Device Descriptor.</p>
+<h3>Attributes</h3>
+<table border="1" width="100%" id="table1">
+	<tr>
+		<td>VID</td>
+		<td>The USB Vendor ID.&nbsp; This is a 16bit integer.&nbsp; The value 
+		can be decimal, or hexadecimal (prefixed with an 'x')</td>
+	</tr>
+	<tr>
+		<td>PID</td>
+		<td>The USB Product ID.&nbsp; This is a 16bit integer.&nbsp; The value 
+		can be decimal, or hexadecimal (prefixed with an 'x')</td>
+	</tr>
+	<tr>
+		<td>Release</td>
+		<td>This is the release version number of the device.&nbsp; This is a 
+		16bit integer.&nbsp; The value can be decimal, or hexadecimal (prefixed 
+		with an 'x')</td>
+	</tr>
+	<tr>
+		<td>Manufacturer</td>
+		<td>The manufacturer string.&nbsp; This is a USB string, maximum length 
+		of 127 bytes.</td>
+	</tr>
+	<tr>
+		<td>Product</td>
+		<td>The product string.&nbsp; This is a USB string, maximum length of 
+		127 bytes.</td>
+	</tr>
+	<tr>
+		<td>SerialNo</td>
+		<td>The serial number of the device as a string.&nbsp; This is a USB 
+		string, maximum length of 127 bytes.</td>
+	</tr>
+</table>
+<h2>&lt;Configuration&gt;</h2>
+<p>The configuration tag describes the device configuration.&nbsp; It is a 
+required node.&nbsp; The configuration attributes are loosely aligned with the 
+USB Config Descriptor.</p>
+<h3>Attributes</h3>
+<table border="1" width="100%" id="table2">
+	<tr>
+		<td>BusPowered</td>
+		<td>true/false if the device is bus powered, otherwise it is self 
+		powered.</td>
+	</tr>
+	<tr>
+		<td>PowerConsumption</td>
+		<td>The power consumption of the device in mA.</td>
+	</tr>
+	<tr>
+		<td>Interval</td>
+		<td>The requested poll interval, in ms.</td>
+	</tr>
+	<tr>
+		<td>is5Volt</td>
+		<td>true if the microcontroller is powered by 5 volts, false if it is 
+		3.3 volts.&nbsp; If it is 5 volts, the internal voltage regulator is 
+		enabled to provide the 3.3 volts need to communicate on the USB bus.</td>
+	</tr>
+	<tr>
+		<td>UseStatusLEDs</td>
+		<td>An enumerated type.&nbsp; One of LED1, LED2, Both, or None.&nbsp; 
+		Tells the microcontroller to use the LEDs as status indicators.</td>
+	</tr>
+	<tr>
+		<td>SerialDebug</td>
+		<td>true/false to enable serial debug.&nbsp; When enabled, I/O pins 
+		PD2/PD3 are set up as serial communication pins RX/TX.&nbsp; The ports 
+		are only used for output at 38400,8,n,1</td>
+	</tr>
+	<tr>
+		<td>HIDDebug</td>
+		<td>true/false to enable HID debug. This isn't implemented.</td>
+	</tr>
+	<tr>
+		<td>UsagePage</td>
+		<td>The device usage page.&nbsp; The value can be decimal, or 
+		hexadecimal (prefixed with an 'x')</td>
+	</tr>
+	<tr>
+		<td>Usage</td>
+		<td>The device usage.&nbsp; The value can be decimal, or hexadecimal 
+		(prefixed with an 'x')</td>
+	</tr>
+	<tr>
+		<td>PowerPort</td>
+		<td>Optional attribute specifying which I/O port PA0-PF7 is used as the
+		<a href="hardware.htm#current">HiPower</a> switch.&nbsp; If no HiPower 
+		switch is used, do not specify this attribute.</td>
+	</tr>
+	<tr>
+		<td>Timer1</td>
+		<td>Settings for Timer1.&nbsp; Timer settings are in the format [mode],[prescaler],[count 
+		top], where mode is 0 for phase correct mode or 1 for fast PWM mode, 
+		prescaler is one of the valid device prescale values, and count top is 
+		the counter top value.&nbsp; The Timer1 attribute specifies settings for 
+		Timer/Counter 1.</td>
+	</tr>
+	<tr>
+		<td>Timer2</td>
+		<td>Settings for Timer/Counter 2, as for Timer1.</td>
+	</tr>
+	<tr>
+		<td>Timer3</td>
+		<td>Settings for Timer/Counter 3, as for Timer1.</td>
+	</tr>
+</table>
+<h2>&lt;Controls&gt;</h2>
+<p>The controls tag is a collection of nodes describing each device connected to 
+the microcontroller.&nbsp; There can be zero or more device nodes.&nbsp; The 
+following sections describe the devices that can be collected under the controls 
+node.</p>
+<h2>&lt;DirectionalSwitch&gt;</h2>
+<p>Used to specify a directional joystick or hat switch. HID returns a value of 
+-1 for not selected, or 0-max indicating which switches are pressed.&nbsp; The 
+physical min/max are used to convert these values to an angle.</p>
+<h3>Attributes</h3>
+<table border="1" width="100%" id="table3">
+	<tr>
+		<td>Name</td>
+		<td>Optonial descriptive text name.</td>
+	</tr>
+	<tr>
+		<td>UsagePage</td>
+		<td>The usage page of the control.</td>
+	</tr>
+	<tr>
+		<td>Usage</td>
+		<td>The usage of the control.</td>
+	</tr>
+	<tr>
+		<td>Pullup</td>
+		<td>true/false if the internal pull-up resistors should be used on all 
+		pins.</td>
+	</tr>
+	<tr>
+		<td>Debounce</td>
+		<td>true/false if the inputs should be debounced.</td>
+	</tr>
+	<tr>
+		<td>Directions</td>
+		<td>The number of directions - one of &quot;2way NS&quot;, &quot;2way WE&quot;, &quot;4way&quot;, 
+		&quot;8way&quot;</td>
+	</tr>
+	<tr>
+		<td>PortN</td>
+		<td>Specifies the port if the device has a N direction.&nbsp; One of 
+		PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>PortS</td>
+		<td>Specifies the port if the device has a S direction.&nbsp; One of 
+		PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>PortW</td>
+		<td>Specifies the port if the device has a W direction.&nbsp; One of 
+		PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>PortE</td>
+		<td>Specifies the port if the device has a E direction.&nbsp; One of 
+		PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>PortNW</td>
+		<td>Specifies the port if the device has a NW direction.&nbsp; One of 
+		PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>PortNE</td>
+		<td>Specifies the port if the device has a NE direction.&nbsp; One of 
+		PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>PortSW</td>
+		<td>Specifies the port if the device has a SW direction.&nbsp; One of 
+		PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>PortSE</td>
+		<td>Specifies the port if the device has a SE direction.&nbsp; One of 
+		PA0..PF7.</td>
+	</tr>
+</table>
+<h2><br>
+&lt;AnalogIn&gt;</h2>
+<p>A generic analogue input.&nbsp; Usually used for potentiometer inputs, but 
+digital analouge inputs can be used as well.</p>
+<h3>Attributes</h3>
+<table border="1" width="100%" id="table4">
+	<tr>
+		<td>Name</td>
+		<td>Optonial descriptive text name.</td>
+	</tr>
+	<tr>
+		<td>UsagePage</td>
+		<td>The usage page of the control.</td>
+	</tr>
+	<tr>
+		<td>Usage</td>
+		<td>The usage of the control.</td>
+	</tr>
+	<tr>
+		<td>Bits</td>
+		<td>The number of bits to return the data in.&nbsp; 1-10.&nbsp; The 
+		internal ADCs always convert to 10 bits, but less bits can be specified 
+		to pack more data into the HID Input Report.</td>
+	</tr>
+</table>
+<h2><br>
+&lt;Switch&gt;</h2>
+<p>Used to specify a simple switch, although it can be used for a digital 
+inputs.</p>
+<h3>Attributes</h3>
+<table border="1" width="100%" id="table5">
+	<tr>
+		<td>Name</td>
+		<td>Optional descriptive text name.</td>
+	</tr>
+	<tr>
+		<td>UsagePage</td>
+		<td>The usage page of the control.</td>
+	</tr>
+	<tr>
+		<td>Usage</td>
+		<td>The usage of the control.</td>
+	</tr>
+	<tr>
+		<td>Port</td>
+		<td>Which I/O port is the input connected to.&nbsp; One of PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>Pullup</td>
+		<td>true/false if the internal pull up resistor should be used.</td>
+	</tr>
+	<tr>
+		<td>Debounce</td>
+		<td>true/false if debounce logic should be used on this input.</td>
+	</tr>
+</table>
+<h2><br>
+&lt;TricolourLED&gt;</h2>
+<p>Used to describe a <a href="tricolourled.htm">tri-colour LED</a>.&nbsp; This 
+is a 2 bit (4 value) HID output.</p>
+<h3>Attributes</h3>
+<table border="1" width="100%" id="table6">
+	<tr>
+		<td>Name</td>
+		<td>Optional descriptive text name.</td>
+	</tr>
+	<tr>
+		<td>UsagePage</td>
+		<td>The usage page of the control.</td>
+	</tr>
+	<tr>
+		<td>Usage</td>
+		<td>The usage of the control.</td>
+	</tr>
+	<tr>
+		<td>PortA</td>
+		<td>The I/O port leg 1 of the LED is connected to.&nbsp; One of 
+		PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>PortB</td>
+		<td>The I/O port leg 1 of the LED is connected to.&nbsp; One of 
+		PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>Source</td>
+		<td>true/false if the microcontroller sources current, or sinks it.</td>
+	</tr>
+</table>
+<h2><br>
+&lt;DigitalEncoder&gt;</h2>
+<p>Defines a digital encoder.&nbsp; The device is defined as an 8 bit HID input 
+value, relative, with wrapping.&nbsp; This means it counts in an 8 bit buffer 
+and wraps when it underflows or overflows.</p>
+<h3>Attributes</h3>
+<table border="1" width="100%" id="table7">
+	<tr>
+		<td>Name</td>
+		<td>Optional descriptive text name.</td>
+	</tr>
+	<tr>
+		<td>UsagePage</td>
+		<td>The usage page of the control.</td>
+	</tr>
+	<tr>
+		<td>Usage</td>
+		<td>The usage of the control.</td>
+	</tr>
+	<tr>
+		<td>PortA</td>
+		<td>The I/O port Pin A of the encoder is connected to.&nbsp; One of 
+		PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>PortB</td>
+		<td>The I/O port Pin B of the encoder is connected to.&nbsp; One of 
+		PA0..PF7.</td>
+	</tr>
+</table>
+<h2><br>
+&lt;KeyMatrix&gt;</h2>
+<p>Defines a key matrix, either a pre-assembled keypad, or a matrix board to add 
+many buttons, but use fewer pins.&nbsp; Internally, the microcontroller will 
+strobe the columns and read the rows.&nbsp; The KeyMatrix tag has child nodes 
+that identify the rows and columns that make up the matrix.&nbsp; Each key can 
+be optionally named.</p>
+<h3>Attributes</h3>
+<table border="1" width="100%" id="table8">
+	<tr>
+		<td>UsagePage</td>
+		<td>The usage page of the control.</td>
+	</tr>
+	<tr>
+		<td>UsageMin</td>
+		<td>The minimum usage value of the control.&nbsp; Each key defined in 
+		the matrix will be allocated a consecutive number starting at UsageMin.</td>
+	</tr>
+	<tr>
+		<td>Debounce</td>
+		<td>true/false to debounce the key strokes.</td>
+	</tr>
+</table>
+<h3>&lt;ColOut&gt;</h3>
+<p>Defines a column that makes up the matrix.&nbsp; Columns are the output 
+strobes.</p>
+<h4>Attributes</h4>
+<table border="1" width="100%" id="table18">
+	<tr>
+		<td>Port</td>
+		<td>The I/O pin that this column is connected to.&nbsp; One of PA0..PF7.</td>
+	</tr>
+</table>
+<h3>&lt;RowIn&gt;</h3>
+<p>Defines a row that makes up the matrix.&nbsp; As the columns are strobed, the 
+rows are read.</p>
+<h4>Attributes</h4>
+<table border="1" width="100%" id="table19">
+	<tr>
+		<td>Port</td>
+		<td>The I/O pin that this row is connected to.&nbsp; One of PA0..PF7.</td>
+	</tr>
+</table>
+<h3>&lt;Key&gt;</h3>
+<p>Defines a key label.&nbsp; This is optional.&nbsp; Keys without labels still 
+have a usage value.</p>
+<h4>Attributes</h4>
+<table border="1" width="100%" id="table17">
+	<tr>
+		<td>Row</td>
+		<td>Which row is this key on.</td>
+	</tr>
+	<tr>
+		<td>Col</td>
+		<td>Which column is this key on.</td>
+	</tr>
+	<tr>
+		<td>Name</td>
+		<td>The text description of the key.</td>
+	</tr>
+</table>
+<h2><br>
+&lt;RotarySwitch&gt;</h2>
+<p>Defines a rotary selector switch.&nbsp; This appears as an n-bit input value.&nbsp; 
+The number of bits is determined by the number of inputs.&nbsp; If the switch is 
+coded, the output is converted to a binary number, and only Log<sub>2</sub>(n)+1 
+bits are required.&nbsp; The RotarySwitch tag contains child nodes which 
+identify the input pins, and which bits they refer to.</p>
+<h3>Attributes</h3>
+<table border="1" width="100%" id="table9">
+	<tr>
+		<td>Name</td>
+		<td>Optional descriptive text name.</td>
+	</tr>
+	<tr>
+		<td>UsagePage</td>
+		<td>The usage page of the control.</td>
+	</tr>
+	<tr>
+		<td>Usage</td>
+		<td>The usage of the control.</td>
+	</tr>
+	<tr>
+		<td>Pullup</td>
+		<td>true/false if the internal pull up resistor should be used.</td>
+	</tr>
+	<tr>
+		<td>Debounce</td>
+		<td>true/false if debounce logic should be used on this input.</td>
+	</tr>
+	<tr>
+		<td>Encoded</td>
+		<td>true/false if the input is encoded.&nbsp; If it is encoded, each 
+		input pin represents a binary value, so, for example 3 inputs makes a 3 
+		bit binary number or 8 different inputs.</td>
+	</tr>
+	<tr>
+		<td>Outputs</td>
+		<td>Only required when Encoded is true.&nbsp; Specifies the maximum 
+		output value of the control.&nbsp; For example, a control that is 
+		decimal encoded will have 4 output pins with a theoretical range of 
+		0-15, but only uses 0-9.&nbsp; Outputs would therefore be 10.</td>
+	</tr>
+</table>
+<h2>&lt;Input&gt;</h2>
+<p>Specifies an input pin of the rotary selector switch.</p>
+<h2>Attributes</h2>
+<table border="1" width="100%" id="table20">
+	<tr>
+		<td>Bit</td>
+		<td>Which bit this input represents.&nbsp; Non-coded bits are numbered 
+		1,2,3,4,..., while coded bits are numbered 1,2,4,8,16,...</td>
+	</tr>
+	<tr>
+		<td>Port</td>
+		<td>The I/O pin that this selector bit is connected to.&nbsp; One of PA0..PF7.</td>
+	</tr>
+</table>
+<h2><br>
+&lt;LCD&gt;</h2>
+<p>Specifies an character based LCD device.&nbsp; The microcontroller will 
+implement a HID Alphanumeric Device, with the bare minimum functionality.</p>
+<h3>Attributes</h3>
+<table border="1" width="100%" id="table10">
+	<tr>
+		<td>Name</td>
+		<td>Optional descriptive text name.</td>
+	</tr>
+	<tr>
+		<td>UsagePage</td>
+		<td>The usage page of the control.</td>
+	</tr>
+	<tr>
+		<td>Usage</td>
+		<td>The usage of the control.</td>
+	</tr>
+	<tr>
+		<td>Rows</td>
+		<td>The number of rows the LCD can display.</td>
+	</tr>
+	<tr>
+		<td>Columns</td>
+		<td>The number of columns the LCD can display.</td>
+	</tr>
+	<tr>
+		<td>Bus8Bit</td>
+		<td>true/false if the microcontroller should use an 8bit bus (D0..7) or 
+		a 4 bit bus (D4..7)</td>
+	</tr>
+	<tr>
+		<td>PortRS</td>
+		<td>The I/O pin that the RS pin of the LCD is connected to.&nbsp; One of PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>PortRW</td>
+		<td>The I/O pin that the RW pin of the LCD is connected to.&nbsp; One of PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>PortE</td>
+		<td>The I/O pin that the E pin of the LCD is connected to.&nbsp; One of PA0..PF7.&nbsp; 
+		Note, if more than one LCD is defined, this is the only pin that needs 
+		to be unique amongst LCDs.</td>
+	</tr>
+	<tr>
+		<td>PortD0</td>
+		<td>The I/O pin that the D0 pin of the LCD is connected to.&nbsp; One of PA0..PF7.&nbsp; 
+		Not used in 4 bit mode.</td>
+	</tr>
+	<tr>
+		<td>PortD1</td>
+		<td>The I/O pin that the D1 pin of the LCD is connected to.&nbsp; One of PA0..PF7.&nbsp; 
+		Not used in 4 bit mode.</td>
+	</tr>
+	<tr>
+		<td>PortD2</td>
+		<td>The I/O pin that the D2 pin of the LCD is connected to.&nbsp; One of PA0..PF7.&nbsp; 
+		Not used in 4 bit mode.</td>
+	</tr>
+	<tr>
+		<td>PortD3</td>
+		<td>The I/O pin that the D3 pin of the LCD is connected to.&nbsp; One of PA0..PF7.&nbsp; 
+		Not used in 4 bit mode.</td>
+	</tr>
+	<tr>
+		<td>PortD4</td>
+		<td>The I/O pin that the D4 pin of the LCD is connected to.&nbsp; One of PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>PortD5</td>
+		<td>The I/O pin that the D5 pin of the LCD is connected to.&nbsp; One of PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>PortD6</td>
+		<td>The I/O pin that the D6 pin of the LCD is connected to.&nbsp; One of PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>PortD7</td>
+		<td>The I/O pin that the D7 pin of the LCD is connected to.&nbsp; One of PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>Row0</td>
+		<td>Specifies the start address of the Row 0.&nbsp; This is to support 
+		non-standard character devices.&nbsp; It is normally 0.</td>
+	</tr>
+	<tr>
+		<td>Row1</td>
+		<td>Specifies the start address of the Row 1.&nbsp; This is to support 
+		non-standard character devices.&nbsp; It is normally 64.</td>
+	</tr>
+	<tr>
+		<td>Row2</td>
+		<td>Specifies the start address of the Row 2.&nbsp; This is to support 
+		non-standard character devices.&nbsp; It is normally 20.</td>
+	</tr>
+	<tr>
+		<td>Row3</td>
+		<td>Specifies the start address of the Row 3.&nbsp; This is to support 
+		non-standard character devices.&nbsp; It is normally 84.</td>
+	</tr>
+</table>
+<h2><br>
+&lt;LED&gt;</h2>
+<p>Used to define an LED output.&nbsp; Can also be used to define any 1-bit 
+output.</p>
+<h3>Attributes</h3>
+<table border="1" width="100%" id="table11">
+	<tr>
+		<td>Name</td>
+		<td>Optional descriptive text name.</td>
+	</tr>
+	<tr>
+		<td>UsagePage</td>
+		<td>The usage page of the control.</td>
+	</tr>
+	<tr>
+		<td>Usage</td>
+		<td>The usage of the control.</td>
+	</tr>
+	<tr>
+		<td>Port</td>
+		<td>The I/O pin that the LED is connected to.&nbsp; One of PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>Source</td>
+		<td>true/false if the microcontroller sources/sinks current.&nbsp;&nbsp; 
+		(Common cathode/common anode)</td>
+	</tr>
+</table>
+<h2><br>
+&lt;BicolourLED&gt;</h2>
+<p>Used to define a <a href="bicolourled.htm">bi-colour</a> LED output.&nbsp; 
+This is a 2-bit, 3 value output.</p>
+<h3>Attributes</h3>
+<table border="1" width="100%" id="table12">
+	<tr>
+		<td>Name</td>
+		<td>Optional descriptive text name.</td>
+	</tr>
+	<tr>
+		<td>UsagePage</td>
+		<td>The usage page of the control.</td>
+	</tr>
+	<tr>
+		<td>Usage</td>
+		<td>The usage of the control.</td>
+	</tr>
+	<tr>
+		<td>PortA</td>
+		<td>The I/O pin that LED leg 1 is connected to.&nbsp; One of PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>PortB</td>
+		<td>The I/O pin that LED leg 2 is connected to.&nbsp; One of PA0..PF7.</td>
+	</tr>
+</table>
+<h2><br>
+&lt;RGBLED&gt;</h2>
+<p>Used to define an RGB LED output.&nbsp; This is a 3-bit, 8 value output.</p>
+<h3>Attributes</h3>
+<table border="1" width="100%" id="table13">
+	<tr>
+		<td>Name</td>
+		<td>Optional descriptive text name.</td>
+	</tr>
+	<tr>
+		<td>UsagePage</td>
+		<td>The usage page of the control.</td>
+	</tr>
+	<tr>
+		<td>Usage</td>
+		<td>The usage of the control.</td>
+	</tr>
+	<tr>
+		<td>PortR</td>
+		<td>The I/O pin that the Red LED leg is connected to.&nbsp; One of PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>PortG</td>
+		<td>The I/O pin that the Green LED leg is connected to.&nbsp; One of PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>PortB</td>
+		<td>The I/O pin that the Blue LED leg is connected to.&nbsp; One of PA0..PF7.</td>
+	</tr>
+	<tr>
+		<td>Source</td>
+		<td>true/false if the microcontroller sources/sinks current.&nbsp; 
+		(Common cathode/common anode)</td>
+	</tr>
+</table>
+<h2><br>
+&lt;PWM&gt;</h2>
+<p>Provides a PWM output on one of the PWM pins.&nbsp; </p>
+<h3>Attributes</h3>
+<table border="1" width="100%" id="table14">
+	<tr>
+		<td>Name</td>
+		<td>Optional descriptive text name.</td>
+	</tr>
+	<tr>
+		<td>UsagePage</td>
+		<td>The usage page of the control.</td>
+	</tr>
+	<tr>
+		<td>Usage</td>
+		<td>The usage of the control.</td>
+	</tr>
+	<tr>
+		<td>Port</td>
+		<td>The I/O pin that the PWM signal is output.&nbsp; One of PA0..PF7.&nbsp; 
+		(really its more restrictive than that).</td>
+	</tr>
+	<tr>
+		<td>Resolution</td>
+		<td>Specifies counter top for this PWM.&nbsp; This is a bit lazy.&nbsp; 
+		This value should be determined from the &lt;Config&gt; tag.&nbsp; Used to 
+		specify the HID LogicalMax, and the size of the Output Report value.</td>
+	</tr>
+</table>
+<h2><br>
+&lt;Counter&gt;</h2>
+<p>Specifies a counter.&nbsp; There can only be one counter.&nbsp; It appears as 
+an n-bit HID input.</p>
+<h3>Attributes</h3>
+<table border="1" width="100%" id="table15">
+	<tr>
+		<td>Name</td>
+		<td>Optional descriptive text name.</td>
+	</tr>
+	<tr>
+		<td>UsagePage</td>
+		<td>The usage page of the control.</td>
+	</tr>
+	<tr>
+		<td>Usage</td>
+		<td>The usage of the control.</td>
+	</tr>
+	<tr>
+		<td>Peroid</td>
+		<td>Specifies the counting period in ms, from 0 to 0xFFFF</td>
+	</tr>
+	<tr>
+		<td>Bits</td>
+		<td>Specifies the number of bits for the value in the input report.</td>
+	</tr>
+</table>
+<h2>Example</h2>
+<p>This example is of my first <a href="samples.htm">CNC pendant</a>.</p>
+
+<font SIZE="2" COLOR="#0000ff">
+<p>&lt;!</font><font SIZE="2" COLOR="#a31515">DOCTYPE</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">GenericHIDDevice</font><font SIZE="2" COLOR="#0000ff">&gt;<br>
+&lt;</font><font SIZE="2" COLOR="#a31515">GenericHIDDevice</font><font SIZE="2" COLOR="#0000ff">&gt;<br>
+&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Device</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Manufacturer</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">FranksWorkshop</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">PID</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1241</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Product</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">Lathe 
+Pendant</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> </font>
+<font SIZE="2" COLOR="#ff0000">VID</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">7232</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">SerialNo</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">00001</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Release</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">100</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Configuration</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Timer2</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1,8,100</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">BusPowered</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">true</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Timer3</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1,8,100</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">PowerPort</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">UseStatusLEDs</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">LED1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">is5Volts</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">true</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">HIDDebug</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">false</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Interval</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">50</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">UsagePage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">PowerConsumption</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">275</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Usage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">SerialDebug</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">false</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Timer1</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1,8,100</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Controls</font><font SIZE="2" COLOR="#0000ff">&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">LCD</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Rows</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">4</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">PortE</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PA2</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Row0</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">0</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Row1</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">64</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Row2</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">20</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Row3</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">84</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">UsagePage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">20</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Columns</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">20</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">PortRS</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PA0</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">PortD0</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">PortD1</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">PortD2</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">PortD3</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">PortD4</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PA3</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">PortRW</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PA1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Bus8Bit</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">false</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">PortD5</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PA4</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Usage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">PortD6</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PA5</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">PortD7</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PA6</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">AnalogIn</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Bits</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">10</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">A</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">UsagePage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Usage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">50</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PF1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">AnalogIn</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Bits</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">10</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">Y</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">UsagePage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Usage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">50</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PF2</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">AnalogIn</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Bits</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">10</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">X</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">UsagePage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Usage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">49</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PF3</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">AnalogIn</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Bits</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">10</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">Z</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">UsagePage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Usage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">48</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PF0</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">KeyMatrix</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Debounce</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">true</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">UsageMin</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">UsagePage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">9</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Pullup</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">true</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">RowIn</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PE4</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">RowIn</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PE5</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">RowIn</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PE6</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">RowIn</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PE7</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">ColOut</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PE0</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">ColOut</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PE1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">ColOut</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PE2</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">ColOut</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PE3</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Key</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Row</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">0</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Col</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">0</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Key</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Row</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">0</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">2</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Col</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Key</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Row</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">0</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">3</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Col</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">2</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Key</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Row</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">0</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">4</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Col</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">3</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Key</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Row</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">5</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Col</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">0</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Key</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Row</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">6</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Col</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Key</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Row</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">7</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Col</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">2</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Key</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Row</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">8</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Col</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">3</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Key</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Row</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">2</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">9</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Col</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">0</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Key</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Row</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">2</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">10</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Col</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Key</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Row</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">2</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">11</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Col</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">2</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Key</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Row</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">2</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">12</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Col</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">3</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Key</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Row</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">3</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">13</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Col</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">0</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Key</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Row</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">3</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">14</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Col</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Key</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Row</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">3</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">15</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Col</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">2</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Key</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Row</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">3</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">16</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Col</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">3</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;/</font><font SIZE="2" COLOR="#a31515">KeyMatrix</font><font SIZE="2" COLOR="#0000ff">&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">DigitalEncoder</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">JogWheel</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">UsagePage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Usage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">65200</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">PortA</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PB0</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">PortB</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PB1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">DigitalEncoder</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">FeedOverride</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">UsagePage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Usage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">65200</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">PortA</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PB2</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">PortB</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PB3</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">DigitalEncoder</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">SpindleOverride</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">UsagePage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Usage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">65200</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">PortA</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PB4</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">PortB</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PB5</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">LED</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Source</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">true</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">ChangeTool</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">UsagePage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">8</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Usage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1000</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PD0</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">LED</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Source</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">true</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">Run</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">UsagePage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">8</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Usage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1001</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PD1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">RotarySwitch</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Debounce</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">true</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Encoded</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">true</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">AxisSelect</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">UsagePage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">9</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Outputs</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">6</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Usage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">65200</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Pullup</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">true</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Input</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Bit</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PC0</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Input</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Bit</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">2</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PC1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Input</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Bit</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">4</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PC2</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;/</font><font SIZE="2" COLOR="#a31515">RotarySwitch</font><font SIZE="2" COLOR="#0000ff">&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">RotarySwitch</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Debounce</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">true</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Encoded</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">true</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">MultiplierSelect</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">UsagePage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">9</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Outputs</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">4</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Usage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">65200</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Pullup</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">true</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Input</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Bit</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PC3</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Input</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Bit</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">2</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PC4</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;/</font><font SIZE="2" COLOR="#a31515">RotarySwitch</font><font SIZE="2" COLOR="#0000ff">&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">LED</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Source</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">true</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">SingleStep</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">UsagePage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">8</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Usage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1002</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PC7</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Switch</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Debounce</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">true</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">Step 
+Mode</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> </font>
+<font SIZE="2" COLOR="#ff0000">UsagePage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">9</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Usage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1001</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Pullup</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">true</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PC5</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;</font><font SIZE="2" COLOR="#a31515">Switch</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Debounce</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">true</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Name</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">Reset</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">UsagePage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">9</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Usage</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">1001</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Pullup</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">true</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">
+</font><font SIZE="2" COLOR="#ff0000">Port</font><font SIZE="2" COLOR="#0000ff">=</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff">PC6</font><font SIZE="2">&quot;</font><font SIZE="2" COLOR="#0000ff"> 
+/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;/</font><font SIZE="2" COLOR="#a31515">Controls</font><font SIZE="2" COLOR="#0000ff">&gt;<br>
+&lt;/</font><font SIZE="2" COLOR="#a31515">GenericHIDDevice</font><font SIZE="2" COLOR="#0000ff">&gt;<br>
+</font>
+<p>&nbsp;</p>
+</body>
+
+</html>

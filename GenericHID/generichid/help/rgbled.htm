@@ -1,0 +1,86 @@
+<html>
+
+<head>
+<title>RGB LED</title>
+</head>
+
+<body>
+<h1>RGB LED</h1>
+
+<p>RGB LEDs are <a href="leds.htm">LEDs</a> that contain three independent LEDs in the one package; a 
+Red, Green and Blue LED, making this a 4 legged LED (or sometimes 6 legs if a 
+common leg isn't used).&nbsp; As with the <a href="tricolourled.htm">Tri-colour LEDs</a>, these LEDs can be 
+either common cathode, or common anode.</p>
+<p><img border="0" src="rgbledsch.png" width="277" height="121"></p>
+<p>Three <a href="leds.htm#clr">current limiting resistors</a> are needed, one on each LED.&nbsp; Also, 
+three microcontroller pins are required.</p>
+<p><img border="0" src="rgbledcon.png" width="170" height="235"></p>
+<p>The RGB LED will appear as a HID output with 8 states.&nbsp; These will be...</p>
+<table >
+	<tr>
+		<td><b>State</b></td>
+		<td><b>Colour</b></td>
+	</tr>
+	<tr>
+		<td>0</td>
+		<td>Off</td>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td>Blue</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>Green</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>Blue + Green = Cyan</td>
+	</tr>
+	<tr>
+		<td>4</td>
+		<td>Red</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>Red + Blue = Magenta</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>Red + Green = Yellow</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>Red + Blue + Green = White</td>
+	</tr>
+</table>
+<p>Note: The mixed colours will vary based on the actual colour of the 
+individual LEDs and their intensity, controlled by the <a href="leds.htm#clr">
+current limiting resistors</a>.</p>
+<p>An RGB LED can be connected to any I/O port.</p>
+<p>
+</p>
+<h2>Properties</h2>
+
+<h3 id="Name">Name</h3>
+<p>Components can be given an optional name.&nbsp; This is seen in the Test tab.  Not all applications support the name.&nbsp; 
+Hidcomp/hidconfig supports names.</p>
+
+<h3 id="Usage">UsagePage/Usage</h3>
+<p>The UsagePage and Usage of the LED.  See <a href="usages.htm">Usages</a> for more information.</p>
+
+<h3 id="Type">Type</h3>
+<p>Whether the <a href="leds.htm">anodes</a> or the <a href="leds.htm">cathodes</a> of the internal diodes are connected together.</p>
+
+<h3 id="Current">Current</h3>
+<p> Defines the amount of electrical current used by the LED in mA.  This is used to estimate the USB power draw.&nbsp; 
+See the section on <a href="hardware.htm#current">Power</a> for more information.</p>
+
+
+<h2>See Also</h2>
+<p><a href="led.htm">LED</a>, <a href="bicolourled.htm">Bicolour LED</a>, <a href="tricolourled.htm">Tri-colour LED</a>, 
+<a href="leds.htm">LEDs</a> </p>
+
+</body>
+
+</html>

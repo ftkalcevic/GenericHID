@@ -1,0 +1,456 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Generic HID Software</title>
+</head>
+
+<body>
+<h1>Generic HID Software</h1>
+<h2>Screen Layout</h2>
+<p>The Generic HID software is used to design a HID device.&nbsp; Components are 
+virtually connected to the microcontroller board, and the firmware is generated 
+and downloaded to the device.&nbsp; The layout of the Generic HID software is 
+shown below.</p>
+
+<p><img border="0" src="generichid.png" width="818" height="536"></p>
+<h3>Menu</h3>
+<p>The following menu items are available.</p>
+<p><b>File</b></p>
+<table cellpadding=5 >
+	<col width="150px">
+	<tr>
+		<td>New</td>
+		<td>Creates a new Generic HID device configuration.</td>
+	</tr>
+	<tr>
+		<td>Open</td>
+		<td>Opens an existing Generic HID device configuration.&nbsp; The 
+		extension .ghd is used for Generic HID device configurations.</td>
+	</tr>
+	<tr>
+		<td>Save</td>
+		<td>Saves the current device configuration.</td>
+	</tr>
+	<tr>
+		<td>Save As</td>
+		<td>Saves the current device configuration, but prompts for a new name.</td>
+	</tr>
+	<tr>
+		<td>Exit</td>
+		<td>Exits the applications</td>
+	</tr>
+</table>
+<p><b>Microcontroller</b></p>
+<table cellpadding=5 >
+	<col width="150px">
+	<tr>
+		<td>Program</td>
+		<td>Programs the connected microcontroller with the currently loaded 
+		configuration.&nbsp; The configuration is verified before the Program 
+		dialog is presented.&nbsp; </td>
+	</tr>
+	<tr>
+		<td>Export</td>
+		<td>Exports the current configuration as a microcontroller configuration 
+		description.&nbsp; The extension .mcd is used for microcontroller 
+		configuration descriptions.&nbsp; .mcd files are used to program the 
+		microcontroller.&nbsp; Generic HID is a visual editor for the .mcd 
+		files, but only supports a subset of functions.&nbsp; If there is a 
+		feature needed that Generic HID doesn't support, the current 
+		configuration can be exported as an .mcd file, edited, then imported and 
+		programmed.&nbsp; Generic HID currently has a fixed number of I/O pins 
+		on the KeyMatrix, Rotary Switch and Coded Rotary Switch.</td>
+	</tr>
+	<tr>
+		<td>Import and Program</td>
+		<td>Imports an existing .mcd file and programs the microcontroller with 
+		the data, as described in &quot;Export&quot;.</td>
+	</tr>
+</table>
+<p><b>Options</b></p>
+<table cellpadding=5 >
+	<col width="150px">
+	<tr>
+		<td>Debug</td>
+		<td>Toggles debug.&nbsp; This generates volumous amounts of debug to 
+		stderr in Linux, and the system debug output device in Windows.</td>
+	</tr>
+</table>
+<p><b>Help</b></p>
+<table cellpadding=5 >
+	<col width="150px">
+	<tr>
+		<td>About</td>
+		<td>Shows the about box.</td>
+	</tr>
+</table>
+<h3>Edit Toolbar</h3>
+<p>The Edit Toolbar provides buttons to perform the standard editing operations, 
+also found in the File menu.</p>
+<table cellpadding=5 >
+	<col width=100px>
+	<tr>
+		<td><img border="0" src="new.png" width="32" height="32"></td>
+		<td>New.&nbsp; Create a new Generic HID configuration.</td>
+	</tr>
+	<tr>
+		<td><img border="0" src="open.png" width="32" height="32"></td>
+		<td>Open.&nbsp; Open an existing configuration.</td>
+	</tr>
+	<tr>
+		<td><img border="0" src="save.png" width="32" height="32"></td>
+		<td>Save.&nbsp; Save the existing configuration.</td>
+	</tr>
+	<tr>
+		<td>Zoom Combo</td>
+		<td>Specifies the Zoom percentage on the Design workspace.</td>
+	</tr>
+</table>
+<h3>Tool Toolbar</h3>
+<p>The Tool Toolbar contains the tools used to manipulate the Generic HID 
+configuration.</p>
+<table cellpadding=5 >
+	<tr>
+		<td><img border="0" src="cursor.png" width="32" height="32"></td>
+		<td>Select</td>
+		<td>Use the select tool to select components on the Design workspace.&nbsp; 
+		A component can be deleted when it is selected by pressing the Delete 
+		key.&nbsp; When an item is selected, its properties can be changed.</td>
+	</tr>
+	<tr>
+		<td><img border="0" src="wire.png" width="48" height="48"></td>
+		<td>Wire</td>
+		<td>Create a wire link between two components.&nbsp; Wires are 
+		restricted to which pins they can be connected to.&nbsp; For example, a 
+		Digital Encoder can only be wired to microcontroller pins that support 
+		interrupts.&nbsp; The cursor changes shape according to whether you can
+		<img border="0" src="wire%20cursor.png" width="32" height="32">, or 
+		can't
+		<img border="0" src="wire%20cursor%20not.png" width="32" height="32"> 
+		place a wire.&nbsp; The reason a wire cannot be placed will be shown on 
+		the status bar.</td>
+	</tr>
+	<tr>
+		<td><img border="0" src="rotate.png" width="48" height="48"></td>
+		<td>Rotate</td>
+		<td>With this tool selected, clicking on a component will rotate them.&nbsp; 
+		Any attached wires will spin too.</td>
+	</tr>
+	<tr>
+		<td><img border="0" src="mirror.png" width="48" height="48"></td>
+		<td>Mirror</td>
+		<td>With this tool selected, the component will mirror horizontally.&nbsp; 
+		To mirror vertically, mirror horizontally first, then use the rotate 
+		tool.&nbsp; An unfortunate side effect of mirroring a component is all 
+		the text labels get mirrored too.</td>
+	</tr>
+</table>
+<h3>Toolbox</h3>
+<p>The tool box contains all the boards and components that can combined to make 
+a Generic HID device.&nbsp; Tools are placed on the design surface by dragging 
+them from the toolbar.</p>
+<table cellpadding=5 >
+	<tr>
+		<td><a href="at90usbkey.htm"><img border="0" src="avrusbkeyicon.png" width="48" height="48"></a></td>
+		<td><a href="stockusbkey.htm">Stock AT90USBKey</a></td>
+		<td>This is a stock AT90USBKey board.&nbsp; A large number of I/O pins 
+		are disabled because they are used by the demo peripherals.</td>
+	</tr>
+	<tr>
+		<td><a href="strippedusbkey.htm"><img border="0" src="avrusbkeyicon.png" width="48" height="48"></a></td>
+		<td><a href="strippedusbkey.htm">Stripped AT90USBKey</a></td>
+		<td>The stripped AT90USBKey has had most of the peripheral parts 
+		removed, reclaiming most of the I/O pins.</td>
+	</tr>
+	<tr>
+		<td><a href="usbkeywithwings.htm"><img border="0" src="avrusbkeywingsicon.png" width="48" height="48"></a></td>
+		<td><a href="usbkeywithwings.htm">Stripped AT90USBKey with wizbang wings</a></td>
+		<td>This is a stripped AT90USBKey with wizbang wings attached.&nbsp; The 
+		pins are laid out according the positioning of the wizbang wings.</td>
+	</tr>
+	<tr>
+		<td><a href="wizbangidc.htm"><img border="0" src="avrusbkeywingsicon.png" width="48" height="48"></a></td>
+		<td><a href="wizbangidc.htm">Stripped AT90USBKey with wizbang wings and IDC connectors</a></td>
+		<td>This is a stripped AT90USBKey with wizbang wings attached. It also 
+		has standard 0.1x0.1 5x2 headers attached and a matching IDC connector 
+		is used to connect wires to the pins.&nbsp; The I/O pins on the board 
+		are laid out linearly, in the order they appear out of the connecting 
+		ribbon cable.</td>
+	</tr>
+	<tr>
+		<td><img border="0" src="generichid.1.0icon.png" width="48" height="48"></td>
+		<td><a href="generichid.1.0.htm">GenericHID 1.0 Custom Board</a></td>
+		<td>This is a custom board.&nbsp; Similar to the AT90USBKey boards 
+		except it is a bigger, has screw terminals and <a href="power.htm">high 
+		power switching</a>.</td>
+	</tr>
+	<tr>
+		<td><a href="pot.htm"><img border="0" src="potentiometericon.png" width="48" height="48"></a></td>
+		<td><a href="pot.htm">Potentiometer</a></td>
+		<td>A potentiometer.&nbsp; This device is used to represent any analogue 
+		input.&nbsp; This component can only connect to an ADC pin.</td>
+	</tr>
+	<tr>
+		<td><a href="digitalencoder.htm"><img border="0" src="digitalencodericon.png" width="48" height="48"></a></td>
+		<td><a href="digitalencoder.htm">Digital Encoder</a></td>
+		<td>A digital encoder.&nbsp; The two wires of the digital encoder, A and 
+		B, can only connect to interrupt ports.&nbsp; There are 16 interrupt 
+		ports.</td>
+	</tr>
+	<tr>
+		<td><a href="button.htm"><img border="0" src="pushbuttonicon.png" width="48" height="48"></a></td>
+		<td><a href="button.htm">Button</a></td>
+		<td>A regular button, or switch.&nbsp; This device is used to represent 
+		any single bit input.&nbsp; This can be a momentary&nbsp; push button, 
+		or a toggle switch.&nbsp; Usually wired so that the button shorts the 
+		pin to ground when pressed, using the internal pull-up resistor.&nbsp; </td>
+	</tr>
+	<tr>
+		<td><a href="keymatrix.htm"><img border="0" src="keymatrixicon.png" width="48" height="48"></a></td>
+		<td><a href="keymatrix.htm">Key Matrix</a></td>
+		<td>The Key Matrix is used to wire up keypads, or to make efficient use 
+		of I/O pins to wire up a lot of buttons.</td>
+	</tr>
+	<tr>
+		<td><a href="rotaryswitch.htm"><img border="0" src="rotaryswitchicon.png" width="48" height="48"></a></td>
+		<td><a href="rotaryswitch.htm">Rotary Selector Switch</a></td>
+		<td>A one-of-n selector switch.&nbsp; Uses the I/O pins inefficiently.&nbsp; 
+		One pin is used for each option.</td>
+	</tr>
+	<tr>
+		<td>
+		<a href="codedrotaryswitch.htm">
+		<img border="0" src="codedrotaryswitchicon.png" width="48" height="48"></a></td>
+		<td><a href="codedrotaryswitch.htm">Coded Rotary Selector Switch</a></td>
+		<td>Like the rotary selector switch above, except the output of the 
+		selector is binary encoded.&nbsp; A 16 way selector only uses 4 I/O 
+		pins.</td>
+	</tr>
+	<tr>
+		<td><a href="lcd.htm"><img border="0" src="lcdicon.png" width="48" height="48"></a></td>
+		<td><a href="lcd.htm">LCD</a></td>
+		<td>The LCD.&nbsp; Character LCD Modules that use the HD44780U or 
+		compatible driver chip.&nbsp; These are your stock modules that you can 
+		get everywhere.&nbsp; Common sizes include 8x1, 16x2, 20x2, 40x2, 20x4.&nbsp; 
+		There are also some 40x4 displays available which can be used by 
+		treating them as separate displays (they have two E pins).</td>
+	</tr>
+	<tr>
+		<td><a href="led.htm"><img border="0" src="ledicon.png" width="48" height="48"></a></td>
+		<td><a href="led.htm">LED</a></td>
+		<td>An LED, or a single bit output.&nbsp; Be careful that you do not 
+		draw too much current to light LEDs or the microcontroller on the demo 
+		boards will be damaged.</td>
+	</tr>
+	<tr>
+		<td><a href="bicolourled.htm"><img border="0" src="bicolourledicon.png" width="48" height="48"></a></td>
+		<td><a href="bicolourled.htm">Bi-Colour LED</a></td>
+		<td>A bi-colour LED.&nbsp; At <a href="http://www.franksworkshop.com.au">
+		Frank's Workshop</a>, a bi-colour LED is a two leg LED, with two LEDs 
+		inside the package with the anode of one LED connected to the cathode of 
+		the other.&nbsp; Power it one way and you get one LED.&nbsp; Reverse the 
+		voltage polarity and you light the other.&nbsp; Again, be careful that 
+		you do not draw too much current to light LEDs or the microcontroller on 
+		the demo boards will be damaged.</td>
+	</tr>
+	<tr>
+		<td><a href="tricolourled.htm"><img border="0" src="tricolourledicon.png" width="48" height="48"></a></td>
+		<td><a href="tricolourled.htm">Tri-Colour LED</a></td>
+		<td>A tri-colour LED.&nbsp; At
+		<a href="http://www.franksworkshop.com.au">Frank's Workshop</a>, a tri-colour 
+		LED is a three leg LED, with two LEDs inside the package with either the 
+		anodes connected, or the cathodes connnected.&nbsp; You can light one, 
+		two, or none of the LEDs independantly.&nbsp; Again, be careful that you 
+		do not draw too much current to light LEDs or the microcontroller on the 
+		demo boards will be damaged.</td>
+	</tr>
+	<tr>
+		<td><a href="rgbled.htm"><img border="0" src="rgbledicon.png" width="48" height="48"></a></td>
+		<td><a href="rgbled.htm">RGB LED</a></td>
+		<td>Am rgb LED.&nbsp; An RGB LED is a three LEDs in one package, a red, 
+		green and blue one, typically with the anodes, or the cathodes 
+		connnected.&nbsp; You can light one, two, or none of the LEDs 
+		independantly.&nbsp; Have I mentioned that you need to be careful that 
+		you do not draw too much current to light LEDs or the microcontroller on 
+		the demo boards will be damaged?&nbsp;</td>
+	</tr>
+	<tr>
+		<td>
+		<a href="dirswitch.htm">
+		<img border="0" src="directionalswitchicon.png" width="48" height="48"></a></td>
+		<td><a href="dirswitch.htm">Directional Switch (HatSwitch)</a></td>
+		<td>The directional switch, or hat switch.&nbsp; This is a controller 
+		that specifies direction by which buttons are being pressed.&nbsp; This 
+		can be disk, like on a game pad, or a joystick, like those found on 
+		arcade machines.</td>
+	</tr>
+	<tr>
+		<td><a href="counter.htm"><img border="0" src="timericon.png" width="47" height="48"></a></td>
+		<td><a href="counter.htm">Counter</a></td>
+		<td>A counter.&nbsp; This counts.</td>
+	</tr>
+	<tr>
+		<td><a href="pwm.htm"><img border="0" src="pwmicon.png" width="48" height="48"></a></td>
+		<td><a href="pwm.htm">PWM</a></td>
+		<td>A PWM output.</td>
+	</tr>
+	<tr>
+		<td><a href="power.htm"><img border="0" src="powericon.png" width="48" height="48"></a></td>
+		<td><a href="power.htm">Power Switch</a></td>
+		<td>Used to define the power the HiPower switch is connected to.</td>
+	</tr>
+</table>
+<h3>Properties</h3>
+<p>The properties panel allows the properties of components to be changed.&nbsp; 
+When a component is selected, the properties panel is populated the components 
+properties.&nbsp; Also, the Help panel will also bring up the help for that 
+component.&nbsp; Selecting a property will move the help to a description of the 
+property.</p>
+<h3>Help</h3>
+<p>The Help panel displays context sensitive help.&nbsp; If a component is 
+selected, the help for the component is selected.&nbsp; If a component's 
+property is selected, the help for that property is selected.&nbsp; If no 
+component is selected, the help index is displayed.</p>
+<p>The Help files are in HTML format, so they can be navigated by clicking on 
+the hyperlinks.</p>
+<h3>Design Panel</h3>
+<p>There are two tabs in the application.&nbsp; One is the Design panel.</p>
+<p>The Design panel is the working area where components are placed, and wires 
+laid.&nbsp; The are can be zoomed into, or scrolled with scroll bars.&nbsp; The 
+are is a fixed size, more than large enough for any HID device, but it will not 
+expand if components are drag outside the region.</p>
+<h3>Test Panel</h3>
+<p>The test panel provides an area to test the new Generic HID device.&nbsp; The 
+image below shows a minimal device.</p>
+<p><img border="0" src="testpanel.png" width="470" height="419"></p>
+<p>All known component types are displayed.&nbsp; Buttons, or 1 bit inputs are 
+shown as red/green lights.&nbsp; Inputs with large values, such as joysticks and 
+encoders, are shown as a percent bar.&nbsp; Directional switches (or hat 
+switches) are shown as a hat switch symbol.&nbsp; Simple LED outputs are shown 
+as check boxes.&nbsp; Outputs with values greater than 1 are shown as a slider 
+switch.&nbsp; LCDs are shown as a working LCD.</p>
+<p>Things that aren't understood may be displayed anyway.&nbsp; The image above 
+shows the &quot;DFU&quot; control.&nbsp; All Generic HID knows about this its name 
+(because the name is reported by the device), and that it is an integer 4 byte 
+number.&nbsp; DFU, Device Firmware Upgrade, is a Generic HID command that sets 
+the device into boot loader mode to upgrade the firmware.</p>
+<p>The test panel may misbehave if a device is disconnected when being tested.&nbsp; 
+Also, the Program menu option is not available while in the test panel.&nbsp; 
+Switch back to design before testing.</p>
+<p>The image below shows a full device, with lots of potentiometer and encoder 
+inputs, lots of buttons and LEDs, and an LCD.</p>
+<p><img border="0" src="testlarge.png" width="499" height="473"></p>
+<h2>Programming</h2>
+<p>The programmer is built into the Generic HID software, so there is not need 
+to jump around between applications, converting file formats, etc, unless you 
+really want to.&nbsp; The Generic HID programmer is built on the
+<a href="http://dfu-programmer.sourceforge.net/">dfuprogrammer</a> to perform 
+the programming.&nbsp; The AT90USB1287 comes preloaded with bootloader firmware, 
+and fuses set so that bootloader cannot be accidently erased.&nbsp; The 
+AT90USB1287 can always be reprogrammed.&nbsp; </p>
+<p>The programmer is launched from the Microcontroller | Program menu.&nbsp; It 
+launches the following dialog.&nbsp; The Program menu is disabled when the Test 
+panel is active.</p>
+<p><img border="0" src="program.png" width="253" height="296"></p>
+<p>The dialog contains the following bits...</p>
+<table cellpadding=5>
+	<tr>
+		<td>Refresh</td>
+		<td>The refresh button is used to re-read the list of usb devices 
+		connected to the computer and update the status of this dialog box.&nbsp; 
+		Normally this isn't needed as refreshes are done automatically every 
+		second or so.</td>
+	</tr>
+	<tr>
+		<td>USB Device Located</td>
+		<td>The USB Device Located light will be green if it can detect a 
+		suitable device.&nbsp; This can either be an active Generic HID device, 
+		or an at90usb1287 based device waiting in DFU programming mode.</td>
+	</tr>
+	<tr>
+		<td>HID Device Mode</td>
+		<td>If this light is green, a Generic HID device has been found and it 
+		is behaving like a HID device.</td>
+	</tr>
+	<tr>
+		<td>Bootloader Mode</td>
+		<td>If this light is green, an at90usb1287 based device waiting in DFU 
+		programming mode.&nbsp; Hopefully this is a Generic HID device about to 
+		be programmed.</td>
+	</tr>
+	<tr>
+		<td>Start Bootloader</td>
+		<td>This button is only available if a Generic HID device is detected, 
+		and it is in HID mode.&nbsp; Pressing the button will put the device 
+		into DFU program mode.&nbsp; It will sit there waiting to be programmed, 
+		or restarted.</td>
+	</tr>
+	<tr>
+		<td>Program</td>
+		<td>The program button is only available after the device has entered 
+		DFU programming mode.&nbsp; Pressing the button will reload the firmware 
+		and eeprom of the device to match the input configuration.</td>
+	</tr>
+	<tr>
+		<td>Restart Device</td>
+		<td>The program button is only available after the device has entered 
+		DFU programming mode.&nbsp; Pressing the button will restart the 
+		firmware, returning the device to HID mode.&nbsp; That's what it should 
+		do in theory.&nbsp; Sometimes it sticks, can needs to be reset by 
+		pressing the RST button on the board, or disconnecting and reconnecting 
+		the device.</td>
+	</tr>
+	<tr>
+		<td>Close</td>
+		<td>Closes the dialog.</td>
+	</tr>
+</table>
+<p>The programming process is quite simple.</p>
+<ol>
+	<li>Bring up the programming dialog.</li>
+	<li>Press the &quot;Start Bootloader&quot; button.</li>
+	<li>Press the &quot;Program&quot; button.</li>
+	<li>Press the &quot;Restart Device&quot; button.</li>
+	<li>Return to the Test panel and admire your device.</li>
+</ol>
+<p>It should be that simple.&nbsp; If the device hasn't been initialised yet, or 
+something just isn't right, program mode can be entered into by using the 
+hardware buttons...</p>
+<ul>
+	<li>Press and hold the HWB button.&nbsp; </li>
+	<li>Press and release the RST button.&nbsp; </li>
+	<li>Release the HWB.&nbsp; </li>
+	<li>The Program button should now be enabled.&nbsp; Continue from step 3 
+	above.</li>
+</ul>
+<h3>Exporting</h3>
+<p>Generic HID was originally written as a simple command line based utility.&nbsp; 
+A microcontroller configuration description (.mcd) file would be crafted by 
+hand.&nbsp; Then Generic HID would compile the eeprom file for the application.&nbsp; 
+Then, manually, the firmware and eeprom would be downloaded to the hid device.</p>
+<p>Then I thought, a GUI to make the .mcd would be cool!&nbsp; So the current 
+version of Generic HID was born; a GUI editor that generated the mcd file and 
+programmed the device.&nbsp; The .mcd file and the eeprom files are still 
+created, but they are stored in memory.&nbsp; The typical flow goes like this...</p>
+<p><img border="0" src="flow.png" width="782" height="279"></p>
+<p>So why is this important?&nbsp; The GUI part of GenericHID doesn't yet 
+support all functionality that an .mcd file can.&nbsp; In particular, the 
+GenericHID GUI has fixed upper limits on KeyMatrix, Rotary Switch and Coded 
+Rotary Switch sizes.&nbsp; If you need to exceed these limits, you need to use 
+an .mcd file.</p>
+<p>The export command will save the current GUI configuration as an .mcd file.&nbsp; 
+This is a one way export; the .mcd file can only be imported directly into the 
+programming stage.&nbsp; It can't be visually edited again.</p>
+<p>The exported .mcd file can be edited using a text editor.&nbsp; It is xml.&nbsp; 
+The schema is documented here, in plain speak.</p>
+<p>After the .mcd file has been changed, it can be imported using the Import and 
+Program command.</p>
+<h3>Importing</h3>
+<p>The Import and Program button will import an mcd file, verify it, create the 
+EEPROM, then enter the program dialog.&nbsp; The regular programming process can 
+then be used to program the Generic HID with the .mcd configuration.</p>
+
+</body>
+
+</html>

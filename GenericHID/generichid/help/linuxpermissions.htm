@@ -1,0 +1,59 @@
+<html>
+
+<head>
+<title>Linux Permissions</title>
+</head>
+
+<body>
+<h1>Linux Permissions</h1>
+				<p>
+				Note - this information applies to Ubuntu 8.04 and may or may not work for other versions.
+				</p>
+				<p>
+				When you insert a USB device, by default, the device is owned by <a class="code">root</a>.
+				A quick and dirty work-around is to run <b>GenericHID</b> as <a class="code">root</a> but
+				that will only allow the device to be built, and not run by the 
+				target application.
+				</p>
+				<p>
+				The correct solution is to create a udev rules file.  A file is create in /etc/udev/rules.d which 
+				tells udev (the dynamic device management system) what to do when the device is inserted.  
+				These files are flexible, allowing other applications to be 
+				launched, but we
+				only need to set permissions.
+				</p>
+<p>
+				Permissions must be set for both the Generic HID device, and the 
+				DFU device (the device that appears when in programming mode).</p>
+				<p>Here is an example of a udev rules file.  In my <a class="code">/etc/udev/rules.d/</a> folder I have created the 
+				file <a class="code">99-hid.rules</a>.  The name of the file is not important, as long as it has the extension <a class="code">.rules</a>.
+				</p>
+				<blockquote class="code">
+					# Generic HID device<br>
+					SYSFS{idProduct}=="04d9",  SYSFS{idVendor}=="1c40", MODE="0660", GROUP="plugdev"<br>
+					# Atmel DFU file for at90usb1286, at90usb1287<br>
+					SYSFS{idProduct}=="2ffb", SYSFS{idVendor}=="03eb", MODE="0660", GROUP="plugdev"<br>
+					<br>
+				</blockquote>
+				<p>
+				In my file, each data line has 4 parts.  The first two specify the PID and VID of the USB device
+				that this line applies to.  The last 2 parts refer to the commands to run when a device is found.
+				In this case, we set the permissions on the device to 0660 (owner=read/write, group=read/write), and
+				we set the group of the device to <a class="code">plugdev</a>.
+				</p>
+				<p>The lines beginning with # are comments.</p>
+				<p>For this file to work, there must also be a group on the system called <a class="code">plugdev</a>, and 
+				the user account that runs Generic HID and the application that 
+				uses the HID device must belong to this group.  This can be done with the commands...
+				</p>
+				<blockquote class="code">
+					sudo addgroup plugdev<br>
+					sudo addgroup myloginname plugdev
+				</blockquote>
+				<p>The rules file will take effect next time the device is plugged in.</p>
+				<p>There is more information about the rules file in <b>udev(7)</b> 
+				man page. </p>
+
+				</body>
+
+</html>

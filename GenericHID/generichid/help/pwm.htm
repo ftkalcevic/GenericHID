@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>PWM</title>
+</head>
+
+<body>
+<h1>PWM - Pulse Width Modulation</h1>
+<p>The PWM control is used to generate a PWM output signal on an output port.&nbsp; 
+A PWM signal is a pulse that repeats at a fixed frequency.&nbsp; The width of 
+the pulse can be varied from 0 to 100%.</p>
+<p><img border="0" src="pwmsignal.png" width="334" height="122"></p>
+<p>The image above shows the PWM signal, plotting the output voltage against 
+time.&nbsp; The period specifies the time the pulse repeats.&nbsp; The frequency 
+of the signal is 1 / period, where the period is in seconds.&nbsp; In the 
+example above, the pulse width, or duty cycle, is about 66%.</p>
+<p>The frequency of the PWM signal and the resolution of the pulse width are 
+defined as characteristics of the microcontroller.&nbsp; See the section on
+<a href="timers.htm">timers</a> for more information.</p>
+<p>The frequency of the PWM signal can be configured to be anything from 0.1Hz 
+to 4MHz.&nbsp; For controlling LED brightness anything above 1kHz is fine.</p>
+<p>So what is a PWM signal used for?&nbsp; In a HID device, they can be used for 
+driving LEDs and other external loads.&nbsp; Hooking up an <a href="rgbled.htm">
+RGB LED</a> to 3 PWM outputs will give infinite colour control of the LED.&nbsp; 
+The PWM signal can also be used to adjust the brightness of an <a href="lcd.htm">
+LCD</a> backlight.&nbsp; Beware of the current limitations of the 
+microcontroller - it is not powerful enough to drive the LCD backlight directly.&nbsp; 
+A switching circuit using a transistor of FET should be used.&nbsp; For 
+example...</p>
+<p><img border="0" src="pwmswitch.png" width="473" height="254"></p>
+<p>A suitable NPN transistor or N-Channel FET should be chosen that can handle 
+the current requirements.&nbsp; Transistors are recommended because they are 
+less susceptible to static electricity damage.&nbsp; </p>
+<p>A PWM component must be connected to a PWM compatible pin, one of: PB5, PB6, 
+PB7, PB4, PD1, PC6,&nbsp; PC5 or PC4.</p>
+
+<h2>Properties</h2>
+
+<h3 id="Name">Name</h3>
+<p>Components can be given an optional name.&nbsp; This is seen in the Test tab.  Not all applications support the name.&nbsp; 
+Hidcomp/hidconfig supports names.</p>
+
+<h3 id="Usage">UsagePage/Usage</h3>
+<p>The UsagePage and Usage of the Timer.  See <a href="usages.htm">Usages</a> for more information.</p>
+
+<h3 id="Frequency">Frequency</h3>
+<p>The frequency of the PWM output.  This is defined in the microcontroller timer setting, shown here for convenience.</p>
+
+<h3 id="Resolution">Resolution</h3>
+<p>The number of integer subdivisions the PWM period is divided into. This is defined in the microcontroller timer setting, shown here for convenience.</p>
+
+<h3 id="Timer">Timer</h3>
+<p>Which microcontroller timer this output is connected to.  This is dependent on the pin that the 
+PWM output is connected to.</p>
+
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>Directional Switch</title>
+</head>
+
+<body>
+<h1>Directional Switch (Hat Switch)</h1>
+<p>The directional switch, or hat switch, or switched joystick, is a navigation 
+type device that uses switches to specify the direction.&nbsp; They come in 
+2-way, 4-way and possibly 8-way (I've never seen one, and probably 
+misinterpreted a 4 way which can output 8 values).</p>
+<p>A 4-way directional switch, commonly found as hat switches on joysticks and 
+game pads, has 4 switches in the North, South, East, West directions.&nbsp; When 
+the stick is moved in the North direction, for example, the North switch 
+triggers.&nbsp; If the stick is moved in the North East direction, both the 
+North and East switches trigger.</p>
+<p>A 2-way direction switch is used to specify navigation in either the North 
+South direction, or East West.&nbsp; Of course, this can be interpreted as up 
+down as a volume control as is required by the application.</p>
+<p>The difference between a Directional Switch and a jumble of buttons is the 
+way Generic HID interprets the directional switch.&nbsp; The 4-way switch will 
+have 9 outputs.&nbsp; -1 for no selection, and the values 0-7 for the directions 
+N,NW,W,S,SW,S,SE,E,NE.&nbsp; The application software can then convert these 
+values into a directional angle (0-359&deg;). </p>
+<p>The directional switch typically uses mechanical switches, so a pull-up 
+resistor and debouncing should be used.&nbsp; See
+<a href="mechanicalswitches.htm">Mechanical Switches</a> for more information.</p>
+<h2>Properties</h2>
+
+<h3 id="Name">Name</h3>
+<p>Components can be given an optional name.&nbsp; This is seen in the Test tab.  Not all applications support the name.&nbsp; 
+Hidcomp/hidconfig supports names.</p>
+
+<h3 id="Usage">UsagePage/Usage</h3>
+<p>The UsagePage and Usage of the Directional Switch.  See <a href="usages.htm">Usages</a> for more information.</p>
+
+<h3 id="Directions">Directions</h3>
+<p>The number of directions.</p>
+
+<h3 id="Pullup">Pull Up</h3>
+<p>Should the internal pullup resistor of the microcontroller be used.  Normally set to true when switching to ground.  See 
+<a href="mechanicalswitches.htm">Mechnical Switches</a> for more information.</p>
+
+<h3 id="Debounce">Debounce</h3>
+<p>Waits for the mechanical switch stop bouncing before registering a switch closure.&nbsp; 
+See 
+<a href="mechanicalswitches.htm">Mechnical Switches</a> for more information.</p>
+
+<h3 id="Current">Current</h3>
+<p> Defines the amount of electrical current used by the LED in mA.  This is used to estimate the USB power draw.&nbsp; 
+See the section on <a href="power.htm">Power</a> for more information.</p>
+
+<p>Current drawn by switches is usually insignificant and can be set to 0.</p>
+
+</body>
+
+</html>
