@@ -1,10 +1,12 @@
 #include "stdafx.h"
 #include "generichid.h"
 #include <QtGui/QApplication>
+#include <QtPlugin>
 #include "usb.h"
 #include "logcore.h"
 #include "hiddevices.h"
 
+Q_IMPORT_PLUGIN(qjpeg)
 
 int main(int argc, char *argv[])
 {
