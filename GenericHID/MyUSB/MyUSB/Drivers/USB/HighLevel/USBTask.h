@@ -19,7 +19,9 @@
 		#include "../../../Scheduler/Scheduler.h"
 		#include "../HighLevel/Events.h"
 		#include "../LowLevel/LowLevel.h"
+	    #if !defined(USB_DEVICE_ONLY) // All modes or USB_HOST_ONLY
 		#include "../LowLevel/HostChapter9.h"
+	    #endif
 		#include "StdDescriptors.h"
 		
 	/* Public Interface - May be used in end-application: */

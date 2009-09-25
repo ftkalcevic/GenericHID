@@ -77,6 +77,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ctoasm.inc"
+				>
+			</File>
+			<File
 				RelativePath=".\Descriptors.c"
 				>
 			</File>
@@ -102,6 +106,14 @@
 			</File>
 			<File
 				RelativePath=".\LED.c"
+				>
+			</File>
+			<File
+				RelativePath=".\macros.inc"
+				>
+			</File>
+			<File
+				RelativePath=".\PortIO.S"
 				>
 			</File>
 			<File
@@ -264,7 +276,27 @@
 				Name="Header Files"
 				>
 				<File
+					RelativePath="..\..\MyUSB\Common\Atomic.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\MyUSB\Drivers\USBKEY\Bicolour.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\MyUSB\Common\ButtLoadTag.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\MyUSB\Common\Common.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\MyUSB\Drivers\USB\LowLevel\DevChapter9.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\MyUSB\Drivers\USB\LowLevel\Device.h"
 					>
 				</File>
 				<File
@@ -273,6 +305,14 @@
 				</File>
 				<File
 					RelativePath="..\..\MyUSB\Drivers\USB\HighLevel\Events.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\MyUSB\Common\FunctionAttributes.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\MyUSB\Common\ISRMacro.h"
 					>
 				</File>
 				<File
@@ -288,6 +328,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\MyUSB\Drivers\USB\LowLevel\StdRequestType.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\MyUSB\Drivers\USB\USB.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\MyUSB\Drivers\USB\HighLevel\USBInterrupt.h"
 					>
 				</File>
@@ -299,10 +347,6 @@
 		</Filter>
 		<File
 			RelativePath=".\makefile"
-			>
-		</File>
-		<File
-			RelativePath=".\readme.txt"
 			>
 		</File>
 	</Files>

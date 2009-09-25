@@ -271,7 +271,7 @@ void WriteLCDFont( struct SLCDFontControl *pData, byte **ReportBuffer, byte *nBi
     }
     WriteLCDData( pLCD, Data, 0 );  // this is the space for the underline cursor.
     // and the left overs 5*8 - 7*5
-    byte nData = ReadPackData16( ReportBuffer, nBit, 5 );
+    ReadPackData16( ReportBuffer, nBit, 5 );
 }
 
 
