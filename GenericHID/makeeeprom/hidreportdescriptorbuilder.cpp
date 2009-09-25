@@ -173,3 +173,4 @@ void HIDReportDescriptorBuilder::AddInputOutputFeature(byte tag, EDataType::EDat
 
     AddValue(tag, nValue);
 }
+

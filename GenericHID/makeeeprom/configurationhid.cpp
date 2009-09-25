@@ -26,3 +26,4 @@ ByteArray ConfigurationHID::GetReportDescriptor(StringTable & /*table*/) const
 
     return HIDDescriptor;
 }
+

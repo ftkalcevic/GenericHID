@@ -263,6 +263,8 @@ void ShapeScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 		}
 	    }
 	    break;
+	case EditMode::Pointer:
+	    break;
     }
 
     //ATLTRACE( "Handled=%d\n", bHandled );

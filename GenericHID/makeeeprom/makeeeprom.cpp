@@ -9,7 +9,7 @@
 #include "usages.h"
 #include "controllcd.h"
 
-const int MAX_STRINGS = 254;
+const unsigned int MAX_STRINGS = 254;
 const char *SELECT_DFU_MODE = "DFU";
 const ushort EndpointInSize = 64;
 const ushort EndpointOutSize = 64;
@@ -148,9 +148,9 @@ ByteArray MakeEEPROM::makeEEPROM()
 			       (m_ConfigConfig->useStatusLEDs() == ConfigurationConfig::LED2 ? DEVICE_OPTION_USE_USBKEY_LED2 : 0 ) |
 			       (m_ConfigConfig->useStatusLEDs() == ConfigurationConfig::Both ? DEVICE_OPTION_USE_USBKEY_LEDS : 0 ) |
 			       (m_ConfigConfig->is5Volts() ? DEVICE_OPTION_5V : 0 );
-    for (int i = 0; i < countof(appHeader.ReportLength); i++)
+    for (unsigned int i = 0; i < countof(appHeader.ReportLength); i++)
 	appHeader.ReportLength[i] = 0;
-    for (int i = 0; i < countof(appHeader.timers); i++ )
+    for (unsigned int i = 0; i < countof(appHeader.timers); i++ )
 	appHeader.timers[i] = m_ConfigConfig->timers()[i];
 
     ByteBuffer ApplicationData;

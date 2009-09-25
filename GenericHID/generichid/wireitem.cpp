@@ -184,7 +184,7 @@ QPainterPath WireItem::shape() const
 };
 
 
-void WireItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * )
+void WireItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * , QWidget * )
 {
     if ( isSelected() )
 	painter->setPen( Qt::DashLine );
