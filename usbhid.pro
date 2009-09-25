@@ -1,7 +1,7 @@
 TEMPLATE = lib
 TARGET = usbhid
 CONFIG += staticlib qt create_prl
-include(../build.pro)
+include(../build.pri)
 
 CONFIG(debug,debug|release) {
 DESTDIR=debug
