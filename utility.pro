@@ -1,7 +1,7 @@
 TEMPLATE = lib
 TARGET = utility
 CONFIG += staticlib qt
-include(../build.pro)
+include(../build.pri)
 
 CONFIG(debug,debug|release) {
 DESTDIR=debug
