@@ -209,11 +209,26 @@
 						Outputs=".\GeneratedFiles\qrc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Rcc&apos;ing $(InputPath)..."
+						CommandLine="&quot;$(QTDIR)\bin\rcc.exe&quot; -name &quot;$(InputName)&quot; -no-compress &quot;$(InputPath)&quot; -o .\GeneratedFiles\qrc_$(InputName).cpp"
+						AdditionalDependencies="$(InputPath);resources/usages.xml"
+						Outputs=".\GeneratedFiles\qrc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
 			Name="Generated Files"
 			>
+			<File
+				RelativePath=".\generatedfiles\qrc_utility.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resources"
