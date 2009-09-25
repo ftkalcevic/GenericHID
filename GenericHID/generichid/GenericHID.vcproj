@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="qtmain.lib QtCore.lib QtGui.lib QtXml.lib ..\libusb-win32-device-bin-0.1.12.2\lib\msvc\libusb.lib QtSolutions_PropertyBrowser-2.5.lib Ws2_32.lib Imm32.lib Winmm.lib qjpeg.lib"
+				AdditionalDependencies="QtSolutions_PropertyBrowser-2.5.lib qtmain.lib QtCore.lib QtGui.lib QtXml.lib ..\libusb-win32-device-bin-0.1.12.2\lib\msvc\libusb.lib QtSolutions_PropertyBrowser-2.5.lib Ws2_32.lib Imm32.lib Winmm.lib qjpeg.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				AdditionalLibraryDirectories="&quot;$(QTDIR)\plugins\imageformats&quot;;$(QTDIR)\lib;..\qtpropertybrowser-2.5-opensource\lib"
 				GenerateDebugInformation="true"
@@ -1587,6 +1587,17 @@
 			<File
 				RelativePath=".\generichid.qrc"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Rcc&apos;ing $(InputPath)..."
+						CommandLine="&quot;$(QTDIR)\bin\rcc.exe&quot; -name &quot;$(InputName)&quot; -no-compress &quot;$(InputPath)&quot; -o .\GeneratedFiles\qrc_$(InputName).cpp"
+						AdditionalDependencies="$(InputPath);resources/greenlight.png;resources/redlight.png;resources/help/led.htm"
+						Outputs=".\GeneratedFiles\qrc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32"
 					>
