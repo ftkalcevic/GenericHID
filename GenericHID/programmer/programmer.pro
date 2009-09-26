@@ -1,20 +1,24 @@
 
 TEMPLATE = lib
 TARGET = programmer
-DESTDIR = ./debug
+CONFIG(debug,debug|release) {
+    DESTDIR=debug
+} else {
+    DESTDIR=release
+}
 QT += xml
 CONFIG += staticlib
 DEFINES += QT_XML_LIB PROGRAMMER_LIB
 INCLUDEPATH += ./generatedfiles \
-    ./generatedfiles/debug \
+    ./generatedfiles/$(DESTDIR) \
     . \
     ./../include \
     ./../utility \
     ../dfuprogrammer
 PRECOMPILED_HEADER = stdafx.h
 DEPENDPATH += .
-MOC_DIR += ./generatedfiles/Debug
-OBJECTS_DIR += debug
+MOC_DIR += ./generatedfiles/$(DESTDIR)
+OBJECTS_DIR += $(DESTDIR)
 UI_DIR += ./generatedfiles
 RCC_DIR += ./generatedfiles
 

@@ -13,14 +13,14 @@ QT += xml
 
 DEFINES += QT_XML_LIB
 INCLUDEPATH += ./generatedfiles \
-    ./generatedfiles/debug \
+    ./generatedfiles/$(DESTDIR) \
     ../include \
     ../utility \
     .
 PRECOMPILED_HEADER = stdafx.h
 DEPENDPATH += .
-MOC_DIR += ./generatedfiles/debug
-OBJECTS_DIR += debug
+MOC_DIR += ./generatedfiles/$(DESTDIR)
+OBJECTS_DIR += $(DESTDIR)
 UI_DIR += ./generatedfiles
 RCC_DIR += ./generatedfiles
 

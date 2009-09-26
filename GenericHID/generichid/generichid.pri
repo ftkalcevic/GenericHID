@@ -11,7 +11,6 @@ HEADERS += columnlayout.h \
     generichid.h \
     listeditorfactory.h \
     listpropertymanager.h \
-    mru.h \
     pin.h \
     pinitem.h \
     programdlg.h \
@@ -79,7 +78,6 @@ SOURCES += columnlayout.cpp \
     listeditorfactory.cpp \
     listpropertymanager.cpp \
     main.cpp \
-    mru.cpp \
     pin.cpp \
     pinitem.cpp \
     programdlg.cpp \
