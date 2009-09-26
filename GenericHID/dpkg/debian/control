@@ -12,5 +12,5 @@ Suggests:
 Conflicts:
 Replaces: 
 Provides: 
-Description: GenericHID - DIY USB HID (Human Interface Device)
+Description: Generic HID - DIY USB HID (Human Interface Device)
  Build your own USB HID Device.
