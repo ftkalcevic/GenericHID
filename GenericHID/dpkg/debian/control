@@ -1,0 +1,16 @@
+Source: generichid
+Section: misc
+Priority: extra
+Maintainer: Frank Tkalcevic <ftkalcevic@franksworkshop.com.au>
+
+Package: generichid
+Architecture: i386
+Depends: ${shlibs:Depends}
+Recommends: 
+Enhances:
+Suggests: 
+Conflicts:
+Replaces: 
+Provides: 
+Description: GenericHID - DIY USB HID (Human Interface Device)
+ Build your own USB HID Device.

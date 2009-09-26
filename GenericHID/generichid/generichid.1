@@ -1,0 +1,86 @@
+.\" Copyright (c) 2009 Frank Tkalcevic
+.\"                (ftkalcevic AT franksworkshop DOT com DOT au)
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 2 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public
+.\" License along with this manual; if not, write to the Free
+.\" Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111,
+.\" USA.
+.\"
+.\"
+.\"
+.de URL
+\\$2 \(laURL: \\$1 \(ra\\$3
+..
+.if \n[.g] .mso www.tmac
+.TH GenericHID "1" 
+.SH NAME
+generichid \- build your own USB HID device.
+.SH SYNOPSIS
+.B generichid
+[\fIfile\fR]
+.SH DESCRIPTION
+\fBgenerichid\fR is used to interactively design and program USB HID devices based on the Atmel AT90USB1287 microcontroller.  The cheapest development board is the AT90USBKey which can be picked up for about $US30.
+
+A USB HID device is a Human Interface Device, the technical name for joysticks, gamepads, and other devices used for input.  This project was started to build CNC pendants, originally for Mach3, and the EMC, the Enhanced Machine Controller, 
+.URL http://www.linuxcnc.org
+
+To build a device, run \fBgenerichid\fR and drag and drop a microcontroller board and components onto the canvas, then connect the compoents and the board with wires.  Then program the device from the program menu.  Of course, this only programs the microcontroller; you still need to physically wire the components to the microcontroller board.
+.PP
+\fBgenerichid\fR supports...
+.IP
+\(bu Buttons
+.IP
+\(bu Analogue Inputs (potentiometers, other analogue sources)
+.IP
+\(bu Digital Encoders
+.IP
+\(bu Key Matrix (either a keypad, or a matrix of hand wired buttons)
+.IP
+\(bu Rotary Selector Switches
+.IP
+\(bu Character LCD Display Modules
+.IP
+\(bu LEDs
+.IP
+\(bu Bi-Colour LEDs
+.IP
+\(bu Tri-Colour LEDs
+.IP
+\(bu RGB LEDs
+.IP
+\(bu Directional Switches (eg Hatswitches, Arcade type joysticks)
+.IP
+\(bu Counter 
+.IP
+\(bu PWM Outputs
+.PP
+Full documentation is available in the online help, or at 
+.URL http://www.franksworkhop.com.au
+.SH OPTIONS
+.TP
+\fBfile\fR
+An existing configuration file can be passed in as an argument.
+.SH AUTHOR
+Frank Tkalcevic <ftkalcevic at franksworkshop dot com dot au>
+.SH REPORTING BUGS
+Report bugs to the author.
+.SH COPYRIGHT
+Copyright \(co 2009 Frank Tkalcevic
+.br
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
