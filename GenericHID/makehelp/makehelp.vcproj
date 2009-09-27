@@ -227,6 +227,10 @@
 			SourceControlFiles="false"
 			>
 		</Filter>
+		<File
+			RelativePath=".\converthelp.bat"
+			>
+		</File>
 	</Files>
 	<Globals>
 		<Global
