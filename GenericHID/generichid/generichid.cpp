@@ -94,7 +94,7 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
     ui.listView->setSplitterPosition( ui.listView->width()/2 );
 
 #ifdef DEBUG
-    ui.textBrowser->setSearchPaths( QStringList() << "help" );
+    ui.textBrowser->setSearchPaths( QStringList() << "./help" );
 #else
     #ifdef __linux
 	ui.textBrowser->setSearchPaths( QStringList() << "/usr/share/generichid/help" );

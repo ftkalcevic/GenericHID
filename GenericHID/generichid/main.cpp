@@ -17,13 +17,16 @@ int main(int argc, char *argv[])
     a.setOrganizationName( "FranksWorkshop" );
     a.setOrganizationDomain( "www.franksworkshop.com.au" );
 
-#ifndef DEBUG
+#ifdef DEBUG
+    QDir::addSearchPath("config","./");
+    QDir::addSearchPath("resources","./resources/");
+#else
     #ifdef __linux
-        QDir::addSearchPath("config","/usr/share/generichid");
-        QDir::addSearchPath("resources","/usr/share/generichid/resources");
+        QDir::addSearchPath("config", "/usr/share/generichid");
+        QDir::addSearchPath("resources", "/usr/share/generichid/resources");
     #else
-        QDir::addSearchPath("config",QCoreApplication::applicationDirPath() );
-        QDir::addSearchPath("resources",QCoreApplication::applicationDirPath() + "/resources");
+        QDir::addSearchPath("config", QCoreApplication::applicationDirPath() );
+        QDir::addSearchPath("resources", QCoreApplication::applicationDirPath() + "/resources");
     #endif
 #endif
 
