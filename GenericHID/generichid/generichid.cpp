@@ -539,7 +539,7 @@ void GenericHID::onMicrocontrollerProgram()
     #ifdef _WIN32
 	dlg.setFirmwareFile( "Joystick.hex");
     #else
-	dlg.setFirmwareFile( "/usr/local/share/generichid/Joystick.hex");
+	dlg.setFirmwareFile( "/usr/share/generichid/Joystick.hex");
     #endif
 #endif	
 
@@ -651,7 +651,7 @@ void GenericHID::onMicrocontrollerImportAndProgram()
     #ifdef _WIN32
 	dlg.setFirmwareFile( "Joystick.hex");
     #else
-	dlg.setFirmwareFile( "/usr/local/share/generichid/Joystick.hex");
+	dlg.setFirmwareFile( "/usr/share/generichid/Joystick.hex");
     #endif
 #endif	
 
