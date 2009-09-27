@@ -1,6 +1,8 @@
 GenericHID GUI
 ==============
 
+Linux
+-----
 GenericHID GUI required Qt 4.5.2.  The release version is built against the
 static library version.  I build this using the configure command...
 
@@ -17,6 +19,17 @@ Building
 > make
 
 The binaries are stored in generichid/release and generichid/debug
+
+
+Win32
+-----
+
+I use Visual Studio 2005 to build GenericHID.  Use the generichid.sln solution 
+file.  The release version is built against the static libraries of Qt4.5.2. 
+I build qt using the following settings...
+
+configure -debug-and-release -opensource -static -qt-zlib -qt-libpng -qt-libmng -qt-libtiff -qt-libjpeg
+
 
 GenericHID firmware
 ===================
