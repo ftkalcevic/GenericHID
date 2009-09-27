@@ -18,6 +18,7 @@ cp ../generichid/config.xml debian/tmp/usr/share/generichid
 cp ../generichid/help/* debian/tmp/usr/share/generichid/help
 cp ../generichid/resources/* debian/tmp/usr/share/generichid/resources
 cp debian/copyright debian/tmp/usr/share/doc/generichid/copyright
+cp ../bin/Joystick.hex debian/tmp/usr/share/generichid
 
 dh_installchangelogs
 
