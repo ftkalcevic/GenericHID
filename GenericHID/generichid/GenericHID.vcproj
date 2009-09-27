@@ -123,7 +123,7 @@
 				AdditionalIncludeDirectories="..\usbhid;..\qtcommon;..\makeeeprom;.\GeneratedFiles;&quot;$(QTDIR)\include&quot;;&quot;.\GeneratedFiles\$(ConfigurationName)&quot;;&quot;$(QTDIR)\include\QtCore&quot;;&quot;$(QTDIR)\include\QtGui&quot;;&quot;$(QTDIR)\include\QtXml&quot;;.\;&quot;..\libusb-win32-device-bin-0.1.12.2\include&quot;;..\utility;..\include;..\programmer;&quot;..\qtpropertybrowser-2.5-opensource\src&quot;"
 				PreprocessorDefinitions="UNICODE;WIN32;QT_THREAD_SUPPORT;QT_CORE_LIB;QT_GUI_LIB;QT_XML_LIB;QT_WEBKIT_LIB"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				TreatWChar_tAsBuiltInType="false"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="stdafx.h"
@@ -142,8 +142,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="QtSolutions_PropertyBrowser-2.5d.lib qtmaind.lib QtCored.lib QtGuid.lib QtXmld.lib ..\libusb-win32-device-bin-0.1.12.2\lib\msvc\libusb.lib Ws2_32.lib Imm32.lib Winmm.lib qjpeg.lib"
+				AdditionalDependencies="libcmtd.lib LIBCPMTd.LIB ole32.lib comsupp.lib QtSolutions_PropertyBrowser-2.5d.lib qtmaind.lib QtCored.lib QtGuid.lib QtXmld.lib ..\libusb-win32-device-bin-0.1.12.2\lib\msvc\libusb.lib Ws2_32.lib Imm32.lib Winmm.lib qjpeg.lib"
 				AdditionalLibraryDirectories="&quot;$(QTDIR)\plugins\imageformats&quot;;&quot;$(QTDIR)\lib&quot;;&quot;..\qtpropertybrowser-2.5-opensource\lib&quot;"
+				IgnoreAllDefaultLibraries="true"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 			/>
@@ -1696,6 +1697,13 @@
 							Name="VCCLCompilerTool"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\generatedfiles\debug\moc_hiddatathread.cpp"
@@ -2503,6 +2511,13 @@
 					RelativePath=".\generatedfiles\Release\moc_programdlg.cpp"
 					>
 					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|Win32"
 						ExcludedFromBuild="true"
 						>
@@ -2514,6 +2529,13 @@
 				<File
 					RelativePath=".\generatedfiles\Release\moc_programmerthread.cpp"
 					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|Win32"
 						ExcludedFromBuild="true"

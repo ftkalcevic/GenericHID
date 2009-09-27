@@ -101,8 +101,6 @@ bool Programmer::Program( const QString &sEeprom, const QString &sFirmwarePath )
 
 bool Programmer::RunFirmware()
 {
- //   if ( !m_flip->EnterApplicationMode(ResetMode::Hard, 0 ) )
-	//return false;
     if ( !m_programmer->EnterApplicationMode(ResetMode::Hard, 0 ) )
 	return false;
     return true;

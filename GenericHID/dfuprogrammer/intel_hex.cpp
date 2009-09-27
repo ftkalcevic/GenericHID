@@ -292,7 +292,12 @@ QVector<int16_t> intel_hex_file_to_buffer( const char *filename, unsigned int ma
         ERROR_MSG( QString("Error opening the file - %1.\n").arg(file.error()) );
         goto error;
     }
-    return intel_hex_to_buffer( file, max_size, usage );
+    {
+	QVector<int16_t> buffer = intel_hex_to_buffer( file, max_size, usage );
+	file.close();
+	fclose( fp );
+	return buffer;
+    }
 
 error:
 

@@ -244,22 +244,37 @@ void ProgramDlg::onStartBootloader()
 void ProgramDlg::onProgram()
 {
     m_timer.stop();
-    ProgrammerThread pProgrammer(this);
-    if ( pProgrammer.Init() )
+
+    // verify the firmeare input file
+    QFileInfo firmwareFile(m_sFirmwareFile );
+    if ( !firmwareFile.exists() )
     {
-	ProgrammingStatusDlg pStatusDlg( this );
-	m_pStatusDlg = &pStatusDlg;
-
-	connect( &pProgrammer, SIGNAL(onUpdateStatus(int)), this, SLOT(onUpdateStatus(int)) );
-	connect( &pProgrammer, SIGNAL(onCompletionStatus(int)), this, SLOT(onCompletionStatus(int)) );
-
-	pProgrammer.StartProgram( m_sEeprom, m_sFirmwareFile );
-	pStatusDlg.exec();
-
-	disconnect( &pProgrammer, 0, 0, 0 );
-	m_pStatusDlg = NULL;
+	QMessageBox::critical( this, "Can't find firmware", QString("Can't find firmware file '%1'.  Can't program device.").arg(m_sFirmwareFile) );
     }
-    pProgrammer.Terminate();
+    else
+    {
+	ProgrammerThread pProgrammer(this);
+	if ( pProgrammer.Init() )
+	{
+	    ProgrammingStatusDlg pStatusDlg( this );
+	    m_pStatusDlg = &pStatusDlg;
+
+	    connect( &pProgrammer, SIGNAL(onUpdateStatus(int)), this, SLOT(onUpdateStatus(int)) );
+	    connect( &pProgrammer, SIGNAL(onCompletionStatus(int)), this, SLOT(onCompletionStatus(int)) );
+
+	    pProgrammer.StartProgram( m_sEeprom, m_sFirmwareFile );
+	    pStatusDlg.exec();
+
+	    disconnect( &pProgrammer, 0, 0, 0 );
+	    m_pStatusDlg = NULL;
+	}
+	pProgrammer.Terminate();
+
+	if ( !pProgrammer.success() )
+	{
+	    QMessageBox::critical( this, "Update Failed", QString("An error occurred while trying to update the firmware.  Check the debug error logs for more details.") );
+	}
+    }
     m_timer.start( 0 );
 }
 

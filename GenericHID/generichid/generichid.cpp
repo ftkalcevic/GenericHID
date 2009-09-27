@@ -533,10 +533,14 @@ void GenericHID::onMicrocontrollerProgram()
     // program
     ProgramDlg dlg(this);
     dlg.setEEPROM( sIntelHex );
-#ifdef _WIN32
-	dlg.setFirmwareFile( "..\\bin\\Joystick.hex");
+#ifdef DEBUG
+    dlg.setFirmwareFile( "..\\bin\\Joystick.hex");
 #else
-	dlg.setFirmwareFile( "../bin/Joystick.hex");
+    #ifdef _WIN32
+	dlg.setFirmwareFile( "Joystick.hex");
+    #else
+	dlg.setFirmwareFile( "/usr/local/share/generichid/Joystick.hex");
+    #endif
 #endif	
 
     dlg.exec();
@@ -641,10 +645,14 @@ void GenericHID::onMicrocontrollerImportAndProgram()
     // program
     ProgramDlg dlg(this);
     dlg.setEEPROM( sIntelHex );
-#ifdef _WIN32
-	dlg.setFirmwareFile( "..\\bin\\Joystick.hex");
+#ifdef DEBUG
+    dlg.setFirmwareFile( "..\\bin\\Joystick.hex");
 #else
-	dlg.setFirmwareFile( "../bin/Joystick.hex");
+    #ifdef _WIN32
+	dlg.setFirmwareFile( "Joystick.hex");
+    #else
+	dlg.setFirmwareFile( "/usr/local/share/generichid/Joystick.hex");
+    #endif
 #endif	
 
     dlg.exec();

@@ -12,6 +12,7 @@ public:
     ProgrammerThread(QObject *parent);
     ~ProgrammerThread();
     bool StartProgram( const QString &sEeprom, const QString &sFirmwarePath );
+    bool success() const { return m_bSuccess; }
 
 signals:
     void onUpdateStatus( int n );
@@ -23,6 +24,7 @@ private:
     virtual void run();
     QString m_sEeprom;
     QString m_sFirmwarePath;
+    bool m_bSuccess;
 };
 
 #endif // PROGRAMMERTHREAD_H
