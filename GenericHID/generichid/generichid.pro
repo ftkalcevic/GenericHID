@@ -1,5 +1,6 @@
 TEMPLATE = app
 TARGET = generichid
+include(../build.pri)
 CONFIG(debug,debug|release) {
 DESTDIR = debug
 } else {
@@ -33,7 +34,8 @@ CONFIG(debug,debug|release) {
 } else {
     unix:LIBS += -L../qtcommon/release -lqtcommon -L../usbhid/release -lusbhid -L../makeeeprom/release -lmakeeeprom -L../utility/release -lutility -L../dfuprogrammer/release -ldfuprogrammer  -L../programmer/release -lprogrammer -L../libusb-0.1.12/.libs -l:libusb.a -ldfuprogrammer -lutility -lprogrammer -ldfuprogrammer -lutility -l:libusb.a -L"../qtpropertybrowser-2.5-opensource/lib" -l:libQtSolutions_PropertyBrowser-2.5.a -lutility -lutility -lutility -L$(QTDIR)/plugins/imageformats -lqjpeg
 }
-
+debug:PRE_TARGETDEPS = ../dfuprogrammer/debug/libdfuprogrammer.a ../makeeeprom/debug/libmakeeeprom.a ../programmer/debug/libprogrammer.a ../qtcommon/debug/libqtcommon.a ../usbhid/debug/libusbhid.a ../utility/debug/libutility.a
+release:PRE_TARGETDEPS = ../dfuprogrammer/release/libdfuprogrammer.a ../makeeeprom/release/libmakeeeprom.a ../programmer/release/libprogrammer.a ../qtcommon/release/libqtcommon.a ../usbhid/release/libusbhid.a ../utility/release/libutility.a
 
 PRECOMPILED_HEADER = stdafx.h
 DEPENDPATH += .

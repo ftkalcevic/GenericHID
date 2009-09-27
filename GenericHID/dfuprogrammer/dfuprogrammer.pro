@@ -1,5 +1,6 @@
 TEMPLATE = lib
 TARGET = dfuprogrammer
+include(../build.pri)
 CONFIG(debug,debug|release) {
     DESTDIR=debug
 } else {

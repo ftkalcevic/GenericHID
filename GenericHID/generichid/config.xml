@@ -1,6 +1,6 @@
 ﻿<Config>
     <Shapes>
-	<Shape Id="stockusbkey" Type="at90usb128" Source="false" Image="resources/avrusbkey.png" Icon="resources/avrusbkeyicon.png" maxInstances="1" name="Stock AT90USBKey Demo board"  description=":stockusbkey.htm">
+	<Shape Id="stockusbkey" Type="at90usb128" Source="false" Image="resources:avrusbkey.png" Icon="resources:avrusbkeyicon.png" maxInstances="1" name="Stock AT90USBKey Demo board"  description=":stockusbkey.htm">
 	    <pin rect="  1, 44, 31, 25" id="Vcc" type="" enabled="false" />
 	    <pin rect=" 32, 44, 31, 25" id="GND" type="" enabled="false" />
 	    <pin rect="  1, 69, 31, 25" id="PF7" type="io,adc" enabled="false" other="JTAG" />
@@ -97,7 +97,7 @@
 	    <property name="Timer2" description=":stockusbkey.htm#Timer2" type="timer2" default="1,8,100"/>
 	    <property name="Timer3" description=":stockusbkey.htm#Timer3" type="timer13" default="1,8,100"/>
 	</Shape>
-	<Shape Id="strippedusbkey" Type="at90usb128" Source="false" Image="resources/avrusbkey.png" Icon="resources/avrusbkeyicon.png" maxInstances="1" name="Stripped AT90USBKey Demo board" description=":strippedusbkey.htm">
+	<Shape Id="strippedusbkey" Type="at90usb128" Source="false" Image="resources:avrusbkey.png" Icon="resources:avrusbkeyicon.png" maxInstances="1" name="Stripped AT90USBKey Demo board" description=":strippedusbkey.htm">
 	    <pin rect="  1, 44, 31, 25" id="Vcc" type="" enabled="false" />
 	    <pin rect=" 32, 44, 31, 25" id="GND" type="" enabled="false" />
 	    <pin rect="  1, 69, 31, 25" id="PF7" type="io,adc" enabled="false" other="JTAG" />
@@ -191,7 +191,7 @@
 	</Shape>
 	
 	
-	<Shape Id="usbkeywithwings" Type="at90usb128" Source="false" Image="resources/avrusbkey - wings.png" Icon="resources/avrusbkeywingsicon.png" maxInstances="1" name="AT90USBKey Demo board with WizBang wings" description=":usbkeywithwings.htm">
+	<Shape Id="usbkeywithwings" Type="at90usb128" Source="false" Image="resources:avrusbkey - wings.png" Icon="resources:avrusbkeywingsicon.png" maxInstances="1" name="AT90USBKey Demo board with WizBang wings" description=":usbkeywithwings.htm">
 	    <pin rect=" -28,130, 31, 25" id="Vcc" type="" enabled="false" />
 	    <pin rect=" -28,155, 31, 25" id="GND" type="" enabled="false" />
 	    <pin rect=" -59,130, 31, 25" id="PF7" type="io,adc" enabled="false" other="JTAG" />
@@ -286,7 +286,7 @@
 
 
 
-	<Shape Id="usbkeywithwiredwings" Type="at90usb128" Source="false" Image="resources/avrusbkey - wings.png" Icon="resources/avrusbkeywingsicon.png" maxInstances="1" name="AT90USBKey Demo board with WizBang wings and IDC connectors" description=":wizbangidc.htm">
+	<Shape Id="usbkeywithwiredwings" Type="at90usb128" Source="false" Image="resources:avrusbkey - wings.png" Icon="resources:avrusbkeywingsicon.png" maxInstances="1" name="AT90USBKey Demo board with WizBang wings and IDC connectors" description=":wizbangidc.htm">
 		<pin rect="-159,140, 31, 25" id="Vcc" type="" enabled="false" />
 		<pin rect="-128,140, 31, 25" id="GND" type="" enabled="false" />
 		<pin rect=" -97,140, 31, 25" id="PF7" type="io,adc" enabled="false" other="JTAG" />
@@ -380,7 +380,7 @@
 	</Shape>
 
 
-	<Shape Id="generichid1.0" Type="at90usb128" Source="false" Image="resources/generichid.1.0.png" Icon="resources/generichid.1.0icon.png" maxInstances="1" name="GenericHID 1.0 Custom Board" description=":generichid.1.0.htm">
+	<Shape Id="generichid1.0" Type="at90usb128" Source="false" Image="resources:generichid.1.0.png" Icon="resources:generichid.1.0icon.png" maxInstances="1" name="GenericHID 1.0 Custom Board" description=":generichid.1.0.htm">
 	    <pin rect="400,  0, 24, 18" id="PF0" type="io,adc" />
 	    <pin rect="400, 18, 24, 18" id="PF1" type="io,adc" />
 	    <pin rect="400, 36, 24, 18" id="PF2" type="io,adc" />
@@ -471,7 +471,7 @@
 	</Shape>
 
 
-	<Shape Id="pot" Type="pot" Source="true" Image="resources/potentiometer.png" Icon="resources/potentiometericon.png" maxInstances="0" name="Analog Potentiometer" description=":pot.htm">
+	<Shape Id="pot" Type="pot" Source="true" Image="resources:potentiometer.png" Icon="resources:potentiometericon.png" maxInstances="0" name="Analog Potentiometer" description=":pot.htm">
 	    <pin rect="2,35,16,16" id="Out" type="adc" valign="above"/>
 	    <property name="Name" description=":pot.htm#Name" type="string"/>
 	    <property name="Usage" description=":pot.htm#Usage" type="usage" default="1:48"/>
@@ -479,7 +479,7 @@
 	    <property name="Current" description=":pot.htm#Current" type="int" min="0" max="500" default="0"/>
 	</Shape>
 	
-	<Shape Id="digitalencoder" Type="digitalencoder" Source="true" Image="resources/digitalencoder.png" Icon="resources/digitalencodericon.png" maxInstances="0" name="Digital Encoder" description=":digitalencoder.htm">
+	<Shape Id="digitalencoder" Type="digitalencoder" Source="true" Image="resources:digitalencoder.png" Icon="resources:digitalencodericon.png" maxInstances="0" name="Digital Encoder" description=":digitalencoder.htm">
 	    <pin rect="7,160,15,15" id="A" type="int" />
 	    <pin rect="25,160,15,15" id="B" type="int" />
 	    <property name="Name" description=":digitalencoder.htm#Name" type="string"/>
@@ -487,7 +487,7 @@
 	    <property name="Current" description=":digitalencoder.htm#Current" type="int" min="0" max="500" default="100"/>
 	</Shape>
 	
-	<Shape Id="pushbutton" Type="switch" Source="true" Image="resources/pushbutton.png" Icon="resources/pushbuttonicon.png" maxInstances="0" name="Push Button" description=":button.htm">
+	<Shape Id="pushbutton" Type="switch" Source="true" Image="resources:pushbutton.png" Icon="resources:pushbuttonicon.png" maxInstances="0" name="Push Button" description=":button.htm">
 	    <pin rect="12,88,15,15" id="In" type="io" />
 	    <property name="Name" description=":button.htm#Name" type="string"/>
 	    <property name="Usage" description=":button.htm#Usage" type="usage" default="9:1"/>
@@ -496,7 +496,7 @@
 	    <property name="Current" description=":button.htm#Current" type="int" min="0" max="500" default="0"/>
 	</Shape>
 	
-	<Shape Id="keymatrix" Type="keymatrix" Source="true" Image="resources/keymatrix.png" Icon="resources/keymatrixicon.png" maxInstances="0" name="Key Matrix" description=":keymatrix.htm">
+	<Shape Id="keymatrix" Type="keymatrix" Source="true" Image="resources:keymatrix.png" Icon="resources:keymatrixicon.png" maxInstances="0" name="Key Matrix" description=":keymatrix.htm">
 	    <pin rect="5,11,20,20" id="R0" type="io" />
 	    <pin rect="5,35,20,20" id="R1" type="io" />
 	    <pin rect="5,60,20,20" id="R2" type="io" />
@@ -521,7 +521,7 @@
 	    <property name="Current" description="keymatrix.htm#Current" type="int" min="0" max="500" default="0"/>
 	</Shape>
 
-	<Shape Id="rotaryswitch" Type="rotaryswitch" Source="true" Image="resources/rotaryswitch.png" Icon="resources/rotaryswitchicon.png" maxInstances="0" name="Rotary Selector Switch" description=":rotaryswitch.htm">
+	<Shape Id="rotaryswitch" Type="rotaryswitch" Source="true" Image="resources:rotaryswitch.png" Icon="resources:rotaryswitchicon.png" maxInstances="0" name="Rotary Selector Switch" description=":rotaryswitch.htm">
 	    <pin rect="3,215,23,18" id="1" type="io" />
 	    <pin rect="33,215,23,18" id="4" type="io" />
 	    <pin rect="63,215,23,18" id="7" type="io" />
@@ -542,7 +542,7 @@
 	    <property name="Current" description=":rotaryswitch.htm#Current" type="int" min="0" max="500" default="0"/>
 	</Shape>
 
-	<Shape Id="codedrotaryswitch" Type="codedrotaryswitch" Source="true" Image="resources/codedrotaryswitch.png" Icon="resources/codedrotaryswitchicon.png" maxInstances="0" name="Coded Rotary Switch" description=":codedrotaryswitch.htm">
+	<Shape Id="codedrotaryswitch" Type="codedrotaryswitch" Source="true" Image="resources:codedrotaryswitch.png" Icon="resources:codedrotaryswitchicon.png" maxInstances="0" name="Coded Rotary Switch" description=":codedrotaryswitch.htm">
 	    <pin rect="1,90,13,13" id="1" type="io" />
 	    <pin rect="17,90,13,13" id="2" type="io" />
 	    <pin rect="33,90,13,13" id="4" type="io" />
@@ -555,7 +555,7 @@
 	    <property name="Current" description=":codedrotaryswitch.htm#Current" type="int" min="0" max="500" default="0"/>
 	</Shape>
 
-	<Shape Id="lcd" Type="lcd" Source="true" Image="resources/lcd.png" Icon="resources/lcdicon.png" maxInstances="0" name="LCD Alphanumeric Display" description=":lcd.htm">
+	<Shape Id="lcd" Type="lcd" Source="true" Image="resources:lcd.png" Icon="resources:lcdicon.png" maxInstances="0" name="LCD Alphanumeric Display" description=":lcd.htm">
 	    <pin rect="3,83,20,15" id="RS" type="io" shared="true"/>
 	    <pin rect="25,83,25,15" id="R/W" type="io" shared="true" />
 	    <pin rect="52,83,15,15" id="E" type="io" />
@@ -580,7 +580,7 @@
 	</Shape>
 
 
-	<Shape Id="led" Type="led" Source="true" Image="resources/led.png" Icon="resources/ledicon.png" maxInstances="0" name="LED" description=":led.htm">
+	<Shape Id="led" Type="led" Source="true" Image="resources:led.png" Icon="resources:ledicon.png" maxInstances="0" name="LED" description=":led.htm">
 	    <pin rect="31,105,15,15" id="In" type="io" />
 	    <property name="Name" description=":led.htm#Name" type="string"/>
 	    <property name="Usage" description=":led.htm#Usage" type="usage" default="8:1000"/>
@@ -588,7 +588,7 @@
 	    <property name="Current" description=":led.htm#Current" type="int" min="0" max="500" default="5"/>
 	</Shape>
 
-	<Shape Id="bicolourled"  Type="bicolourled" Source="true" Image="resources/bicolourled.png" Icon="resources/bicolourledicon.png" maxInstances="0" name="2-lead Bicolour LED" description=":bicolourled.htm">
+	<Shape Id="bicolourled"  Type="bicolourled" Source="true" Image="resources:bicolourled.png" Icon="resources:bicolourledicon.png" maxInstances="0" name="2-lead Bicolour LED" description=":bicolourled.htm">
 	    <pin rect="13,120,14,14" id="1" type="io" />
 	    <pin rect="31,120,14,14" id="2" type="io" />
 	    <property name="Name" description=":bicolourled.htm#Name" type="string"/>
@@ -596,7 +596,7 @@
 	    <property name="Current" description=":bicolourled.htm#Current" type="int" min="0" max="500" default="5"/>
 	</Shape>
 
-	<Shape Id="tricolourled" Type="tricolourled" Source="true" Image="resources/tricolourled.png" Icon="resources/tricolourledicon.png" maxInstances="0" name="3-lead Tricolour LED" description=":tricolourled.htm">
+	<Shape Id="tricolourled" Type="tricolourled" Source="true" Image="resources:tricolourled.png" Icon="resources:tricolourledicon.png" maxInstances="0" name="3-lead Tricolour LED" description=":tricolourled.htm">
 	    <pin rect="5,123,14,14" id="1" type="io" />
 	    <pin rect="43,123,14,14" id="2" type="io" />
 	    <property name="Name" description=":tricolourled.htm#Name" type="string"/>
@@ -608,7 +608,7 @@
 	    <property name="Current" description=":tricolourled.htm#Current" type="int" min="0" max="500" default="10"/>
 	</Shape>
 
-	<Shape Id="rgbled" Type="rgbled" Source="true" Image="resources/rgbled.png" Icon="resources/rgbledicon.png" maxInstances="0" name="4-lead RGB LED" description=":rgbled.htm">
+	<Shape Id="rgbled" Type="rgbled" Source="true" Image="resources:rgbled.png" Icon="resources:rgbledicon.png" maxInstances="0" name="4-lead RGB LED" description=":rgbled.htm">
 	    <pin rect="0,123,14,14" id="G" type="io" />
 	    <pin rect="16,123,14,14" id="B" type="io" />
 	    <pin rect="50,123,14,14" id="R" type="io" />
@@ -621,7 +621,7 @@
 	    <property name="Current" description=":rgbled.htm#Current" type="int" min="0" max="500" default="10"/>
 	</Shape>
 
-	<Shape Id="dirswitch" Type="dirswitch" Source="true" Image="resources/directionalswitch.png" Icon="resources/directionalswitchicon.png" maxInstances="0" name="n-way Directional Switch (POV hat switch)" description=":dirswitch.htm">
+	<Shape Id="dirswitch" Type="dirswitch" Source="true" Image="resources:directionalswitch.png" Icon="resources:directionalswitchicon.png" maxInstances="0" name="n-way Directional Switch (POV hat switch)" description=":dirswitch.htm">
 	    <pin rect="14,100,20,20" id="NW" type="io" />
 	    <pin rect="36,100,20,20" id="N" type="io" />
 	    <pin rect="58,100,20,20" id="NE" type="io" />
@@ -643,14 +643,14 @@
 	    <property name="Current" description=":dirswitch.htm#Current" type="int" min="0" max="500" default="0"/>
 	</Shape>
 
-	<Shape Id="counter" Type="counter" Source="true" Image="resources/timer.png" Icon="resources/timericon.png" maxInstances="1" name="Millisecond Counter" description=":counter.htm">
+	<Shape Id="counter" Type="counter" Source="true" Image="resources:timer.png" Icon="resources:timericon.png" maxInstances="1" name="Millisecond Counter" description=":counter.htm">
 	    <property name="Name" description=":counter.htm#Name" type="string"/>
 	    <property name="Usage" description=":counter.htm#Usage" type="usage" default="62500:1"/>
 	    <property name="Period" description=":counter.htm#Period" type="int" min="1" max="65535" default="500"/>
 	    <property name="Counter Bits" description=":counter.htm#CounterBits" type="int" min="1" max="16" default="16"/>
 	</Shape>
 
-	<Shape Id="pwm" Type="pwm" Source="true" Image="resources/pwm.png" Icon="resources/pwmicon.png" maxInstances="0" name="PWM Output" description=":pwm.htm">
+	<Shape Id="pwm" Type="pwm" Source="true" Image="resources:pwm.png" Icon="resources:pwmicon.png" maxInstances="0" name="PWM Output" description=":pwm.htm">
 	    <property name="Name" description=":pwm.htm#Name" type="string"/>
 	    <property name="Usage" description=":pwm.htmUsage" type="usage" default="62500:1"/>
 	    <property name="Frequency" description=":pwm.htm#Frequency" type="string" enabled="false" />
@@ -663,7 +663,7 @@
 	    <pin rect="60,70,30,20" id="PWM" type="pwm" />
 	</Shape>
 
-	<Shape Id="power" Type="power" Source="true" Image="resources/power.png" Icon="resources/powericon.png" maxInstances="1" name="Vcc Power Switch" description=":power.htm"  >
+	<Shape Id="power" Type="power" Source="true" Image="resources:power.png" Icon="resources:powericon.png" maxInstances="1" name="Vcc Power Switch" description=":power.htm"  >
 	    <property name="Name" description=":power.htm#Name" type="string"/>
 	    <pin rect="55,65,20,20" id="G" type="io" />
 	</Shape>

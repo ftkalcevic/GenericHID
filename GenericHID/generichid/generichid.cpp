@@ -8,7 +8,7 @@
 #include "hiddevices.h"
 
 
-const char * const CONFIGDATA_FILE = "config.xml";
+const char * const CONFIGDATA_FILE = "config:config.xml";
 const int HELP_WINDOW_HEIGHT = 30;
 
 enum
@@ -93,7 +93,15 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
 
     ui.listView->setSplitterPosition( ui.listView->width()/2 );
 
+#ifdef DEBUG
     ui.textBrowser->setSearchPaths( QStringList() << "help" );
+#else
+    #ifdef __linux
+	ui.textBrowser->setSearchPaths( QStringList() << "/usr/share/generichid/help" );
+    #else
+	ui.textBrowser->setSearchPaths( QStringList() << (QCoreApplication::applicationDirPath() + "/help") );
+    #endif
+#endif
     onPropertiesCurrentItemChanged( NULL );
 
     m_cboZoom = new QComboBox();
@@ -438,7 +446,7 @@ void GenericHID::onPropertiesCurrentItemChanged( QtBrowserItem * current )
 {
     // Set the help text
     if ( current == NULL || current->property() == NULL )
-	ui.textBrowser->setSource( QString("index.htm") );
+	ui.textBrowser->setSource( QString(":index.htm") );
     else
     {
 	QString sText = current->property()->toolTip();
@@ -452,10 +460,7 @@ void GenericHID::onPropertiesCurrentItemChanged( QtBrowserItem * current )
 		    break;
 	    }
 	}
-	if ( sText.startsWith(":") )
-	    ui.textBrowser->setSource( sText );
-	else
-	    ui.textBrowser->setText( QString("<b>%1</b><br>\n%2").arg(current->property()->propertyName()).arg(sText) );
+	ui.textBrowser->setSource( sText );
     }
 }
 

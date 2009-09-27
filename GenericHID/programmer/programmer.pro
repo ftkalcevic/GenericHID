@@ -1,6 +1,7 @@
-
 TEMPLATE = lib
 TARGET = programmer
+include(../build.pri)
+
 CONFIG(debug,debug|release) {
     DESTDIR=debug
 } else {
