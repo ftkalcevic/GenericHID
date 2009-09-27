@@ -243,13 +243,23 @@ code and demos...</p>
 <h3>Windows</h3>
 <p>The Win32 binary can be downloaded here...</p>
 		<p>&nbsp;<a href="http://users.tpg.com.au/ftkalcev/generichid_win32_1.0.zip"><img style="background-color=white" border="0" src="gplv3-88x31.png" width="88" height="31"></a>.&nbsp; </p>
-		<p>To install the application, create an empty directory and unzip the 
-		contents of the file into the new directory.&nbsp; You can then run the 
-		GenericHID.exe application.</p>
-<p>Windows also requires the libusb-win32 device driver be installed.&nbsp; You 
-can get it from here...</p>
-<p><a href="http://sourceforge.net/projects/libusb-win32/files/">
-libusb-win32-filter-bin-0.1.12.2.exe</a></p>
+		<ol>
+			<li>To install the application, create an empty directory and unzip the 
+		contents of the file into the new directory.</li>
+			<li>Download and install the libusb win32 library,
+			<a href="http://sourceforge.net/projects/libusb-win32/files/">
+libusb-win32-filter-bin-0.1.12.2.exe</a></li>
+	<li>Download and install the latest version of the
+	<a href="http://www.atmel.com/dyn/products/tools_card.asp?tool_id=3886">Atmel Flip application</a> for windows.&nbsp; This is required 
+	to get the drivers for the bootloader mode of the microcontroller.</li>
+	<li>If using the AT90USBKey, plug the board in to the USB port, enter 
+	bootloader mode (press RST button, press HWB button, release RST button, 
+	release HWB button) and install the DFU drivers.&nbsp; These should be in 
+	C:\Program Files\Atmel\Flip3\usb\usb_dfu.inf or wherever you installed flip.</li>
+			<li>If using a Custom Generic HID board, plug in the board and then 
+			install the DFU drivers described in step 3.</li>
+			<li>Run the GenericHID.exe application.</li>
+</ol>
 <h3>Linux</h3>
 <p>The Linux Debian pacakge can be downloaded here...</p>
 		<p>&nbsp;<a href="http://users.tpg.com.au/ftkalcev/generichid_1.0_i386.deb"><img style="background-color=white" border="0" src="gplv3-88x31.png" width="88" height="31"></a></p>
