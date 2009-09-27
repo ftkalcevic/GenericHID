@@ -1,4 +1,4 @@
-// hidcomp/hidconfig, HID device interface for emc
+// hidcomp/hidconfig/generichid, HID device interface for emc
 // Copyright (C) 2008, Frank Tkalcevic, www.franksworkshop.com
 
 // This program is free software: you can redistribute it and/or modify
