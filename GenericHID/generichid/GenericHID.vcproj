@@ -3174,6 +3174,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\help\gplv3-88x31.png"
+					>
+				</File>
+				<File
 					RelativePath=".\help\hardware.htm"
 					DeploymentContent="true"
 					>
@@ -3218,6 +3222,10 @@
 				</File>
 				<File
 					RelativePath=".\help\keymatrixsch.png"
+					>
+				</File>
+				<File
+					RelativePath=".\help\lathependant.jpg"
 					>
 				</File>
 				<File
