@@ -30,6 +30,12 @@ I build qt using the following settings...
 
 configure -debug-and-release -opensource -static -qt-zlib -qt-libpng -qt-libmng -qt-libtiff -qt-libjpeg
 
+To use the C runtime static libary, the Qt build needs to use the /MT build 
+option.  I edited <QTDir>/mkspecs/win32-msvc2005/qmake.conf and changed
+
+QMAKE_CFLAGS_RELEASE    = -O2 -MT
+
+
 
 GenericHID firmware
 ===================
