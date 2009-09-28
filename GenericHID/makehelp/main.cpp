@@ -21,8 +21,7 @@ const char *webText = \
 "<html>\n" \
     "<head>\n" \
 	"<title>%1</title>\n" \
-	"<link rel=\"stylesheet\" type=\"text/css\" href=\"/Site.css\" />\n" \
-	"<script type=\"text/javascript\" src=\"/menu.js\"></script>\n" \
+	"<link rel=\"stylesheet\" type=\"text/css\" href=\"/site.css\" />\n" \
     "</head>\n" \
     "<body>\n" \
 	"<div id=\"mainContainer\">\n" \
@@ -30,7 +29,6 @@ const char *webText = \
 		"<h1 align=\"center\">%2</h1>\n" \
 	    "</div>\n" \
 	    "<div id=\"leftColumn\">\n" \
-		"<!-- #include file=\"/menu.html\" -->\n" \
 	    "</div>\n"\
 	    "<div id=\"mainContent\">\n" \
 		"%3\n" \

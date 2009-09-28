@@ -2511,13 +2511,6 @@
 					RelativePath=".\generatedfiles\Release\moc_programdlg.cpp"
 					>
 					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Debug|Win32"
 						ExcludedFromBuild="true"
 						>
@@ -2529,13 +2522,6 @@
 				<File
 					RelativePath=".\generatedfiles\Release\moc_programmerthread.cpp"
 					>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|Win32"
 						ExcludedFromBuild="true"
@@ -3212,7 +3198,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\help\index.htm"
+					RelativePath=".\help\index.html"
 					DeploymentContent="true"
 					>
 				</File>

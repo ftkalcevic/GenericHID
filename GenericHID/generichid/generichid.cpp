@@ -462,7 +462,7 @@ void GenericHID::onPropertiesCurrentItemChanged( QtBrowserItem * current )
 {
     // Set the help text
     if ( current == NULL || current->property() == NULL )
-	ui.textBrowser->setSource( QString(":index.htm") );
+	ui.textBrowser->setSource( QString(":index.html") );
     else
     {
 	QString sText = current->property()->toolTip();
