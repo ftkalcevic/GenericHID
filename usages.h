@@ -81,6 +81,7 @@ private:
 };
 
 // Some Common Usages
+#define USAGE_VENDOR_DEFINED			    0xFF00
 #define USAGEPAGE_GENERIC_DESKTOP_CONTROLS          0x01
     #define USAGE_POINTER                           0x01
     #define USAGE_MOUSE                             0x02
@@ -167,6 +168,21 @@ private:
     #define USAGE_BITMAP_SIZE_Y                     0x81
     #define USAGE_BIT_DEPTH_FORMAT                  0x83
     #define USAGE_DISPLAY_ORIENTATION               0x84
+    #define USAGE_BLIT_REPORT			    0x8A 
+    #define USAGE_BLIT_RECTANGLE_X1		    0x8B 
+    #define USAGE_BLIT_RECTANGLE_Y1		    0x8C 
+    #define USAGE_BLIT_RECTANGLE_X2		    0x8D 
+    #define USAGE_BLIT_RECTANGLE_Y2		    0x8E 
+    #define USAGE_BLIT_DATA			    0x8F 
+    #define USAGE_FOREGROUND_COLOUR		    (USAGE_VENDOR_DEFINED+0)
+    #define USAGE_BACKGROUND_COLOUR		    (USAGE_VENDOR_DEFINED+1)
+    #define USAGE_SELECT_FONT			    (USAGE_VENDOR_DEFINED+2)
+    #define USAGE_DRAW_RECT_REPORT		    (USAGE_VENDOR_DEFINED+3)
+    #define USAGE_RECT_FILLED			    (USAGE_VENDOR_DEFINED+4)
+    #define USAGE_RECT_X			    (USAGE_VENDOR_DEFINED+5)
+    #define USAGE_RECT_Y			    (USAGE_VENDOR_DEFINED+6)
+    #define USAGE_RECT_WIDTH			    (USAGE_VENDOR_DEFINED+7)
+    #define USAGE_RECT_HEIGHT			    (USAGE_VENDOR_DEFINED+8)
 #define USAGEPAGE_MEDICAL_INSTRUMENTS               0x40
 #define USAGEPAGE_MONITOR_PAGES                     0x83
 #define USAGEPAGE_POWER_PAGES                       0x87
