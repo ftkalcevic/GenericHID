@@ -23,14 +23,12 @@
 #include "configurationinterface.h"
 #include "control.h"
 #include "usages.h"
-#include "controllcd.h"
+#include "controldisplay.h"
 
 const unsigned int MAX_STRINGS = 254;
 const char *SELECT_DFU_MODE = "DFU";
 const ushort EndpointInSize = 64;
 const ushort EndpointOutSize = 64;
-
-#define MAX(a,b)	((a) > (b) ? (a) : (b))
 
 
 MakeEEPROM::MakeEEPROM()
@@ -164,8 +162,8 @@ ByteArray MakeEEPROM::makeEEPROM()
 			       (m_ConfigConfig->useStatusLEDs() == ConfigurationConfig::LED2 ? DEVICE_OPTION_USE_USBKEY_LED2 : 0 ) |
 			       (m_ConfigConfig->useStatusLEDs() == ConfigurationConfig::Both ? DEVICE_OPTION_USE_USBKEY_LEDS : 0 ) |
 			       (m_ConfigConfig->is5Volts() ? DEVICE_OPTION_5V : 0 );
-    for (unsigned int i = 0; i < countof(appHeader.ReportLength); i++)
-	appHeader.ReportLength[i] = 0;
+    for (unsigned int i = 0; i < countof(appHeader.OutputReportLength); i++)
+	appHeader.OutputReportLength[i] = 0;
     for (unsigned int i = 0; i < countof(appHeader.timers); i++ )
 	appHeader.timers[i] = m_ConfigConfig->timers()[i];
 
@@ -180,7 +178,7 @@ ByteArray MakeEEPROM::makeEEPROM()
     // create feature report for moving device into program mode
     HIDReport.UsagePage(USAGEPAGE_VENDOR_DEFINED);
     HIDReport.Usage(1);
-    HIDReport.ReportID(BOOTLOADER_REPORT);
+    HIDReport.ReportID(BOOTLOADER_REPORT_ID);
     HIDReport.ReportSize(32);	    // 4 bytes
     HIDReport.ReportCount(1);
     HIDReport.StringIndex(table[SELECT_DFU_MODE]);
@@ -190,7 +188,7 @@ ByteArray MakeEEPROM::makeEEPROM()
     byte nMaxOutReportLen = 0;
 
     // group all the inputs
-    byte nReportId = 1;             // 1 = input, 2 = output, 3=Feature, 4... = one for each display.
+    byte nReportId = INPUT_REPORT_ID;             // 1 = input, 2 = output, 3=Feature, 4... = one for each display.
     bool bFirst = true;
     int nBits = 0;
     foreach (Control *c,m_Controls)
@@ -216,14 +214,14 @@ ByteArray MakeEEPROM::makeEEPROM()
     }
 
     byte nLength = (byte)((nBits + 7) / 8);
-    appHeader.ReportLength[1-1] = nLength;   // report length (id=1)
+    appHeader.OutputReportLength[1-1] = nLength;   // report length (id=1)
     nMaxInReportLen = MAX(nMaxInReportLen, nLength );
 
 
     // all the outputs 
     bFirst = true;
     nBits = 0;
-    nReportId = 2;
+    nReportId = OUTPUT_REPORT_ID;
     foreach (Control *c, m_Controls)
 	if ( c->type() == Control::Output )
         {
@@ -246,30 +244,27 @@ ByteArray MakeEEPROM::makeEEPROM()
 	HIDReport.Output(EDataType::Constant, EVarType::Variable, ERelType::Absolute, EWrapType::NoWrap, ELinearType::Linear, EPreferedType::NoPreferred, ENullPositionType::NoNullPosition, EVolatileType::NonVolatile, EBufferType::BitField);
     }
     nLength = (byte)((nBits + 7) / 8);
-    appHeader.ReportLength[2-1] = nLength;   // report length (id=2)
-    appHeader.ReportLength[3-1] = (byte)4;   // report length (id=3)
+    appHeader.OutputReportLength[2-1] = nLength;   // report length (id=2)
+    appHeader.OutputReportLength[3-1] = (byte)4;   // report length (id=3)
 
     nMaxOutReportLen = MAX(nMaxOutReportLen,nLength);
     nMaxOutReportLen = MAX(nMaxOutReportLen,4);
 
     // any lcds
-    nReportId = 4;
+    nReportId = FIRST_LCD_REPORT_ID;
     foreach (Control *c, m_Controls)
 	if (c->type() == Control::Display )
         {
-	    ControlLCD *lcd = dynamic_cast<ControlLCD *>( c );
-            nBits = 0;
-            ByteBuffer descData = lcd->GetHIDReportDescriptor(table, nBits, nReportId);
+	    // input, output, feature reports.
+	    // multiple of each
+	    // update report id
+	    // store the report length - in/out/feat?
+	    // keep track of max output
+	    ControlDisplay *lcd = dynamic_cast<ControlDisplay *>( c );
             ByteBuffer appData = c->GetControlConfig(nReportId);
+            ByteBuffer descData = lcd->GetHIDReportDescriptor(table, nReportId, appHeader.OutputReportLength, nMaxOutReportLen );
             HIDReport.AddBuffer(descData);
             ApplicationData.AddBuffer(appData);
-
-            nLength = (byte)((nBits + 7) / 8);
-            appHeader.ReportLength[nReportId-1] = nLength;  // report length (id=4+)
-            appHeader.ReportLength[nReportId] = 6;	    // font report length (id=4+)
-
-            nMaxOutReportLen = MAX( nMaxOutReportLen, nLength );
-            nReportId += 2;
         }
     HIDReport.EndCollection();
 
@@ -285,6 +280,12 @@ ByteArray MakeEEPROM::makeEEPROM()
 	    m_sLastError = QString("The input report has exceeded the maximum input endpoint size %1 > %2").arg(nMaxInReportLen).arg(EndpointInSize);
 	else
 	    m_sLastError = QString("The output report has exceeded the maximum output endpoint size %1 > %2").arg(nMaxOutReportLen).arg(EndpointOutSize);
+	return ByteArray();
+    }
+
+    if ( nReportId > MAX_REPORTS )
+    {
+	m_sLastError = QString("Exceeded the maximum number of reports.  Have %1, Max %2").arg(nReportId).arg(MAX_REPORTS);
 	return ByteArray();
     }
 

@@ -18,19 +18,17 @@
 #define _CONTROLLCD_H_
 
 
-#include "control.h"
+#include "controldisplay.h"
 
-class ControlLCD :    public Control
+class ControlLCD :    public ControlDisplay
 {
 public:
     ControlLCD(void);
     virtual ~ControlLCD(void);
 
     virtual bool Load( const QDomElement &elem, QString *sError );
-    virtual ByteArray GetHIDReportDescriptor( StringTable & /*table*/, int & /*nBits*/ ) const { assert(false); return ByteArray();}
-    ByteArray GetHIDReportDescriptor( StringTable &table, int &nBits, int nReportId ) const;
+    virtual ByteArray GetHIDReportDescriptor( StringTable &table, byte &nReportId, byte OutputReportLength[MAX_REPORTS], byte &nMaxOutReportLen ) const;
     virtual ByteArray GetControlConfig( byte nReportId ) const;
-    virtual Control::Type type() const { return Control::Display; }
 
 private:
     QString m_sName;

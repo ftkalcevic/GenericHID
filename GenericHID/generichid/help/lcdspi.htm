@@ -1,0 +1,78 @@
+<html>
+<head>
+<title>LCD</title>
+</head>
+
+<body>
+<h1>LCD SPI - Custom SPI LCD Display</h1>
+<p>Generic HID supports a custom hybrid character/graphic LCD module that uses 
+an SPI interface.&nbsp; The project to build this display can be found
+<a href="http://www.franksworkshop.com.au/Electronics/GraphicLCD/GraphicLCD.htm">
+here</a>.</p>
+<p>The LCD SPI component will only work with this display.&nbsp; The display 
+is built around a 320x240 TFT RGB LCD module.&nbsp; The display driver has 2 
+fonts (6x13 and 14x26), supports colour, and can draw rectangles.&nbsp; A sample 
+output is shown here...</p>
+<p><img border="0" src="screen_manual.JPG" width="338" height="218"></p>
+<p>The display uses the SPI interface.&nbsp; There are 4 wires that must be 
+wired correctly to the matching SPI pins on the microcontroller board.&nbsp; 
+Pins SS/SCK/MOSI/MISO on the display must be connected to 
+SS(PB0)/SCK(PB1)/MOSI(PB2)/MISO(PB3) on the microcontroller board.&nbsp; This 
+isn't a generic SPI interface, but could be changed in the future.&nbsp; </p>
+<h3>USB Interface</h3>
+<p>GenericHID implements an extended subset of the standard USB HID specification for 
+character display modules.&nbsp; The following reports are implemented. This is 
+included only if you wish to program your own device.&nbsp; This information can 
+be retrieved from the HID descriptor reports.&nbsp; You just need to know the 
+custom usage ids for the extended facilities.</p>
+<pre>
+USAGEPAGE_ALPHANUMERIC_DISPLAY:USAGE_ALPHANUMERIC_DISPLAY
+
+    <font color="#008000">// Output Report to display text</font>
+    USAGE_CHARACTER_REPORT
+	USAGE_COLUMN			<font color="#008000">// column number</font>
+	USAGE_ROW			<font color="#008000">// row number</font>
+	USAGE_CURSOR_PIXEL_POSITIONING	<font color="#008000">// Row/column is a pixel address or character address</font>
+	USAGE_DISPLAY_DATA		<font color="#008000">// display text (one full row)</font>
+	
+    <font color="#008000">// Feature Report to return display attributes</font>
+    USAGE_DISPLAY_ATTRIBUTES_REPORT
+	USAGE_ROWS			<font color="#008000">// number of rows</font>
+	USAGE_COLUMNS			<font color="#008000">// number of columns</font>
+
+    <font color="#008000">// Output Report to change the display attributes</font>
+    USAGE_DISPLAY_CONTROL_REPORT
+	USAGE_CLEAR_DISPLAY		<font color="#008000">// Clear the display</font>
+	USAGE_DISPLAY_BRIGHTNESS	<font color="#008000">// Set the display backlight brightness</font>
+	USAGE_FOREGROUND_COLOUR(FF00)	<font color="#008000">// 16 bit foreground colour (R:5,G:6,B:5)</font>
+	USAGE_BACKGROUND_COLOUR(FF01)	<font color="#008000">// 16 bit background colour (R:5,G:6,B:5)</font>
+	USAGE_SELECT_FONT(FF02)		<font color="#008000">// select the font</font>
+	USAGE_CHAR_ATTR_UNDERLINE	<font color="#008000">// enable underline (not implemented)</font>
+    
+    <font color="#008000">// Output report to draw a rectangle</font>
+    USAGE_DRAW_RECT_REPORT(FF03)
+	USAGE_RECT_FILLED(FF04)		<font color="#008000">// filled or outline</font>
+	USAGE_RECT_X(FF05)		<font color="#008000">// x coordinate</font>
+	USAGE_RECT_Y(FF06)		<font color="#008000">// y coordinate</font>
+	USAGE_RECT_WIDTH(FF07)		<font color="#008000">// width</font>
+	USAGE_RECT_HEIGHT(FF08)		/<font color="#008000">/ height</font>
+</pre>
+<h2>Properties</h2>
+
+<h3 id="Name">Name</h3>
+<p>Components can be given an optional name.&nbsp; This is seen in the Test tab.  Not all applications support the name.&nbsp; 
+Hidcomp/hidconfig supports names.</p>
+
+<h3 id="Usage">UsagePage/Usage</h3>
+<p>The UsagePage and Usage of the display.  See <a href="usages.htm">Usages</a> for more information.</p>
+<p>Note- for an LCD display, this is fixed and cannot be changed.</p>
+
+<h3 id="Current">Current</h3>
+<p> Defines the amount of electrical current used by the LED in mA.  This is used to estimate the USB power draw.&nbsp; 
+See the section on <a href="power.htm">Power</a> for more information.</p>
+<p> LCD displays use very little power to display the LCD text, typically 1-2mA.&nbsp; 
+The LCD back light, however, are generally power hogs.</p>
+
+</body>
+
+</html>

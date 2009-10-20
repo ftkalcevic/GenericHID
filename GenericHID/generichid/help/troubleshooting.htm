@@ -69,6 +69,25 @@
 		<td>The libusb drivers can be finicky.&nbsp; Try rebooting.&nbsp; Try 
 		reinstalling the libusb-win32 filter driver.</td>
 	</tr>
+	<tr>
+		<td>Other USB devices fail under Windows.</td>
+		<td>The libusb-win32 filter driver can effect other devices.&nbsp; After 
+		you have finished building your GenericHID device, unistall the 
+		libusb-win32 filter drivers.</td>
+	</tr>
+	<tr>
+		<td>In the programming dialog, GenericHID complains with the message 
+		&quot;More than one GenericHID device (GenericHID or AT90USB128 in DFU mode) 
+		found in the system. This may be a USB driver glitch; in this case you 
+		can ignore the message. If there are multiple devices plugged in, you 
+		may program the wrong one.&quot;</td>
+		<td>To be able to program the device correctly, only one GenericHID 
+		device must be present.&nbsp; This message will be displayed when more 
+		than one GenericHID devices, or AT90USB1287 devices in programming mode 
+		are detected.<p>Note that this message can be incorrectly displayed 
+		because of driver conflicts between libusb and other device drivers.&nbsp; 
+		It is left to the user to ensure the correct device is plugged in.</td>
+	</tr>
 </table>
 </body>
 

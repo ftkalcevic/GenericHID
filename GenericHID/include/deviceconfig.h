@@ -44,13 +44,14 @@ enum ControlType
     AnalogEncoder = 12,
     PWMOutput = 13,
     RGBLED = 14,
-    LCDFont = 15
+    LCD_SPI = 15
 };
 
 struct SControlHeader
 {
     byte Type;
     byte Length;
+    byte ReportIdMax;
     byte ReportId;
 };
 
@@ -165,9 +166,15 @@ struct SLCDControl
     byte RowAddr[4];		// Start of each row
 };
 
-struct SLCDFontControl
+struct SLCDSPIControl
 {
     struct SControlHeader hdr;
+    byte nRows;
+    byte nColumns;
+    byte nPortSS;
+    byte nPortSCK;
+    byte nPortMOSI;
+    byte nPortMISO;
 };
 
 struct SLEDControl
@@ -268,7 +275,7 @@ struct SDynamicHID
 };
 
 #define MAX_READ_BUFFER		64
-#define MAX_REPORTS		10
+#define MAX_REPORTS		20
 #define MAX_TIMERS		3
 
 struct TimerConfig
@@ -292,12 +299,22 @@ struct SApplicationHeader
 	#define DEVICE_OPTION_SERIAL_DEBUG	0x10
 	#define DEVICE_OPTION_5V		0x20
     struct TimerConfig timers[MAX_TIMERS];
-    byte ReportLength[MAX_REPORTS];
+    byte OutputReportLength[MAX_REPORTS];
 };
 
+#define INPUT_REPORT_ID 1
+#define OUTPUT_REPORT_ID 2
+#define BOOTLOADER_REPORT_ID 3
+#define FIRST_LCD_REPORT_ID 4
+    #define LCD_ATTRIBUTE_REPORT_ID 0
+    #define LCD_DISPLAY_REPORT_ID 0
+    #define LCD_FONT_REPORT_ID 1
+    #define LCDSPI_ATTRIBUTE_REPORT_ID 0
+    #define LCDSPI_DISPLAY_REPORT_ID 0
+    #define LCDSPI_DISPLAY_CONTROL_REPORT_ID 1
+    #define LCDSPI_DRAW_RECT_REPORT_ID 2
 
 #define MAGIC_BOOTLOADER_CODE 0xDF0DF0DF
-#define BOOTLOADER_REPORT 3
 #define MAX_HID_DATA	4096				// 4k of eeprom
 
 #ifdef _WIN32

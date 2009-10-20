@@ -1,3 +1,19 @@
+// generichid, DIY HID device 
+// Copyright (C) 2009, Frank Tkalcevic, www.franksworkshop.com
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 #ifndef _SHAPE_H_
 #define _SHAPE_H_
 
@@ -17,6 +33,7 @@ namespace ShapeType
 	RotarySwitch,
 	CodedRotarySwitch,
 	LCD,
+	LCD_SPI,
 	LED,
 	RGB,
 	BiColourLED,
@@ -86,6 +103,8 @@ public:
     void MakeRGBControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bSource, const QString &sPortR, const QString &sPortG, const QString &sPortB ) const;
     void MakePWMControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nResolution, const QString &sPort ) const;
     void MakeCounterControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nPeriod, int nBits ) const;
+    void MakeLCDSPIControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage,
+			    const QString &sPortSS, const QString &sPortSCK, const QString &sPortMOSI, const QString &sPortMISO	) const;
 
 protected:
     QString m_sShapeName;

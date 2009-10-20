@@ -28,8 +28,16 @@ const char *webText = \
 	    "<div id=\"topBar\">\n" \
 		"<h1 align=\"center\">%2</h1>\n" \
 	    "</div>\n" \
-	    "<div id=\"leftColumn\">\n" \
-	    "</div>\n"\
+
+	    "<div id=\"leftColumn\">"
+		"<ul id=\"dhtmlgoodies_listMenu\">"
+		    "<li><a href=\"index.html\">Home</a></li>"
+		    "<li><a href=\"http://www.franksworkshop.com.au\">Return to<br>Franks Workshop</a></li>"
+		    "<li><a href=\"http://sourceforge.net/projects/generichid/\">Return to<br>Sourceforge</a></li>"
+		"</ul>"
+	    "</div>"
+
+
 	    "<div id=\"mainContent\">\n" \
 		"%3\n" \
 	    "</div>\n" \

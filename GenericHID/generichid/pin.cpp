@@ -30,6 +30,10 @@ namespace PinType
 	{ Interrupt, "Int" },
 	{ IO, "IO" },
 	{ PWM, "PWM" },
+	{ SS, "SS" },
+	{ SCK, "SCK" },
+	{ MOSI, "MOSI" },
+	{ MISO, "MISO" },
     };
 
     enum PinType fromString(const QString &sPinType)

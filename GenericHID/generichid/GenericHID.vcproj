@@ -291,6 +291,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\shapelcd_spi.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\shapeled.cpp"
 				>
 			</File>
@@ -890,6 +894,10 @@
 			</File>
 			<File
 				RelativePath=".\shapelcd.h"
+				>
+			</File>
+			<File
+				RelativePath=".\shapelcd_spi.h"
 				>
 			</File>
 			<File
@@ -1692,13 +1700,6 @@
 					<FileConfiguration
 						Name="Release|Win32"
 						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -2511,6 +2512,13 @@
 					RelativePath=".\generatedfiles\Release\moc_programdlg.cpp"
 					>
 					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|Win32"
 						ExcludedFromBuild="true"
 						>
@@ -3245,6 +3253,11 @@
 					>
 				</File>
 				<File
+					RelativePath=".\help\lcdspi.htm"
+					DeploymentContent="true"
+					>
+				</File>
+				<File
 					RelativePath=".\help\led.htm"
 					DeploymentContent="true"
 					>
@@ -3445,6 +3458,10 @@
 				</File>
 				<File
 					RelativePath=".\help\save.png"
+					>
+				</File>
+				<File
+					RelativePath=".\help\screen_manual.JPG"
 					>
 				</File>
 				<File

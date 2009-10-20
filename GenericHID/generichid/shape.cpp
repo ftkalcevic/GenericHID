@@ -22,6 +22,7 @@
 #include "shapecodedselectorswitch.h"
 #include "shapeselectorswitch.h"
 #include "shapelcd.h"
+#include "shapelcd_spi.h"
 #include "shapekeymatrix.h"
 #include "shapepotentiometer.h"
 #include "shapedigitalencoder.h"
@@ -57,6 +58,7 @@ namespace ShapeType
         { "rotaryswitch", RotarySwitch },
         { "codedrotaryswitch", CodedRotarySwitch },
         { "lcd", LCD },
+        { "lcdspi", LCD_SPI },
         { "led", LED },
         { "rgbled", RGB },
         { "bicolourled", BiColourLED },
@@ -131,6 +133,7 @@ Shape *Shape::CreateFromXML( QDomElement &node, QString &sError )
 	    case ShapeType::RotarySwitch:	pShape = new ShapeSelectorSwitch( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
 	    case ShapeType::CodedRotarySwitch:  pShape = new ShapeCodedSelectorSwitch( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
 	    case ShapeType::LCD:		pShape = new ShapeLCD( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
+	    case ShapeType::LCD_SPI:		pShape = new ShapeLCD_SPI( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
 	    case ShapeType::Pot:		pShape = new ShapePotentiometer( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
 	    case ShapeType::DigitalEncoder:	pShape = new ShapeDigitalEncoder( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
 	    case ShapeType::Switch:		pShape = new ShapeSwitch( node, sName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription);    break;
@@ -527,6 +530,22 @@ void Shape::MakeLCDControl( QDomElement &elem, const QString &sName, unsigned sh
     XMLUtility::setAttribute( node, "Row1", nAddrRow1);
     XMLUtility::setAttribute( node, "Row2", nAddrRow2);
     XMLUtility::setAttribute( node, "Row3", nAddrRow3);
+}
+
+
+void Shape::MakeLCDSPIControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, 
+			    const QString &sPortSS, const QString &sPortSCK, const QString &sPortMOSI, const QString &sPortMISO	) const
+{
+    QDomElement node = elem.ownerDocument().createElement( "LCD_SPI" );
+    elem.appendChild( node );
+
+    XMLUtility::setAttribute( node, "Name", sName );
+    XMLUtility::setAttribute( node, "UsagePage", nUsagePage );
+    XMLUtility::setAttribute( node, "Usage", nUsage );
+    XMLUtility::setAttribute( node, "PortSS", sPortSS);
+    XMLUtility::setAttribute( node, "PortSCK", sPortSCK);
+    XMLUtility::setAttribute( node, "PortMOSI", sPortMOSI);
+    XMLUtility::setAttribute( node, "PortMISO", sPortMISO);
 }
 
 

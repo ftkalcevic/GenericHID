@@ -85,11 +85,13 @@ bool ControlLCD::Load( const QDomElement &elem, QString *sError )
 }
 
 
-ByteArray ControlLCD::GetHIDReportDescriptor( StringTable &table, int &nBits, int nReportId ) const
+ByteArray ControlLCD::GetHIDReportDescriptor( StringTable &table, byte &nReportId, byte OutputReportLength[MAX_REPORTS], byte &nMaxOutReportLen ) const
 {
+    int nBits = 0;
+
     HIDReportDescriptorBuilder Desc;
 
-    Desc.ReportID(nReportId);
+    Desc.ReportID(nReportId+LCD_DISPLAY_REPORT_ID);
     Desc.UsagePage(USAGEPAGE_ALPHANUMERIC_DISPLAY);
     Desc.Usage(USAGE_ALPHANUMERIC_DISPLAY);
     if (!m_sName.isEmpty())
@@ -139,7 +141,7 @@ ByteArray ControlLCD::GetHIDReportDescriptor( StringTable &table, int &nBits, in
     Desc.EndCollection();
 
     // Font change report
-    Desc.ReportID(nReportId+1);
+    Desc.ReportID(nReportId+LCD_FONT_REPORT_ID);
     Desc.Usage(USAGE_FONT_REPORT);
     Desc.Collection(CollectionType::Logical);
     Desc.LogicalMinimum(0);
@@ -153,8 +155,14 @@ ByteArray ControlLCD::GetHIDReportDescriptor( StringTable &table, int &nBits, in
     Desc.Output(EDataType::Data, EVarType::Variable, ERelType::Absolute, EWrapType::NoWrap, ELinearType::Linear, EPreferedType::NoPreferred, ENullPositionType::NoNullPosition, EVolatileType::NonVolatile, EBufferType::Buffered );	//Font data
     Desc.EndCollection();
 
-
     Desc.EndCollection();
+
+    byte nLength = (byte)((nBits + 7) / 8);
+    OutputReportLength[nReportId+LCD_DISPLAY_REPORT_ID-1] = nLength;
+    OutputReportLength[nReportId+LCD_FONT_REPORT_ID-1] = 6;
+    nMaxOutReportLen = MAX( nMaxOutReportLen, nLength );
+    nMaxOutReportLen = MAX( nMaxOutReportLen, 6 );
+    nReportId += 2;
 
     return Desc;
 }
@@ -167,6 +175,7 @@ ByteArray ControlLCD::GetControlConfig( byte nReportId ) const
 
     config.hdr.Type = LCD;
     config.hdr.ReportId = nReportId;
+    config.hdr.ReportIdMax = nReportId + LCD_FONT_REPORT_ID;
     config.hdr.Length = sizeof(config);
     config.nRows = m_nRows;
     config.nColumns = m_nCols;
@@ -187,13 +196,5 @@ ByteArray ControlLCD::GetControlConfig( byte nReportId ) const
     config.RowAddr[2] = m_nAddrRow2;
     config.RowAddr[3] = m_nAddrRow3;
 
-    struct SLCDFontControl font;
-    font.hdr.Type = LCDFont;
-    font.hdr.ReportId = nReportId+1;
-    font.hdr.Length = sizeof(font);
-
-    ByteBuffer retBuf((byte *)&config, sizeof(config) );
-    retBuf.AddBuffer( ByteBuffer((byte *)&font, sizeof(font) ) );
-
-    return retBuf;
+    return ByteBuffer((byte *)&config, sizeof(config) );
 }

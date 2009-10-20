@@ -14,28 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SHAPEPROPERTYBROWSER_H
-#define SHAPEPROPERTYBROWSER_H
+#ifndef _CONTROLDISPLAY_H_
+#define _CONTROLDISPLAY_H_
 
-#include <QtTreePropertyBrowser>
+#include "control.h"
 
-class ShapePropertyBrowser : public QtTreePropertyBrowser
+class ControlDisplay :
+    public Control
 {
-    Q_OBJECT
-
 public:
-    ShapePropertyBrowser(QWidget *parent);
-    ~ShapePropertyBrowser();
+    ControlDisplay(void);
+    virtual ~ControlDisplay(void);
 
-signals:
-    void itemDataChanged( QtBrowserItem * item );
-
-private:
-    virtual void itemChanged ( QtBrowserItem * item )
-    {
-	QtTreePropertyBrowser::itemChanged( item );
-	emit itemDataChanged( item );
-    }
+    virtual Control::Type type() const { return Control::Display; }
+    virtual ByteArray GetHIDReportDescriptor( StringTable & /*table*/, int & /*nBits*/ ) const { assert(false); return ByteArray();}
+    virtual ByteArray GetHIDReportDescriptor( StringTable &table, byte &nReportId, byte OutputReportLength[MAX_REPORTS], byte &nMaxOutReportLen ) const = 0;
 };
 
-#endif // SHAPEPROPERTYBROWSER_H
+#endif
+

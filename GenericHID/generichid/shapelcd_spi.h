@@ -14,28 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef SHAPEPROPERTYBROWSER_H
-#define SHAPEPROPERTYBROWSER_H
+#ifndef _SHAPELCD_SPI_H_
+#define _SHAPELCD_SPI_H_
 
-#include <QtTreePropertyBrowser>
+#include "shape.h"
 
-class ShapePropertyBrowser : public QtTreePropertyBrowser
+class ShapeLCD_SPI :
+    public Shape
 {
-    Q_OBJECT
-
 public:
-    ShapePropertyBrowser(QWidget *parent);
-    ~ShapePropertyBrowser();
-
-signals:
-    void itemDataChanged( QtBrowserItem * item );
-
-private:
-    virtual void itemChanged ( QtBrowserItem * item )
-    {
-	QtTreePropertyBrowser::itemChanged( item );
-	emit itemDataChanged( item );
-    }
+    ShapeLCD_SPI(QDomElement &node, const QString &sShapeName, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, const QString &sIconFile, int nMaxInstances, const QString &sDescription);
+    virtual ~ShapeLCD_SPI(void);
+    virtual bool Verify( QString &sErrors, const QList<class PinItem *> &pins, const QList<class PropertyValue *> &values ) const;
+    virtual void MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &pins, const QList<PropertyValue *> &values  ) const;
 };
 
-#endif // SHAPEPROPERTYBROWSER_H
+#endif

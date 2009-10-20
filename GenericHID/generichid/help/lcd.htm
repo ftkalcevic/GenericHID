@@ -50,6 +50,31 @@ requires a potentiometer wired to this pin and, power and ground.&nbsp; A cheap
 10k trimmer potentiometer is adequate.&nbsp; Schematically, it should be 
 connected as follows.</p>
 <p><img border="0" src="lcdcontrast.png" width="156" height="145"></p>
+<h3>USB Interface</h3>
+<p>GenericHID implements a subset of the standard USB HID specification for 
+character display modules.&nbsp; The following reports are implemented. This is 
+included only if you wish to program your own device.&nbsp; This information can 
+be retrieved from the HID descriptor reports.</p>
+<pre>
+
+USAGEPAGE_ALPHANUMERIC_DISPLAY:USAGE_ALPHANUMERIC_DISPLAY
+
+    <font color="#008000">// Output Report to display text</font>
+    USAGE_CHARACTER_REPORT
+	USAGE_COLUMN		    <font color="#008000">// column number</font>
+	USAGE_ROW		    <font color="#008000">// row number</font>
+	USAGE_DISPLAY_DATA	    <font color="#008000">// display text (one full row)</font>
+	
+    <font color="#008000">// Feature Report to return display attributes</font>
+    USAGE_DISPLAY_ATTRIBUTES_REPORT
+	USAGE_ROWS		    <font color="#008000">// number of rows</font>
+	USAGE_COLUMNS		    <font color="#008000">// number of columns</font>
+	
+    <font color="#008000">// report to set a user font</font>
+    USAGE_FONT_REPORT
+	USAGE_DISPLAY_DATA	    <font color="#008000">// the character index (0-7)</font>
+	USAGE_FONT_DATA		    <font color="#008000">// 5 bytes of font data, bit packed</font>
+</pre>
 <h2>Properties</h2>
 
 <h3 id="Name">Name</h3>

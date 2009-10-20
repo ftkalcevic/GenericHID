@@ -202,11 +202,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\controldisplay.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\controlkeymatrix.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\controllcd.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\controllcd_spi.cpp"
 				>
 			</File>
 			<File
@@ -328,11 +336,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\controldisplay.h"
+				>
+			</File>
+			<File
 				RelativePath=".\controlkeymatrix.h"
 				>
 			</File>
 			<File
 				RelativePath=".\controllcd.h"
+				>
+			</File>
+			<File
+				RelativePath=".\controllcd_spi.h"
 				>
 			</File>
 			<File

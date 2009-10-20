@@ -180,12 +180,12 @@ void ProgramDlg::updateDeviceStatus()
 	    if ( !m_bMultipleWarning )
 	    {
 		m_bMultipleWarning = true;
-		QMessageBox::warning( this, "Multiple Devices Found", "More than one GenericHID device (GenericHID or AT90USB128 in DFU mode) found in the system.  Only one can be present during programming." );
+		QMessageBox::warning( this, "Multiple Devices Found", "More than one GenericHID device (GenericHID or AT90USB128 in DFU mode) found in the system.  This may be a USB driver glitch; in this case you can ignore the message.  If there are multiple devices plugged in, you may program the wrong one." );
 	    }
 	}
-	else
+
 	{
-	    m_bMultipleWarning = false;
+	    //m_bMultipleWarning = false;
 	    if ( nGenericHIDs > 0 )
 	    {
 		// the device is present, but still in HID mode.

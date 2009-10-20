@@ -23,6 +23,7 @@
 #include "controldirectionalswitch.h"
 #include "controlkeymatrix.h"
 #include "controllcd.h"
+#include "controllcd_spi.h"
 #include "controlled.h"
 #include "controlpotentiometer.h"
 #include "controlpwm.h"
@@ -59,6 +60,8 @@ Control *Control::MakeControl( const QDomElement &elem, QString *sError )
 	pControl = new ControlRotarySwitch();
     else if ( elem.nodeName().compare( "LCD", Qt::CaseInsensitive ) == 0 )
 	pControl = new ControlLCD();
+    else if ( elem.nodeName().compare( "LCD_SPI", Qt::CaseInsensitive ) == 0 )
+	pControl = new ControlLCDSPI();
     else if ( elem.nodeName().compare( "LED", Qt::CaseInsensitive ) == 0 )
 	pControl = new ControlLED();
     else if ( elem.nodeName().compare( "BicolourLED", Qt::CaseInsensitive ) == 0 )
