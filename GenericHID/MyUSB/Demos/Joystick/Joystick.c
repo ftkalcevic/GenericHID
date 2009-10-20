@@ -1,3 +1,21 @@
+// generichid, DIY HID device 
+// Copyright (C) 2009, Frank Tkalcevic, www.franksworkshop.com
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+
 /*
 MyUSB Library
 Copyright (C) Dean Camera, 2007.
@@ -30,7 +48,6 @@ host computer.
 #include "PWM.h"
 
 #include <string.h>
-
 
 static void ProcessOutputReport( byte *buf );
 
@@ -131,7 +148,7 @@ static void ioint(void)
     OCR0A = 125;
     TIMSK0 |= _BV(OCIE0A);		    // interupt on output compare A
 
-    PRR0 = _BV(PRTWI) | _BV(PRSPI);	    // We never use TWI or SPI
+    PRR0 = _BV(PRTWI);	    // We never use TWI
     ASSR = 0;
 }
 
@@ -170,7 +187,7 @@ int main(void)
     // not used yet byte bHIDDebug = pApplicationHdr->nOptions & DEVICE_OPTION_HID_DEBUG;
     bSerialDebug = pApplicationHdr->nOptions & DEVICE_OPTION_SERIAL_DEBUG;
     byte b5Volt = pApplicationHdr->nOptions & DEVICE_OPTION_5V;
-    pReportLengths = pApplicationHdr->ReportLength;
+    pReportLengths = pApplicationHdr->OutputReportLength;
     pApplicationData = (byte *)pApplicationHdr + sizeof(struct SApplicationHeader);
     ReadBufferPtr = 0;
     ReadState = ReadReportId;
@@ -196,6 +213,7 @@ int main(void)
 	UART1_Init( 12 );		// Fixed at 38400,8,n,1
 
     sei();
+
 
     if ( bSerialDebug )
     {
@@ -532,13 +550,11 @@ TASK(USB_Joystick_Report)
     }
 }
 
-#define BOOTLOADER_REPORT	3
-
 static void ProcessOutputReport( byte *buf )
 {
     if ( bSerialDebug ) UART1_Send_P( PSTR("Processing Output Report\r\n") );
 
-    if ( *buf == BOOTLOADER_REPORT )
+    if ( *buf == BOOTLOADER_REPORT_ID )
     {				
 	// DFU report.  Data is UInt32.  Check the value = 0xDF0DF0DF then restart.
 	if ( *((uint32_t *)(buf+1)) == MAGIC_BOOTLOADER_CODE )
@@ -613,4 +629,3 @@ compile with optimise.
 Debug
 serial/usb debug properly
 */
-

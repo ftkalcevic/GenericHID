@@ -179,7 +179,7 @@ static void USB_Device_GetDescriptor(void)
     }
 
 
-    if (USB_GetDescriptor(DescriptorType, DescriptorIndex, &DescriptorPointer, &DescriptorBytesRem) == false)
+    if (USB_GetDescriptor(DescriptorType, DescriptorIndex, (void **)&DescriptorPointer, &DescriptorBytesRem) == false)
     {
 	return;
     }

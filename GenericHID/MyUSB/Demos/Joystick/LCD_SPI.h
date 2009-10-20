@@ -16,11 +16,12 @@
 
 
 
-#ifndef _DIGITALENCODER_H_
-#define _DIGITALENCODER_H_
+#ifndef _LCD_SPI_H_
+#define _LCD_SPI_H_
 
 
-extern void InitDigitalEncoder( struct SDigitalEncoderControl *pData );
-extern void ReadDigitalEncoder( struct SDigitalEncoderControl *pData, byte **ReportBuffer, byte *nBit );
+extern void InitLCD_SPI( struct SLCDSPIControl *pData );
+extern void WriteLCD_SPI( struct SLCDSPIControl *pData, byte nReportId, byte **ReportBuffer, byte *nBit );
+extern void SendFeatureAttributeReportLCD_SPI( struct SLCDSPIControl *pData );
 
 #endif

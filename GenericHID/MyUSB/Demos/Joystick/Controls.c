@@ -1,3 +1,21 @@
+// generichid, DIY HID device 
+// Copyright (C) 2009, Frank Tkalcevic, www.franksworkshop.com
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+
 #include "Common.h"
 #include "Serial.h"
 #include "Controls.h"
@@ -14,6 +32,7 @@
 #include "Counter.h"
 #include "pwm.h"
 #include "rgb.h"
+#include "LCD_SPI.h"
 
 void InitControls( byte *pData )
 {
@@ -23,55 +42,56 @@ void InitControls( byte *pData )
 
 	switch ( hdr->Type )
 	{
-	case Potentiometer:
-	    InitPotentiometer( (struct SPotentiometerControl *)pData );
-	    break;
-	case Switch:
-	    InitSwitch( (struct SSwitchControl *)pData );
-	    break;
-	case RotarySwitch:
-	    InitRotarySwitch( (struct SRotarySwitchControl *)pData );
-	    break;
-	case KeyMatrix:
-	    InitKeyMatrix( (struct SKeyMatrixControl *)pData );
-	    break;
-	case DigitalEncoder:
-	    InitDigitalEncoder( (struct SDigitalEncoderControl *)pData );
-	    break;
-	case LED:
-	    InitLED( (struct SLEDControl *)pData );
-	    break;
-	case BicolourLED:
-	    InitBicolourLED( (struct SBicolourLEDControl *)pData );
-	    break;
-	case TricolourLED:
-	    InitTricolourLED( (struct STricolourLEDControl *)pData );
-	    break;
-	case RGBLED:
-	    InitRGB( (struct SRGBLEDControl *)pData );
-	    break;
-	case LCD:
-	    InitLCD( (struct SLCDControl *)pData );
-	    break;
-	case DirectionalSwitch:
-	    InitDirSwitch( (struct SDirSwitchControl *)pData );
-	    break;
-	case Counter:
-	    InitCounter( (struct SCounterControl *)pData );
-	    break;
-	case PWMOutput:
-	    InitPWM( (struct SPWMControl *)pData );
-	    break;
-	case LCDFont:
-	    break;  // place holder for lcd font report
-	default:
-	    if ( bSerialDebug )
-	    {
-		UART1_Send_P(PSTR("Got unexpected type in InitControls - 0x"));
-		UART1_SendHex(*pData);
-		UART1_SendCRLF();
-	    }
-	    return;
+	    case Potentiometer:
+		InitPotentiometer( (struct SPotentiometerControl *)pData );
+		break;
+	    case Switch:
+		InitSwitch( (struct SSwitchControl *)pData );
+		break;
+	    case RotarySwitch:
+		InitRotarySwitch( (struct SRotarySwitchControl *)pData );
+		break;
+	    case KeyMatrix:
+		InitKeyMatrix( (struct SKeyMatrixControl *)pData );
+		break;
+	    case DigitalEncoder:
+		InitDigitalEncoder( (struct SDigitalEncoderControl *)pData );
+		break;
+	    case LED:
+		InitLED( (struct SLEDControl *)pData );
+		break;
+	    case BicolourLED:
+		InitBicolourLED( (struct SBicolourLEDControl *)pData );
+		break;
+	    case TricolourLED:
+		InitTricolourLED( (struct STricolourLEDControl *)pData );
+		break;
+	    case RGBLED:
+		InitRGB( (struct SRGBLEDControl *)pData );
+		break;
+	    case LCD:
+		InitLCD( (struct SLCDControl *)pData );
+		break;
+	    case DirectionalSwitch:
+		InitDirSwitch( (struct SDirSwitchControl *)pData );
+		break;
+	    case Counter:
+		InitCounter( (struct SCounterControl *)pData );
+		break;
+	    case PWMOutput:
+		InitPWM( (struct SPWMControl *)pData );
+		break;
+	    case LCD_SPI:
+		InitLCD_SPI( (struct SLCDSPIControl *)pData );
+		break;
+	    default:
+		if ( bSerialDebug )
+		{
+		    UART1_Send_P(PSTR("Got unexpected type in InitControls - 0x"));
+		    UART1_SendHex(*pData);
+		    UART1_SendCRLF();
+		}
+		return;
 	}
 	pData += hdr->Length;
     }
@@ -88,31 +108,31 @@ void ReadControls( byte nReportId, byte *pData, byte *pReportBuffer, byte *nLeng
     while ( *pData != 0 )
     {
 	struct SControlHeader *header = (struct SControlHeader *)pData;
-	if ( header->ReportId == nReportId )
+	if ( nReportId == header->ReportId || ( nReportId >= header->ReportId && nReportId <= header->ReportIdMax ) )
 	{
 	    switch ( header->Type )
 	    {
-	    case Potentiometer:
-		ReadPotentiometer( (struct SPotentiometerControl *)pData,  &pReport, &nOutMask );
-		break;
-	    case Switch:
-		ReadSwitch( (struct SSwitchControl *)pData,  &pReport, &nOutMask );
-		break;
-	    case RotarySwitch:
-		ReadRotarySwitch( (struct SRotarySwitchControl *)pData,  &pReport, &nOutMask );
-		break;
-	    case KeyMatrix:
-		ReadKeyMatrix( (struct SKeyMatrixControl *)pData,  &pReport, &nOutMask );
-		break;
-	    case DigitalEncoder:
-		ReadDigitalEncoder( (struct SDigitalEncoderControl *)pData,  &pReport, &nOutMask );
-		break;
-	    case DirectionalSwitch:
-		ReadDirSwitch( (struct SDirSwitchControl *)pData,  &pReport, &nOutMask );
-		break;
-	    case Counter:
-		ReadCounter( (struct SCounterControl *)pData, &pReport, &nOutMask );
-		break;
+		case Potentiometer:
+		    ReadPotentiometer( (struct SPotentiometerControl *)pData,  &pReport, &nOutMask );
+		    break;
+		case Switch:
+		    ReadSwitch( (struct SSwitchControl *)pData,  &pReport, &nOutMask );
+		    break;
+		case RotarySwitch:
+		    ReadRotarySwitch( (struct SRotarySwitchControl *)pData,  &pReport, &nOutMask );
+		    break;
+		case KeyMatrix:
+		    ReadKeyMatrix( (struct SKeyMatrixControl *)pData,  &pReport, &nOutMask );
+		    break;
+		case DigitalEncoder:
+		    ReadDigitalEncoder( (struct SDigitalEncoderControl *)pData,  &pReport, &nOutMask );
+		    break;
+		case DirectionalSwitch:
+		    ReadDirSwitch( (struct SDirSwitchControl *)pData,  &pReport, &nOutMask );
+		    break;
+		case Counter:
+		    ReadCounter( (struct SCounterControl *)pData, &pReport, &nOutMask );
+		    break;
 	    }
 	}
 	pData += header->Length;
@@ -153,31 +173,31 @@ void WriteControls( byte nReportId, byte *pData, byte *pReportBuffer )
     while ( *pData != 0 )
     {
 	struct SControlHeader *header = (struct SControlHeader *)pData;
-	if ( header->ReportId == nReportId )
+	if ( nReportId == header->ReportId || ( nReportId >= header->ReportId && nReportId <= header->ReportIdMax ) )
 	{
 	    switch ( header->Type )
 	    {
-	    case LED:
-		WriteLED( (struct SLEDControl *)pData,  &pReport, &nOutMask );
-		break;
-	    case BicolourLED:
-		WriteBicolourLED( (struct SBicolourLEDControl *)pData,  &pReport, &nOutMask );
-		break;
-	    case TricolourLED:
-		WriteTricolourLED( (struct STricolourLEDControl *)pData,  &pReport, &nOutMask );
-		break;
-	    case RGBLED:
-		WriteRGB( (struct SRGBLEDControl *)pData,  &pReport, &nOutMask );
-		break;
-	    case LCD:
-		WriteLCD( (struct SLCDControl *)pData,  &pReport, &nOutMask );
-		break;
-	    case LCDFont:
-		WriteLCDFont( (struct SLCDFontControl *)pData,  &pReport, &nOutMask );
-		break;
-	    case PWMOutput:
-		WritePWM( (struct SPWMControl *)pData,  &pReport, &nOutMask );
-		break;
+		case LED:
+		    WriteLED( (struct SLEDControl *)pData,  &pReport, &nOutMask );
+		    break;
+		case BicolourLED:
+		    WriteBicolourLED( (struct SBicolourLEDControl *)pData,  &pReport, &nOutMask );
+		    break;
+		case TricolourLED:
+		    WriteTricolourLED( (struct STricolourLEDControl *)pData,  &pReport, &nOutMask );
+		    break;
+		case RGBLED:
+		    WriteRGB( (struct SRGBLEDControl *)pData,  &pReport, &nOutMask );
+		    break;
+		case LCD:
+		    WriteLCD( (struct SLCDControl *)pData, nReportId, &pReport, &nOutMask );
+		    break;
+		case PWMOutput:
+		    WritePWM( (struct SPWMControl *)pData, &pReport, &nOutMask );
+		    break;
+		case LCD_SPI:
+		    WriteLCD_SPI( (struct SLCDSPIControl *)pData, nReportId, &pReport, &nOutMask );
+		    break;
 	    }
 	}
 	pData += header->Length;
@@ -221,12 +241,15 @@ void WriteFeatureReport( byte nReportId, byte *pData )
     while ( *pData != 0 )
     {
 	struct SControlHeader *header = (struct SControlHeader *)pData;
-	if ( header->ReportId == nReportId )
+	if ( nReportId == header->ReportId || ( nReportId >= header->ReportId && nReportId <= header->ReportIdMax ) )
 	{
 	    switch ( header->Type )
 	    {
 		case LCD:
 		    SendFeatureAttributeReportLCD( (struct SLCDControl *)pData );
+		    break;
+		case LCD_SPI:
+		    SendFeatureAttributeReportLCD_SPI( (struct SLCDSPIControl *)pData );
 		    break;
 	    }
 	}

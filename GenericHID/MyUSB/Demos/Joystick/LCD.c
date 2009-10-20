@@ -1,3 +1,21 @@
+// generichid, DIY HID device 
+// Copyright (C) 2009, Frank Tkalcevic, www.franksworkshop.com
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+
 #include "Common.h"
 #include "Serial.h"
 #include "Controls.h"
@@ -225,7 +243,7 @@ void InitLCD( struct SLCDControl *pData )
 }
 
 
-void WriteLCD( struct SLCDControl *pData, byte **ReportBuffer, byte *nBit )
+static void LCD_Display( struct SLCDControl *pData, byte **ReportBuffer, byte *nBit )
 {
     if ( bSerialDebug )
     {
@@ -235,7 +253,8 @@ void WriteLCD( struct SLCDControl *pData, byte **ReportBuffer, byte *nBit )
 
     byte nColumn = ReadPackData16( ReportBuffer, nBit, 8 );
     byte nRow = ReadPackData16( ReportBuffer, nBit, 8 );
-    nRow &= pData->nRows-1;
+    if ( nRow > pData->nRows-1 )
+	nRow = pData->nRows-1;
 
     byte nAddr = pData->RowAddr[nRow] + nColumn;
     WriteLCDData( pData, Instr, 0x80 | nAddr );			// Set Cursor Addr
@@ -249,7 +268,7 @@ void WriteLCD( struct SLCDControl *pData, byte **ReportBuffer, byte *nBit )
 }
 
 
-void WriteLCDFont( struct SLCDFontControl *pData, byte **ReportBuffer, byte *nBit )
+static void LCD_Font( struct SLCDControl *pData, byte **ReportBuffer, byte *nBit )
 {
     if ( bSerialDebug )
     {
@@ -257,24 +276,39 @@ void WriteLCDFont( struct SLCDFontControl *pData, byte **ReportBuffer, byte *nBi
 	UART1_SendCRLF();
     }
     
-    // The LCD Font info always follows the LCD info.
-    struct SLCDControl *pLCD = ((struct SLCDControl *)pData) - 1;
-
     // [id][data 5 bytes of data]
     // the 5 bytes of data are broken into 7 x 5 bits, one for each row of data.
     byte nCharAddr = ReadPackData16( ReportBuffer, nBit, 8 );
-    WriteLCDData( pLCD, Instr, 0x40 | (nCharAddr << 3) );	// Set CG RAM address
+    WriteLCDData( pData, Instr, 0x40 | (nCharAddr << 3) );	// Set CG RAM address
     for ( int i = 0; i < 7; i++ )
     {
 	byte nData = ReadPackData16( ReportBuffer, nBit, 5 );
-	WriteLCDData( pLCD, Data, nData );			// Data
+	WriteLCDData( pData, Data, nData );			// Data
     }
-    WriteLCDData( pLCD, Data, 0 );  // this is the space for the underline cursor.
+    WriteLCDData( pData, Data, 0 );  // this is the space for the underline cursor.
     // and the left overs 5*8 - 7*5
-    ReadPackData16( ReportBuffer, nBit, 5 );
+    //ReadPackData16( ReportBuffer, nBit, 5 );
 }
 
 
+void WriteLCD( struct SLCDControl *pData, byte nReportId, byte **ReportBuffer, byte *nBit )
+{
+    if ( nReportId == pData->hdr.ReportId + LCD_DISPLAY_REPORT_ID )
+	LCD_Display( pData, ReportBuffer, nBit );
+    else if ( nReportId == pData->hdr.ReportId + LCD_FONT_REPORT_ID )
+	LCD_Font( pData, ReportBuffer, nBit );
+    else
+    {
+	if ( bSerialDebug )
+	{
+		UART1_Send_P(PSTR("LCD Unknown report id "));
+		UART1_SendInt(nReportId);
+		UART1_SendChar('?');
+		UART1_SendInt(pData->hdr.ReportId);
+		UART1_SendCRLF();
+	}
+    }
+}
 
 
 void SendFeatureAttributeReportLCD( struct SLCDControl *pData )

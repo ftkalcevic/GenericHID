@@ -105,6 +105,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LCD_SPI.c"
+				>
+			</File>
+			<File
 				RelativePath=".\LED.c"
 				>
 			</File>
@@ -192,6 +196,10 @@
 			</File>
 			<File
 				RelativePath=".\LCD.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LCD_SPI.h"
 				>
 			</File>
 			<File
