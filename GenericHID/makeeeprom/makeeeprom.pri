@@ -17,9 +17,11 @@ HEADERS += \
 	controlcounter.h \
 	controldigitalencoder.h \
 	controldirectionalswitch.h \
+	controldisplay.h \
 	control.h \
 	controlkeymatrix.h \
 	controllcd.h \
+	controllcd_spi.h \
 	controlled.h \
 	controlpotentiometer.h \
 	controlpwm.h \
@@ -47,8 +49,10 @@ SOURCES += \
 	control.cpp \
 	controldigitalencoder.cpp \
 	controldirectionalswitch.cpp \
+	controldisplay.cpp \
 	controlkeymatrix.cpp \
 	controllcd.cpp \
+	controllcd_spi.cpp \
 	controlled.cpp \
 	controlpotentiometer.cpp \
 	controlpwm.cpp \

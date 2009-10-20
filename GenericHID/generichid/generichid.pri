@@ -33,6 +33,7 @@ HEADERS += columnlayout.h \
     shapescene.h \
     shapedigitalencoder.h \
     shapelcd.h \
+    shapelcd_spi.h \
     shapeselectorswitch.h \
     shapergb.h \
     shapetimer.h \
@@ -100,6 +101,7 @@ SOURCES += columnlayout.cpp \
     shapescene.cpp \
     shapedigitalencoder.cpp \
     shapelcd.cpp \
+    shapelcd_spi.cpp \
     shapeselectorswitch.cpp \
     shapergb.cpp \
     shapetimer.cpp \
