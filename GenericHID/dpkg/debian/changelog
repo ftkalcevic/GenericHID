@@ -1,3 +1,8 @@
+generichid (1.1) release; urgency=low
+
+  * Add SPI LCD
+ -- Frank Tkalcevic <ftkalcevic@franksworkshop.com.au>  Tue, 20 Oct 2009 13:53:49 +1000
+
 generichid (1.0) release; urgency=low
 
   * Made Debian package.
