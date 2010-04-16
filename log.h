@@ -50,7 +50,7 @@ public:
 
 #define LOG_MSG( ClassLogger, Type, Msg )
 
-#endif
+#endif	// ENABLE_LOGGING
 
 
 
