@@ -162,14 +162,17 @@ usb_dev_handle * TeensyProgrammer::open_usb_device(int vid, int pid)
 		continue;
 	    }
 #ifdef LIBUSB_HAS_GET_DRIVER_NP
-	    r = usb_get_driver_np(h, 0, buf, sizeof(buf));
-	    if (r >= 0) {
-		r = usb_detach_kernel_driver_np(h, 0);
-		if (r < 0) {
-		    usb_close(h);
-		    printf_verbose("Device is in use by \"%s\" driver", buf);
-		    continue;
-		}
+	    {
+	        char buf[260];
+	        r = usb_get_driver_np(h, 0, buf, sizeof(buf));
+	        if (r >= 0) {
+		    r = usb_detach_kernel_driver_np(h, 0);
+		    if (r < 0) {
+		        usb_close(h);
+		        //printf_verbose("Device is in use by \"%s\" driver", buf);
+		        continue;
+		    }
+	        }
 	    }
 #endif
             usb_set_configuration(h, 1);

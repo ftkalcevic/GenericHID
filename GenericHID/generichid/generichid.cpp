@@ -645,7 +645,11 @@ void GenericHID::DoProgram( QString &sEEPROM )
     dlg.setEEPROM( sEEPROM );
 
 #ifdef DEBUG
-    QString sFirmwarePath = QString("..\\bin\\") + sFirmware;
+    #ifdef _WIN32
+        QString sFirmwarePath = QString("..\\bin\\") + sFirmware;
+    #else
+        QString sFirmwarePath = QString("/home/frankt/svn/generichid/bin/") + sFirmware;
+    #endif
 #else
     #ifdef _WIN32
 	QString sFirmwarePath = sFirmware;

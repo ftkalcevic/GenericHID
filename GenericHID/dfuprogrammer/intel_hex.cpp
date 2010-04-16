@@ -240,10 +240,16 @@ static int intel_read_data( QIODevice &file, struct intel_record *record )
 
 static int intel_parse_line( QIODevice &file, struct intel_record *record )
 {
-    if( 0 != intel_read_data(file, record) )
+    int ret;
+    ret = intel_read_data(file, record);
+    if( ret != 0 )
+    {
+        ERROR_MSG( QString("Error reading line. %1\n").arg(ret) );
         return -1;
+    }
 
-    switch( intel_validate_line(record) ) {
+    ret = intel_validate_line(record);
+    switch( ret ) {
         case 0:     /* data, extended address, etc */
             intel_process_address( record );
             break;
@@ -252,6 +258,7 @@ static int intel_parse_line( QIODevice &file, struct intel_record *record )
             break;
 
         default:
+            ERROR_MSG( QString("Error validating line. %1\n").arg(ret) );
             return -1;
     }
 

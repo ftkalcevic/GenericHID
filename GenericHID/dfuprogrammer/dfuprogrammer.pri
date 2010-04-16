@@ -11,12 +11,16 @@ HEADERS += atmel.h \
 	   intelhexbuffer.h \
 	   inttypes.h \
 	   dfutypes.h \
-	   dfuprogrammer.h
+	   dfuprogrammer.h \
+	   deviceprogrammer.h \
+	   teensyprogrammer.h
 
 #Source files
 SOURCES += atmel.cpp \
 	   dfu.cpp \
 	   intel_hex.cpp \
 	   intelhexbuffer.cpp \
-	   dfuprogrammer.cpp
+	   dfuprogrammer.cpp \
+	   deviceprogrammer.cpp \
+	   teensyprogrammer.cpp
 
