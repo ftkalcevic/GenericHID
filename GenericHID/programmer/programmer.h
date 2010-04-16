@@ -17,6 +17,8 @@
 #ifndef _PROGRAMMER_H_
 #define _PROGRAMMER_H_
 
+#include "log.h"
+
 namespace ProgramState
 {
     enum ProgramState
@@ -60,6 +62,7 @@ protected:
     virtual void CompletionStatus( int nPercentComplete ) = 0;
     static void completion_callback( void *user_data, int percent );
 
+    Logger m_Logger;
     DeviceProgrammer *m_programmer;
 };
 

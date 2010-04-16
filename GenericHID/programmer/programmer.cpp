@@ -22,6 +22,7 @@
 
 Programmer::Programmer()
 : m_programmer( NULL )
+, m_Logger( QCoreApplication::applicationName(), "Programmer" )
 {
 
 }
@@ -39,7 +40,7 @@ void Programmer::completion_callback( void *user_data, int percent )
 
 bool Programmer::Init( ProgrammerType::ProgrammerType type )
 {
-    LOG_MSG( m_Logger, LogTypes::Info, QString("Initialising programmer type '%1'").arg(type) );
+    LOG_DEBUG( m_Logger, QString("Initialising programmer type '%1'").arg(type) );
     if ( m_programmer == NULL )
     {
 	switch ( type )

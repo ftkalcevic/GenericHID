@@ -16,13 +16,13 @@
 
 #include "stdafx.h"
 #include "generichid.h"
-#include "programdlg.h"
 #include "dragtoolbutton.h"
 #include "makeeeprom.h"
 #include "timerconfigdlg.h"
 #include "logcore.h"
 #include "hiddevices.h"
 #include "deviceconfig.h"
+#include "programdlg.h"
 
 
 const char * const CONFIGDATA_FILE = "config:config.xml";
