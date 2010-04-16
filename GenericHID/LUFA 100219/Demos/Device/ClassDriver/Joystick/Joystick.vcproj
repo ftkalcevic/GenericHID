@@ -108,6 +108,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PortIO.S"
+				>
+			</File>
+			<File
 				RelativePath=".\Potentiometer.c"
 				>
 			</File>
@@ -368,6 +372,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\makefile"
+			>
+		</File>
 		<File
 			RelativePath=".\readme.txt"
 			>
