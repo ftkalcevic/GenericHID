@@ -21,6 +21,7 @@
 #include "shape.h"
 #include "shapeitem.h"
 
+
 class ShapeScene : public QGraphicsScene
 {
     Q_OBJECT
@@ -38,6 +39,8 @@ public:
     bool VerifyShapes( QString &sError ) const;
     QString MakeDeviceXML() const;
     bool isMouseDown() const { return m_bMouseDown; }
+    QString MCUFirmware();
+    QString MCUProgrammerType();
 
 public slots:
     void onViewItemChanged( QGraphicsItem *item, QGraphicsItem::GraphicsItemChange change, const QVariant &value);
@@ -58,6 +61,7 @@ private:
     void RemoveShape( ShapeItem *pItem );
     int GetUniqueShapeId();
     void SetStatusMsg( const QString &sMsg );
+    ShapeItem *GetMCUShape();
 
     Logger m_Logger;
     Editor *m_pEditor;

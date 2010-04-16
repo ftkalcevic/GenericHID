@@ -54,5 +54,7 @@
 QVector<int16_t> intel_hex_file_to_buffer( const char *filename, unsigned int max_size, unsigned int *usage );
 QVector<int16_t> intel_hex_to_buffer( QIODevice &file, unsigned int max_size, unsigned int *usage );
 QVector<int16_t> intel_hex_string_to_buffer( const QString &s, unsigned int max_size, unsigned int *usage );
+void intel_hex_string_to_buffer_append( QVector<int16_t> &memory, const QString &s, unsigned int max_size, unsigned int *usage );
+void intel_hex_to_buffer_append( QVector<int16_t> &memory, QIODevice &file, unsigned int max_size, unsigned int *usage );
 
 #endif

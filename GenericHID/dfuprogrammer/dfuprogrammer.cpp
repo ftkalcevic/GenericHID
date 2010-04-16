@@ -112,6 +112,8 @@ DFUProgrammer::DFUProgrammer( enum targets_enum target )
     m_flash_address_bottom = 0;
     m_bootloader_bottom = 0;
     m_bootloader_top = 0;
+    m_eeprom_page_size = m_pDetails->eeprom_page_size;
+    m_flash_page_size = m_pDetails->flash_page_size;
     if( m_pDetails->bootloader_at_highmem ) 
     {
 	m_bootloader_bottom = m_flash_address_top - m_pDetails->bootloader_size;
@@ -166,14 +168,14 @@ bool DFUProgrammer::GetDevice()
 	return true;
 }
 
-bool DFUProgrammer::HasDevice()
-{
-    if ( m_pDevice == NULL )
-	return false;
-
-    // todo: test if we still have the device
-    return true;
-}
+//bool DFUProgrammer::HasDevice()
+//{
+//    if ( m_pDevice == NULL )
+//	return false;
+//
+//    // todo: test if we still have the device
+//    return true;
+//}
 
 bool DFUProgrammer::EraseDevice()
 {
@@ -203,14 +205,14 @@ bool DFUProgrammer::StartProgramming(IntelHexBuffer &memory)
     uint32_t memory_size;
     uint32_t top_memory_address = m_flash_address_top;
     uint32_t bottom_memory_address = m_flash_address_bottom;
-    uint32_t page_size = m_pDetails->flash_page_size;
+    uint32_t page_size = m_flash_page_size;
     bool bEeprom = memory.memoryType() == MemoryType::EEPROM;
 
     if( bEeprom ) 
     {
         top_memory_address = m_top_eeprom_memory_address;
         bottom_memory_address = 0;
-        page_size = m_pDetails->eeprom_page_size;
+        page_size = m_eeprom_page_size;
     }
 
     memory_size = top_memory_address - bottom_memory_address;
@@ -273,14 +275,14 @@ bool DFUProgrammer::StartVerify(IntelHexBuffer &memory)
     uint32_t memory_size;
     uint32_t top_memory_address = m_flash_address_top;
     uint32_t bottom_memory_address = m_flash_address_bottom;
-    uint32_t page_size = m_pDetails->flash_page_size;
+    uint32_t page_size = m_flash_page_size;
     bool bEeprom = memory.memoryType() == MemoryType::EEPROM;
 
     if( bEeprom ) 
     {
         top_memory_address = m_top_eeprom_memory_address;
         bottom_memory_address = 0;
-        page_size = m_pDetails->eeprom_page_size;
+        page_size = m_eeprom_page_size;
     }
 
     memory_size = top_memory_address - bottom_memory_address;
@@ -339,55 +341,3 @@ bool DFUProgrammer::EnterApplicationMode(ResetMode::ResetMode mode, unsigned int
 
     //const QString &LastError() { return m_sLastError; }
 
-
-
-
-IntelHexBuffer DFUProgrammer::LoadHex(MemoryType::MemoryType memtype, const QString &sBuffer)
-{
-    uint32_t memory_size;
-    uint32_t top_memory_address = m_flash_address_top;
-    uint32_t bottom_memory_address = m_flash_address_bottom;
-    uint32_t page_size = m_pDetails->flash_page_size;
-    bool bEeprom = memtype == MemoryType::EEPROM;
-
-    if( bEeprom ) 
-    {
-        top_memory_address = m_top_eeprom_memory_address;
-        bottom_memory_address = 0;
-        page_size = m_pDetails->eeprom_page_size;
-    }
-
-    memory_size = top_memory_address - bottom_memory_address;
-
-    IntelHexBuffer buffer;
-    buffer.load( memtype, sBuffer, top_memory_address );
-
-    return buffer;
-}
-
-
-
-
-
-IntelHexBuffer DFUProgrammer::LoadHexFile(MemoryType::MemoryType memtype, const QString &sPath)
-{
-    uint32_t memory_size;
-    uint32_t top_memory_address = m_flash_address_top;
-    uint32_t bottom_memory_address = m_flash_address_bottom;
-    uint32_t page_size = m_pDetails->flash_page_size;
-    bool bEeprom = memtype == MemoryType::EEPROM;
-
-    if( bEeprom ) 
-    {
-        top_memory_address = m_top_eeprom_memory_address;
-        bottom_memory_address = 0;
-        page_size = m_pDetails->eeprom_page_size;
-    }
-
-    memory_size = top_memory_address - bottom_memory_address;
-
-    IntelHexBuffer buffer;
-    buffer.loadFile( memtype, sPath.toAscii().constData(), top_memory_address );
-
-    return buffer;
-}

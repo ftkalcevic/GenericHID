@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 
     MyProgrammer prog;
 
-    if ( prog.Init() )
+    if ( prog.Init(ProgrammerType::DFU) )
 	if ( prog.Program( sEeprom, sFirmware ) )
 	    if ( prog.RunFirmware() )
 		return 0;

@@ -46,6 +46,18 @@ bool IntelHexBuffer::load(MemoryType::MemoryType memory, const QString &sBuffer,
 	return true;
 }
 
+bool IntelHexBuffer::append(MemoryType::MemoryType memory, const QString &sBuffer, unsigned int max_size)
+{
+    m_nMaxSize = max_size;
+    m_eMemoryType = memory;
+    m_nUsage = 0;
+    intel_hex_string_to_buffer_append( m_HexBuffer, sBuffer, max_size, &m_nUsage );
+    if( m_HexBuffer.isEmpty() ) 
+	return false;
+    else
+	return true;
+}
+
 bool IntelHexBuffer::loadFile(MemoryType::MemoryType memory, const QString &sHexPath, unsigned int max_size)
 {
     m_nMaxSize = max_size;
@@ -56,4 +68,15 @@ bool IntelHexBuffer::loadFile(MemoryType::MemoryType memory, const QString &sHex
 	return false;
     else
 	return true;
+}
+
+
+bool IntelHexBuffer::isInUse( int nAddrStart, int nAddrEnd )
+{
+    for ( int i = nAddrStart; i <= nAddrEnd && i < m_HexBuffer.size(); i++ )
+    {
+	if ( m_HexBuffer[i] != -1 )
+	    return true;
+    }
+    return false;
 }

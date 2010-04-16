@@ -96,6 +96,8 @@
 	    <property name="Timer1" description=":stockusbkey.htm#Timer1" type="timer13" default="1,8,100"/>
 	    <property name="Timer2" description=":stockusbkey.htm#Timer2" type="timer2" default="1,8,100"/>
 	    <property name="Timer3" description=":stockusbkey.htm#Timer3" type="timer13" default="1,8,100"/>
+	    <property name="Firmware" description="" type="string" enabled="false" default="usbkey.hex" />
+	    <property name="ProgrammerType" description="" type="string" enabled="false" default="DFU" />
 	</Shape>
 	<Shape Id="strippedusbkey" Type="at90usb128" Source="false" Image="resources:avrusbkey.png" Icon="resources:avrusbkeyicon.png" maxInstances="1" name="Stripped AT90USBKey Demo board" description=":strippedusbkey.htm">
 	    <pin rect="  1, 44, 31, 25" id="Vcc" type="" enabled="false" />
@@ -188,6 +190,8 @@
 	    <property name="Timer1" description=":strippedusbkey.htm#Timer1" type="timer13" default="1,8,100"/>
 	    <property name="Timer2" description=":strippedusbkey.htm#Timer2" type="timer2" default="1,8,100"/>
 	    <property name="Timer3" description=":strippedusbkey.htm#Timer3" type="timer13" default="1,8,100"/>
+	    <property name="Firmware" description="" type="string" enabled="false" default="usbkey.hex" />
+	    <property name="ProgrammerType" description="" type="string" enabled="false" default="DFU" />
 	</Shape>
 	
 	
@@ -282,6 +286,8 @@
 	    <property name="Timer1" description=":usbkeywithwings.htm#Timer1" type="timer13" default="1,8,100"/>
 	    <property name="Timer2" description=":usbkeywithwings.htm#Timer2" type="timer2" default="1,8,100"/>
 	    <property name="Timer3" description=":usbkeywithwings.htm#Timer3" type="timer13" default="1,8,100"/>
+	    <property name="Firmware" description="" type="string" enabled="false" default="usbkey.hex" />
+	    <property name="ProgrammerType" description="" type="string" enabled="false" default="DFU" />
 	</Shape>
 
 
@@ -377,6 +383,8 @@
 	    <property name="Timer1" description=":wizbangidc.htm#Timer1" type="timer13" default="1,8,100"/>
 	    <property name="Timer2" description=":wizbangidc.htm#Timer2" type="timer2" default="1,8,100"/>
 	    <property name="Timer3" description=":wizbangidc.htm#Timer3" type="timer13" default="1,8,100"/>
+	    <property name="Firmware" description="" type="string" enabled="false" default="usbkey.hex" />
+	    <property name="ProgrammerType" description="" type="string" enabled="false" default="DFU" />
 	</Shape>
 
 
@@ -468,8 +476,86 @@
 	    <property name="Timer1" description=":generichid.1.0.htm#Timer1" type="timer13" default="1,8,100"/>
 	    <property name="Timer2" description=":generichid.1.0.htm#Timer2" type="timer2" default="1,8,100"/>
 	    <property name="Timer3" description=":generichid.1.0.htm#Timer3" type="timer13" default="1,8,100"/>
+	    <property name="Firmware" description="" type="string" enabled="false" default="usbkey.hex" />
+	    <property name="ProgrammerType" description="" type="string" enabled="false" default="DFU" />
 	</Shape>
 
+	<Shape Id="Teensy++2.0" Type="at90usb128" Source="false" Image="resources:teensypp.png" Icon="resources:teensyppicon.png" maxInstances="1" name="Teensy++ 2.0 USB Development Board" description=":teensypp.htm">
+	    <pin rect= "78,  0, 24, 22" id="PE5" type="io,int" />
+	    <pin rect="102,  0, 24, 22" id="PE4" type="io,int" />
+
+	    <pin rect="  0, 46, 24, 22" id="GND" type="" enabled="false" />
+	    <pin rect="  0, 68, 24, 22" id="PB7" type="io,int,pwm" />
+	    <pin rect="  0, 90, 24, 22" id="PD0" type="io,int" />
+	    <pin rect="  0,112, 24, 22" id="PD1" type="io,int,pwm" />
+	    <pin rect="  0,134, 24, 22" id="PD2" type="io,int" />
+	    <pin rect="  0,156, 24, 22" id="PD3" type="io,int" />
+	    <pin rect="  0,178, 24, 22" id="PD4" type="io"/>
+	    <pin rect="  0,200, 24, 22" id="PD5" type="io" />
+	    <pin rect="  0,222, 24, 22" id="PD6" type="io" other="LED" />
+	    <pin rect="  0,244, 24, 22" id="PD7" type="io" />
+	    <pin rect="  0,266, 24, 22" id="PE0" type="io" />
+	    <pin rect="  0,288, 24, 22" id="PE1" type="io" />
+	    <pin rect="  0,310, 24, 22" id="PC0" type="io" />
+	    <pin rect="  0,332, 24, 22" id="PC1" type="io" />
+	    <pin rect="  0,354, 24, 22" id="PC3" type="io" />
+	    <pin rect="  0,376, 24, 22" id="PC2" type="io" />
+	    <pin rect="  0,398, 24, 22" id="PC4" type="io,pwm" />
+	    <pin rect="  0,420, 24, 22" id="PC5" type="io,pwm" />
+	    <pin rect="  0,442, 24, 22" id="PC6" type="io,pwm" />
+	    <pin rect="  0,464, 24, 22" id="PC7" type="io" />
+
+	    <pin rect="185, 46, 24, 22" id="Vcc" type="" enabled="false" />
+	    <pin rect="185, 68, 24, 22" id="PB6" type="io,int,pwm" />
+	    <pin rect="185, 90, 24, 22" id="PB5" type="io,int,pwm" />
+	    <pin rect="185,112, 24, 22" id="PB4" type="io,int,pwm" />
+	    <pin rect="185,134, 24, 22" id="PB3" type="io,int,miso" />
+	    <pin rect="185,156, 24, 22" id="PB2" type="io,int,mosi" />
+	    <pin rect="185,178, 24, 22" id="PB1" type="io,int,sck" />
+	    <pin rect="185,200, 24, 22" id="PB0" type="io,int,ss" />
+	    <pin rect="185,222, 24, 22" id="PE7" type="io,int" />
+	    <pin rect="185,244, 24, 22" id="PE6" type="io,int" />
+	    <pin rect="185,310, 24, 22" id="PF0" type="io,adc" />
+	    <pin rect="185,332, 24, 22" id="PF1" type="io,adc" />
+	    <pin rect="185,354, 24, 22" id="PF2" type="io,adc" />
+	    <pin rect="185,376, 24, 22" id="PF3" type="io,adc" />
+	    <pin rect="185,398, 24, 22" id="PF4" type="io,adc" enabled="false" other="JTAG" />
+	    <pin rect="185,420, 24, 22" id="PF5" type="io,adc" enabled="false" other="JTAG" />
+	    <pin rect="185,442, 24, 22" id="PF6" type="io,adc" enabled="false" other="JTAG" />
+	    <pin rect="185,464, 24, 22" id="PF7" type="io,adc" enabled="false" other="JTAG" />
+
+	    <pin rect=" 78,500, 24, 22" id="PA4" type="io" />
+	    <pin rect=" 78,522, 24, 22" id="PA5" type="io" />
+	    <pin rect=" 78,544, 24, 22" id="PA6" type="io" />
+	    <pin rect=" 78,566, 24, 22" id="PA7" type="io" />
+
+	    <pin rect="102,500, 24, 22" id="PA0" type="io" />
+	    <pin rect="102,522, 24, 22" id="PA1" type="io" />
+	    <pin rect="102,544, 24, 22" id="PA2" type="io" />
+	    <pin rect="102,566, 24, 22" id="PA3" type="io" />
+
+
+	    <property name="Name" description=":teensypp.htm#Name" type="string" default="Generic HID Device"/>
+	    <property name="Usage" description=":teensypp.htm#Usage" type="usage" default="1:8" />
+	    <property name="Voltage" description=":teensypp.htm#Voltage" type="enum" default="5" enabled="false">
+		<enum name="5"/>
+	    </property>
+	    <property name="Power-Source" description=":teensypp.htm#Power-Source" type="enum" default="Bus-Powered" enabled="false">
+		<enum name="Bus-Powered"/>
+	    </property>
+	    <property name="Interval" description=":teensypp.htm#Interval" type="int" min="0" max="255" default="50"/>
+	    <property name="Serial-Debug" description=":teensypp.htm#Serial-Debug" type="bool" default="false"/>
+	    <property name="Current" description=":teensypp.htm#Current" type="int" min="20" max="20" default="20"/>
+	    <property name="Use Status LEDs" description=":teensypp.htm#UseStatusLEDs" type="enum" default="None">
+		<enum name="None"/>
+	    </property>
+	    <property name="SerialNo" description=":teensypp.htm#SerialNo" type="string" default="1"/>
+	    <property name="Timer1" description=":teensypp.htm#Timer1" type="timer13" default="1,8,100"/>
+	    <property name="Timer2" description=":teensypp.htm#Timer2" type="timer2" default="1,8,100"/>
+	    <property name="Timer3" description=":teensypp.htm#Timer3" type="timer13" default="1,8,100"/>
+	    <property name="Firmware" description="" type="string" enabled="false" default="teensypp.hex" />
+	    <property name="ProgrammerType" description="" type="string" enabled="false" default="HalfKay" />
+	</Shape>
 
 	<Shape Id="pot" Type="pot" Source="true" Image="resources:potentiometer.png" Icon="resources:potentiometericon.png" maxInstances="0" name="Analog Potentiometer" description=":pot.htm">
 	    <pin rect="2,35,16,16" id="Out" type="adc" valign="above"/>

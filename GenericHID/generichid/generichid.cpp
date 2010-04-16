@@ -22,6 +22,7 @@
 #include "timerconfigdlg.h"
 #include "logcore.h"
 #include "hiddevices.h"
+#include "deviceconfig.h"
 
 
 const char * const CONFIGDATA_FILE = "config:config.xml";
@@ -525,25 +526,13 @@ void GenericHID::onMicrocontrollerProgram()
 	return;
     }
 
-    QString sIntelHex = MakeEEPROM::MakeIntelHexFormat( buf );
+    QString sIntelHex = MakeEEPROM::MakeIntelHexFormat( DYNAMIC_HIDDATA_ADDRESS, buf );
 
     LOG_DEBUG( m_Logger, "Program HexFile - " );
     LOG_DEBUG( m_Logger, sIntelHex );
 
     // program
-    ProgramDlg dlg(this);
-    dlg.setEEPROM( sIntelHex );
-#ifdef DEBUG
-    dlg.setFirmwareFile( "..\\bin\\Joystick.hex");
-#else
-    #ifdef _WIN32
-	dlg.setFirmwareFile( "Joystick.hex");
-    #else
-	dlg.setFirmwareFile( "/usr/share/generichid/Joystick.hex");
-    #endif
-#endif	
-
-    dlg.exec();
+    DoProgram( sIntelHex );
 }
 
 void GenericHID::onMicrocontrollerExport()
@@ -640,20 +629,33 @@ void GenericHID::onMicrocontrollerImportAndProgram()
 	return;
     }
 
-    QString sIntelHex = MakeEEPROM::MakeIntelHexFormat( buf );
+    QString sIntelHex = MakeEEPROM::MakeIntelHexFormat( DYNAMIC_HIDDATA_ADDRESS, buf );
+
+    DoProgram( sIntelHex );
+}
+
+void GenericHID::DoProgram( QString &sEEPROM )
+{
+    // Get MCU parameters
+    QString sProgrammerType = m_pScene->MCUProgrammerType();
+    QString sFirmware = m_pScene->MCUFirmware();
 
     // program
     ProgramDlg dlg(this);
-    dlg.setEEPROM( sIntelHex );
+    dlg.setEEPROM( sEEPROM );
+
 #ifdef DEBUG
-    dlg.setFirmwareFile( "..\\bin\\Joystick.hex");
+    QString sFirmwarePath = QString("..\\bin\\") + sFirmware;
 #else
     #ifdef _WIN32
-	dlg.setFirmwareFile( "Joystick.hex");
+	QString sFirmwarePath = sFirmware;
     #else
-	dlg.setFirmwareFile( "/usr/share/generichid/Joystick.hex");
+	QString sFirmwarePath = QString("/usr/share/generichid/") + sFirmware;
     #endif
 #endif	
+
+    dlg.setFirmwareFile(sFirmwarePath);
+    dlg.setProgrammerType( sProgrammerType );
 
     dlg.exec();
 }

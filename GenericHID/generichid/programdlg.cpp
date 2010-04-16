@@ -27,6 +27,9 @@ const unsigned short GenericHID_PID = 0x04d9;
 const unsigned short At90USB1287_VID = 0x03eb;
 const unsigned short At90USB1287_PID = 0x2FFB;
 
+const unsigned short TEENSYPP_VID = 0x16C0;
+const unsigned short TEENSYPP_PID = 0x0478;
+
 
 ProgramDlg::ProgramDlg(QWidget *parent)
 : QDialog(parent)
@@ -59,10 +62,11 @@ void ProgramDlg::SetMode( bool bDevice, bool bBootloader, bool bHID)
     ui.btnRestartDevice->setEnabled( bBootloader );
 }
 
-bool ProgramDlg::FindDevices( int &nGenericHIDs, int &nAt90DFUs )
+bool ProgramDlg::FindDevices( int &nGenericHIDs, int &nAt90DFUs, int &nTeensies )
 {
     nGenericHIDs = 0;
     nAt90DFUs = 0;
+    nTeensies = 0;
 
     usb_find_busses();
     usb_find_devices();
@@ -75,6 +79,8 @@ bool ProgramDlg::FindDevices( int &nGenericHIDs, int &nAt90DFUs )
 	    LOG_MSG( m_Logger, LogTypes::Debug, QString("VID=%1 PID=%2").arg(device->descriptor.idVendor,4,16,QChar('0')).arg(device->descriptor.idProduct,4,16,QChar('0')) );
             if( device->descriptor.idVendor == GenericHID_VID && device->descriptor.idProduct == GenericHID_PID )
 		nGenericHIDs++;
+            else if( device->descriptor.idVendor == TEENSYPP_VID && device->descriptor.idProduct == TEENSYPP_PID )
+		nTeensies++;
             else if( device->descriptor.idVendor == At90USB1287_VID && device->descriptor.idProduct == At90USB1287_PID )
 		nAt90DFUs++;
         }
@@ -170,17 +176,18 @@ void ProgramDlg::updateDeviceStatus()
     // Check for USB devices on the BUS.
     int nGenericHIDs = 0;
     int nAt90DFUs = 0;
-    if ( FindDevices( nGenericHIDs, nAt90DFUs ) )
+    int nTeensies = 0;
+    if ( FindDevices( nGenericHIDs, nAt90DFUs, nTeensies ) )
     {
 	// check for too many devices
-	if ( nGenericHIDs + nAt90DFUs > 1 )
+	if ( nGenericHIDs + nAt90DFUs + nTeensies > 1 )
 	{
 	    //
 	    SetMode( false, false, false );
 	    if ( !m_bMultipleWarning )
 	    {
 		m_bMultipleWarning = true;
-		QMessageBox::warning( this, "Multiple Devices Found", "More than one GenericHID device (GenericHID or AT90USB128 in DFU mode) found in the system.  This may be a USB driver glitch; in this case you can ignore the message.  If there are multiple devices plugged in, you may program the wrong one." );
+		QMessageBox::warning( this, "Multiple Devices Found", "More than one GenericHID device (GenericHID or AT90USB128 in DFU mode or Teensy++ in programming mode) found in the system.  This may be a USB driver glitch; in this case you can ignore the message.  If there are multiple devices plugged in, you may program the wrong one." );
 	    }
 	}
 
@@ -191,7 +198,7 @@ void ProgramDlg::updateDeviceStatus()
 		// the device is present, but still in HID mode.
 		SetMode( true, false, true );
 	    }
-	    else if ( nAt90DFUs > 0 )
+	    else if ( nAt90DFUs > 0 || nTeensies > 0 )
 	    {
 		// the device is present, in DFU mode.
 		SetMode( true, true, false );
@@ -254,7 +261,8 @@ void ProgramDlg::onProgram()
     else
     {
 	ProgrammerThread pProgrammer(this);
-	if ( pProgrammer.Init() )
+
+	if ( pProgrammer.Init(m_ProgrammerType) )
 	{
 	    ProgrammingStatusDlg pStatusDlg( this );
 	    m_pStatusDlg = &pStatusDlg;
@@ -281,9 +289,18 @@ void ProgramDlg::onProgram()
 void ProgramDlg::onRestartDevice()
 {
     ProgrammerThread programmer(this);
-    if ( programmer.Init() )
+    if ( programmer.Init(m_ProgrammerType) )
 	programmer.RunFirmware();
     programmer.Terminate();
+}
+
+void ProgramDlg::setProgrammerType( const QString &sProgrammerType )
+{
+    m_ProgrammerType = ProgrammerType::DFU;
+    if ( sProgrammerType == "DFU" )
+	m_ProgrammerType = ProgrammerType::DFU;
+    else if ( sProgrammerType == "HalfKay" )
+	m_ProgrammerType = ProgrammerType::HalfK;	
 }
 
 void ProgramDlg::onClose()

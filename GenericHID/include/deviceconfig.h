@@ -316,6 +316,7 @@ struct SApplicationHeader
 
 #define MAGIC_BOOTLOADER_CODE 0xDF0DF0DF
 #define MAX_HID_DATA	4096				// 4k of eeprom
+#define DYNAMIC_HIDDATA_ADDRESS	    (0x10000 - 0x1000 - 0x1000)	    // (this is actually 4k words)
 
 #ifdef _WIN32
 #pragma warning(pop)

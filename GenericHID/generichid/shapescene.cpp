@@ -19,6 +19,7 @@
 #include "pinitem.h"
 #include "shapeitem.h"
 #include "shape.h"
+#include "shapemcu.h"
 
 ShapeScene::ShapeScene( Editor *pEditor, qreal x, qreal y, qreal width, qreal height, QObject * parent )
 : QGraphicsScene( x, y, width, height, parent )
@@ -569,6 +570,42 @@ bool ShapeScene::VerifyShapes( QString &sError ) const
     return !bFailed;
 }
 
+QString ShapeScene::MCUFirmware()
+{
+    QString s;
+    ShapeItem *pItem = GetMCUShape();
+    if ( pItem != NULL )
+    {
+	const ShapeMCU *mcu = dynamic_cast<const ShapeMCU*>(pItem->shapeData());
+	s = mcu->Firmware( pItem->values() );
+    }
+    return s;
+}
+
+QString ShapeScene::MCUProgrammerType()
+{
+    QString s;
+    ShapeItem *pItem = GetMCUShape();
+    if ( pItem != NULL )
+    {
+	const ShapeMCU *mcu = dynamic_cast<const ShapeMCU*>(pItem->shapeData());
+	s = mcu->ProgrammerType( pItem->values() );
+    }
+    return s;
+}
+
+ShapeItem *ShapeScene::GetMCUShape()
+{
+    // Find the MCU 
+    foreach (ShapeItem *pItem, m_ShapeItems )
+    {
+	if ( pItem->shapeData()->shapeType() == ShapeType::AT90USB128 )
+	{
+	    return pItem;
+	}
+    }
+    return NULL;
+}
 
 QString ShapeScene::MakeDeviceXML( ) const
 {

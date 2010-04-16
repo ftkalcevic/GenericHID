@@ -72,6 +72,7 @@ private:
     bool CheckDataChanged();
     void RetrieveProperties();
     void setMenus( bool bActive );
+    void DoProgram( QString &sEEPROM );
 
     Logger m_Logger;
     QString m_sLastFile;

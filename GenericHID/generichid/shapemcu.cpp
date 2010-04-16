@@ -246,4 +246,12 @@ void ShapeMCU::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> 
     }
 }
 
+QString ShapeMCU::Firmware( const QList<PropertyValue *> &values ) const
+{
+    return GetPropertyValueString("Firmware",values,"");
+}
 
+QString ShapeMCU::ProgrammerType( const QList<PropertyValue *> &values ) const
+{
+    return GetPropertyValueString("ProgrammerType",values,"");
+}

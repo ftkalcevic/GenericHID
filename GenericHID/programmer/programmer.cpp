@@ -17,6 +17,7 @@
 #include "stdafx.h"
 #include "programmer.h"
 #include "dfuprogrammer.h"
+#include "teensyprogrammer.h"
 
 
 Programmer::Programmer()
@@ -36,11 +37,20 @@ void Programmer::completion_callback( void *user_data, int percent )
     that->CompletionStatus( percent );
 }
 
-bool Programmer::Init()
+bool Programmer::Init( ProgrammerType::ProgrammerType type )
 {
     if ( m_programmer == NULL )
     {
-	m_programmer = new DFUProgrammer( tar_at90usb1287 );
+	switch ( type )
+	{
+	    case ProgrammerType::DFU:
+		m_programmer = new DFUProgrammer( tar_at90usb1287 );
+		break;
+
+	    case ProgrammerType::HalfK:
+		m_programmer = new TeensyProgrammer();
+		break;
+	}
 	m_programmer->RegisterCallback( &completion_callback, this );
     }
 
@@ -66,11 +76,11 @@ bool Programmer::Program( const QString &sEeprom, const QString &sFirmwarePath )
     if ( m_programmer == NULL )
 	return false;
 
-    IntelHexBuffer eeprom = m_programmer->LoadHex(MemoryType::EEPROM, sEeprom);
-    if ( eeprom.isEmpty() )
+    IntelHexBuffer firmware = m_programmer->LoadHexFile(MemoryType::FLASH, sFirmwarePath);
+    if ( firmware.isEmpty() )
 	return false;
 
-    IntelHexBuffer firmware = m_programmer->LoadHexFile(MemoryType::FLASH, sFirmwarePath);
+    m_programmer->AppendHex(firmware, MemoryType::FLASH, sEeprom);
     if ( firmware.isEmpty() )
 	return false;
 
@@ -78,17 +88,17 @@ bool Programmer::Program( const QString &sEeprom, const QString &sFirmwarePath )
     if ( !m_programmer->EraseDevice() )
 	return false;
 
-    UpdateStatus( ProgramState::ProgrammingEEPROM );
-    if ( !m_programmer->StartProgramming( eeprom ) )
-	return false;
+ //   UpdateStatus( ProgramState::ProgrammingEEPROM );
+ //   if ( !m_programmer->StartProgramming( eeprom ) )
+	//return false;
 
     UpdateStatus( ProgramState::ProgrammingFlash );
     if ( !m_programmer->StartProgramming( firmware ))
 	return false;
 
-    UpdateStatus( ProgramState::VerifyingEEPROM );
-    if ( !m_programmer->StartVerify( eeprom ) )
-	return false;
+ //   UpdateStatus( ProgramState::VerifyingEEPROM );
+ //   if ( !m_programmer->StartVerify( eeprom ) )
+	//return false;
 
     UpdateStatus( ProgramState::VerifyingFlash );
     if ( !m_programmer->StartVerify( firmware ))

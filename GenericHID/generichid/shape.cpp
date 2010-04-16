@@ -168,7 +168,7 @@ Shape *Shape::CreateFromXML( QDomElement &node, QString &sError )
 	    }
 	}
 
-	// the shapes configurable properties
+	// the shape's configurable properties
 	QDomNodeList propertyNodes = XMLUtility::elementsByTagName( node, "property" );
 	for ( uint i = 0; i < propertyNodes.length(); i++ )
 	{

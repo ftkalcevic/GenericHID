@@ -30,13 +30,26 @@ namespace ProgramState
     };
 };
 
+namespace ProgrammerType
+{
+    enum ProgrammerType
+    {
+        DFU,
+        HalfK
+    };
+};
+
+
+
+class DeviceProgrammer;
+
 class Programmer
 {
 public:
     Programmer();
     ~Programmer();
 
-    bool Init();
+    bool Init(ProgrammerType::ProgrammerType type);
     bool Terminate();
     bool Program( const QString &sEepromPath, const QString &sFirmwarePath );
     bool RunFirmware();
@@ -47,7 +60,7 @@ protected:
     virtual void CompletionStatus( int nPercentComplete ) = 0;
     static void completion_callback( void *user_data, int percent );
 
-    class DFUProgrammer *m_programmer;
+    DeviceProgrammer *m_programmer;
 };
 
 #endif // PROGRAMMER_H

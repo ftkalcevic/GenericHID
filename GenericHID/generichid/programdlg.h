@@ -39,6 +39,7 @@ public:
     ~ProgramDlg();
     void setEEPROM( const QString &sIntelFormat );
     void setFirmwareFile( const QString &sFilename );
+    void setProgrammerType( const QString &sProgrammerType );
 
 public slots:
     void updateDeviceStatus();
@@ -58,9 +59,10 @@ private:
     ProgrammingStatusDlg *m_pStatusDlg;
     QString m_sEeprom;
     QString m_sFirmwareFile;
+    ProgrammerType::ProgrammerType m_ProgrammerType;
 
     void SetMode( bool bDevice, bool bBootloader, bool bHID);
-    bool FindDevices( int &nGenericHIDs, int &nAt90DFUs );
+    bool FindDevices( int &nGenericHIDs, int &nAt90DFUs, int &nTeensies );
     USBDevice GetGenericHIDDevice();
 };
 

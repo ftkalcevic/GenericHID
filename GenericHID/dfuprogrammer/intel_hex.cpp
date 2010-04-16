@@ -320,9 +320,36 @@ QVector<int16_t> intel_hex_string_to_buffer( const QString &s, unsigned int max_
 }
 
 
+void intel_hex_string_to_buffer_append( QVector<int16_t> &memory, const QString &s, unsigned int max_size, unsigned int *usage )
+{
+    QByteArray b = s.toAscii();
+    QBuffer buffer( &b );
+    buffer.open(QIODevice::ReadOnly );
+    intel_hex_to_buffer_append( memory, buffer, max_size, usage );
+}
+
+
 QVector<int16_t> intel_hex_to_buffer( QIODevice &file, unsigned int max_size, unsigned int *usage )
 {
     QVector<int16_t> memory;
+
+    if( max_size <= 0 ) 
+    {
+        ERROR_MSG( "Invalid max_size.\n" );
+    }
+    else
+    {
+	memory.fill( -1, max_size );
+	intel_hex_to_buffer_append( memory, file, max_size, usage );
+    }
+
+    return memory;
+}
+
+
+
+void intel_hex_to_buffer_append( QVector<int16_t> &memory, QIODevice &file, unsigned int max_size, unsigned int *usage )
+{
     int failure = 1;
     struct intel_record record;
     unsigned int address = 0;
@@ -333,8 +360,6 @@ QVector<int16_t> intel_hex_to_buffer( QIODevice &file, unsigned int max_size, un
         ERROR_MSG( "Invalid max_size.\n" );
         goto error;
     }
-
-    memory.fill( -1, max_size );
 
     *usage = 0;
     do 
@@ -385,6 +410,4 @@ error:
 
     if ( failure != 0 )
 	memory.clear();
-
-    return memory;
 }

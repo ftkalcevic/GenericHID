@@ -29,6 +29,10 @@ public:
     virtual bool Verify( QString &sErrors, const QList<class PinItem *> &pins, const QList<class PropertyValue *> &values ) const;
     virtual void MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sPowerPin, const QList<PropertyValue *> &values  ) const;
     virtual void MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &pins, const QList<PropertyValue *> &values  ) const;
+
+public:
+    QString Firmware( const QList<PropertyValue *> &values ) const;
+    QString ProgrammerType( const QList<PropertyValue *> &values ) const;
 };
 
 #endif

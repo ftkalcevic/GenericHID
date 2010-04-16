@@ -186,6 +186,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\deviceprogrammer.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\dfu.cpp"
 				>
 			</File>
@@ -199,6 +203,10 @@
 			</File>
 			<File
 				RelativePath=".\intelhexbuffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\teensyprogrammer.cpp"
 				>
 			</File>
 		</Filter>
@@ -232,6 +240,10 @@
 						Outputs=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\deviceprogrammer.h"
+				>
 			</File>
 			<File
 				RelativePath="dfu-device.h"
@@ -329,6 +341,10 @@
 			</File>
 			<File
 				RelativePath=".\inttypes.h"
+				>
+			</File>
+			<File
+				RelativePath=".\teensyprogrammer.h"
 				>
 			</File>
 		</Filter>

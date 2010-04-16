@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
     #endif
 #endif
 
-    HIDDevices::Open(false);
+    HIDDevices::Open(255);
     LogCore::SetLog( false );
     GenericHID w;
     if ( !w.initialised() )
