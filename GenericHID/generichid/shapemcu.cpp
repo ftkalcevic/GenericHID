@@ -168,7 +168,7 @@ void ShapeMCU::MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sP
     QDomElement configNode = elem.ownerDocument().createElement( "Configuration" );
     elem.appendChild( configNode );
     QString sTempPowerPin = GetPropertyValueString("PowerSwitch", values, "" );
-    if ( !sTempPowerPin.isEmpty() )
+    if ( sTempPowerPin.isEmpty() )
 	sTempPowerPin = sPowerPin;
 
     XMLUtility::setAttribute( deviceNode, "VID", FRANKSWORKSHOP_VID );
