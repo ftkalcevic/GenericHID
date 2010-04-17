@@ -483,7 +483,17 @@ void EVENT_USB_Device_ConfigurationChanged(void)
 {
     if ( bSerialDebug )
     {
-	UART1_Send_P(PSTR("\r\nConfigChg\r\n"));
+	UART1_Send_P(PSTR("\r\nCfgChg "));
+	switch ( USB_DeviceState )
+	{
+	    case DEVICE_STATE_Unattached:   UART1_Send_P(PSTR("Unattached\r\n")); break;
+	    case DEVICE_STATE_Powered:	    UART1_Send_P(PSTR("Powered\r\n")); break;
+	    case DEVICE_STATE_Default:	    UART1_Send_P(PSTR("Default\r\n")); break;
+	    case DEVICE_STATE_Addressed:    UART1_Send_P(PSTR("Addressed\r\n")); break;
+	    case DEVICE_STATE_Configured:   UART1_Send_P(PSTR("Configured\r\n")); break;
+	    case DEVICE_STATE_Suspended:    UART1_Send_P(PSTR("Suspended\r\n")); break;
+	    default:			    UART1_Send_P(PSTR("?\r\n")); break;
+	}
     }
 
     // Allocate the largest endpoint buffers.  We only have two, so even at 64 bytes, double buffered, we only use 256 of 836 bytes
@@ -508,12 +518,19 @@ void EVENT_USB_Device_ConfigurationChanged(void)
 
     if ( pApplicationHdr->nPowerPort != 0xFF )	
     {
-	ClearIOBit( pApplicationHdr->nPowerPort );
+	if (USB_DeviceState == DEVICE_STATE_Configured)
+	    ClearIOBit( pApplicationHdr->nPowerPort );
+	else
+	    SetIOBit( pApplicationHdr->nPowerPort );
     }
 }
 
 void EVENT_USB_Device_Disconnect(void)
 {
+    if ( pApplicationHdr->nPowerPort != 0xFF )	
+    {
+	SetIOBit( pApplicationHdr->nPowerPort );
+    }
     if ( bSerialDebug )
     {
 	UART1_Send_P(PSTR("\r\nDisconnect\r\n"));

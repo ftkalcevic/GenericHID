@@ -170,6 +170,12 @@ static void USB_Device_SetAddress(void)
 
 static void USB_Device_SetConfiguration(void)
 {
+    if ( bSerialDebug )
+    {
+	UART1_SendChar('C');
+	UART1_SendInt( USB_ControlRequest.wValue );
+    }
+
 #if defined(FIXED_NUM_CONFIGURATIONS)
 	if ((uint8_t)USB_ControlRequest.wValue > FIXED_NUM_CONFIGURATIONS)
 	  return;
@@ -188,6 +194,13 @@ static void USB_Device_SetConfiguration(void)
 	{
 		return;
 	}
+
+    if ( bSerialDebug )
+    {
+	UART1_SendChar('.');
+	UART1_SendInt( DevDescriptorPtr->NumberOfConfigurations );
+	UART1_SendCRLF(');
+    }
 	
 	#if defined(USE_RAM_DESCRIPTORS)
 	if ((uint8_t)USB_ControlRequest.wValue > DevDescriptorPtr->NumberOfConfigurations)
