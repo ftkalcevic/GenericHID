@@ -57,7 +57,11 @@ bool Programmer::Init( ProgrammerType::ProgrammerType type )
     }
 
     if ( !m_programmer->GetDevice() )
+    {
+	LOG_DEBUG( m_Logger, QString("Failed to get device") );
 	return false;
+    }
+    LOG_DEBUG( m_Logger, QString("Initialisation Complete") );
     return true;
 }
 
@@ -75,13 +79,18 @@ bool Programmer::Terminate()
 
 bool Programmer::Program( const QString &sEeprom, const QString &sFirmwarePath )
 {
+    LOG_DEBUG( m_Logger, QString("Programming. Firmware=%1").arg(sEeprom) );
+    LOG_DEBUG( m_Logger, QString("Eeprom=%1").arg(sFirmwarePath) );
+
     if ( m_programmer == NULL )
 	return false;
 
+    LOG_DEBUG( m_Logger, QString("Loading flash") );
     IntelHexBuffer firmware = m_programmer->LoadHexFile(MemoryType::FLASH, sFirmwarePath);
     if ( firmware.isEmpty() )
 	return false;
 
+    LOG_DEBUG( m_Logger, QString("Apending EEPROM flash") );
     m_programmer->AppendHex(firmware, MemoryType::FLASH, sEeprom);
     if ( firmware.isEmpty() )
 	return false;
