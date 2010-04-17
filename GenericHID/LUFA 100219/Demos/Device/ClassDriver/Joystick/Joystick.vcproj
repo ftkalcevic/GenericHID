@@ -22,7 +22,7 @@
 			>
 			<Tool
 				Name="VCNMakeTool"
-				BuildCommandLine="make -f makefile.usbkey"
+				BuildCommandLine="make -f makefile.usbkey all"
 				ReBuildCommandLine=""
 				CleanCommandLine="make -f makefile.usbkey clean"
 				Output="usbkey.hex"
@@ -281,6 +281,18 @@
 			</File>
 			<File
 				RelativePath="..\..\..\..\LUFA\Common\FunctionAttributes.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\LUFA\Drivers\USB\Class\Common\HID.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\LUFA\Drivers\USB\Class\HID.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\LUFA\Drivers\USB\Class\Device\HID.h"
 				>
 			</File>
 			<File
