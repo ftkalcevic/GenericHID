@@ -2,7 +2,7 @@
 #include "inttypes.h"
 #include "deviceprogrammer.h"
 
-DeviceProgrammer::DeviceProgrammer(void)
+DeviceProgrammer::DeviceProgrammer()
 {
 }
 

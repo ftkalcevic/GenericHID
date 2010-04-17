@@ -58,7 +58,7 @@ bool Programmer::Init( ProgrammerType::ProgrammerType type )
 
     if ( !m_programmer->GetDevice() )
     {
-	LOG_DEBUG( m_Logger, QString("Failed to get device") );
+	LOG_ERROR( m_Logger, QString("Failed to get device") );
 	return false;
     }
     LOG_DEBUG( m_Logger, QString("Initialisation Complete") );

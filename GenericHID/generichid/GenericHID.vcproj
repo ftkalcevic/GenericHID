@@ -3484,6 +3484,11 @@
 					>
 				</File>
 				<File
+					RelativePath=".\help\teensypp2.htm"
+					DeploymentContent="true"
+					>
+				</File>
+				<File
 					RelativePath=".\help\testlarge.png"
 					>
 				</File>

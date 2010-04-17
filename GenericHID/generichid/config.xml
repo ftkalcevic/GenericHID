@@ -480,7 +480,7 @@
 	    <property name="ProgrammerType" description="" type="string" enabled="false" default="DFU" />
 	</Shape>
 
-	<Shape Id="Teensy++2.0" Type="at90usb128" Source="false" Image="resources:teensypp.png" Icon="resources:teensyppicon.png" maxInstances="1" name="Teensy++ 2.0 USB Development Board" description=":teensypp.htm">
+	<Shape Id="Teensy++2.0" Type="at90usb128" Source="false" Image="resources:teensypp.png" Icon="resources:teensyppicon.png" maxInstances="1" name="Teensy++ 2.0 USB Development Board" description=":teensypp2.htm">
 	    <pin rect= "78,  0, 24, 22" id="PE5" type="io,int" />
 	    <pin rect="102,  0, 24, 22" id="PE4" type="io,int" />
 
@@ -535,24 +535,24 @@
 	    <pin rect="102,566, 24, 22" id="PA3" type="io" />
 
 
-	    <property name="Name" description=":teensypp.htm#Name" type="string" default="Generic HID Device"/>
-	    <property name="Usage" description=":teensypp.htm#Usage" type="usage" default="1:8" />
-	    <property name="Voltage" description=":teensypp.htm#Voltage" type="enum" default="5" enabled="false">
+	    <property name="Name" description=":teensypp2.htm#Name" type="string" default="Generic HID Device"/>
+	    <property name="Usage" description=":teensypp2.htm#Usage" type="usage" default="1:8" />
+	    <property name="Voltage" description=":teensypp2.htm#Voltage" type="enum" default="5" enabled="false">
 		<enum name="5"/>
 	    </property>
-	    <property name="Power-Source" description=":teensypp.htm#Power-Source" type="enum" default="Bus-Powered" enabled="false">
+	    <property name="Power-Source" description=":teensypp2.htm#Power-Source" type="enum" default="Bus-Powered" enabled="false">
 		<enum name="Bus-Powered"/>
 	    </property>
-	    <property name="Interval" description=":teensypp.htm#Interval" type="int" min="0" max="255" default="50"/>
-	    <property name="Serial-Debug" description=":teensypp.htm#Serial-Debug" type="bool" default="false"/>
-	    <property name="Current" description=":teensypp.htm#Current" type="int" min="20" max="20" default="20"/>
-	    <property name="Use Status LEDs" description=":teensypp.htm#UseStatusLEDs" type="enum" default="None">
+	    <property name="Interval" description=":teensypp2.htm#Interval" type="int" min="0" max="255" default="50"/>
+	    <property name="Serial-Debug" description=":teensypp2.htm#Serial-Debug" type="bool" default="false"/>
+	    <property name="Current" description=":teensypp2.htm#Current" type="int" min="20" max="20" default="20"/>
+	    <property name="Use Status LEDs" description=":teensypp2.htm#UseStatusLEDs" type="enum" default="None">
 		<enum name="None"/>
 	    </property>
-	    <property name="SerialNo" description=":teensypp.htm#SerialNo" type="string" default="1"/>
-	    <property name="Timer1" description=":teensypp.htm#Timer1" type="timer13" default="1,8,100"/>
-	    <property name="Timer2" description=":teensypp.htm#Timer2" type="timer2" default="1,8,100"/>
-	    <property name="Timer3" description=":teensypp.htm#Timer3" type="timer13" default="1,8,100"/>
+	    <property name="SerialNo" description=":teensypp2.htm#SerialNo" type="string" default="1"/>
+	    <property name="Timer1" description=":teensypp2.htm#Timer1" type="timer13" default="1,8,100"/>
+	    <property name="Timer2" description=":teensypp2.htm#Timer2" type="timer2" default="1,8,100"/>
+	    <property name="Timer3" description=":teensypp2.htm#Timer3" type="timer13" default="1,8,100"/>
 	    <property name="Firmware" description="" type="string" enabled="false" default="teensypp2.hex" />
 	    <property name="ProgrammerType" description="" type="string" enabled="false" default="HalfKay" />
 	</Shape>

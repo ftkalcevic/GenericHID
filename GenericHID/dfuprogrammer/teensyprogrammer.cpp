@@ -103,7 +103,7 @@ bool TeensyProgrammer::StartProgramming(IntelHexBuffer &memory)
 
 	if (!r) 
 	{
-	    //die("error writing to Teensy\n");
+	    ERROR_MSG( "Error writing to Teensy.\n" );
 	    return false;
 	}
 	first_block = false;
@@ -146,19 +146,18 @@ usb_dev_handle * TeensyProgrammer::open_usb_device(int vid, int pid)
     usb_init();
     usb_find_busses();
     usb_find_devices();
-    //printf_verbose("\nSearching for USB device:\n");
-    for (bus = usb_get_busses(); bus; bus = bus->next) {
-	for (dev = bus->devices; dev; dev = dev->next) {
-	    //printf_verbose("bus \"%s\", device \"%s\" vid=%04X, pid=%04X\n",
-	    //	bus->dirname, dev->filename,
-	    //	dev->descriptor.idVendor,
-	    //	dev->descriptor.idProduct
-	    //);
+    DEBUG_MSG( "nSearching for Teensy USB device:" );
+    for (bus = usb_get_busses(); bus; bus = bus->next) 
+    {
+	for (dev = bus->devices; dev; dev = dev->next) 
+	{
+	    DEBUG_MSG( QString("bus \"%1\", device \"%2\" vid=%3, pid=%4").arg(bus->dirname).arg(dev->filename).arg(dev->descriptor.idVendor,4,16,QChar('0')).arg(dev->descriptor.idProduct,4,16,QChar('0')) );
 	    if (dev->descriptor.idVendor != vid) continue;
 	    if (dev->descriptor.idProduct != pid) continue;
 	    h = usb_open(dev);
-	    if (!h) {
-//		printf_verbose("Found device but unable to open");
+	    if (!h) 
+	    {
+		ERROR_MSG( "Found device but unable to open" );
 		continue;
 	    }
 #ifdef LIBUSB_HAS_GET_DRIVER_NP
@@ -169,7 +168,7 @@ usb_dev_handle * TeensyProgrammer::open_usb_device(int vid, int pid)
 		    r = usb_detach_kernel_driver_np(h, 0);
 		    if (r < 0) {
 		        usb_close(h);
-		        //printf_verbose("Device is in use by \"%s\" driver", buf);
+			ERROR_MSG( QString("Device is in use by \"%1\" driver").arg(buf) );
 		        continue;
 		    }
 	        }
@@ -180,9 +179,10 @@ usb_dev_handle * TeensyProgrammer::open_usb_device(int vid, int pid)
 	    // this to work, even though it is a clear misuse of the libusb API.
 	    // normally Apple's IOKit should be used on Mac OS-X
 	    r = usb_claim_interface(h, 0);
-	    if (r < 0) {
+	    if (r < 0) 
+	    {
 		usb_close(h);
-//		printf_verbose("Unable to claim interface, check USB permissions");
+		ERROR_MSG( "Unable to claim interface, check USB permissions" );
 		continue;
 	    }
 	    return h;
