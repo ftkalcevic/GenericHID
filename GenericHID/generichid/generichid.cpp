@@ -246,7 +246,7 @@ void GenericHID::onHelpAbout()
     msg.setTextFormat( Qt::RichText );
     msg.setText( QString("<h1><b>GenericHID version %1.%2</b></h1>").arg(VERSION_MAJOR).arg(VERSION_MINOR) );
     msg.setInformativeText( "<p>DIY HID device builder</p>"
-			    "<p>Copyright (C) 2009 Frank Tkalcevic.</p>"
+			    "<p>Copyright (C) 2010 Frank Tkalcevic.</p>"
 			    "<p/>"
 			    "<p>This is free software, and you are welcome to redistribute it under certain conditions.  See the file COPYING, included.</p>"
 			    "<p/>"
@@ -254,7 +254,7 @@ void GenericHID::onHelpAbout()
 			    "<p>This application is built using...<p>"
 			    "<blockquote>"
 			    "<ul>"
-			    "<li><a href=\"http://www.fourwalledcubicle.com/LUFA.php\">MyUSB/LUFA</a></li>"
+			    "<li><a href=\"http://www.fourwalledcubicle.com/LUFA.php\">LUFA</a></li>"
 			    "<li><a href=\"http://dfu-programmer.sourceforge.net/\">dfu-programmer</a></li>"
 			    "<li><a href=\"http://www.libusb.org/\">libusb v0.1.12</a></li>"
 			    "<li><a href=\"http://libusb-win32.sourceforge.net/\">libusb-win32 v0.1.12</a></li>"
