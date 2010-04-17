@@ -240,7 +240,7 @@ CFLAGS += -Wa,-adhlns=$(<:%.c=$(OBJDIR)/%.lst)
 CFLAGS += $(patsubst %,-I%,$(EXTRAINCDIRS))
 CFLAGS += $(CSTANDARD)
 
-CFLAGS += -DCPU_CLK=F_CPU -DUART1_RS232_TX -DUART1_TX_BUFFER_SIZE=256 -DUART1_RX_BUFFER_SIZE=1 -DAT90USBKEY
+CFLAGS += -DCPU_CLK=F_CPU -DUART1_RS232_TX -DUART1_TX_BUFFER_SIZE=256 -DUART1_RX_BUFFER_SIZE=1 -DTEENSYPP
 
 #---------------- Compiler Options C++ ----------------
 #  -g*:          generate debugging information

@@ -208,6 +208,12 @@ int main(void)
     nLastPacketTime = 0;
     bForcePacket = false;
 
+    if ( pApplicationHdr->nPowerPort != 0xFF )
+    {
+	SetDDR( pApplicationHdr->nPowerPort, DDR_OUTPUT );
+	SetIOBit( pApplicationHdr->nPowerPort );
+    }
+
     /* Hardware Initialization */ 
     ioint();
 
@@ -238,6 +244,13 @@ int main(void)
 	UART1_Send_P( PSTR("USB HID v1.0 Initialised (") );
 	UART1_SendHex( nReason );
 	UART1_Send_P( PSTR(")\r\n") );
+	if ( pApplicationHdr->nPowerPort != 0xFF )
+	{
+	    UART1_Send_P( PSTR("Power=P") );
+	    UART1_SendChar( 'A' + (pApplicationHdr->nPowerPort >> 3) );
+	    UART1_SendChar( '0' + (pApplicationHdr->nPowerPort % 8) );
+	    UART1_SendCRLF( );
+	}
     }
 
     /* Initial LED colour - Double red to indicate USB not ready */
@@ -470,7 +483,7 @@ void EVENT_USB_Device_ConfigurationChanged(void)
 {
     if ( bSerialDebug )
     {
-	UART1_Send_P(PSTR("\nConfigChg\n"));
+	UART1_Send_P(PSTR("\r\nConfigChg\r\n"));
     }
 
     // Allocate the largest endpoint buffers.  We only have two, so even at 64 bytes, double buffered, we only use 256 of 836 bytes
@@ -493,15 +506,18 @@ void EVENT_USB_Device_ConfigurationChanged(void)
 	    Bicolour_SetLed(2, BICOLOUR_LED2_GREEN);		
     }
 
-    if ( pApplicationHdr->nPowerPort != 0xFF )
+    if ( pApplicationHdr->nPowerPort != 0xFF )	
     {
-	SetDDR( pApplicationHdr->nPowerPort, DDR_OUTPUT );
-	SetIOBit( pApplicationHdr->nPowerPort );
+	ClearIOBit( pApplicationHdr->nPowerPort );
     }
 }
 
 void EVENT_USB_Device_Disconnect(void)
 {
+    if ( bSerialDebug )
+    {
+	UART1_Send_P(PSTR("\r\nDisconnect\r\n"));
+    }
 }
 
 void EVENT_USB_Device_StartOfFrame(void)
@@ -510,6 +526,10 @@ void EVENT_USB_Device_StartOfFrame(void)
 
 void EVENT_USB_Device_Connect(void)
 {
+    if ( bSerialDebug )
+    {
+	UART1_Send_P(PSTR("\r\nConnect\r\n"));
+    }
 }
 
 static void GenericHIDProcessing(void)
