@@ -524,10 +524,10 @@
 	    <pin rect="185,332, 24, 22" id="PF1" type="io,adc" />
 	    <pin rect="185,354, 24, 22" id="PF2" type="io,adc" />
 	    <pin rect="185,376, 24, 22" id="PF3" type="io,adc" />
-	    <pin rect="185,398, 24, 22" id="PF4" type="io,adc" enabled="false" other="JTAG" />
-	    <pin rect="185,420, 24, 22" id="PF5" type="io,adc" enabled="false" other="JTAG" />
-	    <pin rect="185,442, 24, 22" id="PF6" type="io,adc" enabled="false" other="JTAG" />
-	    <pin rect="185,464, 24, 22" id="PF7" type="io,adc" enabled="false" other="JTAG" />
+	    <pin rect="185,398, 24, 22" id="PF4" type="io,adc" />
+	    <pin rect="185,420, 24, 22" id="PF5" type="io,adc" />
+	    <pin rect="185,442, 24, 22" id="PF6" type="io,adc" />
+	    <pin rect="185,464, 24, 22" id="PF7" type="io,adc" />
 
 	    <pin rect=" 78,500, 24, 22" id="PA4" type="io" />
 	    <pin rect=" 78,522, 24, 22" id="PA5" type="io" />
