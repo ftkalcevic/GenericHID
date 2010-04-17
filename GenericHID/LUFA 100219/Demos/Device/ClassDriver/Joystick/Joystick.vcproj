@@ -376,10 +376,6 @@
 			Name="Firmware"
 			>
 			<File
-				RelativePath="..\..\..\..\..\bin\teensypp.hex"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\..\..\bin\usbkey.hex"
 				>
 			</File>
@@ -394,6 +390,10 @@
 		</File>
 		<File
 			RelativePath=".\readme.txt"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\..\..\bin\teensypp2.hex"
 			>
 		</File>
 	</Files>
