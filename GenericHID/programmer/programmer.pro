@@ -10,6 +10,9 @@ CONFIG(debug,debug|release) {
 QT += xml
 CONFIG += staticlib
 DEFINES += QT_XML_LIB PROGRAMMER_LIB
+CONFIG(debug,debug|release) {
+    DEFINES += DEBUG
+}
 INCLUDEPATH += ./generatedfiles \
     ./generatedfiles/$(DESTDIR) \
     . \

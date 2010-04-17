@@ -12,6 +12,9 @@ DESTDIR=release
 QT += xml
 
 DEFINES += QT_XML_LIB
+CONFIG(debug,debug|release) {
+    DEFINES += DEBUG
+}
 INCLUDEPATH += ./generatedfiles \
     ./generatedfiles/$(DESTDIR) \
     ../include \

@@ -16,6 +16,9 @@ INCLUDEPATH += generatedfiles \
     ../utility \
     ../libusb-0.1.12
 #PRECOMPILED_HEADER = stdafx.h
+CONFIG(debug,debug|release) {
+    DEFINES += DEBUG
+}
 DEPENDPATH += .
 MOC_DIR += ./generatedfiles/$(DESTDIR)
 OBJECTS_DIR += $(DESTDIR)

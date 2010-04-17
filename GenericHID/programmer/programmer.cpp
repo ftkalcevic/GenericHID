@@ -79,8 +79,8 @@ bool Programmer::Terminate()
 
 bool Programmer::Program( const QString &sEeprom, const QString &sFirmwarePath )
 {
-    LOG_DEBUG( m_Logger, QString("Programming. Firmware=%1").arg(sEeprom) );
-    LOG_DEBUG( m_Logger, QString("Eeprom=%1").arg(sFirmwarePath) );
+    LOG_DEBUG( m_Logger, QString("Programming. Firmware=%1").arg(sFirmwarePath) );
+    LOG_DEBUG( m_Logger, QString("Eeprom=%1").arg(sEeprom) );
 
     if ( m_programmer == NULL )
 	return false;

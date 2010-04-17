@@ -50,3 +50,5 @@ void TestOutputValue::onSliderValueChanged(int nNewValue)
 
     m_lblValue->setText( QString::number(m_nValue) );
 }
+
+

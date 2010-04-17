@@ -10,6 +10,9 @@ QT += xml svg
 QTPLUGIN += qjpeg
 CONFIG += precompile_header link_prl
 DEFINES += QT_XML_LIB QT_SVG_LIB USING_PCH
+CONFIG(debug,debug|release) {
+    DEFINES += DEBUG
+}
 INCLUDEPATH += ./generatedfiles \
     ./generatedfiles/$(DESTDIR) \
     ../include \
