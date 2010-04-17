@@ -67,5 +67,5 @@ enum EParity
     extern void UART1_SetParity( enum EParity eParity );
 #endif
 
-    extern bool bSerialDebug;
+    extern byte nSerialDebugLevel;
 #endif

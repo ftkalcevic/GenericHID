@@ -67,7 +67,7 @@ byte DynamicHIDData[MAX_HID_DATA] __attribute__ ((section (".noinit")));			// bu
 static struct SApplicationHeader *pApplicationHdr;	// Pointer to the application data header
 static byte *pApplicationData;				// pointer to the application data - description and working data for installed components.
 static byte nUseStatusLEDs;				// Bit mask indicating whether to use USBKeyLeds 1, 2 or none
-byte bSerialDebug;					// RS232 debug enabled flag
+byte nSerialDebugLevel;					// RS232 debug level
 byte bUSBDebug;						// Debug via USB line enabled flag
 static bool bInitialised;
 static byte bPreScaler;					// remember the clock prescaler so we can restore it when we 
@@ -198,7 +198,7 @@ int main(void)
     //byte bBusPowered = pApplicationHdr->nOptions & DEVICE_OPTION_BUS_POWERED;
     nUseStatusLEDs = pApplicationHdr->nOptions & DEVICE_OPTION_USE_USBKEY_LEDS;
     // not used yet byte bHIDDebug = pApplicationHdr->nOptions & DEVICE_OPTION_HID_DEBUG;
-    bSerialDebug = pApplicationHdr->nOptions & DEVICE_OPTION_SERIAL_DEBUG;
+    nSerialDebugLevel = pApplicationHdr->nDebugLevel;
     byte b5Volt = pApplicationHdr->nOptions & DEVICE_OPTION_5V;
     pReportLengths = pApplicationHdr->OutputReportLength;
     pApplicationData = (byte *)pApplicationHdr + sizeof(struct SApplicationHeader);
@@ -228,7 +228,7 @@ int main(void)
 	    Bicolour_SetLed(2, BICOLOUR_LED2_ORANGE);	
     }
 
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 0 )
     {
 	#if F_CPU == 8000000
 	    UART1_Init( 12 );		// Fixed at 38400,8,n,1
@@ -239,7 +239,7 @@ int main(void)
 
     sei();
 
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 0 )
     {
 	UART1_Send_P( PSTR("USB HID v1.0 Initialised (") );
 	UART1_SendHex( nReason );
@@ -317,7 +317,7 @@ static bool SendInputReport(bool bForcePacket )
 	    if (Endpoint_IsReadWriteAllowed() && Endpoint_IsINReady() )
 	    {
 		Endpoint_Write_Byte(1);			// Report ID - input report is always 1
-		if ( bSerialDebug )
+		if ( nSerialDebugLevel > 10 )
 		{
 		    UART1_SendHex( 1 );
 		    UART1_SendChar(' ');
@@ -326,13 +326,13 @@ static bool SendInputReport(bool bForcePacket )
 		for ( byte i = 0; i < nLen; i++ )
 		{
 		    Endpoint_Write_Byte(buf[i]);
-		    if ( bSerialDebug )
+		    if ( nSerialDebugLevel > 10 )
 		    {
 			UART1_SendHex( buf[i] );
 			UART1_SendChar(' ');
 		    }
 		}
-		if ( bSerialDebug )
+		if ( nSerialDebugLevel > 10 )
 		{
 		    UART1_SendCRLF();
 		}
@@ -360,7 +360,7 @@ void EVENT_USB_Device_UnhandledControlRequest(void)
     const uint8_t RequestType = USB_ControlRequest.bmRequestType;
 
     /* Process specific control requests */
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 10 )
     {
 	UART1_Send_P(PSTR("UCP="));
 	UART1_SendHex( Request );
@@ -381,7 +381,7 @@ void EVENT_USB_Device_UnhandledControlRequest(void)
 		int nEndPoint = USB_ControlRequest.wIndex;
 		int nRequestLen = USB_ControlRequest.wLength;
 
-		if ( bSerialDebug )
+		if ( nSerialDebugLevel > 10 )
 		{
 		    UART1_Send_P(PSTR("GET_REPORT="));
 		    UART1_SendHex( type );
@@ -421,7 +421,7 @@ void EVENT_USB_Device_UnhandledControlRequest(void)
 	case REQ_SetReport:
 	    if (USB_ControlRequest.bmRequestType == (REQDIR_HOSTTODEVICE | REQTYPE_CLASS | REQREC_INTERFACE))
 	    {
-		if ( bSerialDebug )
+		if ( nSerialDebugLevel > 10 )
 		{
 		    UART1_Send_P(PSTR("SET_IDLE"));
 		    UART1_SendCRLF();
@@ -440,14 +440,14 @@ void EVENT_USB_Device_UnhandledControlRequest(void)
 
 	    break;
 	case REQ_GetProtocol:
-	    if ( bSerialDebug )
+	    if ( nSerialDebugLevel > 10 )
 	    {
 		UART1_Send_P(PSTR("GET_PROTOCOL"));
 		UART1_SendCRLF();
 	    }
 	    break;
 	case REQ_SetProtocol:
-	    if ( bSerialDebug )
+	    if ( nSerialDebugLevel > 10 )
 	    {
 		UART1_Send_P(PSTR("SET_PROTOCOL"));
 		UART1_SendCRLF();
@@ -456,7 +456,7 @@ void EVENT_USB_Device_UnhandledControlRequest(void)
 	case REQ_SetIdle:
 	    if (USB_ControlRequest.bmRequestType == (REQDIR_HOSTTODEVICE | REQTYPE_CLASS | REQREC_INTERFACE))
 	    {
-		if ( bSerialDebug )
+		if ( nSerialDebugLevel > 10 )
 		{
 		    UART1_Send_P(PSTR("SET_IDLE"));
 		    UART1_SendCRLF();
@@ -467,7 +467,7 @@ void EVENT_USB_Device_UnhandledControlRequest(void)
 	case REQ_GetIdle:
 	    if (USB_ControlRequest.bmRequestType == (REQDIR_DEVICETOHOST | REQTYPE_CLASS | REQREC_INTERFACE))
 	    {		
-		if ( bSerialDebug )
+		if ( nSerialDebugLevel > 10 )
 		{
 		    UART1_Send_P(PSTR("GET_IDLE"));
 		    UART1_SendCRLF();
@@ -481,7 +481,7 @@ void EVENT_USB_Device_UnhandledControlRequest(void)
 
 void EVENT_USB_Device_ConfigurationChanged(void)
 {
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 0 )
     {
 	UART1_Send_P(PSTR("\r\nCfgChg "));
 	switch ( USB_DeviceState )
@@ -531,7 +531,7 @@ void EVENT_USB_Device_Disconnect(void)
     {
 	SetIOBit( pApplicationHdr->nPowerPort );
     }
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 0 )
     {
 	UART1_Send_P(PSTR("\r\nDisconnect\r\n"));
     }
@@ -543,7 +543,7 @@ void EVENT_USB_Device_StartOfFrame(void)
 
 void EVENT_USB_Device_Connect(void)
 {
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 0 )
     {
 	UART1_Send_P(PSTR("\r\nConnect\r\n"));
     }
@@ -556,13 +556,13 @@ static void GenericHIDProcessing(void)
 
     if ( !bInitialised )
     {
-	if ( bSerialDebug )
+	if ( nSerialDebugLevel > 0 )
 	    UART1_Send_P( PSTR("Initialising\r\n") );
 
 	InitControls( pApplicationData );
 	bInitialised = true;
 
-	if ( bSerialDebug )
+	if ( nSerialDebugLevel > 0 )
 	    UART1_Send_P( PSTR("Initialisation Complete\r\n") );
     }
 
@@ -573,7 +573,7 @@ static void GenericHIDProcessing(void)
 	if ( old != seconds_counter )
 	{
 	    old = seconds_counter;
-	    if ( bSerialDebug )
+	    if ( nSerialDebugLevel > 0 )
 	    {
 		UART1_SendInt( t );
 		UART1_SendCRLF();
@@ -594,7 +594,7 @@ static void GenericHIDProcessing(void)
     Endpoint_SelectEndpoint(JOYSTICK_OUT_EPNUM);
     if (Endpoint_IsOUTReceived() )
     {
-	if ( bSerialDebug )
+	if ( nSerialDebugLevel > 10 )
 	{
 	    UART1_Send_P( PSTR("Received ") );
 	}
@@ -602,7 +602,7 @@ static void GenericHIDProcessing(void)
 	while ( Endpoint_BytesInEndpoint() )
 	{
 	    byte b = Endpoint_Read_Byte();
-	    if ( bSerialDebug )
+	    if ( nSerialDebugLevel > 10 )
 	    {
 		UART1_SendHex( b );
 		UART1_SendChar( ' ' );
@@ -616,7 +616,7 @@ static void GenericHIDProcessing(void)
 			ReadBufferPtr = 0;
 			ReadBuffer[ReadBufferPtr++] = b;
 			BytesToRead = pReportLengths[b-1];
-			if ( bSerialDebug )
+			if ( nSerialDebugLevel > 10 )
 			{
 			    UART1_Send_P( PSTR("BytesToRead=") );
 			    UART1_SendHex( BytesToRead );
@@ -642,7 +642,7 @@ static void GenericHIDProcessing(void)
 	    }
 	}
 	Endpoint_ClearOUT();
-	if ( bSerialDebug )
+	if ( nSerialDebugLevel > 10 )
 	{
 	    UART1_SendCRLF();
 	}
@@ -651,14 +651,14 @@ static void GenericHIDProcessing(void)
 
 static void ProcessOutputReport( byte *buf )
 {
-    if ( bSerialDebug ) UART1_Send_P( PSTR("Processing Output Report\r\n") );
+    if ( nSerialDebugLevel > 10 ) UART1_Send_P( PSTR("Processing Output Report\r\n") );
 
     if ( *buf == BOOTLOADER_REPORT_ID )
     {				
 	// DFU report.  Data is UInt32.  Check the value = 0xDF0DF0DF then restart.
 	if ( *((uint32_t *)(buf+1)) == MAGIC_BOOTLOADER_CODE )
 	{
-	    if ( bSerialDebug )
+	    if ( nSerialDebugLevel > 0 )
 	    {
 		UART1_Send_P( PSTR("Starting Bootloader\r\n") );
 		// Wait for the message to be sent.

@@ -71,7 +71,7 @@ void WritePWM( struct SPWMControl *pData, byte **ReportBuffer, byte *nBit )
 	    nValue = pData->Resolution;
 	byte n = pData->Resolution - *(byte *)(&nValue);
 
-	if ( bSerialDebug )
+	if ( nSerialDebugLevel > 10 )
 	{
 	    UART1_Send_P( PSTR("PWM Port=") );
 	    UART1_SendHex( pData->Port );
@@ -94,7 +94,7 @@ void WritePWM( struct SPWMControl *pData, byte **ReportBuffer, byte *nBit )
 	//    nValue = 0xFFFF;
 	nValue = pData->Resolution - nValue;
 
-	if ( bSerialDebug )
+	if ( nSerialDebugLevel > 10 )
 	{
 	    UART1_Send_P( PSTR("PWM Port=") );
 	    UART1_SendHex( pData->Port );

@@ -35,7 +35,7 @@ void InitCounter( struct SCounterControl *pData )
     nMask -= 1;
     g_nCounterMask = *(uint16_t *)&nMask;
 
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 1 )
     {
 	UART1_Send_P(PSTR("InitCounter Period="));
 	UART1_SendHex(g_nCounterTop);

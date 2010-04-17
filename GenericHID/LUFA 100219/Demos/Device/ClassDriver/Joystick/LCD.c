@@ -158,7 +158,7 @@ static void WriteLCDData( struct SLCDControl *pData, enum RegisterSelect eRegSel
 }
 static void Init8Bit(struct SLCDControl *pData)
 {
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 0 )
 	UART1_Send_P(PSTR("Initialising 8bit LCD\r\n"));
 
     // wait for the clock to hit > 45ms	- assume this is already done
@@ -181,7 +181,7 @@ static void Init8Bit(struct SLCDControl *pData)
 
 static void Init4Bit(struct SLCDControl *pData)
 {
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 0 )
 	UART1_Send_P(PSTR("Initialising 4bit LCD\r\n"));
 
     // wait for the clock to hit > 45ms	- assume this is already done
@@ -221,7 +221,7 @@ void InitLCD( struct SLCDControl *pData )
     SetDDR( pData->nPortRW, DDR_OUTPUT );
     SetDDR( pData->nPortE, DDR_OUTPUT );
 
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 0 )
     {
 	UART1_Send_P(PSTR("RS=")); UART1_SendHex(pData->nPortRS);
 	UART1_Send_P(PSTR(" RW=")); UART1_SendHex(pData->nPortRW);
@@ -245,7 +245,7 @@ void InitLCD( struct SLCDControl *pData )
 
 static void LCD_Display( struct SLCDControl *pData, byte **ReportBuffer, byte *nBit )
 {
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 10 )
     {
 	UART1_Send_P(PSTR("LCD Output Report"));
 	UART1_SendCRLF();
@@ -270,7 +270,7 @@ static void LCD_Display( struct SLCDControl *pData, byte **ReportBuffer, byte *n
 
 static void LCD_Font( struct SLCDControl *pData, byte **ReportBuffer, byte *nBit )
 {
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 10 )
     {
 	UART1_Send_P(PSTR("LCD Font Report"));
 	UART1_SendCRLF();
@@ -299,7 +299,7 @@ void WriteLCD( struct SLCDControl *pData, byte nReportId, byte **ReportBuffer, b
 	LCD_Font( pData, ReportBuffer, nBit );
     else
     {
-	if ( bSerialDebug )
+	if ( nSerialDebugLevel > 0 )
 	{
 		UART1_Send_P(PSTR("LCD Unknown report id "));
 		UART1_SendInt(nReportId);
@@ -317,14 +317,14 @@ void SendFeatureAttributeReportLCD( struct SLCDControl *pData )
 
     for ( int i = 0; i < 3; i++, pReport++ )
     {
-	if ( bSerialDebug )
+	if ( nSerialDebugLevel > 10 )
 	{
 	    UART1_SendHex( *pReport );
 	    UART1_SendChar( ' ' );
 	}
 	Endpoint_Write_Byte( *pReport );
     }
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 10 )
 	UART1_SendCRLF();
 }
 

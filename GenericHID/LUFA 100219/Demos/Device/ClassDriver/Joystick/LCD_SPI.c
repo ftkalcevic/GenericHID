@@ -119,7 +119,7 @@ static void spi_init(void)
 
 void InitLCD_SPI( struct SLCDSPIControl *pData )
 {
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 0 )
     {
 	UART1_Send_P(PSTR("LCD_SPI Initialising"));
 	UART1_SendCRLF();
@@ -142,7 +142,7 @@ void InitLCD_SPI( struct SLCDSPIControl *pData )
 
 static void LCD_SPI_Display( struct SLCDSPIControl *pData, byte **ReportBuffer, byte *nBit )
 {
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 10 )
     {
 	UART1_Send_P(PSTR("LCD_SPI Character Output Report"));
 	UART1_SendCRLF();
@@ -185,7 +185,7 @@ static void LCD_SPI_Display( struct SLCDSPIControl *pData, byte **ReportBuffer, 
 
 static void LCD_SPI_DisplayControl( struct SLCDSPIControl *pData, byte **ReportBuffer, byte *nBit )
 {
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 10 )
     {
 	UART1_Send_P(PSTR("LCD_SPI Display control Output Report"));
 	UART1_SendCRLF();
@@ -242,7 +242,7 @@ static void LCD_SPI_DisplayControl( struct SLCDSPIControl *pData, byte **ReportB
 
 static void LCD_SPI_DrawRect( struct SLCDSPIControl *pData, byte **ReportBuffer, byte *nBit )
 {
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 10 )
     {
 	UART1_Send_P(PSTR("LCD_SPI DrawRect Output Report"));
 	UART1_SendCRLF();
@@ -270,7 +270,7 @@ void WriteLCD_SPI( struct SLCDSPIControl *pData, byte nReportId, byte **ReportBu
 	LCD_SPI_DrawRect( pData, ReportBuffer, nBit );
     else
     {
-	if ( bSerialDebug )
+	if ( nSerialDebugLevel > 0 )
 	{
 	    UART1_Send_P(PSTR("LCD_SPI Unknown report id "));
 	    UART1_SendInt(nReportId);
@@ -290,14 +290,14 @@ void SendFeatureAttributeReportLCD_SPI( struct SLCDSPIControl *pData )
 
     for ( int i = 0; i < 3; i++, pReport++ )
     {
-	if ( bSerialDebug )
+	if ( nSerialDebugLevel > 10 )
 	{
 	    UART1_SendHex( *pReport );
 	    UART1_SendChar( ' ' );
 	}
 	Endpoint_Write_Byte( *pReport );
     }
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 10 )
 	UART1_SendCRLF();
 }
 

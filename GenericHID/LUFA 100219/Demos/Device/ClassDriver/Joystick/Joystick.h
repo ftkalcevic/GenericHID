@@ -51,7 +51,7 @@ extern volatile uint8_t seconds_counter;			// second counter
 extern volatile uint8_t milliseconds_counter;		// msec counter - wraps at 0xFF
 extern volatile uint16_t milliseconds_counter16;	// msec counter - wraps at 0xFFFF
 extern byte DynamicHIDData[];
-extern byte bSerialDebug;
+extern byte nSerialDebug;
 
 extern uint16_t g_nCounterTop;
 extern uint16_t g_nCounterCount;

@@ -51,7 +51,7 @@ void InitRotarySwitch( struct SRotarySwitchControl *pData )
 
 	pData->Pins[i].Debounce = 0;
 
-	if ( bSerialDebug )
+	if ( nSerialDebugLevel > 10 )
 	{
 	    UART1_Send_P( PSTR("Port ") );
 	    UART1_SendHex( pData->Pins[i].Port );

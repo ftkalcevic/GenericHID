@@ -32,7 +32,7 @@ static bool bInitialised = false;			// first time through we need to initialise 
 
 void InitSwitch( struct SSwitchControl *pData )
 {
-    if ( bSerialDebug ) UART1_Send_P( PSTR("InitSwitch\r\n") );
+    if ( nSerialDebugLevel > 0 ) UART1_Send_P( PSTR("InitSwitch\r\n") );
 
     if ( !bInitialised )
     {

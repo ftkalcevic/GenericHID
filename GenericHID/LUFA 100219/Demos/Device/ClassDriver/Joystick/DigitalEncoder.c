@@ -34,7 +34,7 @@ static struct
 {
     byte nBitA;
     byte nBitB;
-    int8_t nCounter;
+    int16_t nCounter;
 } Encoders[MAX_ENCODERS];
 
 #define FromAB(a,b)		(((a)<<3) | ((b)<<2))
@@ -109,6 +109,8 @@ void InitDigitalEncoder( struct SDigitalEncoderControl *pData )
     Encoders[nEncoders].nBitA = nPinA + (nPortA == PortB ? 0 : 8);
     Encoders[nEncoders].nBitB = nPinB + (nPortA == PortB ? 0 : 8);
     Encoders[nEncoders].nCounter = 0;
+
+    pData->Index = nEncoders;	// index to the encoder array for quick look up
     nEncoders++;
 
     bInitialised = true;
@@ -117,22 +119,13 @@ void InitDigitalEncoder( struct SDigitalEncoderControl *pData )
 
 void ReadDigitalEncoder( struct SDigitalEncoderControl *pData, byte **ReportBuffer, byte *nBit )
 {
-    byte nPortA = GET_PORT_ID(pData->PortA);
-    byte nPinA = GET_PORT_PIN(pData->PortA);
-    byte nBitA = nPinA + (nPortA == PortB ? 0 : 8);
+    byte nIndex = pData->Index;
+    int16_t *ptr = &(Encoders[nIndex].nCounter);
+    cli();
+    int16_t nCounter = *ptr;
+    sei();
 
-    for ( byte i = 0; i < nEncoders; i++ )
-	if ( nBitA == Encoders[i].nBitA )
-	{
-	    int8_t *ptr = &(Encoders[i].nCounter);
-	    cli();
-	    int8_t nCounter = *ptr;
-	    //*ptr = 0;
-	    sei();
-
-	    PackData16( ReportBuffer, nBit, nCounter, 8 );
-	    break;
-	}
+    PackData16( ReportBuffer, nBit, nCounter, pData->Bits );
 }
 
 

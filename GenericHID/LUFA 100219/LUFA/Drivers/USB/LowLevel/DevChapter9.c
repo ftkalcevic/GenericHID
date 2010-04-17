@@ -59,7 +59,7 @@ void USB_Device_ProcessControlRequest(void)
 	  
 	uint8_t bmRequestType = USB_ControlRequest.bmRequestType;
 	
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 10 )
     {
 	UART1_SendChar('R');
 	UART1_SendInt( USB_ControlRequest.bRequest );
@@ -80,7 +80,7 @@ void USB_Device_ProcessControlRequest(void)
 
 			break;
 		case REQ_ClearFeature:
-	if ( bSerialDebug )
+	if ( nSerialDebugLevel > 10 )
 	{
 	    UART1_Send_P(PSTR("ClearFeature="));
 	    UART1_SendHex(USB_ControlRequest.bmRequestType);
@@ -158,7 +158,7 @@ static void USB_Device_SetAddress(void)
 	  USB_DeviceState = DEVICE_STATE_Addressed;
 
 	UDADDR = ((1 << ADDEN) | DeviceAddress);
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 10 )
     {
 	UART1_SendChar('A');
 	UART1_SendInt( DeviceAddress );
@@ -170,7 +170,7 @@ static void USB_Device_SetAddress(void)
 
 static void USB_Device_SetConfiguration(void)
 {
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 10 )
     {
 	UART1_SendChar('C');
 	UART1_SendInt( USB_ControlRequest.wValue );
@@ -195,11 +195,11 @@ static void USB_Device_SetConfiguration(void)
 		return;
 	}
 
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 10 )
     {
 	UART1_SendChar('.');
 	UART1_SendInt( DevDescriptorPtr->NumberOfConfigurations );
-	UART1_SendCRLF(');
+	UART1_SendCRLF();
     }
 	
 	#if defined(USE_RAM_DESCRIPTORS)
@@ -297,14 +297,14 @@ static void USB_Device_GetDescriptor(void)
 	void*    DescriptorPointer;
 	uint16_t DescriptorSize;
 	
-    if ( bSerialDebug )
-    {
-	UART1_SendChar('D');
-	UART1_SendInt( USB_ControlRequest.wValue & 0xFF );
-	UART1_SendChar('.');
-	UART1_SendInt( USB_ControlRequest.wValue >> 8 );
-	UART1_SendChar(' ');
-    }
+	if ( nSerialDebugLevel > 10 )
+	{
+	    UART1_SendChar('D');
+	    UART1_SendInt( USB_ControlRequest.wValue & 0xFF );
+	    UART1_SendChar('.');
+	    UART1_SendInt( USB_ControlRequest.wValue >> 8 );
+	    UART1_SendChar(' ');
+	}
 
 	#if !defined(USE_FLASH_DESCRIPTORS) && !defined(USE_EEPROM_DESCRIPTORS) && !defined(USE_RAM_DESCRIPTORS)
 	uint8_t  DescriptorAddressSpace;

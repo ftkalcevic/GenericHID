@@ -85,7 +85,7 @@ void InitControls( byte *pData )
 		InitLCD_SPI( (struct SLCDSPIControl *)pData );
 		break;
 	    default:
-		if ( bSerialDebug )
+		if ( nSerialDebugLevel > 0 )
 		{
 		    UART1_Send_P(PSTR("Got unexpected type in InitControls - 0x"));
 		    UART1_SendHex(*pData);

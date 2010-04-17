@@ -57,7 +57,7 @@ void WriteBicolourLED( struct SBicolourLEDControl *pData, byte **ReportBuffer, b
 {
     byte nOut = ReadPackData16( ReportBuffer, nBit, 2 );
 
-    if ( bSerialDebug )
+    if ( nSerialDebugLevel > 10 )
     {
 	UART1_Send_P(PSTR("Got BicolourLED State "));
 	UART1_SendInt( nOut );

@@ -34,7 +34,6 @@ Released under the GPL Licence, Version 3
 
 static void Dump( void* const DescriptorAddr, uint16_t const Size)
 {
-    return;
     uint16_t nSize = Size;
     byte *pData = (byte *)DescriptorAddr;
 
@@ -42,7 +41,8 @@ static void Dump( void* const DescriptorAddr, uint16_t const Size)
     {
 	if ( i % 16 == 0 && i != 0 )
 	    UART1_SendCRLF();
-	UART1_SendHex( pData[i] );
+	UART1_SendHex( *pData );
+	pData++;
 	UART1_SendChar( ' ' );
     }
     UART1_SendCRLF();
@@ -64,7 +64,7 @@ uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue, const uint8_t wIndex,
 	case DTYPE_Device:
 	    Address = DynamicHIDData + pHIDData->nDeviceDescriptorOffset;
 	    Size    = pHIDData->nDeviceDescriptorLength;
-	    if ( bSerialDebug )
+	    if ( nSerialDebugLevel > 10 )
 	    {
 		UART1_Send_P( PSTR("Dev ") );
 		UART1_SendInt( pHIDData->nDeviceDescriptorOffset );
@@ -77,7 +77,7 @@ uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue, const uint8_t wIndex,
 	case DTYPE_Configuration:
 	    Address = DynamicHIDData + pHIDData->nConfigDescriptorOffset;
 	    Size    = pHIDData->nConfigDescriptorLength;
-	    if ( bSerialDebug )
+	    if ( nSerialDebugLevel > 10 )
 	    {
 		UART1_Send_P( PSTR("Config ") );
 		UART1_SendInt( pHIDData->nConfigDescriptorOffset );
@@ -91,7 +91,7 @@ uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue, const uint8_t wIndex,
 	    // TODO - error check string table length
 	    Address = DynamicHIDData + pHIDData->nStringIndex0Offset[DescriptorNumber];
 	    Size    = *(byte *)(Address);
-	    if ( bSerialDebug )
+	    if ( nSerialDebugLevel > 10 )
 	    {
 		UART1_Send_P( PSTR("Str ") );
 		UART1_SendInt( DescriptorNumber );
@@ -106,7 +106,7 @@ uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue, const uint8_t wIndex,
 	case DTYPE_HID:
 	    Address = DynamicHIDData + pHIDData->nHIDDescriptorOffset;
 	    Size    = pHIDData->nHIDDescriptorLength;
-	    if ( bSerialDebug )
+	    if ( nSerialDebugLevel > 10 )
 	    {
 		UART1_Send_P( PSTR("HID ") );
 		UART1_SendInt( pHIDData->nHIDDescriptorOffset );
@@ -119,7 +119,7 @@ uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue, const uint8_t wIndex,
 	case DTYPE_Report:
 	    Address = DynamicHIDData + pHIDData->nReportDescriptorOffset;
 	    Size    = pHIDData->nReportDescriptorLength;
-	    if ( bSerialDebug )
+	    if ( nSerialDebugLevel > 10 )
 	    {
 		UART1_Send_P( PSTR("Report ") );
 		UART1_SendInt( pHIDData->nReportDescriptorOffset );
@@ -129,7 +129,7 @@ uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue, const uint8_t wIndex,
 	    }
 	    break;
     }
-    if ( bSerialDebug && Size > 0 )
+    if ( nSerialDebugLevel > 20 && Size > 0 )
     {
 	Dump( Address, Size );
     }
