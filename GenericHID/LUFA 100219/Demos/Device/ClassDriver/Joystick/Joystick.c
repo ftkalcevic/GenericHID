@@ -437,8 +437,18 @@ void EVENT_USB_Device_UnhandledControlRequest(void)
 
 	    break;
 	case REQ_GetProtocol:
+	    if ( bSerialDebug )
+	    {
+		UART1_Send_P(PSTR("GET_PROTOCOL"));
+		UART1_SendCRLF();
+	    }
 	    break;
 	case REQ_SetProtocol:
+	    if ( bSerialDebug )
+	    {
+		UART1_Send_P(PSTR("SET_PROTOCOL"));
+		UART1_SendCRLF();
+	    }
 	    break;
 	case REQ_SetIdle:
 	    if (USB_ControlRequest.bmRequestType == (REQDIR_HOSTTODEVICE | REQTYPE_CLASS | REQREC_INTERFACE))
@@ -500,13 +510,22 @@ void EVENT_USB_Device_ConfigurationChanged(void)
     }
 }
 
+void EVENT_USB_Device_Disconnect(void)
+{
+}
+
+void EVENT_USB_Device_StartOfFrame(void)
+{
+}
+
+void EVENT_USB_Device_Connect(void)
+{
+}
+
 static void GenericHIDProcessing(void)
 {
-    if (!(Endpoint_IsSETUPReceived()))
+    if (USB_DeviceState != DEVICE_STATE_Configured)
 	return;
-
- //   if (USB_ControlRequest.wIndex != 0)
-	//return;
 
     if ( !bInitialised )
     {
@@ -545,63 +564,60 @@ static void GenericHIDProcessing(void)
     if ( !SendInputReport( bForcePacket ) )
 	bForcePacket = false;
 
-    if (USB_DeviceState != DEVICE_STATE_Unattached)
+    Endpoint_SelectEndpoint(JOYSTICK_OUT_EPNUM);
+    if (Endpoint_IsOUTReceived() )
     {
-	Endpoint_SelectEndpoint(JOYSTICK_OUT_EPNUM);
-	if (Endpoint_IsOUTReceived() )
+	if ( bSerialDebug )
 	{
+	    UART1_Send_P( PSTR("Received ") );
+	}
+
+	while ( Endpoint_BytesInEndpoint() )
+	{
+	    byte b = Endpoint_Read_Byte();
 	    if ( bSerialDebug )
 	    {
-		UART1_Send_P( PSTR("Received ") );
+		UART1_SendHex( b );
+		UART1_SendChar( ' ' );
 	    }
 
-	    while ( Endpoint_BytesInEndpoint() )
+	    switch ( ReadState )
 	    {
-		byte b = Endpoint_Read_Byte();
-		if ( bSerialDebug )
-		{
-		    UART1_SendHex( b );
-		    UART1_SendChar( ' ' );
-		}
-
-		switch ( ReadState )
-		{
-		    case ReadReportId:
-			if ( b > 0 && b < MAX_REPORTS )
-			{
-			    ReadBufferPtr = 0;
-			    ReadBuffer[ReadBufferPtr++] = b;
-			    BytesToRead = pReportLengths[b-1];
-			    if ( bSerialDebug )
-			    {
-				UART1_Send_P( PSTR("BytesToRead=") );
-				UART1_SendHex( BytesToRead );
-				UART1_SendChar( ' ' );
-			    }
-			    ReadState = ReadData;
-			}
-			else
-			{
-			    Endpoint_ClearOUT();
-			}
-			break;
-
-		    case ReadData:
+		case ReadReportId:
+		    if ( b > 0 && b < MAX_REPORTS )
+		    {
+			ReadBufferPtr = 0;
 			ReadBuffer[ReadBufferPtr++] = b;
-			BytesToRead--;
-			if ( BytesToRead == 0 )
+			BytesToRead = pReportLengths[b-1];
+			if ( bSerialDebug )
 			{
-			    ProcessOutputReport( ReadBuffer );
-			    ReadState = ReadReportId;
+			    UART1_Send_P( PSTR("BytesToRead=") );
+			    UART1_SendHex( BytesToRead );
+			    UART1_SendChar( ' ' );
 			}
-			break;
-		}
+			ReadState = ReadData;
+		    }
+		    else
+		    {
+			Endpoint_ClearOUT();
+		    }
+		    break;
+
+		case ReadData:
+		    ReadBuffer[ReadBufferPtr++] = b;
+		    BytesToRead--;
+		    if ( BytesToRead == 0 )
+		    {
+			ProcessOutputReport( ReadBuffer );
+			ReadState = ReadReportId;
+		    }
+		    break;
 	    }
-	    Endpoint_ClearOUT();
-	    if ( bSerialDebug )
-	    {
-		UART1_SendCRLF();
-	    }
+	}
+	Endpoint_ClearOUT();
+	if ( bSerialDebug )
+	{
+	    UART1_SendCRLF();
 	}
     }
 }

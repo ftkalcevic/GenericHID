@@ -372,6 +372,18 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="Firmware"
+			>
+			<File
+				RelativePath="..\..\..\..\..\bin\teensypp.hex"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\..\bin\usbkey.hex"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\makefile"
 			>
