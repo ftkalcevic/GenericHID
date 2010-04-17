@@ -553,7 +553,7 @@
 	    <property name="Timer1" description=":teensypp.htm#Timer1" type="timer13" default="1,8,100"/>
 	    <property name="Timer2" description=":teensypp.htm#Timer2" type="timer2" default="1,8,100"/>
 	    <property name="Timer3" description=":teensypp.htm#Timer3" type="timer13" default="1,8,100"/>
-	    <property name="Firmware" description="" type="string" enabled="false" default="teensypp.hex" />
+	    <property name="Firmware" description="" type="string" enabled="false" default="teensypp2.hex" />
 	    <property name="ProgrammerType" description="" type="string" enabled="false" default="HalfKay" />
 	</Shape>
 
