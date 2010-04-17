@@ -258,7 +258,7 @@ int main(void)
     }
     else
     {
-	//PORTD |= _BV(PD6);
+	PORTD |= _BV(PD6);
 	USB_Init( USB_DEVICE_OPT_FULLSPEED);
     }
 

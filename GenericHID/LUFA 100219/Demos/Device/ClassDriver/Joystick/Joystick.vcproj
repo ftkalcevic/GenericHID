@@ -15,16 +15,16 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="Debug|Win32"
+			Name="USB Key|Win32"
 			OutputDirectory="$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="0"
 			>
 			<Tool
 				Name="VCNMakeTool"
-				BuildCommandLine="make -f makefile"
+				BuildCommandLine="make -f makefile.usbkey"
 				ReBuildCommandLine=""
-				CleanCommandLine="make -f makefile clean"
+				CleanCommandLine="make -f makefile.usbkey clean"
 				Output="usbkey.hex"
 				PreprocessorDefinitions="WIN32;_DEBUG"
 				IncludeSearchPath=""
@@ -35,18 +35,18 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="Release|Win32"
+			Name="Teensy++ 2.0|Win32"
 			OutputDirectory="$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="0"
 			>
 			<Tool
 				Name="VCNMakeTool"
-				BuildCommandLine="make -f makefile"
+				BuildCommandLine="make -f makefile.teensypp2"
 				ReBuildCommandLine=""
-				CleanCommandLine="make -f makefile clean"
-				Output="usbkey.hex"
-				PreprocessorDefinitions="WIN32;NDEBUG"
+				CleanCommandLine="make -f makefile.teensypp2 clean"
+				Output="teensypp2.hex"
+				PreprocessorDefinitions="WIN32;_DEBUG"
 				IncludeSearchPath=""
 				ForcedIncludes=""
 				AssemblySearchPath=""
@@ -385,7 +385,11 @@
 			</File>
 		</Filter>
 		<File
-			RelativePath=".\makefile"
+			RelativePath=".\makefile.teensypp2"
+			>
+		</File>
+		<File
+			RelativePath=".\makefile.usbkey"
 			>
 		</File>
 		<File
