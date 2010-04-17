@@ -654,7 +654,7 @@ void GenericHID::DoProgram( QString &sEEPROM )
     #ifdef _WIN32
 	QString sFirmwarePath = sFirmware;
     #else
-	QString sFirmwarePath = QString("/usr/share/generichid/") + sFirmware;
+	QString sFirmwarePath = QString("/usr/share/generichid/bin/") + sFirmware;
     #endif
 #endif	
 
