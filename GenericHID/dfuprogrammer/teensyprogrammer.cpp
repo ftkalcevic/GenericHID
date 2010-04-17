@@ -72,6 +72,8 @@ bool TeensyProgrammer::EraseDevice()
 
 bool TeensyProgrammer::StartProgramming(IntelHexBuffer &memory)
 {
+    (*m_Callback)(m_user_data, 0 );
+
     // program the data
     unsigned char buf[260];
     bool first_block=true;
@@ -79,6 +81,7 @@ bool TeensyProgrammer::StartProgramming(IntelHexBuffer &memory)
     int code_size = m_flash_address_top;
     for ( unsigned int addr = 0; addr < m_flash_address_top; addr += block_size ) 
     {
+	(*m_Callback)(m_user_data, 100 * addr / m_flash_address_top );
 	if ( addr > 0 && !memory.isInUse(addr, addr + block_size - 1) ) 
 	{
 	    // don't waste time on blocks that are unused,
@@ -108,6 +111,7 @@ bool TeensyProgrammer::StartProgramming(IntelHexBuffer &memory)
 	}
 	first_block = false;
     }
+    (*m_Callback)(m_user_data, 100  );
     return true;
 }
 
