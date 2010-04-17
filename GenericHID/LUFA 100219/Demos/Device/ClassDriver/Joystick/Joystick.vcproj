@@ -76,6 +76,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ctoasm.inc"
+				>
+			</File>
+			<File
 				RelativePath=".\Descriptors.c"
 				>
 			</File>
@@ -105,6 +109,10 @@
 			</File>
 			<File
 				RelativePath=".\LED.c"
+				>
+			</File>
+			<File
+				RelativePath=".\macros.inc"
 				>
 			</File>
 			<File
