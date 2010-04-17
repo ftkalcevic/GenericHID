@@ -168,8 +168,6 @@ static void ioint(void)
 
 int main(void)
 {
-    DDRD = OUTPUT(PD6);
-
     byte nReason = MCUSR;
 
     // Watch dog is used by the bootloader to reset after firmware upgrades
@@ -258,15 +256,7 @@ int main(void)
     }
     else
     {
-	PORTD |= _BV(PD6);
 	USB_Init( USB_DEVICE_OPT_FULLSPEED);
-    }
-
-    if ( bSerialDebug )
-    {
-	UART1_Send_P( PSTR("EPs ") );
-	UART1_SendHex( UECFG1X );
-	UART1_Send_P( PSTR(")\r\n") );
     }
 
     /* Scheduling - routine never returns, so put this last in the main function */
