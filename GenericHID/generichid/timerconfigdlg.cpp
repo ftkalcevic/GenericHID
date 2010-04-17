@@ -19,14 +19,15 @@
 #include "timercounter.h"
 #include "deviceconfig.h"
 
-TimerConfigDlg::TimerConfigDlg( int nBits, QStringList &sPrescales, QWidget *parent)
+TimerConfigDlg::TimerConfigDlg( int nBits, QStringList &sPrescales, unsigned int nClock, QWidget *parent)
 : QDialog(parent)
 , m_nBits( nBits )
 , m_sPrescales( sPrescales )
 {
     ui.setupUi(this);
 
-    m_nClockFrequency = 8000000;
+    m_nClockFrequency = nClock;
+    TimerCounter::SetClock( nClock );
     //m_nBits = 16;
     //m_sPrescales << "1" << "8" << "64" << "256" << "1024";
     //m_nBits = 8;

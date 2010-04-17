@@ -41,6 +41,7 @@ public:
     bool isMouseDown() const { return m_bMouseDown; }
     QString MCUFirmware();
     QString MCUProgrammerType();
+    unsigned int CPUClockFrequency();
 
 public slots:
     void onViewItemChanged( QGraphicsItem *item, QGraphicsItem::GraphicsItemChange change, const QVariant &value);

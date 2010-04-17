@@ -36,7 +36,7 @@ class TimerEditorFactory : public QtAbstractEditorFactory<TimerStringPropertyMan
     Q_OBJECT
 
 public:
-    TimerEditorFactory(int nBits, QStringList sPrescales, QObject *parent=0);
+    TimerEditorFactory(int nBits, QStringList sPrescales, unsigned int nClock, QObject *parent=0);
     ~TimerEditorFactory();
 
 public:
@@ -47,6 +47,7 @@ private:
     TimerEditorFactoryPrivate *d_ptr;
     int m_nBits;
     QStringList m_sPrescales;
+    unsigned int m_nCPUClockFrequency;
     Q_DECLARE_PRIVATE(TimerEditorFactory)
     Q_DISABLE_COPY(TimerEditorFactory)
 

@@ -37,6 +37,7 @@ private:
     QString m_sName;
     ushort m_nUsagePage;
     ushort m_nUsage;
+    unsigned int m_nBits;
 };
 
 #endif

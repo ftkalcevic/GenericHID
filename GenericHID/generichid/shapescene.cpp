@@ -594,6 +594,18 @@ QString ShapeScene::MCUProgrammerType()
     return s;
 }
 
+unsigned int ShapeScene::CPUClockFrequency()
+{
+    unsigned int n = 0;
+    ShapeItem *pItem = GetMCUShape();
+    if ( pItem != NULL )
+    {
+	const ShapeMCU *mcu = dynamic_cast<const ShapeMCU*>(pItem->shapeData());
+	n = mcu->CPUClockFrequency( pItem->values() );
+    }
+    return n;
+}
+
 ShapeItem *ShapeScene::GetMCUShape()
 {
     // Find the MCU 

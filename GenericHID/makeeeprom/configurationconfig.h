@@ -43,7 +43,7 @@ public:
     unsigned short powerConsumption() const { return m_nPowerConsumption; }
     unsigned short descriptorsLength() const { return m_nDescriptorsLength; }
     USBKeyLED useStatusLEDs() const { return m_eUseStatusLEDs; }
-    bool serialDebug() const { return m_bSerialDebug; }
+    int serialDebug() const { return m_nSerialDebug; }
     bool HIDDebug() const { return m_bHIDDebug; }
     unsigned short usagePage() const { return m_nUsagePage; }
     unsigned short usage() const { return m_nUsage; }
@@ -57,7 +57,7 @@ private:
     unsigned short m_nPowerConsumption;
     unsigned short m_nDescriptorsLength;
     USBKeyLED m_eUseStatusLEDs;
-    bool m_bSerialDebug;
+    unsigned int m_nSerialDebug;
     bool m_bHIDDebug;
     unsigned short m_nUsagePage;
     unsigned short m_nUsage;

@@ -36,6 +36,13 @@ Hidcomp/hidconfig supports names.</p>
 <h3 id="Usage">UsagePage/Usage</h3>
 <p>The UsagePage and Usage of the Digital Encoder.  See <a href="usages.htm">Usages</a> for more information.</p>
 
+
+<h3 id="Bits">Bits</h3>
+<p>The size of the encoder counter in bits.&nbsp; GenericHID supports up to 16 bit
+numbers meaning they can count from 0 to 2<sup>16</sup>-1 
+(65535).&nbsp; The counter will wrap around the minimum/maximum values.</p>
+<p>Depending on the software reading the values, 8 bits is usually enough.</p>
+
 <h3 id="Current">Current</h3>
 <p> Defines the amount of electrical current used by the LED in mA.  This is used to estimate the USB power draw.&nbsp; 
 See the section on <a href="power.htm">Power</a> for more information.&nbsp; <i>

@@ -33,6 +33,7 @@ public:
 public:
     QString Firmware( const QList<PropertyValue *> &values ) const;
     QString ProgrammerType( const QList<PropertyValue *> &values ) const;
+    unsigned int CPUClockFrequency( const QList<PropertyValue *> &values ) const;
 };
 
 #endif

@@ -98,6 +98,8 @@ struct SDigitalEncoderControl
     struct SControlHeader hdr;
     byte PortA;
     byte PortB;
+    byte Bits;
+    byte Index;	// Working data.
 };
 
 enum DirSwitchType
@@ -296,8 +298,8 @@ struct SApplicationHeader
 	#define DEVICE_OPTION_USE_USBKEY_LED2	0x04
 	#define	DEVICE_OPTION_USE_USBKEY_LEDS	(DEVICE_OPTION_USE_USBKEY_LED1|DEVICE_OPTION_USE_USBKEY_LED2)
 	#define DEVICE_OPTION_HID_DEBUG		0x08
-	#define DEVICE_OPTION_SERIAL_DEBUG	0x10
-	#define DEVICE_OPTION_5V		0x20
+	#define DEVICE_OPTION_5V		0x10
+    byte nDebugLevel;
     struct TimerConfig timers[MAX_TIMERS];
     byte OutputReportLength[MAX_REPORTS];
 };

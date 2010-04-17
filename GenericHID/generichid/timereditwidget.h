@@ -24,11 +24,12 @@ class TimerEditWidget : public QWidget
     Q_OBJECT
 
 public:
-    TimerEditWidget(QWidget *parent);
+    TimerEditWidget(QWidget *parent );
 
     bool eventFilter(QObject *obj, QEvent *ev);
     void setBits( int nBits ) { m_nBits = nBits; }
     void setPrescales( QStringList &sPrescales ) { m_sPrescales = sPrescales; }
+    void setCPUClock( unsigned int n ) { m_nCPUClockFrequency = n; }
 
 public Q_SLOTS:
     void setValue(const QString &value);
@@ -45,6 +46,7 @@ private:
     QToolButton *m_button;
     int m_nBits;
     QStringList m_sPrescales;
+    unsigned int m_nCPUClockFrequency;
 };
 
 #endif // TIMEREDITWIDGET_H

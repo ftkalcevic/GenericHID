@@ -185,7 +185,7 @@ void ShapeMCU::MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sP
     XMLUtility::setAttribute( configNode, "UseStatusLEDs", GetPropertyValueEnum("Use Status LEDs",values,"") );
     XMLUtility::setAttribute( configNode, "UsagePage", GetPropertyValueUsagePage("Usage",values,1) );
     XMLUtility::setAttribute( configNode, "Usage", GetPropertyValueUsage("Usage",values,1) );
-    XMLUtility::setAttribute( configNode, "SerialDebug", GetPropertyValueBool("Serial-Debug",values,false) );
+    XMLUtility::setAttribute( configNode, "SerialDebug", GetPropertyValueInt("Serial-Debug",values,0) );
     XMLUtility::setAttribute( configNode, "HIDDebug", GetPropertyValueBool("HID-Debug",values,false) );
     XMLUtility::setAttribute( configNode, "PowerPort", sTempPowerPin );
     XMLUtility::setAttribute( configNode, "Timer1", GetPropertyValueString("Timer1",values,false) );
@@ -254,4 +254,9 @@ QString ShapeMCU::Firmware( const QList<PropertyValue *> &values ) const
 QString ShapeMCU::ProgrammerType( const QList<PropertyValue *> &values ) const
 {
     return GetPropertyValueString("ProgrammerType",values,"");
+}
+
+unsigned int ShapeMCU::CPUClockFrequency( const QList<PropertyValue *> &values ) const
+{
+    return (unsigned int )GetPropertyValueInt("CPUClock",values,0);
 }

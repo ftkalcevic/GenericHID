@@ -63,7 +63,7 @@ void TimerEditWidget::setValue(const QString &s)
 
 void TimerEditWidget::buttonClicked()
 {
-    TimerConfigDlg dlg( m_nBits, m_sPrescales, this );
+    TimerConfigDlg dlg( m_nBits, m_sPrescales, m_nCPUClockFrequency, this );
     dlg.setValue( m_sTimerDetails );
     if ( dlg.exec() == QDialog::Accepted )
     {

@@ -52,7 +52,7 @@ protected:
 public:
     virtual ~ShapeProperty(void);
     static ShapeProperty *CreateShapeProperty( QDomElement &node, const QString &sName, const QString &sDescription, PropertyType::PropertyType ePropType, bool bEnabled, QString &sError );
-    static void SetBrowserFactory( QtAbstractPropertyBrowser *browser );
+    static void SetBrowserFactory( QtAbstractPropertyBrowser *browser, unsigned int nCpuClock );
     static void Init();
     static QtProperty *MakeGroupItem( const QString &s );
     virtual QtProperty *getQtProperty() = 0;

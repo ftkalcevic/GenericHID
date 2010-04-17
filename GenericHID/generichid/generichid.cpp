@@ -104,7 +104,7 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
     ui.listView->setPropertiesWithoutValueMarked(false);
     ui.listView->setResizeMode(QtTreePropertyBrowser::Interactive);
     ui.listView->setRootIsDecorated(false);
-    ShapeProperty::SetBrowserFactory( ui.listView );
+    ShapeProperty::SetBrowserFactory( ui.listView, m_pScene->CPUClockFrequency() );
     connect( ui.listView, SIGNAL(currentItemChanged(QtBrowserItem *)), this, SLOT(onPropertiesCurrentItemChanged( QtBrowserItem *)) );
     connect( ui.listView, SIGNAL(itemDataChanged(QtBrowserItem *)), this, SLOT(onPropertiesItemDataChanged( QtBrowserItem *)) );
 
@@ -706,7 +706,7 @@ void GenericHID::onSelectionChanged()
 	    m_pLastSelectedShape = selectedShapes[0];
 
 	    const ShapeProperties &pProps = m_pLastSelectedShape->shapeData()->properties();
-	    ShapeProperty::SetBrowserFactory( ui.listView );
+	    ShapeProperty::SetBrowserFactory( ui.listView, m_pScene->CPUClockFrequency() );
 	    ui.listView->addProperty(pProps.topItem());
 	    m_pLastSelectedShape->populateProperties();
 	    if ( ui.listView->topLevelItems().count() > 0 )

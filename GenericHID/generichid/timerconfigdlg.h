@@ -25,7 +25,7 @@ class TimerConfigDlg : public QDialog
     Q_OBJECT
 
 public:
-    TimerConfigDlg(int nBits, QStringList &sPrescales, QWidget *parent = 0);
+    TimerConfigDlg(int nBits, QStringList &sPrescales, unsigned int nClock, QWidget *parent = 0);
     ~TimerConfigDlg();
     void setValue( const QString &sTimerDetails );
     QString value() const;

@@ -34,6 +34,7 @@ void ShapeDigitalEncoder::MakeControlsXML( QDomElement &elem, const QList<class 
 			       GetPropertyValueUsagePage("Usage",values,1),
 			       GetPropertyValueUsage("Usage",values,1),
 			       GetPort( pins, "A"),
-			       GetPort( pins, "B") );
+			       GetPort( pins, "B"),
+			       GetPropertyValueInt("Bits",values,8) );
 
 }

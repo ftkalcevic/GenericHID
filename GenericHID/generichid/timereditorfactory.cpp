@@ -125,12 +125,12 @@ void TimerEditorFactoryPrivate::slotSetValue(const QString &value)
 }
 
 
-TimerEditorFactory::TimerEditorFactory(int nBits, QStringList sPrescales, QObject *parent) 
+TimerEditorFactory::TimerEditorFactory(int nBits, QStringList sPrescales, unsigned int nClock, QObject *parent) 
 : QtAbstractEditorFactory<TimerStringPropertyManager>(parent)
 , d_ptr(new TimerEditorFactoryPrivate())
 , m_nBits( nBits )
 , m_sPrescales( sPrescales )
-
+, m_nCPUClockFrequency( nClock )
 {
     d_ptr->q_ptr = this;
 }
@@ -152,6 +152,7 @@ QWidget *TimerEditorFactory::createEditor(TimerStringPropertyManager *manager, Q
     editor->setValue(manager->value(property));
     editor->setBits( m_nBits );
     editor->setPrescales( m_sPrescales );
+    editor->setCPUClock( m_nCPUClockFrequency );
 
     connect(editor, SIGNAL(valueChanged(QString)), this, SLOT(slotSetValue(QString)));
     connect(editor, SIGNAL(destroyed(QObject *)), this, SLOT(slotEditorDestroyed(QObject *)));

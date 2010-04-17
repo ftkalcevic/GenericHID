@@ -26,6 +26,7 @@
 #include "listeditorfactory.h"
 #include "timereditorfactory.h"
 #include "keymatrixeditorfactory.h"
+#include "timercounter.h"
 
 
 namespace  PropertyType
@@ -80,7 +81,7 @@ QtProperty *ShapeProperty::MakeGroupItem( const QString &s )
     return m_groupManager->addProperty(s);
 }
 
-void ShapeProperty::SetBrowserFactory( QtAbstractPropertyBrowser *browser )
+void ShapeProperty::SetBrowserFactory( QtAbstractPropertyBrowser *browser, unsigned int nCpuClock )
 {
     Init();
 
@@ -90,8 +91,9 @@ void ShapeProperty::SetBrowserFactory( QtAbstractPropertyBrowser *browser )
     ListEditorFactory *comboListFactory = new ListEditorFactory();
     QtCheckBoxFactory *checkBoxFactory = new QtCheckBoxFactory();
     QtSpinBoxFactory *spinBoxFactory = new QtSpinBoxFactory();
-    TimerEditorFactory *timer13Factory = new TimerEditorFactory(16,QStringList()<< "1" << "8" << "64" << "256" << "1024" );
-    TimerEditorFactory *timer2Factory = new TimerEditorFactory(8,QStringList()<< "1" << "8" << "32" << "64" << "128" << "256" << "1024" );
+    TimerEditorFactory *timer13Factory = new TimerEditorFactory(16,QStringList()<< "1" << "8" << "64" << "256" << "1024", nCpuClock );
+    TimerEditorFactory *timer2Factory = new TimerEditorFactory(8,QStringList()<< "1" << "8" << "32" << "64" << "128" << "256" << "1024", nCpuClock );
+    TimerCounter::SetClock( nCpuClock );
     m_keyMatrixNameFactory  = new KeyMatrixEditorFactory();
 
     browser->setFactoryForManager(m_stringManager, lineEditFactory);

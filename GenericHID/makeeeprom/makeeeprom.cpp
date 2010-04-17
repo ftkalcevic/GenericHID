@@ -157,11 +157,11 @@ ByteArray MakeEEPROM::makeEEPROM()
     appHeader.nPowerPort = m_ConfigConfig->powerPort();
     appHeader.nOptions = (m_ConfigConfig->busPowered() ? DEVICE_OPTION_BUS_POWERED : 0 ) |
 			       (m_ConfigConfig->HIDDebug() ? DEVICE_OPTION_HID_DEBUG : 0 ) |
-			       (m_ConfigConfig->serialDebug() ? DEVICE_OPTION_SERIAL_DEBUG : 0 ) |
 			       (m_ConfigConfig->useStatusLEDs() == ConfigurationConfig::LED1 ? DEVICE_OPTION_USE_USBKEY_LED1 : 0 ) |
 			       (m_ConfigConfig->useStatusLEDs() == ConfigurationConfig::LED2 ? DEVICE_OPTION_USE_USBKEY_LED2 : 0 ) |
 			       (m_ConfigConfig->useStatusLEDs() == ConfigurationConfig::Both ? DEVICE_OPTION_USE_USBKEY_LEDS : 0 ) |
 			       (m_ConfigConfig->is5Volts() ? DEVICE_OPTION_5V : 0 );
+    appHeader.nDebugLevel = (byte)m_ConfigConfig->serialDebug();
     for (unsigned int i = 0; i < countof(appHeader.OutputReportLength); i++)
 	appHeader.OutputReportLength[i] = 0;
     for (unsigned int i = 0; i < countof(appHeader.timers); i++ )

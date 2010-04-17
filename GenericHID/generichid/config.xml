@@ -78,7 +78,7 @@
 		<enum name="Bus-Powered"/>
 	    </property>
 	    <property name="Interval" description=":stockusbkey.htm#Interval" type="int" min="0" max="255" default="50"/>
-	    <property name="Serial-Debug" description=":stockusbkey.htm#Serial-Debug" type="bool" default="false"/>
+	    <property name="Serial-Debug" description=":stockusbkey.htm#Serial-Debug" type="int" min="0" max="100" default="0"/>
 	    <property name="HID-Debug" description=":stockusbkey.htm#HID-Debug" type="bool" default="false"/>
 	    <property name="Current" description=":stockusbkey.htm#Current" type="int" min="0" max="500" default="20"/>
 	    <property name="Use Status LEDs" description=":stockusbkey.htm#UseStatusLEDs" type="enum" default="LED1">
@@ -98,6 +98,7 @@
 	    <property name="Timer3" description=":stockusbkey.htm#Timer3" type="timer13" default="1,8,100"/>
 	    <property name="Firmware" description="" type="string" enabled="false" default="usbkey.hex" />
 	    <property name="ProgrammerType" description="" type="string" enabled="false" default="DFU" />
+	    <property name="CPUClock" description="" type="int" enabled="false" max="8000000" default="8000000" />
 	</Shape>
 	<Shape Id="strippedusbkey" Type="at90usb128" Source="false" Image="resources:avrusbkey.png" Icon="resources:avrusbkeyicon.png" maxInstances="1" name="Stripped AT90USBKey Demo board" description=":strippedusbkey.htm">
 	    <pin rect="  1, 44, 31, 25" id="Vcc" type="" enabled="false" />
@@ -177,7 +178,7 @@
 		<enum name="Bus-Powered"/>
 	    </property>
 	    <property name="Interval" description=":strippedusbkey.htm#Interval" type="int" min="0" max="255" default="50"/>
-	    <property name="Serial-Debug" description=":strippedusbkey.htm#Serial-Debug" type="bool" default="false"/>
+	    <property name="Serial-Debug" description=":strippedusbkey.htm#Serial-Debug" type="int" min="0" max="100" default="0"/>
 	    <property name="HID-Debug" description=":strippedusbkey.htm#HID-Debug" type="bool" default="false"/>
 	    <property name="Current" description=":strippedusbkey.htm#Current" type="int" min="0" max="500" default="20"/>
 	    <property name="Use Status LEDs" description=":strippedusbkey.htm#UseStatusLEDs" type="enum" default="LED1">
@@ -192,9 +193,10 @@
 	    <property name="Timer3" description=":strippedusbkey.htm#Timer3" type="timer13" default="1,8,100"/>
 	    <property name="Firmware" description="" type="string" enabled="false" default="usbkey.hex" />
 	    <property name="ProgrammerType" description="" type="string" enabled="false" default="DFU" />
+	    <property name="CPUClock" description="" type="int" enabled="false" max="8000000" default="8000000" />
 	</Shape>
-	
-	
+
+
 	<Shape Id="usbkeywithwings" Type="at90usb128" Source="false" Image="resources:avrusbkey - wings.png" Icon="resources:avrusbkeywingsicon.png" maxInstances="1" name="AT90USBKey Demo board with WizBang wings" description=":usbkeywithwings.htm">
 	    <pin rect=" -28,130, 31, 25" id="Vcc" type="" enabled="false" />
 	    <pin rect=" -28,155, 31, 25" id="GND" type="" enabled="false" />
@@ -273,7 +275,7 @@
 		<enum name="Bus-Powered"/>
 	    </property>
 	    <property name="Interval" description=":usbkeywithwings.htm#Interval" type="int" min="0" max="255" default="50"/>
-	    <property name="Serial-Debug" description=":usbkeywithwings.htm#Serial-Debug" type="bool" default="false"/>
+	    <property name="Serial-Debug" description=":usbkeywithwings.htm#Serial-Debug" type="int" min="0" max="100" default="0"/>
 	    <property name="HID-Debug" description=":usbkeywithwings.htm#HID-Debug" type="bool" default="false"/>
 	    <property name="Current" description=":usbkeywithwings.htm#Current" type="int" min="0" max="500" default="20"/>
 	    <property name="Use Status LEDs" description=":usbkeywithwings.htm#UseStatusLEDs" type="enum" default="LED1">
@@ -288,76 +290,77 @@
 	    <property name="Timer3" description=":usbkeywithwings.htm#Timer3" type="timer13" default="1,8,100"/>
 	    <property name="Firmware" description="" type="string" enabled="false" default="usbkey.hex" />
 	    <property name="ProgrammerType" description="" type="string" enabled="false" default="DFU" />
+	    <property name="CPUClock" description="" type="int" enabled="false" max="8000000" default="8000000" />
 	</Shape>
 
 
 
 	<Shape Id="usbkeywithwiredwings" Type="at90usb128" Source="false" Image="resources:avrusbkey - wings.png" Icon="resources:avrusbkeywingsicon.png" maxInstances="1" name="AT90USBKey Demo board with WizBang wings and IDC connectors" description=":wizbangidc.htm">
-		<pin rect="-159,140, 31, 25" id="Vcc" type="" enabled="false" />
-		<pin rect="-128,140, 31, 25" id="GND" type="" enabled="false" />
-		<pin rect=" -97,140, 31, 25" id="PF7" type="io,adc" enabled="false" other="JTAG" />
-		<pin rect=" -66,140, 31, 25" id="PF6" type="io,adc" enabled="false" other="JTAG" />
-		<pin rect=" -35,140, 31, 25" id="PF5" type="io,adc" enabled="false" other="JTAG" />
-		<pin rect="  -4,140, 31, 25" id="PF4" type="io,adc" enabled="false" other="JTAG" />
-		<pin rect="  27,140, 31, 25" id="PF3" type="io,adc" other="Battery voltage monitor" />
-		<pin rect="  58,140, 31, 25" id="PF2" type="io,adc" />
-		<pin rect="  89,140, 31, 25" id="PF1" type="io,adc" />
-		<pin rect=" 120,140, 31, 25" id="PF0" type="io,adc" other="Temperature Sensor"/>
+	    <pin rect="-159,140, 31, 25" id="Vcc" type="" enabled="false" />
+	    <pin rect="-128,140, 31, 25" id="GND" type="" enabled="false" />
+	    <pin rect=" -97,140, 31, 25" id="PF7" type="io,adc" enabled="false" other="JTAG" />
+	    <pin rect=" -66,140, 31, 25" id="PF6" type="io,adc" enabled="false" other="JTAG" />
+	    <pin rect=" -35,140, 31, 25" id="PF5" type="io,adc" enabled="false" other="JTAG" />
+	    <pin rect="  -4,140, 31, 25" id="PF4" type="io,adc" enabled="false" other="JTAG" />
+	    <pin rect="  27,140, 31, 25" id="PF3" type="io,adc" other="Battery voltage monitor" />
+	    <pin rect="  58,140, 31, 25" id="PF2" type="io,adc" />
+	    <pin rect="  89,140, 31, 25" id="PF1" type="io,adc" />
+	    <pin rect=" 120,140, 31, 25" id="PF0" type="io,adc" other="Temperature Sensor"/>
 
-		<pin rect="-159,210, 31, 25" id="Vcc" type="" enabled="false" />
-		<pin rect="-128,210, 31, 25" id="GND" type="" enabled="false" />
-		<pin rect=" -97,210, 31, 25" id="PE7" type="io,int" other="UVCON"/>
-		<pin rect=" -66,210, 31, 25" id="PE6" type="io,int" />
-		<pin rect=" -35,210, 31, 25" id="PE5" type="io,int" other="Joystick" />
-		<pin rect="  -4,210, 31, 25" id="PE4" type="io,int" other="Joystick" />
-		<pin rect="  27,210, 31, 25" id="PE3" type="io" other="UID"/>
-		<pin rect="  58,210, 31, 25" id="PE2" type="io" other="HWB" />
-		<pin rect="  89,210, 31, 25" id="PE1" type="io" other="Flash" />
-		<pin rect=" 120,210, 31, 25" id="PE0" type="io" other="Flash" />
+	    <pin rect="-159,210, 31, 25" id="Vcc" type="" enabled="false" />
+	    <pin rect="-128,210, 31, 25" id="GND" type="" enabled="false" />
+	    <pin rect=" -97,210, 31, 25" id="PE7" type="io,int" other="UVCON"/>
+	    <pin rect=" -66,210, 31, 25" id="PE6" type="io,int" />
+	    <pin rect=" -35,210, 31, 25" id="PE5" type="io,int" other="Joystick" />
+	    <pin rect="  -4,210, 31, 25" id="PE4" type="io,int" other="Joystick" />
+	    <pin rect="  27,210, 31, 25" id="PE3" type="io" other="UID"/>
+	    <pin rect="  58,210, 31, 25" id="PE2" type="io" other="HWB" />
+	    <pin rect="  89,210, 31, 25" id="PE1" type="io" other="Flash" />
+	    <pin rect=" 120,210, 31, 25" id="PE0" type="io" other="Flash" />
 
-		<pin rect="-159,272, 31, 25" id="Vcc" type="" enabled="false" />
-		<pin rect="-128,272, 31, 25" id="GND" type="" enabled="false" />
-		<pin rect=" -97,272, 31, 25" id="PB7" type="io,int,pwm" other="Joystick"/>
-		<pin rect=" -66,272, 31, 25" id="PB6" type="io,int,pwm" other="Joystick"/>
-		<pin rect=" -35,272, 31, 25" id="PB5" type="io,int,pwm" other="Joystick"/>
-		<pin rect="  -4,272, 31, 25" id="PB4" type="io,int,pwm" />
-		<pin rect="  27,272, 31, 25" id="PB3" type="io,int,miso" other="Flash" />
-		<pin rect="  58,272, 31, 25" id="PB2" type="io,int,mosi" other="Flash" />
-		<pin rect="  89,272, 31, 25" id="PB1" type="io,int,sck" other="Flash" />
-		<pin rect=" 120,272, 31, 25" id="PB0" type="io,int,ss" />
+	    <pin rect="-159,272, 31, 25" id="Vcc" type="" enabled="false" />
+	    <pin rect="-128,272, 31, 25" id="GND" type="" enabled="false" />
+	    <pin rect=" -97,272, 31, 25" id="PB7" type="io,int,pwm" other="Joystick"/>
+	    <pin rect=" -66,272, 31, 25" id="PB6" type="io,int,pwm" other="Joystick"/>
+	    <pin rect=" -35,272, 31, 25" id="PB5" type="io,int,pwm" other="Joystick"/>
+	    <pin rect="  -4,272, 31, 25" id="PB4" type="io,int,pwm" />
+	    <pin rect="  27,272, 31, 25" id="PB3" type="io,int,miso" other="Flash" />
+	    <pin rect="  58,272, 31, 25" id="PB2" type="io,int,mosi" other="Flash" />
+	    <pin rect="  89,272, 31, 25" id="PB1" type="io,int,sck" other="Flash" />
+	    <pin rect=" 120,272, 31, 25" id="PB0" type="io,int,ss" />
 
-		<pin rect="574,272, 31, 25" id="PD0" type="io,int" />
-		<pin rect="543,272, 31, 25" id="PD1" type="io,int,pwm" />
-		<pin rect="512,272, 31, 25" id="PD2" type="io,int" />
-		<pin rect="481,272, 31, 25" id="PD3" type="io,int" />
-		<pin rect="450,272, 31, 25" id="PD4" type="io" other="LED1, D2"/>
-		<pin rect="419,272, 31, 25" id="PD5" type="io" other="LED1, D2"/>
-		<pin rect="388,272, 31, 25" id="PD6" type="io" other="LED2, D5"/>
-		<pin rect="357,272, 31, 25" id="PD7" type="io" other="LED2, D5"/>
-		<pin rect="326,272, 31, 25" id="GND" type="" enabled="false" />
-		<pin rect="295,272, 31, 25" id="Vcc" type="" enabled="false" />
+	    <pin rect="574,272, 31, 25" id="PD0" type="io,int" />
+	    <pin rect="543,272, 31, 25" id="PD1" type="io,int,pwm" />
+	    <pin rect="512,272, 31, 25" id="PD2" type="io,int" />
+	    <pin rect="481,272, 31, 25" id="PD3" type="io,int" />
+	    <pin rect="450,272, 31, 25" id="PD4" type="io" other="LED1, D2"/>
+	    <pin rect="419,272, 31, 25" id="PD5" type="io" other="LED1, D2"/>
+	    <pin rect="388,272, 31, 25" id="PD6" type="io" other="LED2, D5"/>
+	    <pin rect="357,272, 31, 25" id="PD7" type="io" other="LED2, D5"/>
+	    <pin rect="326,272, 31, 25" id="GND" type="" enabled="false" />
+	    <pin rect="295,272, 31, 25" id="Vcc" type="" enabled="false" />
 
-		<pin rect="574,210, 31, 25" id="PC0" type="io" />
-		<pin rect="543,210, 31, 25" id="PC1" type="io" />
-		<pin rect="512,210, 31, 25" id="PC2" type="io" />
-		<pin rect="481,210, 31, 25" id="PC3" type="io" />
-		<pin rect="450,210, 31, 25" id="PC4" type="io,pwm" />
-		<pin rect="419,210, 31, 25" id="PC5" type="io,pwm" />
-		<pin rect="388,210, 31, 25" id="PC6" type="io,pwm" />
-		<pin rect="357,210, 31, 25" id="PC7" type="io" />
-		<pin rect="326,210, 31, 25" id="GND" type="" enabled="false" />
-		<pin rect="295,210, 31, 25" id="Vcc" type="" enabled="false" />
+	    <pin rect="574,210, 31, 25" id="PC0" type="io" />
+	    <pin rect="543,210, 31, 25" id="PC1" type="io" />
+	    <pin rect="512,210, 31, 25" id="PC2" type="io" />
+	    <pin rect="481,210, 31, 25" id="PC3" type="io" />
+	    <pin rect="450,210, 31, 25" id="PC4" type="io,pwm" />
+	    <pin rect="419,210, 31, 25" id="PC5" type="io,pwm" />
+	    <pin rect="388,210, 31, 25" id="PC6" type="io,pwm" />
+	    <pin rect="357,210, 31, 25" id="PC7" type="io" />
+	    <pin rect="326,210, 31, 25" id="GND" type="" enabled="false" />
+	    <pin rect="295,210, 31, 25" id="Vcc" type="" enabled="false" />
 
-		<pin rect="574,140, 31, 25" id="PA0" type="io" />
-		<pin rect="543,140, 31, 25" id="PA1" type="io" />
-		<pin rect="512,140, 31, 25" id="PA2" type="io" />
-		<pin rect="481,140, 31, 25" id="PA3" type="io" />
-		<pin rect="450,140, 31, 25" id="PA4" type="io" />
-		<pin rect="419,140, 31, 25" id="PA5" type="io" />
-		<pin rect="388,140, 31, 25" id="PA6" type="io" />
-		<pin rect="357,140, 31, 25" id="PA7" type="io" />
-		<pin rect="326,140, 31, 25" id="GND" type="" enabled="false" />
-		<pin rect="295,140, 31, 25" id="Vcc" type="" enabled="false" />
+	    <pin rect="574,140, 31, 25" id="PA0" type="io" />
+	    <pin rect="543,140, 31, 25" id="PA1" type="io" />
+	    <pin rect="512,140, 31, 25" id="PA2" type="io" />
+	    <pin rect="481,140, 31, 25" id="PA3" type="io" />
+	    <pin rect="450,140, 31, 25" id="PA4" type="io" />
+	    <pin rect="419,140, 31, 25" id="PA5" type="io" />
+	    <pin rect="388,140, 31, 25" id="PA6" type="io" />
+	    <pin rect="357,140, 31, 25" id="PA7" type="io" />
+	    <pin rect="326,140, 31, 25" id="GND" type="" enabled="false" />
+	    <pin rect="295,140, 31, 25" id="Vcc" type="" enabled="false" />
 
 	    <property name="Name" description=":wizbangidc.htm#Name" type="string" default="Generic HID Device"/>
 	    <property name="Usage" description=":wizbangidc.htm#Usage" type="usage" default="1:8" />
@@ -370,7 +373,7 @@
 		<enum name="Bus-Powered"/>
 	    </property>
 	    <property name="Interval" description=":wizbangidc.htm#Interval" type="int" min="0" max="255" default="50"/>
-	    <property name="Serial-Debug" description=":wizbangidc.htm#Serial-Debug" type="bool" default="false"/>
+	    <property name="Serial-Debug" description=":wizbangidc.htm#Serial-Debug" type="int" min="0" max="100" default="0"/>
 	    <property name="HID-Debug" description=":wizbangidc.htm#HID-Debug" type="bool" default="false"/>
 	    <property name="Current" description=":wizbangidc.htm#Current" type="int" min="0" max="500" default="20"/>
 	    <property name="Use Status LEDs" description=":wizbangidc.htm#UseStatusLEDs" type="enum" default="LED1">
@@ -385,6 +388,7 @@
 	    <property name="Timer3" description=":wizbangidc.htm#Timer3" type="timer13" default="1,8,100"/>
 	    <property name="Firmware" description="" type="string" enabled="false" default="usbkey.hex" />
 	    <property name="ProgrammerType" description="" type="string" enabled="false" default="DFU" />
+	    <property name="CPUClock" description="" type="int" enabled="false" max="8000000" default="8000000" />
 	</Shape>
 
 
@@ -432,7 +436,7 @@
 	    <pin rect="  0,126, 24, 18" id="PB7" type="io,int,pwm" />
 	    <pin rect="  0,144, 24, 18" id="Vcc" type="" enabled="false" />
 	    <pin rect="  0,162, 24, 18" id="GND" type="" enabled="false" />
-		       
+
 	    <pin rect="  0,190, 24, 18" id="PD0" type="io,int" />
 	    <pin rect="  0,208, 24, 18" id="PD1" type="io,int,pwm" />
 	    <pin rect="  0,226, 24, 18" id="PD2" type="io,int" />
@@ -443,7 +447,7 @@
 	    <pin rect="  0,316, 24, 18" id="PD7" type="io" enabled="false" other="Power Switch"/>
 	    <pin rect="  0,334, 24, 18" id="Vcc" type="" enabled="false" />
 	    <pin rect="  0,352, 24, 18" id="GND" type="" enabled="false" />
-		       
+
 	    <pin rect="  0,380, 24, 18" id="PC0" type="io" />
 	    <pin rect="  0,398, 24, 18" id="PC1" type="io" />
 	    <pin rect="  0,416, 24, 18" id="PC3" type="io" />
@@ -464,7 +468,7 @@
 		<enum name="Bus-Powered"/>
 	    </property>
 	    <property name="Interval" description=":generichid.1.0.htm#Interval" type="int" min="0" max="255" default="50"/>
-	    <property name="Serial-Debug" description=":generichid.1.0.htm#Serial-Debug" type="bool" default="false"/>
+	    <property name="Serial-Debug" description=":generichid.1.0.htm#Serial-Debug" type="int" min="0" max="100" default="0"/>
 	    <property name="HID-Debug" description=":generichid.1.0.htm#HID-Debug" type="bool" default="false"/>
 	    <property name="Current" description=":generichid.1.0.htm#Current" type="int" min="20" max="20" default="20"/>
 	    <property name="Use Status LEDs" description=":generichid.1.0.htm#UseStatusLEDs" type="enum" default="LED2">
@@ -478,6 +482,7 @@
 	    <property name="Timer3" description=":generichid.1.0.htm#Timer3" type="timer13" default="1,8,100"/>
 	    <property name="Firmware" description="" type="string" enabled="false" default="usbkey.hex" />
 	    <property name="ProgrammerType" description="" type="string" enabled="false" default="DFU" />
+	    <property name="CPUClock" description="" type="int" enabled="false" max="8000000" default="8000000" />
 	</Shape>
 
 	<Shape Id="Teensy++2.0" Type="at90usb128" Source="false" Image="resources:teensypp.png" Icon="resources:teensyppicon.png" maxInstances="1" name="Teensy++ 2.0 USB Development Board" description=":teensypp2.htm">
@@ -544,17 +549,18 @@
 		<enum name="Bus-Powered"/>
 	    </property>
 	    <property name="Interval" description=":teensypp2.htm#Interval" type="int" min="0" max="255" default="50"/>
-	    <property name="Serial-Debug" description=":teensypp2.htm#Serial-Debug" type="bool" default="false"/>
+	    <property name="Serial-Debug" description=":teensypp2.htm#Serial-Debug" type="int" min="0" max="100" default="0"/>
 	    <property name="Current" description=":teensypp2.htm#Current" type="int" min="20" max="20" default="20"/>
 	    <property name="Use Status LEDs" description=":teensypp2.htm#UseStatusLEDs" type="enum" default="None">
 		<enum name="None"/>
 	    </property>
 	    <property name="SerialNo" description=":teensypp2.htm#SerialNo" type="string" default="1"/>
-	    <property name="Timer1" description=":teensypp2.htm#Timer1" type="timer13" default="1,8,100"/>
-	    <property name="Timer2" description=":teensypp2.htm#Timer2" type="timer2" default="1,8,100"/>
-	    <property name="Timer3" description=":teensypp2.htm#Timer3" type="timer13" default="1,8,100"/>
+	    <property name="Timer1" description=":teensypp2.htm#Timer1" type="timer13" default="0,8,100"/>
+	    <property name="Timer2" description=":teensypp2.htm#Timer2" type="timer2" default="0,8,100"/>
+	    <property name="Timer3" description=":teensypp2.htm#Timer3" type="timer13" default="0,8,100"/>
 	    <property name="Firmware" description="" type="string" enabled="false" default="teensypp2.hex" />
 	    <property name="ProgrammerType" description="" type="string" enabled="false" default="HalfKay" />
+	    <property name="CPUClock" description="" type="int" enabled="false" max="16000000" default="16000000" />
 	</Shape>
 
 	<Shape Id="pot" Type="pot" Source="true" Image="resources:potentiometer.png" Icon="resources:potentiometericon.png" maxInstances="0" name="Analog Potentiometer" description=":pot.htm">
@@ -570,6 +576,7 @@
 	    <pin rect="25,160,15,15" id="B" type="int" />
 	    <property name="Name" description=":digitalencoder.htm#Name" type="string"/>
 	    <property name="Usage" description=":digitalencoder.htm#Usage" type="usage" default="1:55" />
+	    <property name="Bits" description=":digitalencoder.htm#Bits" type="int" min="1" max="16" default="8"/>
 	    <property name="Current" description=":digitalencoder.htm#Current" type="int" min="0" max="500" default="100"/>
 	</Shape>
 	

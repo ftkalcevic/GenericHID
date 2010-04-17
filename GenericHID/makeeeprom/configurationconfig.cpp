@@ -123,7 +123,7 @@ bool ConfigurationConfig::Load( const QDomElement &elem, QString *sError )
 	    *sError = QString("Unknown value found for attribute '%1' in node <%2>.  Found '%3' but expected one of LED1,LED2,Both, or None.").arg("UseStatusLEDs",elem.nodeName(),s);
 	return false;
     }
-    if ( !XMLUtility::getAttributeBool( elem, "SerialDebug", m_bSerialDebug, sError ) )
+    if ( !XMLUtility::getAttributeUInt( elem, "SerialDebug", m_nSerialDebug, 0, 100, sError ) )
 	return false;
     if ( !XMLUtility::getAttributeBool( elem, "HIDDebug", m_bHIDDebug, sError ) )
 	return false;
