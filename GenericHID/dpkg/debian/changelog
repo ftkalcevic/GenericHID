@@ -3,6 +3,7 @@ generichid (1.2) release; urgency=low
   * Support teensy++ 2.0
   * Remove unusable PWM line
   * Add size option to encoder data
+  * Upgrade firmware to use latest LUFA instead of MyUSB
  -- Frank Tkalcevic <ftkalcevic@franksworkshop.com.au>  Sun, 18 Apr 2010 14:41:51 +1000
 
 generichid (1.1) release; urgency=low
