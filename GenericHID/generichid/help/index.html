@@ -10,6 +10,7 @@
 					<li><a href="#background">Background</a></li>
 					<li><a href="#credits">Credits</a></li>
 					<li><a href="#download">Download and Install</a></li>
+					<li><a href="#history">Change History</a></li>
 				</ul>
 			<li><a href="hardware.htm">USB Hardware</a></li>
 			<li><a href="generichid.htm">Using Generic HID</a></li>
@@ -26,8 +27,10 @@ so any computer can read them.&nbsp; A HID device can be a joystick, game pad,
 keyboard, mouse, CNC pendant, bar code reader, force feedback device; anything 
 that interacts with a user.</p>
 <p>Generic HID comprises two parts: hardware and configuration software.&nbsp; 
-The hardware can be any Atmel at90usb1287 based board.&nbsp; The cheapest of 
-these this at90usbkey demo board which you can get for about $US30.&nbsp; The 
+The hardware can be any Atmel at90usb1287 or&nbsp; at90usb1286 based board.&nbsp; 
+The cheapest of these are the <a href="http://www.pjrc.com/store/teensypp.html">
+teensy++2.0</a> development board or the <a href="http://www.atmel.com">at90usbkey</a> demo board which you can get for 
+under $US30.&nbsp; The 
 software is open sourced and can be downloaded below.&nbsp; It runs on both 
 Linux and Windows&nbsp; By dragging and 
 dropping components, then hooking up the pins with virtual wires, the hardware 
@@ -150,7 +153,7 @@ to define it.&nbsp; Click on them for large images.</p>
 	</tr>
 	<tr>
 		<td><a href="pwm.htm">PWM</a></td>
-		<td>8<sup>1</sup></td>
+		<td>7<sup>1</sup></td>
 		<td>The at90usb1287 microcontroller supports 8 PWM outputs.&nbsp; These 
 		can be used to drive LEDs at different intensities, eg RGB LEDs to give 
 		true colour, or to modulate a larger loaded, switched by a transistor, 
@@ -194,6 +197,11 @@ ports of the microcontroller are accessible via through-holes on the board
 either at $30.00 (at <a href="http://www.digikey.com/">Digikey</a> last time I 
 looked, or for even cheaper at <a href="http://www.mouser.com/">Mouser</a>, 
 $29.99) compared to $15.05 for just the AT90USB1287 chip.</p>
+		<p>Recently support was added for the
+		<a href="http://www.pjrc.com/store/teensypp.html">teensy++ 2.0</a> 
+		development board.&nbsp; This is a better option than the USBKey because 
+		it is cheaper ($24 at last check) and only has the essential chip and 
+		supporting circuitry.&nbsp; Most IO pins are available (46 of them).</p>
 <p>The firmware for the board is configured by uploading data to 
 its EEPROM.&nbsp; The configuration data controls some hardware attributes, but 
 mostly it just defines what component is connected to which I/O pin.&nbsp; The 
@@ -292,10 +300,50 @@ generichid_x.x_i386.deb</a>.</p>
 					at the command line to run it.</span></p>
 <h3>Source</h3>
 <p>The source code can be downloaded 
+from 
 <a href="https://sourceforge.net/projects/generichid/files/">sourceforge</a>.&nbsp; 
 It requires Qt 4.5.2 (qtsdk2009.03).&nbsp; The release binaries are built 
 against the static libraries.&nbsp; The file is large, 37MB.&nbsp; This is 
 because it contains the library binaries :(&nbsp; If I get un-lazy, I'll clean 
 up the build process and remove the binaries.</p>
+
+	<h2 id=history>Change History</h2>
+<table cellpadding=5>
+	<tr>
+		<th>Version</td>
+		<th>Date</td>
+		<th>Description</td>
+	</tr>
+	<tr>
+		<td>1.2</td>
+		<td>18 Apr 2010</td>
+		<td>
+		<ul>
+			<li>Support for teensy++ 2.0 development board</li>
+			<li>Enhanced PWM channels from 8 to 7</li>
+			<li>Configurable bits (1-16) for encoders</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td>1.1</td>
+		<td>20 Oct 2009</td>
+		<td>
+			<ul>
+				<li>Add custom SPI display type</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<td>1.0</td>
+		<td>28 Sept 2009</td>
+		<td>
+			<ul>
+				<li>Initial Release</li>
+			</ul>
+		</td>
+	</tr>
+</table>
+
 		</body>
 </html>
