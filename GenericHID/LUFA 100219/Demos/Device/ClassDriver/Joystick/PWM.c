@@ -48,14 +48,13 @@ void InitPWM( struct SPWMControl *pData )
     // WritePWM()) inverts the value.
     switch ( pData->Port )
     {
-	case (PortB*8 + 4): /*0 PB4 OC2A*/ pData->Port = 0; TCCR2A |= _BV(COM2A1) | _BV(COM2A0); OCR2A = pData->Resolution; break;
-	case (PortD*8 + 1): /*1 PD1 OC2B*/ pData->Port = 1; TCCR2A |= _BV(COM2B1) | _BV(COM2B0); OCR2B = pData->Resolution; break;
-	case (PortB*8 + 5): /*2 PB5 OC1A*/ pData->Port = 2; TCCR1A |= _BV(COM1A1) | _BV(COM1A0); OCR1A = pData->Resolution; break;
-	case (PortB*8 + 6): /*3 PB6 OC1B*/ pData->Port = 3; TCCR1A |= _BV(COM1B1) | _BV(COM1B0); OCR1B = pData->Resolution; break;
-	case (PortB*8 + 7): /*4 PB7 OC1C*/ pData->Port = 4; TCCR1A |= _BV(COM1C1) | _BV(COM1C0); OCR1C = pData->Resolution; break;
-	case (PortC*8 + 6): /*5 PC6 OC3A*/ pData->Port = 5; TCCR3A |= _BV(COM3A1) | _BV(COM3A0); OCR3A = pData->Resolution; break;
-	case (PortC*8 + 5): /*6 PC5 OC3B*/ pData->Port = 6; TCCR3A |= _BV(COM3B1) | _BV(COM3B0); OCR3B = pData->Resolution; break;
-	case (PortC*8 + 4): /*7 PC4 OC3C*/ pData->Port = 7; TCCR3A |= _BV(COM3C1) | _BV(COM3C0); OCR3C = pData->Resolution; break;
+	case (PortD*8 + 1): /*1 PD1 OC2B*/ pData->Port = 0; TCCR2A |= _BV(COM2B1) | _BV(COM2B0); OCR2B = pData->Resolution; break;
+	case (PortB*8 + 5): /*2 PB5 OC1A*/ pData->Port = 1; TCCR1A |= _BV(COM1A1) | _BV(COM1A0); OCR1A = pData->Resolution; break;
+	case (PortB*8 + 6): /*3 PB6 OC1B*/ pData->Port = 2; TCCR1A |= _BV(COM1B1) | _BV(COM1B0); OCR1B = pData->Resolution; break;
+	case (PortB*8 + 7): /*4 PB7 OC1C*/ pData->Port = 3; TCCR1A |= _BV(COM1C1) | _BV(COM1C0); OCR1C = pData->Resolution; break;
+	case (PortC*8 + 6): /*5 PC6 OC3A*/ pData->Port = 4; TCCR3A |= _BV(COM3A1) | _BV(COM3A0); OCR3A = pData->Resolution; break;
+	case (PortC*8 + 5): /*6 PC5 OC3B*/ pData->Port = 5; TCCR3A |= _BV(COM3B1) | _BV(COM3B0); OCR3B = pData->Resolution; break;
+	case (PortC*8 + 4): /*7 PC4 OC3C*/ pData->Port = 6; TCCR3A |= _BV(COM3C1) | _BV(COM3C0); OCR3C = pData->Resolution; break;
     }
 
     bInitialised = true;
@@ -64,7 +63,7 @@ void InitPWM( struct SPWMControl *pData )
 
 void WritePWM( struct SPWMControl *pData, byte **ReportBuffer, byte *nBit )
 {
-    if ( pData->Port == 0 || pData->Port == 1)
+    if ( pData->Port == 0 )
     {
 	uint16_t nValue = ReadPackData16( ReportBuffer, nBit, pData->Bits ); 
 	if ( nValue > pData->Resolution )
@@ -81,8 +80,6 @@ void WritePWM( struct SPWMControl *pData, byte **ReportBuffer, byte *nBit )
 	}
 
 	if ( pData->Port == 0 )
-	    OCR2A = n;		    /*0 PB4 OC2A*/ 
-	else
 	    OCR2B = n;		    /*1 PD1 OC2B*/
     }
     else
@@ -105,12 +102,12 @@ void WritePWM( struct SPWMControl *pData, byte **ReportBuffer, byte *nBit )
 
 	switch ( pData->Port )
 	{
-	    case 2: /*2 PB5 OC1A*/ OCR1A = nValue; break;
-	    case 3: /*3 PB6 OC1B*/ OCR1B = nValue; break;
-	    case 4: /*4 PB7 OC1C*/ OCR1C = nValue; break;
-	    case 5: /*5 PC6 OC3A*/ OCR3A = nValue; break;
-	    case 6: /*6 PC5 OC3B*/ OCR3B = nValue; break;
-	    case 7: /*7 PC4 OC3C*/ OCR3C = nValue; break;
+	    case 1: /*2 PB5 OC1A*/ OCR1A = nValue; break;
+	    case 2: /*3 PB6 OC1B*/ OCR1B = nValue; break;
+	    case 3: /*4 PB7 OC1C*/ OCR1C = nValue; break;
+	    case 4: /*5 PC6 OC3A*/ OCR3A = nValue; break;
+	    case 5: /*6 PC5 OC3B*/ OCR3B = nValue; break;
+	    case 6: /*7 PC4 OC3C*/ OCR3C = nValue; break;
 	}
     }
 }
