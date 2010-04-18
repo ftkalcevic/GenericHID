@@ -28,7 +28,7 @@
 	    <pin rect="  1,352, 31, 25" id="PB7" type="io,int,pwm" enabled="false"  other="Joystick"/>
 	    <pin rect=" 32,352, 31, 25" id="PB6" type="io,int,pwm" enabled="false"  other="Joystick"/>
 	    <pin rect="  1,377, 31, 25" id="PB5" type="io,int,pwm" enabled="false"  other="Joystick"/>
-	    <pin rect=" 32,377, 31, 25" id="PB4" type="io,int,pwm" />
+	    <pin rect=" 32,377, 31, 25" id="PB4" type="io,int" />
 	    <pin rect="  1,402, 31, 25" id="PB3" type="io,int,miso" enabled="false" other="Flash" />
 	    <pin rect=" 32,402, 31, 25" id="PB2" type="io,int,mosi" enabled="false" other="Flash" />
 	    <pin rect="  1,427, 31, 25" id="PB1" type="io,int,sck" enabled="false" other="Flash" />
@@ -128,7 +128,7 @@
 	    <pin rect="  1,352, 31, 25" id="PB7" type="io,int,pwm" />
 	    <pin rect=" 32,352, 31, 25" id="PB6" type="io,int,pwm" />
 	    <pin rect="  1,377, 31, 25" id="PB5" type="io,int,pwm" />
-	    <pin rect=" 32,377, 31, 25" id="PB4" type="io,int,pwm" />
+	    <pin rect=" 32,377, 31, 25" id="PB4" type="io,int" />
 	    <pin rect="  1,402, 31, 25" id="PB3" type="io,int,miso" />
 	    <pin rect=" 32,402, 31, 25" id="PB2" type="io,int,mosi" />
 	    <pin rect="  1,427, 31, 25" id="PB1" type="io,int,sck" />
@@ -225,7 +225,7 @@
 	    <pin rect=" -59,270, 31, 25" id="PB7" type="io,int,pwm"  other="Joystick"/>
 	    <pin rect=" -59,295, 31, 25" id="PB6" type="io,int,pwm"  other="Joystick"/>
 	    <pin rect=" -90,270, 31, 25" id="PB5" type="io,int,pwm"  other="Joystick"/>
-	    <pin rect=" -90,295, 31, 25" id="PB4" type="io,int,pwm" />
+	    <pin rect=" -90,295, 31, 25" id="PB4" type="io,int" />
 	    <pin rect="-121,270, 31, 25" id="PB3" type="io,int,miso" other="Flash" />
 	    <pin rect="-121,295, 31, 25" id="PB2" type="io,int,mosi" other="Flash" />
 	    <pin rect="-152,270, 31, 25" id="PB1" type="io,int,sck" other="Flash" />
@@ -323,7 +323,7 @@
 	    <pin rect=" -97,272, 31, 25" id="PB7" type="io,int,pwm" other="Joystick"/>
 	    <pin rect=" -66,272, 31, 25" id="PB6" type="io,int,pwm" other="Joystick"/>
 	    <pin rect=" -35,272, 31, 25" id="PB5" type="io,int,pwm" other="Joystick"/>
-	    <pin rect="  -4,272, 31, 25" id="PB4" type="io,int,pwm" />
+	    <pin rect="  -4,272, 31, 25" id="PB4" type="io,int" />
 	    <pin rect="  27,272, 31, 25" id="PB3" type="io,int,miso" other="Flash" />
 	    <pin rect="  58,272, 31, 25" id="PB2" type="io,int,mosi" other="Flash" />
 	    <pin rect="  89,272, 31, 25" id="PB1" type="io,int,sck" other="Flash" />
@@ -430,7 +430,7 @@
 	    <pin rect="  0, 18, 24, 18" id="PB1" type="io,int,sck" />
 	    <pin rect="  0, 36, 24, 18" id="PB2" type="io,int,mosi" />
 	    <pin rect="  0, 54, 24, 18" id="PB3" type="io,int,miso" />
-	    <pin rect="  0, 72, 24, 18" id="PB4" type="io,int,pwm" />
+	    <pin rect="  0, 72, 24, 18" id="PB4" type="io,int" />
 	    <pin rect="  0, 90, 24, 18" id="PB5" type="io,int,pwm" />
 	    <pin rect="  0,108, 24, 18" id="PB6" type="io,int,pwm" />
 	    <pin rect="  0,126, 24, 18" id="PB7" type="io,int,pwm" />
@@ -513,7 +513,7 @@
 	    <pin rect="185, 46, 24, 22" id="Vcc" type="" enabled="false" />
 	    <pin rect="185, 68, 24, 22" id="PB6" type="io,int,pwm" />
 	    <pin rect="185, 90, 24, 22" id="PB5" type="io,int,pwm" />
-	    <pin rect="185,112, 24, 22" id="PB4" type="io,int,pwm" />
+	    <pin rect="185,112, 24, 22" id="PB4" type="io,int" />
 	    <pin rect="185,134, 24, 22" id="PB3" type="io,int,miso" />
 	    <pin rect="185,156, 24, 22" id="PB2" type="io,int,mosi" />
 	    <pin rect="185,178, 24, 22" id="PB1" type="io,int,sck" />

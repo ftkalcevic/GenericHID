@@ -89,7 +89,6 @@ ByteArray ControlPWM::GetControlConfig( byte nReportId ) const
     PB5	    OC.1A
     PB6	    OC.1B
     PB7	    OC.1C
-    PB4	    OC.2A
     PD1	    OC.2B
     PC4	    OC.3C
     PC5	    OC.3B

@@ -62,8 +62,7 @@ void ShapePWM::UpdateTimerDetails( PinItem *pMCUPin, QList<PropertyValue *> &val
     // Need to read the properties
     QString sPinName = pMCUPin->pin()->id();
     int nTimer;
-    if ( sPinName.compare( "PB4", Qt::CaseInsensitive ) == 0 ||
-	 sPinName.compare( "PD1", Qt::CaseInsensitive ) == 0 )
+    if ( sPinName.compare( "PD1", Qt::CaseInsensitive ) == 0 )
 	 nTimer = 2;
     else if ( sPinName.compare( "PB5", Qt::CaseInsensitive ) == 0 ||
 	      sPinName.compare( "PB6", Qt::CaseInsensitive ) == 0 ||
