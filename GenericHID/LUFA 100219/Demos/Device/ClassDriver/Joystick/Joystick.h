@@ -36,7 +36,6 @@ Released under the GPL Licence, Version 3
 #include "Descriptors.h"
 
 #include <LUFA/Drivers/USB/USB.h>            // USB Functionality
-#include <LUFA/Scheduler/Scheduler.h>        // Simple scheduler for task management
 #include "USBKey_Bicolour.h"
 
 /* Task Definitions: */
