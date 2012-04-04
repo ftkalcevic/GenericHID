@@ -54,9 +54,9 @@ bool ShapeDirectionalSwitch::Verify( QString &sErrors, const QList<class PinItem
 }
 
 
-void ShapeDirectionalSwitch::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &, const QList<PropertyValue *> &values  ) const
+void ShapeDirectionalSwitch::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> &pins, const QList<PropertyValue *> &values  ) const
 {
-    QString sDirections = GetPropertyValueEnum("sDirections",values,"");
+    QString sDirections = GetPropertyValueEnum("Directions",values,"");
 
     MakeDirectionalSwitchControl( elem, 
 				  GetPropertyValueString("Name",values,""), 
@@ -65,12 +65,12 @@ void ShapeDirectionalSwitch::MakeControlsXML( QDomElement &elem, const QList<cla
 				  GetPropertyValueBool("Pullup",values,true),
 				  GetPropertyValueBool("Debounce",values,true),
 				  sDirections,
-				  GetPropertyValueString("N",values,""),
-				  GetPropertyValueString("S",values,""),
-				  GetPropertyValueString("E",values,""),
-				  GetPropertyValueString("W",values,""),
-				  GetPropertyValueString("NE",values,""),
-				  GetPropertyValueString("NW",values,""),
-				  GetPropertyValueString("SE",values,""),
-				  GetPropertyValueString("SW",values,"") );
+				  GetPort(pins,"N"),
+				  GetPort(pins,"S"),
+				  GetPort(pins,"E"),
+				  GetPort(pins,"W"),
+				  GetPort(pins,"NE"),
+				  GetPort(pins,"NW"),
+				  GetPort(pins,"SE"),
+				  GetPort(pins,"SW") );
 }

@@ -24,7 +24,7 @@
 #endif
 
 #define VERSION_MAJOR	    1
-#define VERSION_MINOR	    2
+#define VERSION_MINOR	    3
 
 #define FRANKSWORKSHOP_VID	    0x1C40
 #define GENERICHID_PID		    0x04D9

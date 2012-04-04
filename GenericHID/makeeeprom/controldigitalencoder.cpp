@@ -39,6 +39,15 @@ bool ControlDigitalEncoder::Load( const QDomElement &elem, QString *sError )
 	return false;
     if ( !XMLUtility::getAttributeUShort( elem, "Usage", m_nUsage, 0, 0xFFFF, sError ) )
 	return false;
+    if ( !XMLUtility::getAttributeBool( elem, "Pullup", m_bPullup, sError ) )
+	return false;
+    QString sOutput;
+    if ( !XMLUtility::getAttributeString( elem, "Output", sOutput, sError ) )
+	return false;
+    if ( sOutput == "Absolute" )
+	m_bAbsoluteOutput = true;
+    else
+	m_bAbsoluteOutput = false;
     return true;
 }
 
@@ -49,14 +58,25 @@ ByteArray ControlDigitalEncoder::GetHIDReportDescriptor( StringTable &table, int
 
     Desc.UsagePage(m_nUsagePage);
     Desc.Usage(m_nUsage);
-    Desc.LogicalMinimum(0);
-    Desc.LogicalMaximum((1<<m_nBits)-1);
+    if ( m_bAbsoluteOutput )
+    {
+        Desc.LogicalMinimum(0);
+        Desc.LogicalMaximum((1<<m_nBits)-1);
+    }
+    else
+    {
+        Desc.LogicalMinimum(-((1<<(m_nBits-1))-1));
+        Desc.LogicalMaximum((1<<(m_nBits-1)));
+    }
     Desc.ReportSize(m_nBits);
     Desc.ReportCount(1);
     nBits += m_nBits;
     if (!m_sName.isEmpty())
         Desc.StringIndex(table[m_sName]);
-    Desc.Input(EDataType::Data, EVarType::Variable, ERelType::Relative, EWrapType::Wrap, ELinearType::Linear, EPreferedType::NoPreferred, ENullPositionType::NoNullPosition, EBufferType::BitField);
+    if ( m_bAbsoluteOutput )
+        Desc.Input(EDataType::Data, EVarType::Variable, ERelType::Absolute, EWrapType::Wrap, ELinearType::Linear, EPreferedType::NoPreferred, ENullPositionType::NoNullPosition, EBufferType::BitField);
+    else
+        Desc.Input(EDataType::Data, EVarType::Variable, ERelType::Relative, EWrapType::NoWrap, ELinearType::Linear, EPreferedType::NoPreferred, ENullPositionType::NoNullPosition, EBufferType::BitField);
 
     return Desc;
 }
@@ -73,6 +93,8 @@ ByteArray ControlDigitalEncoder::GetControlConfig( byte nReportId ) const
     config.PortA = (byte)m_nPortA;
     config.PortB = (byte)m_nPortB;
     config.Bits = (byte)m_nBits;
+    config.Options = (m_bAbsoluteOutput ? (1<<DE_ABSOLUTE) : 0) |
+                     (m_bPullup ? (1<<DE_PULLUP) : 0 );
 
     return ByteBuffer((byte *)&config, sizeof(config) );
 }

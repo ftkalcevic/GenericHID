@@ -35,6 +35,9 @@ void ShapeDigitalEncoder::MakeControlsXML( QDomElement &elem, const QList<class 
 			       GetPropertyValueUsage("Usage",values,1),
 			       GetPort( pins, "A"),
 			       GetPort( pins, "B"),
-			       GetPropertyValueInt("Bits",values,8) );
+			       GetPropertyValueInt("Bits",values,8),
+				   GetPropertyValueEnum( "Output", values, "Absolute" ),
+				   GetPropertyValueBool( "Pullup", values, false )
+				   );
 
 }

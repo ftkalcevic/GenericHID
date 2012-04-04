@@ -155,14 +155,32 @@ ByteArray ControlLCD::GetHIDReportDescriptor( StringTable &table, byte &nReportI
     Desc.Output(EDataType::Data, EVarType::Variable, ERelType::Absolute, EWrapType::NoWrap, ELinearType::Linear, EPreferedType::NoPreferred, ENullPositionType::NoNullPosition, EVolatileType::NonVolatile, EBufferType::Buffered );	//Font data
     Desc.EndCollection();
 
+    // Cursor position report
+    Desc.ReportID(nReportId+LCD_CURSOR_POSITION_REPORT_ID);
+    Desc.Usage(USAGE_CURSOR_POSITION_REPORT);
+    Desc.Collection(CollectionType::Logical);
+    Desc.LogicalMinimum(0);
+    Desc.LogicalMaximum(1);
+    Desc.ReportSize(1);
+    Desc.ReportCount(1);
+    Desc.Usage(USAGE_CURSOR_ENABLE);
+    Desc.Output(EDataType::Data, EVarType::Variable, ERelType::Absolute, EWrapType::NoWrap, ELinearType::Linear, EPreferedType::NoPreferred, ENullPositionType::NoNullPosition, EVolatileType::NonVolatile, EBufferType::BitField );
+    Desc.Usage(USAGE_CURSOR_BLINK);
+    Desc.Output(EDataType::Data, EVarType::Variable, ERelType::Absolute, EWrapType::NoWrap, ELinearType::Linear, EPreferedType::NoPreferred, ENullPositionType::NoNullPosition, EVolatileType::NonVolatile, EBufferType::BitField );
+    Desc.ReportSize(6);
+    Desc.ReportCount(1);
+    Desc.Output(EDataType::Constant, EVarType::Variable, ERelType::Absolute, EWrapType::NoWrap, ELinearType::Linear, EPreferedType::NoPreferred, ENullPositionType::NoNullPosition, EVolatileType::NonVolatile, EBufferType::BitField);
+    Desc.EndCollection();
+
     Desc.EndCollection();
 
     byte nLength = (byte)((nBits + 7) / 8);
     OutputReportLength[nReportId+LCD_DISPLAY_REPORT_ID-1] = nLength;
     OutputReportLength[nReportId+LCD_FONT_REPORT_ID-1] = 6;
+    OutputReportLength[nReportId+LCD_CURSOR_POSITION_REPORT_ID-1] = 1;
     nMaxOutReportLen = MAX( nMaxOutReportLen, nLength );
     nMaxOutReportLen = MAX( nMaxOutReportLen, 6 );
-    nReportId += 2;
+    nReportId += 3;
 
     return Desc;
 }
@@ -175,7 +193,7 @@ ByteArray ControlLCD::GetControlConfig( byte nReportId ) const
 
     config.hdr.Type = LCD;
     config.hdr.ReportId = nReportId;
-    config.hdr.ReportIdMax = nReportId + LCD_FONT_REPORT_ID;
+    config.hdr.ReportIdMax = nReportId + LCD_CURSOR_POSITION_REPORT_ID;
     config.hdr.Length = sizeof(config);
     config.nRows = m_nRows;
     config.nColumns = m_nCols;

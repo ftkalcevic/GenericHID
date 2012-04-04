@@ -419,7 +419,7 @@ void Shape::MakeTricolourLEDControl( QDomElement &elem, const QString &sName, un
 }
 
 
-void Shape::MakeDigitalEncoderControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, const QString &sPortA, const QString &sPortB, int nBits ) const
+void Shape::MakeDigitalEncoderControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, const QString &sPortA, const QString &sPortB, int nBits, const QString &sOutput, bool bPullup ) const
 {
     QDomElement node = elem.ownerDocument().createElement( "DigitalEncoder" );
     elem.appendChild( node );
@@ -430,6 +430,8 @@ void Shape::MakeDigitalEncoderControl( QDomElement &elem, const QString &sName, 
     XMLUtility::setAttribute( node, "PortA", sPortA );
     XMLUtility::setAttribute( node, "PortB", sPortB );
     XMLUtility::setAttribute( node, "Bits", nBits );
+    XMLUtility::setAttribute( node, "Output", sOutput );
+    XMLUtility::setAttribute( node, "Pullup", bPullup );
 }
 
 void Shape::MakeKeyMatrixControl( QDomElement &elem, const QString &sNames, unsigned short nUsagePage, unsigned short nUsageMin, bool bDebounce, const QStringList &rows, const QStringList &cols  ) const

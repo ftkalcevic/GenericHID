@@ -38,6 +38,8 @@ private:
     ushort m_nUsagePage;
     ushort m_nUsage;
     unsigned int m_nBits;
+    bool m_bAbsoluteOutput;
+    bool m_bPullup;
 };
 
 #endif

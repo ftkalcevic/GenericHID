@@ -157,7 +157,6 @@ bool ShapeMCU::Verify( QString &sErrors, const QList<class PinItem *> &pins, con
 	}
     }
 
-
     return bSuccess;
 }
 
@@ -191,6 +190,7 @@ void ShapeMCU::MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sP
     XMLUtility::setAttribute( configNode, "Timer1", GetPropertyValueString("Timer1",values,false) );
     XMLUtility::setAttribute( configNode, "Timer2", GetPropertyValueString("Timer2",values,false) );
     XMLUtility::setAttribute( configNode, "Timer3", GetPropertyValueString("Timer3",values,false) );
+    XMLUtility::setAttribute( configNode, "EnableJTAG", GetPropertyValueBool("EnableJTAG",values,false) );
 }
 
 

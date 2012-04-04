@@ -127,6 +127,8 @@ bool ConfigurationConfig::Load( const QDomElement &elem, QString *sError )
 	return false;
     if ( !XMLUtility::getAttributeBool( elem, "HIDDebug", m_bHIDDebug, sError ) )
 	return false;
+    if ( !XMLUtility::getAttributeBool( elem, "EnableJTAG", m_bEnableJTAG, sError ) )
+	return false;
     if ( !XMLUtility::getAttributeUShort( elem, "UsagePage", m_nUsagePage, 0, 0xFFFF, sError ) )
 	return false;
     if ( !XMLUtility::getAttributeUShort( elem, "Usage", m_nUsage, 0, 0xFFFF, sError ) )

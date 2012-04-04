@@ -33,8 +33,10 @@ public:
 
 private slots:
     void onClearPressed();
+    void onCursorToggle(bool);
     void onLCDClear();
     void onLCDWrite(int nRow,int nCol,const QString &s);
+    void onLCDCursor(bool,bool);
 
 private:
     void getLCDAttributes( int &nRows, int &nCols );
@@ -44,6 +46,8 @@ private:
     HIDDevice *m_pDevice;
     HID_CollectionPath_t *m_pCol;
     HIDLCDDevice m_LCDDevice;
+    QCheckBox *m_chkCursor;
+    QCheckBox *m_chkCursorBlink;
 };
 
 #endif // TESTOUTPUTLCD_H

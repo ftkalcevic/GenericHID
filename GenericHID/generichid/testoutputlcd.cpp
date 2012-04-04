@@ -26,6 +26,8 @@ TestOutputLCD::TestOutputLCD( HIDDevice *pDevice, HID_CollectionPath_t *pCollect
 , m_pDevice( pDevice )
 , m_pCol( pCollection )
 , m_LCDDevice( pDevice, pCollection )
+, m_chkCursor( NULL )
+, m_chkCursorBlink( NULL )
 {
     QHBoxLayout *layout2 = new QHBoxLayout();
     m_pLCD = new LCDWidget();
@@ -42,12 +44,18 @@ TestOutputLCD::TestOutputLCD( HIDDevice *pDevice, HID_CollectionPath_t *pCollect
     QLabel *label = new QLabel(sName);
     QPushButton *button = new QPushButton( "Clear" );
     QLabel * lblSize = new QLabel( QString("%1x%2").arg(m_LCDDevice.rows()).arg(m_LCDDevice.columns()) );
-    
+    m_chkCursor = new QCheckBox("Cursor");
+    m_chkCursorBlink = new QCheckBox("Blink");
+
     layout2->addWidget( label );
     layout2->addWidget( button );
+    layout2->addWidget( m_chkCursor );
+    layout2->addWidget( m_chkCursorBlink );
     layout2->addSpacerItem( new QSpacerItem( 0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
     layout2->addWidget( lblSize );
     connect( button, SIGNAL(pressed()), this, SLOT(onClearPressed()) );
+    connect( m_chkCursor, SIGNAL(toggled(bool)), this, SLOT(onCursorToggle(bool)));
+    connect( m_chkCursorBlink, SIGNAL(toggled(bool)), this, SLOT(onCursorToggle(bool)));
 
     QVBoxLayout *layout = new QVBoxLayout();
     layout->addLayout( layout2 );
@@ -55,6 +63,7 @@ TestOutputLCD::TestOutputLCD( HIDDevice *pDevice, HID_CollectionPath_t *pCollect
 
     connect( m_pLCD, SIGNAL(clear()), this, SLOT(onLCDClear()) );
     connect( m_pLCD, SIGNAL(write(int,int,const QString &)), this, SLOT(onLCDWrite(int,int,const QString &)) );
+    connect( m_pLCD, SIGNAL(cursor(bool,bool)), this, SLOT(onLCDCursor(bool,bool)) );
 
     setLayout( layout );
 }
@@ -70,6 +79,11 @@ void TestOutputLCD::onClearPressed()
     m_pLCD->Clear();
 }
 
+void TestOutputLCD::onCursorToggle(bool)
+{
+    m_pLCD->SetCursor( m_chkCursor->isChecked(),
+                       m_chkCursorBlink->isChecked() );
+}
 
 void TestOutputLCD::onLCDClear()
 {
@@ -82,4 +96,10 @@ void TestOutputLCD::onLCDWrite(int nRow,int nCol,const QString &s)
 {
     m_LCDDevice.LCDWrite(nRow,nCol,s);
 }
+
+void TestOutputLCD::onLCDCursor( bool bEnable, bool bBlink )
+{
+    m_LCDDevice.LCDSetCursor(bEnable, bBlink);
+}
+
 

@@ -51,6 +51,7 @@ public:
     byte powerPort() const { return m_nPowerPort; }
     byte interval() const { return m_nInterval; }
     const struct TimerConfig *timers() const { return m_Timers; }
+    bool enableJTAG() const { return m_bEnableJTAG; }
 
 private:
     bool m_bBusPowered;
@@ -65,6 +66,7 @@ private:
     byte m_nPowerPort;
     byte m_nInterval;
     struct TimerConfig m_Timers[MAX_TIMERS];
+    bool m_bEnableJTAG;
 };
 
 #endif

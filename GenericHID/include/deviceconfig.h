@@ -66,7 +66,6 @@ enum PortIDs
     PortF,
 };
 
-
 struct SAnalogEncoderControl
 {
     struct SControlHeader hdr;
@@ -77,7 +76,6 @@ struct SAnalogEncoderControl
 	#define AE_PULLUPB     1
 	#define AE_DEBOUNCE    2
 };
-
 
 struct SBicolourLEDControl
 {
@@ -99,6 +97,9 @@ struct SDigitalEncoderControl
     byte PortA;
     byte PortB;
     byte Bits;
+    byte Options;
+	#define DE_PULLUP      0
+	#define DE_ABSOLUTE    1
     byte Index;	// Working data.
 };
 
@@ -299,6 +300,7 @@ struct SApplicationHeader
 	#define	DEVICE_OPTION_USE_USBKEY_LEDS	(DEVICE_OPTION_USE_USBKEY_LED1|DEVICE_OPTION_USE_USBKEY_LED2)
 	#define DEVICE_OPTION_HID_DEBUG		0x08
 	#define DEVICE_OPTION_5V		0x10
+	#define DEVICE_OPTION_ENABLE_JTAG	0x20
     byte nDebugLevel;
     struct TimerConfig timers[MAX_TIMERS];
     byte OutputReportLength[MAX_REPORTS];
@@ -311,6 +313,7 @@ struct SApplicationHeader
     #define LCD_ATTRIBUTE_REPORT_ID 0
     #define LCD_DISPLAY_REPORT_ID 0
     #define LCD_FONT_REPORT_ID 1
+    #define LCD_CURSOR_POSITION_REPORT_ID 2
     #define LCDSPI_ATTRIBUTE_REPORT_ID 0
     #define LCDSPI_DISPLAY_REPORT_ID 0
     #define LCDSPI_DISPLAY_CONTROL_REPORT_ID 1
