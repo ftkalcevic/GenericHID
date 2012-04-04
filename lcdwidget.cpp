@@ -29,6 +29,9 @@ LCDWidget::LCDWidget(QWidget *parent)
     , m_nRows( 4 )  // some default
     , m_nCols( 20 ) // some default
     , m_bReadOnly( false )
+    , m_bCursorEnable( false )
+    , m_bCursorBlink( false )
+    , m_bBlinkOn(false)
 {
     m_bkgBrush = QBrush(QColor(134, 154, 58));
     if ( m_chars.isEmpty() )
@@ -137,6 +140,11 @@ LCDWidget::LCDWidget(QWidget *parent)
     setFocusPolicy( Qt::StrongFocus );
     m_cursorPosRow = 0;
     m_cursorPosCol = 0;
+
+    m_cursorTimer = new QTimer(this);
+    m_cursorTimer->stop();
+    m_cursorTimer->setInterval( 500 );  // Blink twice a second
+    connect( m_cursorTimer, SIGNAL(timeout()), this, SLOT(onCursorTimer()) );
 }       
         
 LCDWidget::~LCDWidget()
@@ -163,9 +171,19 @@ void LCDWidget::paintEvent( QPaintEvent *  )
     p2.setRenderHint( QPainter::SmoothPixmapTransform, true );
     p2.drawImage( QPoint(0,0), img );
 
-    if ( !m_bReadOnly )
+    if ( m_bCursorBlink && m_bBlinkOn )
     {
 	QRectF rcCursorCell( CellQRect(m_cursorPosRow, m_cursorPosCol) );
+	QTransform transform;
+	double scale = (double)img.width() / (double)m_imgLCD.width();
+	transform.scale( scale, scale );
+	rcCursorCell = transform.mapRect( rcCursorCell );
+	p2.fillRect( rcCursorCell, Qt::black );
+    }
+    else if ( m_bCursorEnable )
+    {
+	QRectF rcCursorCell( CellQRect(m_cursorPosRow, m_cursorPosCol) );
+        rcCursorCell.setTop( rcCursorCell.bottom() - rcCursorCell.height()/7 );
 	QTransform transform;
 	double scale = (double)img.width() / (double)m_imgLCD.width();
 	transform.scale( scale, scale );
@@ -217,6 +235,17 @@ void LCDWidget::Write( int nRow, int nCol, const QString &str, bool bHighlight )
     }
     InvalidateCells( nRow, nCol, s.length() );
     emit write( nRow, nCol, s );
+}
+
+void LCDWidget::SetCursor( bool bEnable, bool bBlink )
+{
+    m_bCursorEnable = bEnable;
+    m_bCursorBlink = bBlink;
+    if ( m_bCursorBlink )
+        m_cursorTimer->start();
+    else
+        m_cursorTimer->stop();
+    emit cursor( bEnable, bBlink );
 }
 
 void LCDWidget::Erase( int nRow, int nCol, int nLen )
@@ -360,3 +389,10 @@ void LCDWidget::SetUserFont( byte index, const QVector<byte> &data )
     m_chars[index] = new LCDChar( char_data[0], char_data[1], char_data[2], char_data[3], char_data[4] );
     m_chars[index|0x8] = new LCDChar( char_data[0], char_data[1], char_data[2], char_data[3], char_data[4] );
 }
+
+void LCDWidget::onCursorTimer()
+{
+    m_bBlinkOn = !m_bBlinkOn;
+    InvalidateCells( m_cursorPosRow, m_cursorPosCol, 1 );
+}
+

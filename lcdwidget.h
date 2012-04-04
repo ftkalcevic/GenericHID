@@ -19,6 +19,7 @@
 
 #include <QWidget>
 #include <QPainter>
+#include <QTimer>
 #include "lcdchar.h"
 #include "datatypes.h"
 
@@ -35,10 +36,15 @@ public:
     void setSize( int nRows, int nCols );
     void SetUserFont( byte index, const QVector<byte> &data );
     void setReadOnly( bool bReadOnly) { m_bReadOnly = bReadOnly; }
+    void SetCursor( bool bEnable, bool bBlink );
 
 signals:
     void write( int nRow, int nCol, const QString &s );
+    void cursor( bool bEnable, bool bBlink );
     void clear();
+
+public slots:
+    void onCursorTimer();
 
 private:
     virtual void paintEvent( QPaintEvent * evnt );
@@ -60,6 +66,10 @@ private:
     int m_cursorPosRow;
     int m_cursorPosCol;
     bool m_bReadOnly;
+    bool m_bCursorEnable;
+    bool m_bCursorBlink;
+    bool m_bBlinkOn;
+    QTimer *m_cursorTimer;
 };
 
 #endif // LCDWIDGET_H
