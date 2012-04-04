@@ -402,6 +402,8 @@ private:
     #define USAGE_RECT_Y			    (USAGE_VENDOR_DEFINED+6)
     #define USAGE_RECT_WIDTH			    (USAGE_VENDOR_DEFINED+7)
     #define USAGE_RECT_HEIGHT			    (USAGE_VENDOR_DEFINED+8)
+    #define USAGE_FUNCTION_SET_REPORT		    (USAGE_VENDOR_DEFINED+9)
+    #define USAGE_FUNCTION_SET			    (USAGE_VENDOR_DEFINED+10)
 #define USAGEPAGE_MEDICAL_INSTRUMENTS               0x40
 #define USAGEPAGE_MONITOR_PAGES                     0x83
 #define USAGEPAGE_POWER_PAGES                       0x87
