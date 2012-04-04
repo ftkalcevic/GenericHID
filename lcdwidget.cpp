@@ -245,7 +245,12 @@ void LCDWidget::SetCursor( bool bEnable, bool bBlink )
         m_cursorTimer->start();
     else
         m_cursorTimer->stop();
-    emit cursor( bEnable, bBlink );
+    MoveCursor();
+}
+
+void LCDWidget::MoveCursor()
+{
+    emit cursor( m_cursorPosRow, m_cursorPosCol, m_bCursorEnable, m_bCursorBlink );
 }
 
 void LCDWidget::Erase( int nRow, int nCol, int nLen )
@@ -300,6 +305,7 @@ void LCDWidget::keyPressEvent( QKeyEvent * event )
 	case Qt::Key_Home:
 	    m_cursorPosCol = 0;
 	    m_cursorPosRow = 0;
+            MoveCursor();
 	    event->accept();
 	    break;
 	case Qt::Key_Backspace:
@@ -308,12 +314,14 @@ void LCDWidget::keyPressEvent( QKeyEvent * event )
 	    m_cursorPosCol--;
 	    if ( m_cursorPosCol < 0 )
 		m_cursorPosCol = m_nCols - 1;
+            MoveCursor();
 	    event->accept();
 	    break;
 	case Qt::Key_Up:
 	    m_cursorPosRow--;
 	    if ( m_cursorPosRow < 0 )
 		m_cursorPosRow = m_nRows - 1;
+            MoveCursor();
 	    event->accept();
 	    break;
 	case Qt::Key_Delete:
@@ -322,6 +330,7 @@ void LCDWidget::keyPressEvent( QKeyEvent * event )
 	    m_cursorPosCol++;
 	    if ( m_cursorPosCol >= m_nCols )
 		m_cursorPosCol = 0;
+            MoveCursor();
 	    event->accept();
 	    break;
 	case Qt::Key_Return:
@@ -331,6 +340,7 @@ void LCDWidget::keyPressEvent( QKeyEvent * event )
 	    m_cursorPosRow++;
 	    if ( m_cursorPosRow >= m_nRows )
 		m_cursorPosRow = 0;
+            MoveCursor();
 	    event->accept();
 	    break;
 	default:
@@ -396,3 +406,7 @@ void LCDWidget::onCursorTimer()
     InvalidateCells( m_cursorPosRow, m_cursorPosCol, 1 );
 }
 
+void LCDWidget::LCDFunctionSet( int n )
+{
+    emit functionSet(n);
+}

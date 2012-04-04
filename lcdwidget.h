@@ -37,11 +37,13 @@ public:
     void SetUserFont( byte index, const QVector<byte> &data );
     void setReadOnly( bool bReadOnly) { m_bReadOnly = bReadOnly; }
     void SetCursor( bool bEnable, bool bBlink );
+    void LCDFunctionSet( int n );
 
 signals:
     void write( int nRow, int nCol, const QString &s );
-    void cursor( bool bEnable, bool bBlink );
+    void cursor( int nRow, int nCol, bool bEnable, bool bBlink );
     void clear();
+    void functionSet(int n);
 
 public slots:
     void onCursorTimer();
@@ -52,6 +54,7 @@ private:
     virtual int heightForWidth ( int w ) const;
     virtual QSize sizeHint() const;
     virtual void keyPressEvent( QKeyEvent * event );
+    void MoveCursor();
 
     void InvalidateCells( int nRow, int nCol, int n );
     QRect CellQRect( int nRow, int nCol );
