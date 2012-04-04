@@ -34,9 +34,11 @@ public:
 private slots:
     void onClearPressed();
     void onCursorToggle(bool);
+    void onFunctionSetEdited(const QString &);
     void onLCDClear();
     void onLCDWrite(int nRow,int nCol,const QString &s);
-    void onLCDCursor(bool,bool);
+    void onLCDCursor(int nRow, int nCol, bool bCursor, bool bBlink );
+    void onLCDFunctionSet(int);
 
 private:
     void getLCDAttributes( int &nRows, int &nCols );

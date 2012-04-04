@@ -37,6 +37,7 @@ private:
     byte m_nRows;
     byte m_nCols;
     bool m_b8Bit;
+    byte m_nFunctionSet;
     byte m_nPortRS;
     byte m_nPortRW;
     byte m_nPortE;

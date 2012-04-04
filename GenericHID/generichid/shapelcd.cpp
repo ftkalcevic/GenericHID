@@ -58,6 +58,7 @@ void ShapeLCD::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> 
 		    GetPropertyValueInt("Rows",values,0),
 		    GetPropertyValueInt("Columns",values,0),
 		    GetPropertyValueBool("8 Bit",values,0),
+		    GetPropertyValueInt("FunctionSet",values,0),
 		    GetPort(pins, "RS"),
 		    GetPort(pins, "R/W"),
 		    GetPort(pins, "E"),

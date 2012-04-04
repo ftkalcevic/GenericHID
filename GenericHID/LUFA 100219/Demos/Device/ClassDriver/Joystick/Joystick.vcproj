@@ -316,15 +316,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\..\LUFA\Drivers\USB\Class\Device\HID.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\..\LUFA\Drivers\USB\Class\Common\HID.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\..\..\LUFA\Drivers\USB\Class\HID.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\LUFA\Drivers\USB\Class\Device\HID.h"
 				>
 			</File>
 			<File
@@ -432,6 +432,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\buildall.bat"
+			>
+		</File>
 		<File
 			RelativePath=".\makefile.generic16"
 			>

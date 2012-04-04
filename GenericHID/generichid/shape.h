@@ -94,7 +94,7 @@ public:
     void MakeDigitalEncoderControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, const QString &sPortA, const QString &sPortB, int nBits, const QString &sOutput, bool bPullup ) const;
     void MakeKeyMatrixControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsageMin, bool bDebounce, const QStringList &rows, const QStringList &cols  ) const;
     void MakeRotarySwitchControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, bool bPullUp, bool bDebounce, bool bEncoded, int nBits, const QStringList &outputs ) const;
-    void MakeLCDControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nRows, int nCols, bool b8Bit,
+    void MakeLCDControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nRows, int nCols, bool b8Bit, int nFunctionSet,
 			 const QString &sPortRS, const QString &sPortRW, const QString &sPortE, const QString &sPortD0, const QString &sPortD1, const QString &sPortD2,
 			 const QString &sPortD3, const QString &sPortD4, const QString &sPortD5, const QString &sPortD6, const QString &sPortD7, 
 			 int nAddrRow0, int nAddrRow1, int nAddrRow2, int nAddrRow3 ) const;

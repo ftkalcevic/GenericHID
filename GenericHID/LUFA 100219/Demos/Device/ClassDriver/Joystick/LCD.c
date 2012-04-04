@@ -168,10 +168,7 @@ static void Init8Bit(struct SLCDControl *pData)
     _delay_us( CPU_CLK, 100 );			// wait 100us
     WriteLCDData( pData, Instr, 0x30 );		// set interface to 8 bits
 
-    if ( pData->nRows > 1 )
-	WriteLCDData( pData, Instr, 0x38 );	// Function set
-    else
-	WriteLCDData( pData, Instr, 0x30 );	// Function set
+    WriteLCDData( pData, Instr, 0x30 | ((pData->nRows > 1) ? 0x8 : 0) | pData->nFunctionSet );	// Function set
 
     WriteLCDData( pData, Instr, 0x08 );		// Display Off
     WriteLCDData( pData, Instr, 0x01 );		// Display Clear
@@ -192,10 +189,7 @@ static void Init4Bit(struct SLCDControl *pData)
     WriteLCDData4( pData, Instr, 0x3 );		// set interface to 4 bits
     WriteLCDData4( pData, Instr, 0x2 );		// set interface to 4 bits
 
-    if ( pData->nRows > 1 )
-	WriteLCDData( pData, Instr, 0x28 );		// Function set
-    else
-	WriteLCDData( pData, Instr, 0x20 );		// Function set
+    WriteLCDData( pData, Instr, 0x20 | ((pData->nRows > 1) ? 0x8 : 0) | pData->nFunctionSet );	// Function set
 
     WriteLCDData( pData, Instr, 0x08 );		// Display Off
     WriteLCDData( pData, Instr, 0x01 );		// Display Clear
@@ -298,14 +292,36 @@ static void LCD_Cursor( struct SLCDControl *pData, byte **ReportBuffer, byte *nB
 	UART1_SendCRLF();
     }
     
-    // [Enable][blink]
-    byte nEnabled = ReadPackData16( ReportBuffer, nBit, 1 );
+    // [column][row][cursor][blink]
+    byte nColumn = ReadPackData16( ReportBuffer, nBit, 8 );
+    byte nRow = ReadPackData16( ReportBuffer, nBit, 8 );
+    byte nCursor = ReadPackData16( ReportBuffer, nBit, 1 );
     byte nBlink = ReadPackData16( ReportBuffer, nBit, 1 );
+
+    byte nAddr = pData->RowAddr[nRow] + nColumn;
+    WriteLCDData( pData, Instr, 0x80 | nAddr );     // Set Cursor Addr
 
     WriteLCDData( pData, Instr, (1 << 3) |          // Display On/Off cmd
                                 (1 << 2) |          // Display On
-                                (nEnabled << 1) |   // Enable Cursor
+                                (nCursor << 1) |    // Cursor
                                 (nBlink << 0) );    // Blink
+}
+
+static void LCD_FunctionSet( struct SLCDControl *pData, byte **ReportBuffer, byte *nBit )
+{
+    if ( nSerialDebugLevel > 10 )
+    {
+	UART1_Send_P(PSTR("LCD FunctionSet Report"));
+	UART1_SendCRLF();
+    }
+    
+    // [row][column][Enable][blink]
+    byte nFunctionSet = ReadPackData16( ReportBuffer, nBit, 4 );
+    nFunctionSet &= 0x0F;
+
+    WriteLCDData( pData, Instr, (1 << 5) |                  // Function Set Cmd
+                                ((pData->b8Bit?1:0) << 4) | // 4/8Bit
+                                nFunctionSet );             // Function
 }
 
 void WriteLCD( struct SLCDControl *pData, byte nReportId, byte **ReportBuffer, byte *nBit )
@@ -316,6 +332,8 @@ void WriteLCD( struct SLCDControl *pData, byte nReportId, byte **ReportBuffer, b
 	LCD_Font( pData, ReportBuffer, nBit );
     else if ( nReportId == pData->hdr.ReportId + LCD_CURSOR_POSITION_REPORT_ID )
 	LCD_Cursor( pData, ReportBuffer, nBit );
+    else if ( nReportId == pData->hdr.ReportId + LCD_FUNCTION_SET_REPORT_ID )
+	LCD_FunctionSet( pData, ReportBuffer, nBit );
     else
     {
 	if ( nSerialDebugLevel > 0 )

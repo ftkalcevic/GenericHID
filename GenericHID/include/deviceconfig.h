@@ -155,6 +155,7 @@ struct SLCDControl
     byte nRows;
     byte nColumns;
     byte b8Bit;
+    byte nFunctionSet;
     byte nPortRS;
     byte nPortRW;
     byte nPortE;
@@ -314,6 +315,7 @@ struct SApplicationHeader
     #define LCD_DISPLAY_REPORT_ID 0
     #define LCD_FONT_REPORT_ID 1
     #define LCD_CURSOR_POSITION_REPORT_ID 2
+    #define LCD_FUNCTION_SET_REPORT_ID 3
     #define LCDSPI_ATTRIBUTE_REPORT_ID 0
     #define LCDSPI_DISPLAY_REPORT_ID 0
     #define LCDSPI_DISPLAY_CONTROL_REPORT_ID 1

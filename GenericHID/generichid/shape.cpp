@@ -504,7 +504,7 @@ void Shape::MakeRotarySwitchControl( QDomElement &elem, const QString &sName, un
     }
 }
 
-void Shape::MakeLCDControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nRows, int nCols, bool b8Bit,
+void Shape::MakeLCDControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nRows, int nCols, bool b8Bit, int nFunctionSet,
 			    const QString &sPortRS, const QString &sPortRW, const QString &sPortE, const QString &sPortD0, const QString &sPortD1, const QString &sPortD2,
 			    const QString &sPortD3, const QString &sPortD4, const QString &sPortD5, const QString &sPortD6, const QString &sPortD7, 
 			    int nAddrRow0, int nAddrRow1, int nAddrRow2, int nAddrRow3 ) const
@@ -518,6 +518,7 @@ void Shape::MakeLCDControl( QDomElement &elem, const QString &sName, unsigned sh
     XMLUtility::setAttribute( node, "Rows", nRows );
     XMLUtility::setAttribute( node, "Columns", nCols );
     XMLUtility::setAttribute( node, "Bus8Bit", b8Bit );
+    XMLUtility::setAttribute( node, "FunctionSet", nFunctionSet );
     XMLUtility::setAttribute( node, "PortRS", sPortRS);
     XMLUtility::setAttribute( node, "PortRW", sPortRW);
     XMLUtility::setAttribute( node, "PortE", sPortE);

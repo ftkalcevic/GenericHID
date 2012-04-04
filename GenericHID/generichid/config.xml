@@ -775,6 +775,7 @@
       <property name="Row3Address" description=":lcd.htm#Row3Address" type="int" min="0" max="255" default="20"/>
       <property name="Row4Address" description=":lcd.htm#Row4Address" type="int" min="0" max="255" default="84"/>
       <property name="Current" description=":lcd.htm#Current" type="int" min="0" max="500" default="300"/>
+      <property name="FunctionSet" description=":lcd.htm#FunctionSet" type="int" min="0" max="7" default="0"/>
     </Shape>
 
 

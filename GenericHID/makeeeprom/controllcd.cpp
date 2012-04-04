@@ -40,6 +40,8 @@ bool ControlLCD::Load( const QDomElement &elem, QString *sError )
 	return false;
     if ( !XMLUtility::getAttributeBool( elem, "Bus8Bit", m_b8Bit, sError ) )
 	return false;
+    if ( !XMLUtility::getAttributeByte( elem, "FunctionSet", m_nFunctionSet, 0, 7, sError ) )
+	return false;
     if ( !GetPort( elem, "PortRS", m_nPortRS, sError ) )
 	return false;
     if ( !GetPort( elem, "PortRW", m_nPortRW, sError ) )
@@ -159,6 +161,18 @@ ByteArray ControlLCD::GetHIDReportDescriptor( StringTable &table, byte &nReportI
     Desc.ReportID(nReportId+LCD_CURSOR_POSITION_REPORT_ID);
     Desc.Usage(USAGE_CURSOR_POSITION_REPORT);
     Desc.Collection(CollectionType::Logical);
+    Desc.Usage(USAGE_COLUMN);                       // column
+    Desc.LogicalMinimum(0);
+    Desc.LogicalMaximum(m_nCols-1);
+    Desc.ReportSize(8);
+    Desc.ReportCount(1);
+    Desc.Output(EDataType::Data, EVarType::Variable, ERelType::Absolute, EWrapType::NoWrap, ELinearType::Linear, EPreferedType::NoPreferred, ENullPositionType::NoNullPosition, EVolatileType::NonVolatile, EBufferType::BitField);
+    Desc.Usage(USAGE_ROW);                       // row
+    Desc.LogicalMinimum(0);
+    Desc.LogicalMaximum(m_nRows - 1);
+    Desc.ReportSize(8);
+    Desc.ReportCount(1);
+    Desc.Output(EDataType::Data, EVarType::Variable, ERelType::Absolute, EWrapType::NoWrap, ELinearType::Linear, EPreferedType::NoPreferred, ENullPositionType::NoNullPosition, EVolatileType::NonVolatile, EBufferType::BitField);
     Desc.LogicalMinimum(0);
     Desc.LogicalMaximum(1);
     Desc.ReportSize(1);
@@ -172,15 +186,32 @@ ByteArray ControlLCD::GetHIDReportDescriptor( StringTable &table, byte &nReportI
     Desc.Output(EDataType::Constant, EVarType::Variable, ERelType::Absolute, EWrapType::NoWrap, ELinearType::Linear, EPreferedType::NoPreferred, ENullPositionType::NoNullPosition, EVolatileType::NonVolatile, EBufferType::BitField);
     Desc.EndCollection();
 
+    // Function set
+    Desc.ReportID(nReportId+LCD_FUNCTION_SET_REPORT_ID);
+    Desc.Usage(USAGE_FUNCTION_SET_REPORT);
+    Desc.Collection(CollectionType::Logical);
+    Desc.Usage(USAGE_FUNCTION_SET);
+    Desc.LogicalMinimum(0);
+    Desc.LogicalMaximum(7);
+    Desc.ReportSize(3);
+    Desc.ReportCount(1);
+    Desc.Output(EDataType::Data, EVarType::Variable, ERelType::Absolute, EWrapType::NoWrap, ELinearType::Linear, EPreferedType::NoPreferred, ENullPositionType::NoNullPosition, EVolatileType::NonVolatile, EBufferType::BitField);
+    Desc.Usage(0);          // Padding
+    Desc.ReportSize(5);
+    Desc.ReportCount(1);
+    Desc.Output(EDataType::Constant, EVarType::Variable, ERelType::Absolute, EWrapType::NoWrap, ELinearType::Linear, EPreferedType::NoPreferred, ENullPositionType::NoNullPosition, EVolatileType::NonVolatile, EBufferType::BitField);
+    Desc.EndCollection();
+
     Desc.EndCollection();
 
     byte nLength = (byte)((nBits + 7) / 8);
     OutputReportLength[nReportId+LCD_DISPLAY_REPORT_ID-1] = nLength;
     OutputReportLength[nReportId+LCD_FONT_REPORT_ID-1] = 6;
-    OutputReportLength[nReportId+LCD_CURSOR_POSITION_REPORT_ID-1] = 1;
+    OutputReportLength[nReportId+LCD_CURSOR_POSITION_REPORT_ID-1] = 3;
+    OutputReportLength[nReportId+LCD_FUNCTION_SET_REPORT_ID-1] = 1;
     nMaxOutReportLen = MAX( nMaxOutReportLen, nLength );
     nMaxOutReportLen = MAX( nMaxOutReportLen, 6 );
-    nReportId += 3;
+    nReportId += 4;
 
     return Desc;
 }
@@ -193,11 +224,12 @@ ByteArray ControlLCD::GetControlConfig( byte nReportId ) const
 
     config.hdr.Type = LCD;
     config.hdr.ReportId = nReportId;
-    config.hdr.ReportIdMax = nReportId + LCD_CURSOR_POSITION_REPORT_ID;
+    config.hdr.ReportIdMax = nReportId + LCD_FUNCTION_SET_REPORT_ID;
     config.hdr.Length = sizeof(config);
     config.nRows = m_nRows;
     config.nColumns = m_nCols;
     config.b8Bit = m_b8Bit;
+    config.nFunctionSet = m_nFunctionSet;
     config.nPortRS = m_nPortRS;
     config.nPortRW = m_nPortRW;
     config.nPortE = m_nPortE;
