@@ -256,3 +256,56 @@ bool HIDLCDDevice::LCDSendUserFont( byte nCharIndex, const QVector<byte> &data )
 }
 
 
+bool HIDLCDDevice::LCDSetCursor(bool bEnable, bool bBlink)
+{
+    HID_ReportItem_t *pCursorEnable = m_pDevice->ReportInfo().FindReportItem( m_pLCDReportCol, REPORT_ITEM_TYPE_Out, USAGEPAGE_ALPHANUMERIC_DISPLAY, USAGE_CURSOR_POSITION_REPORT, USAGEPAGE_ALPHANUMERIC_DISPLAY, USAGE_CURSOR_ENABLE );
+    if ( pCursorEnable == NULL )
+    {
+	LOG_MSG( m_Logger, LogTypes::Error, "Failed to find USAGE_CURSOR_ENABLE in cursor report" );
+	return false;
+    }
+    HID_CollectionPath_t *pCollection = pCursorEnable->CollectionPath;
+    byte nReportId = pCursorEnable->ReportID;
+
+    // Iterate through the report and set the things we know.
+    unsigned int nIndex = 0;
+    for ( ; nIndex < pCollection->ReportItems.size(); nIndex++ )
+    {
+	if ( pCollection->ReportItems[nIndex]->Attributes.Usage == USAGE_CURSOR_ENABLE )
+        {
+            pCollection->ReportItems[nIndex]->Value = bEnable ? 1 : 0;
+        }
+	else if ( pCollection->ReportItems[nIndex]->Attributes.Usage == USAGE_CURSOR_BLINK )
+        {
+            pCollection->ReportItems[nIndex]->Value = bBlink ? 1 : 0;
+        }
+        else
+        {
+            pCollection->ReportItems[nIndex]->Value = 0;
+        }
+    }
+
+    HID_ReportDetails_t pReportDetails = m_pDevice->ReportInfo().Reports[nReportId];
+    int nBufLen = pReportDetails.OutReportLength;
+    int nOffset = 0;
+    if ( m_pDevice->ReportInfo().Reports.size() > 1 )
+	nOffset=1;
+
+    QVarLengthArray<byte> buf(nBufLen+nOffset);
+    if ( nOffset )
+	buf[0] = nReportId;
+
+    HIDParser parser;
+    parser.MakeOutputReport( buf.data() + nOffset, (byte)(buf.count() - nOffset), m_pDevice->ReportInfo().ReportItems, nReportId );
+
+    // Send the report
+    int nRet = m_pDevice->InterruptWrite( buf.data(), buf.count(), USB_TIMEOUT );
+    LOG_MSG( m_Logger, LogTypes::Debug, QString("interrupt write returned %1\n").arg(nRet) );
+
+    if ( nRet != buf.count() )
+    {
+	LOG_MSG( m_Logger, LogTypes::Error, QString("Failed to send cursor data packet.  Interrupt write returned %1, expected %2\n").arg(nRet).arg(buf.count()) );
+	return false;
+    }
+    return true;
+}
