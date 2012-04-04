@@ -41,7 +41,8 @@ public:
     bool Init();
     bool LCDWrite( int nRow, int nCol, QString sText );
     bool LCDSendUserFont( byte nCharIndex, const QVector<byte> &data );
-    bool LCDSetCursor(bool bEnable, bool bBlink);
+    bool LCDSetCursor(int nRow, int nCol, bool bEnable, bool bBlink);
+    bool LCDFunctionSet(int n);
 
     int rows() const { return m_nRows; }
     int columns() const { return m_nCols; }
