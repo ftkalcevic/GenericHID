@@ -24,8 +24,7 @@
 #include "Joystick.h"
 
 #include <string.h>
-// todo put this somewhere
-#include "D:\\Projects\\CNC\\PendantDisplay\\source\\display\\displaycommands.h"
+#include "../../../../../include/displaycommands.h"
 
 static bool bInitialised = false;			// first time through we need to initialise everything
 static byte nOldBrightness;

@@ -195,6 +195,18 @@ int main(void)
     LoadDynamicHIDData();
 
     pApplicationHdr = (struct SApplicationHeader *)(DynamicHIDData + (((struct SDynamicHID *)DynamicHIDData)->nApplicationDataOffset));
+
+    if ( !(pApplicationHdr->nOptions & DEVICE_OPTION_ENABLE_JTAG) )
+    {
+        // software disable of JTAG
+        // From http://code.google.com/p/micropendous/wiki/Micropendous3
+        // note the JTD bit must be written twice within 4 clock cycles to disable JTAG
+        // you must also set the IVSEL bit at the same time, which requires IVCE to be set first
+        // port pull-up resistors are enabled - PUD(Pull Up Disable) = 0
+        MCUCR = (1 << JTD) | (1 << IVCE) | (0 << PUD);
+        MCUCR = (1 << JTD) | (0 << IVSEL) | (0 << IVCE) | (0 << PUD);
+    }
+
     //byte bBusPowered = pApplicationHdr->nOptions & DEVICE_OPTION_BUS_POWERED;
     nUseStatusLEDs = pApplicationHdr->nOptions & DEVICE_OPTION_USE_USBKEY_LEDS;
     // not used yet byte bHIDDebug = pApplicationHdr->nOptions & DEVICE_OPTION_HID_DEBUG;

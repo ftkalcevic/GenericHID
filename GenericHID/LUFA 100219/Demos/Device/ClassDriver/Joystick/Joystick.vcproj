@@ -25,7 +25,7 @@
 				BuildCommandLine="make -f makefile.usbkey all"
 				ReBuildCommandLine=""
 				CleanCommandLine="make -f makefile.usbkey clean"
-				Output="usbkey.hex"
+				Output="..\..\..\..\..\bin\usbkey.hex"
 				PreprocessorDefinitions="WIN32;_DEBUG"
 				IncludeSearchPath=""
 				ForcedIncludes=""
@@ -45,7 +45,27 @@
 				BuildCommandLine="make -f makefile.teensypp2"
 				ReBuildCommandLine=""
 				CleanCommandLine="make -f makefile.teensypp2 clean"
-				Output="teensypp2.hex"
+				Output="..\bin\teensypp2.hex"
+				PreprocessorDefinitions="WIN32;_DEBUG"
+				IncludeSearchPath=""
+				ForcedIncludes=""
+				AssemblySearchPath=""
+				ForcedUsingAssemblies=""
+				CompileAsManaged=""
+			/>
+		</Configuration>
+		<Configuration
+			Name="Generic 16MHz|Win32"
+			OutputDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="0"
+			>
+			<Tool
+				Name="VCNMakeTool"
+				BuildCommandLine="make -f makefile.generic16 all"
+				ReBuildCommandLine=""
+				CleanCommandLine="make -f makefile.generic16 clean"
+				Output="..\bin\generic16.hex"
 				PreprocessorDefinitions="WIN32;_DEBUG"
 				IncludeSearchPath=""
 				ForcedIncludes=""
@@ -182,6 +202,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\..\include\displaycommands.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Joystick.h"
 				>
 			</File>
@@ -292,15 +316,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\LUFA\Drivers\USB\Class\Device\HID.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\LUFA\Drivers\USB\Class\Common\HID.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\..\..\LUFA\Drivers\USB\Class\HID.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\..\LUFA\Drivers\USB\Class\Device\HID.h"
 				>
 			</File>
 			<File
@@ -396,6 +420,10 @@
 			Name="Firmware"
 			>
 			<File
+				RelativePath="..\..\..\..\..\bin\generic16.hex"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\..\bin\teensypp2.hex"
 				>
 			</File>
@@ -404,6 +432,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\makefile.generic16"
+			>
+		</File>
 		<File
 			RelativePath=".\makefile.teensypp2"
 			>

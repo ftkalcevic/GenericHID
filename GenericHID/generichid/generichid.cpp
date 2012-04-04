@@ -842,8 +842,6 @@ void GenericHID::onStatusChanged(const QString &s)
     4.)The sum of all IOL, for ports F0-F7 should not exceed 100 mA.
 - test directional switch
 - test all controls - under linux
-- firmware
-    - port to lufa
 - test linux version
 - win32 debug
 - make c# test routine

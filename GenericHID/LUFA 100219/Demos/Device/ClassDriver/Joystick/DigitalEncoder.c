@@ -100,11 +100,11 @@ void InitDigitalEncoder( struct SDigitalEncoderControl *pData )
     // set interrupt for a and b
     byte nPortA = GET_PORT_ID(pData->PortA);
     byte nPinA = GET_PORT_PIN(pData->PortA);
-    SetInterruptPort( nPortA, nPinA, false );
+    SetInterruptPort( nPortA, nPinA, pData->Options & _BV(DE_PULLUP) );
 
     byte nPortB = GET_PORT_ID(pData->PortB);
     byte nPinB = GET_PORT_PIN(pData->PortB);
-    SetInterruptPort( nPortB, nPinB, false );
+    SetInterruptPort( nPortB, nPinB, pData->Options & _BV(DE_PULLUP) );
 
     Encoders[nEncoders].nBitA = nPinA + (nPortA == PortB ? 0 : 8);
     Encoders[nEncoders].nBitB = nPinB + (nPortA == PortB ? 0 : 8);
@@ -123,6 +123,11 @@ void ReadDigitalEncoder( struct SDigitalEncoderControl *pData, byte **ReportBuff
     int16_t *ptr = &(Encoders[nIndex].nCounter);
     cli();
     int16_t nCounter = *ptr;
+    if ( !(pData->Options & _BV(DE_ABSOLUTE)) )
+    {
+        // Incremental output - we just send the changes each period
+        *ptr = 0;
+    }
     sei();
 
     PackData16( ReportBuffer, nBit, nCounter, pData->Bits );

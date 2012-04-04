@@ -290,6 +290,23 @@ static void LCD_Font( struct SLCDControl *pData, byte **ReportBuffer, byte *nBit
     //ReadPackData16( ReportBuffer, nBit, 5 );
 }
 
+static void LCD_Cursor( struct SLCDControl *pData, byte **ReportBuffer, byte *nBit )
+{
+    if ( nSerialDebugLevel > 10 )
+    {
+	UART1_Send_P(PSTR("LCD Cursor Report"));
+	UART1_SendCRLF();
+    }
+    
+    // [Enable][blink]
+    byte nEnabled = ReadPackData16( ReportBuffer, nBit, 1 );
+    byte nBlink = ReadPackData16( ReportBuffer, nBit, 1 );
+
+    WriteLCDData( pData, Instr, (1 << 3) |          // Display On/Off cmd
+                                (1 << 2) |          // Display On
+                                (nEnabled << 1) |   // Enable Cursor
+                                (nBlink << 0) );    // Blink
+}
 
 void WriteLCD( struct SLCDControl *pData, byte nReportId, byte **ReportBuffer, byte *nBit )
 {
@@ -297,6 +314,8 @@ void WriteLCD( struct SLCDControl *pData, byte nReportId, byte **ReportBuffer, b
 	LCD_Display( pData, ReportBuffer, nBit );
     else if ( nReportId == pData->hdr.ReportId + LCD_FONT_REPORT_ID )
 	LCD_Font( pData, ReportBuffer, nBit );
+    else if ( nReportId == pData->hdr.ReportId + LCD_CURSOR_POSITION_REPORT_ID )
+	LCD_Cursor( pData, ReportBuffer, nBit );
     else
     {
 	if ( nSerialDebugLevel > 0 )
