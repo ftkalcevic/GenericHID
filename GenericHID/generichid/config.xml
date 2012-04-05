@@ -679,7 +679,7 @@
       <property name="Bits" description=":digitalencoder.htm#Bits" type="int" min="1" max="16" default="8"/>
       <property name="Output" description=":digitalencoder.htm#Output" type="enum" default="Absolute">
         <enum name="Absolute"/>
-        <enum name="Incremental"/>
+        <enum name="Relative"/>
       </property>
       <property name="Pullup" description=":digitalencoder.htm#Pullup" type="bool" default="false"/>
       <property name="Current" description=":digitalencoder.htm#Current" type="int" min="0" max="500" default="100"/>

@@ -168,7 +168,10 @@ static void Init8Bit(struct SLCDControl *pData)
     _delay_us( CPU_CLK, 100 );			// wait 100us
     WriteLCDData( pData, Instr, 0x30 );		// set interface to 8 bits
 
-    WriteLCDData( pData, Instr, 0x30 | ((pData->nRows > 1) ? 0x8 : 0) | pData->nFunctionSet );	// Function set
+    if ( pData->nRows > 1 )
+	WriteLCDData( pData, Instr, 0x38 );	// Function set
+    else
+	WriteLCDData( pData, Instr, 0x30 );	// Function set
 
     WriteLCDData( pData, Instr, 0x08 );		// Display Off
     WriteLCDData( pData, Instr, 0x01 );		// Display Clear
@@ -189,7 +192,10 @@ static void Init4Bit(struct SLCDControl *pData)
     WriteLCDData4( pData, Instr, 0x3 );		// set interface to 4 bits
     WriteLCDData4( pData, Instr, 0x2 );		// set interface to 4 bits
 
-    WriteLCDData( pData, Instr, 0x20 | ((pData->nRows > 1) ? 0x8 : 0) | pData->nFunctionSet );	// Function set
+    if ( pData->nRows > 1 )
+	WriteLCDData( pData, Instr, 0x28 );		// Function set
+    else
+	WriteLCDData( pData, Instr, 0x20 );		// Function set
 
     WriteLCDData( pData, Instr, 0x08 );		// Display Off
     WriteLCDData( pData, Instr, 0x01 );		// Display Clear
@@ -298,6 +304,8 @@ static void LCD_Cursor( struct SLCDControl *pData, byte **ReportBuffer, byte *nB
     byte nCursor = ReadPackData16( ReportBuffer, nBit, 1 );
     byte nBlink = ReadPackData16( ReportBuffer, nBit, 1 );
 
+    if ( nRow > pData->nRows-1 )
+	nRow = pData->nRows-1;
     byte nAddr = pData->RowAddr[nRow] + nColumn;
     WriteLCDData( pData, Instr, 0x80 | nAddr );     // Set Cursor Addr
 
@@ -316,12 +324,18 @@ static void LCD_FunctionSet( struct SLCDControl *pData, byte **ReportBuffer, byt
     }
     
     // [row][column][Enable][blink]
-    byte nFunctionSet = ReadPackData16( ReportBuffer, nBit, 4 );
-    nFunctionSet &= 0x0F;
+    byte nFunctionSet = ReadPackData16( ReportBuffer, nBit, 3 );
 
-    WriteLCDData( pData, Instr, (1 << 5) |                  // Function Set Cmd
-                                ((pData->b8Bit?1:0) << 4) | // 4/8Bit
-                                nFunctionSet );             // Function
+    byte data = (1 << 5) |                      // Function Set Cmd
+                ((pData->b8Bit?1:0) << 4) |     // 4/8Bit
+                (((pData->nRows>1)?1:0) << 3) | // 1 or 2 rows
+                nFunctionSet;                   // Function
+    WriteLCDData( pData, Instr, data );
+    //{
+    //    static char Hex[] = "0123456789ABCDEF";
+    //    WriteLCDData( pData, Data, Hex[data>>4] );
+    //    WriteLCDData( pData, Data, Hex[data&0xF] );
+    //}
 }
 
 void WriteLCD( struct SLCDControl *pData, byte nReportId, byte **ReportBuffer, byte *nBit )
