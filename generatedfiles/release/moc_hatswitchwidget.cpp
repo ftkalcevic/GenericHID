@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'hatswitchwidget.h'
 **
-** Created: Thu 5. Apr 08:25:34 2012
+** Created: Fri 6. Apr 09:16:46 2012
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.2)
 **
 ** WARNING! All changes made in this file will be lost!
