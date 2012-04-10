@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'lcdwidget.h'
 **
-** Created: Tue Apr 10 23:48:57 2012
+** Created: Wed Apr 11 00:07:24 2012
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.2)
 **
 ** WARNING! All changes made in this file will be lost!
