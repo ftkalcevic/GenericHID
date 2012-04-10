@@ -1,14 +1,13 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'hatswitchwidget.h'
 **
-** Created: Wed 4. Apr 15:55:05 2012
+** Created: Tue Apr 10 23:48:57 2012
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "stdafx.h"
-#include "..\..\hatswitchwidget.h"
+#include "../../hatswitchwidget.h"
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'hatswitchwidget.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 61
