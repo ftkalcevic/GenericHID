@@ -596,6 +596,11 @@ unsigned short HIDDevice::PID()
 #endif
 }
 
+byte HIDDevice::InterfaceNumber()
+{
+    return m_nInterface;
+}
+
 QString HIDDevice::SystemId()
 {
     if ( m_sSystemId.isEmpty() )

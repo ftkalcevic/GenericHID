@@ -131,7 +131,7 @@ static bool CompareString( const QString &s1, const QString &s2 )
 }
 
 
-std::vector<HIDDevice *> HIDDevices::SearchHIDDevices( bool bPID, unsigned short nPID, bool bVID, unsigned short nVID, bool bManufacturer, const QString &sManfacturer, bool bProduct, const QString &sProduct, bool bSN, const QString &sSerialNumber, bool bSystemId, const QString &sSystemId )
+std::vector<HIDDevice *> HIDDevices::SearchHIDDevices( bool bPID, unsigned short nPID, bool bVID, unsigned short nVID, bool bManufacturer, const QString &sManfacturer, bool bProduct, const QString &sProduct, bool bSN, const QString &sSerialNumber, bool bSystemId, const QString &sSystemId, bool bInterfaceNumber, const byte nInterfaceNumber )
 {
     std::vector<HIDDevice *> ret;
 
@@ -148,7 +148,8 @@ std::vector<HIDDevice *> HIDDevices::SearchHIDDevices( bool bPID, unsigned short
 	    ((bManufacturer && CompareString(dev->Manufacturer(), sManfacturer)) || !bManufacturer) &&
 	    ((bProduct && CompareString(dev->Product(), sProduct)) || !bProduct) &&
 	    ((bSN && CompareString(dev->SerialNumber(), sSerialNumber)) || !bSN) &&
-	    ((bSystemId && CompareString(dev->SystemId(), sSystemId)) || !bSystemId) )
+            ((bSystemId && CompareString(dev->SystemId(), sSystemId)) || !bSystemId) &&
+            ((bInterfaceNumber && dev->InterfaceNumber() == nInterfaceNumber)) )
 	{
 	    ret.push_back( dev );
 	}

@@ -33,7 +33,7 @@ private:
 public:
     std::vector<HIDDevice *>  m_Devices;
     bool FindHIDDevices();
-    std::vector<HIDDevice *> SearchHIDDevices( bool bPID, unsigned short nPID, bool bVID, unsigned short nVID, bool bManufacturer, const QString &sManfacturer, bool bProduct, const QString &sProduct, bool bSN, const QString &sSerialNumber, bool bSystemId, const QString &sSystemId );
+    std::vector<HIDDevice *> SearchHIDDevices( bool bPID, unsigned short nPID, bool bVID, unsigned short nVID, bool bManufacturer, const QString &sManfacturer, bool bProduct, const QString &sProduct, bool bSN, const QString &sSerialNumber, bool bSystemId, const QString &sSystemId, bool bInterfaceNumber, const byte nInterfaceNumber );
     Logger m_Logger;
 };
 

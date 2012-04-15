@@ -185,7 +185,7 @@ void HIDDeviceThread::run()
 	tv.tv_usec = 50000;
 	fd_set fds_read;
 	fd_set fds_write;
-	int nFds;
+        int nFds = 0;
 	m_bRebuild_fds = true;
 
 	struct timeval tv_zero = {0,0};
@@ -276,9 +276,10 @@ void HIDDeviceThread::run()
 
 	    if ( m_bRunning && FD_ISSET( m_nReadPipe, &rd ) )
 	    {
-		char buf;
-		read( m_nReadPipe, &buf, 1 );
-		LOG_MSG( m_Logger, LogTypes::Debug, "Write pipe signalled"  );
+                LOG_MSG( m_Logger, LogTypes::Debug, "Read pipe signalled"  );
+
+                char buf;
+                read( m_nReadPipe, &buf, 1 );   // Swallow the signal byte
 	    }
 
 	    if ( m_bRunning && m_Logger.WillLog( LogTypes::Debug ) )

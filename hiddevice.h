@@ -66,6 +66,7 @@ public:
     QString SystemId();
     unsigned short VID();
     unsigned short PID();
+    byte InterfaceNumber();
     HID_ReportInfo_t &ReportInfo() { return m_ReportInfo; }
     bool PreprocessReportData();
     QString GetDescriptorString( unsigned char index );
@@ -102,7 +103,6 @@ private:
     struct libusb_device *m_dev;
     struct libusb_device_handle *m_hDev;
 #endif
-    int m_nInterfaceNumber;
     byte m_nInterface;
     byte m_nConfig;
     bool m_bOpen;

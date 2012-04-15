@@ -20,8 +20,8 @@
 HIDKBDevice::HIDKBDevice(HIDDevice *pDevice, HID_CollectionPath_t *pCol)
 : m_Logger(QCoreApplication::applicationName(), "HIDLCDDevice" )
 , m_pDevice( pDevice )
-, m_pKBCol( pCol )
 , m_bInitialised( false )
+, m_pKBCol( pCol )
 {
 }
 
