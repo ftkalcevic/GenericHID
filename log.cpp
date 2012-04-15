@@ -17,6 +17,9 @@
 #include "log.h"
 #include "logcore.h"
 
+#include <string.h>
+#include <errno.h>
+
 // Logger implementation
 
 Logger::Logger( const QString &sModule, const QString &sComponent )
@@ -36,4 +39,14 @@ void Logger::LogMsg( LogTypes::LogTypes type, const char *sFile, int nLine, cons
 bool Logger::WillLog(LogTypes::LogTypes type)
 {
     return LogCore::WillLog( m_sModule, m_sComponent, type );
+}
+
+QString Logger::LastError()
+{
+    int errnum = errno;
+    char buf[100];
+
+    strerror_r( errnum, buf, sizeof(buf) );
+
+    return QString(buf);
 }

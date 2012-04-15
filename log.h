@@ -44,6 +44,7 @@ public:
     Logger( const QString &sModule, const QString &sComponent );
     void LogMsg( LogTypes::LogTypes type, const char *sFile, int nLine, const QString &sMsg );
     bool WillLog(LogTypes::LogTypes type);
+    static QString LastError();
 };
 
 #else
