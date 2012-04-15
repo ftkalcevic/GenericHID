@@ -394,7 +394,7 @@ void LCDWidget::SetUserFont( byte index, const QVector<byte> &data )
     if ( m_chars.contains(index) )
     {
 	delete m_chars[index&0x7];
-	delete m_chars[index&0x7|0x8];
+        delete m_chars[(index&0x7)|0x8];
     }
     m_chars[index] = new LCDChar( char_data[0], char_data[1], char_data[2], char_data[3], char_data[4] );
     m_chars[index|0x8] = new LCDChar( char_data[0], char_data[1], char_data[2], char_data[3], char_data[4] );
