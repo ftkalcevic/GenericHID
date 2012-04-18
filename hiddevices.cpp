@@ -95,20 +95,18 @@ bool HIDDevices::FindHIDDevices()
 	libusb_device_descriptor device_desc;
 	if ( libusb_get_device_descriptor( dev,  &device_desc ) == 0 )
 	{
-	    bool bMatched = false;
-	    for ( int c = 0; c < device_desc.bNumConfigurations && !bMatched; c++ )
+            for ( int c = 0; c < device_desc.bNumConfigurations; c++ )
 	    {
 		libusb_config_descriptor *config_desc = NULL;
 
 		if ( libusb_get_config_descriptor( dev, c, &config_desc ) == 0 )
 		{
-		    for ( int i = 0; i < config_desc->bNumInterfaces && !bMatched; i++ )
-			for ( int a = 0; a < config_desc->interface[i].num_altsetting && !bMatched; a++ )
+                    for ( int i = 0; i < config_desc->bNumInterfaces; i++ )
+                        for ( int a = 0; a < config_desc->interface[i].num_altsetting; a++ )
 			    if (config_desc->interface[i].altsetting[a].bInterfaceClass == LIBUSB_CLASS_HID ) 
 			    {
 				HIDDevice *pDevice = new HIDDevice( dev, config_desc->interface[i].altsetting[a].bInterfaceNumber, config_desc->bConfigurationValue );
 				m_Devices.push_back( pDevice );
-				bMatched = true;
 			    }
 
 		    libusb_free_config_descriptor( config_desc );
