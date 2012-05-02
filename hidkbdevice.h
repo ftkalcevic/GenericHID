@@ -26,6 +26,7 @@
 #endif
 
 #include <QVector>
+#include <QMap>
 
 #ifdef _WIN32
 #pragma warning(pop)
@@ -35,23 +36,27 @@
 class HIDKBDevice
 {
 public:
-    HIDKBDevice(HIDDevice *pDevice, HID_CollectionPath_t *pCol);
+    HIDKBDevice(HID_CollectionPath_t *pCol);
     ~HIDKBDevice(void);
 
     bool Init();
 
-    const QVector<HID_ReportItem_t *> Modifiers() const { return m_modifiers; }
+    const QMap<unsigned short, HID_ReportItem_t *> Modifiers() const { return m_modifiers; }
     const QVector<HID_ReportItem_t *> Keys() const { return m_keys; }
+    const QMap<unsigned short, bool> ModifiersDown() const { return m_ModifiersDown; }
+    const QVector<int> KeysDown() const { return m_KeysDown; }
 
-    HIDDevice *Device() const { return m_pDevice; }
+    bool ProcessKeyboardData();
+
 
 private:
     Logger m_Logger;
-    HIDDevice *m_pDevice;
     bool m_bInitialised;
     HID_CollectionPath_t *m_pKBCol;
-    QVector<HID_ReportItem_t *> m_modifiers;
+    QMap<unsigned short, HID_ReportItem_t *> m_modifiers;
     QVector<HID_ReportItem_t *> m_keys;
+    QMap<unsigned short, bool> m_ModifiersDown;
+    QVector<int> m_KeysDown;
 
     bool FindKeys();
     bool FindModifiers();

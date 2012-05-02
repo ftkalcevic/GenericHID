@@ -17,9 +17,8 @@
 #include "hidkbdevice.h"
 #include "usages.h"
 
-HIDKBDevice::HIDKBDevice(HIDDevice *pDevice, HID_CollectionPath_t *pCol)
-: m_Logger(QCoreApplication::applicationName(), "HIDLCDDevice" )
-, m_pDevice( pDevice )
+HIDKBDevice::HIDKBDevice(HID_CollectionPath_t *pCol)
+: m_Logger(QCoreApplication::applicationName(), "HIDKBDevice" )
 , m_bInitialised( false )
 , m_pKBCol( pCol )
 {
@@ -39,7 +38,7 @@ bool HIDKBDevice::Init()
 
 bool HIDKBDevice::FindKeys()
 {
-    // Keyboard keys are an array of input values.  Unlike a variables, where each variable contains
+    // Keyboard keys are an array of input values.  Unlike variables, where each variable contains
     // the status of a control (each bit contains the state of a key), the array contains the status
     // of at max. n controls at a time (n keys pressed).
 
@@ -53,9 +52,9 @@ bool HIDKBDevice::FindKeys()
 	     (item->ItemFlags & IOF_CONSTANT) == 0 )
 	{
 	    m_keys.append( item );
-	}
-
+        }
     }
+    LOG_MSG( m_Logger, LogTypes::Error, QString("Found %1 key slots\n").arg(m_keys.count()) );
     return true;
 }
 
@@ -73,8 +72,64 @@ bool HIDKBDevice::FindModifiers()
 	     item->Attributes.Usage >= KEYBOARD_LEFTCONTROL &&
 	     item->Attributes.Usage <= KEYBOARD_RIGHT )
 	{
-	    m_modifiers.append( item );
+            m_modifiers[item->Attributes.Usage] = item;
+            m_ModifiersDown[item->Attributes.Usage] = false;
 	}
     }
     return true;
+}
+
+
+// Read the keyboard data
+bool HIDKBDevice::ProcessKeyboardData()
+{
+    bool bChanged = false;
+    QVector<int> keysdown;
+
+    for ( int i = 0; i < m_keys.count(); i++  )
+    {
+        HID_ReportItem_t *key_item = m_keys[i];
+
+        if ( key_item->Value == KEYBOARD_ERRORROLLOVER )
+        {
+            // Too many keys down.   Just wait for the next message.
+        }
+        else if ( key_item->Value >= KEYBOARD_A )
+        {
+            keysdown.append( key_item->Value );
+        }
+    }
+    qSort( keysdown );
+
+    if ( keysdown.count() != m_KeysDown.count() )
+        bChanged = true;
+    else
+    {
+        for ( int i = 0; i < keysdown.count(); i++)
+        {
+            if ( keysdown[i] != m_KeysDown[i] )
+            {
+                bChanged =true;
+                break;
+            }
+        }
+    }
+
+    if ( bChanged )
+    {
+        m_KeysDown = keysdown;
+    }
+
+    foreach ( HID_ReportItem_t *modifier_item, m_modifiers  )
+    {
+        if ( (modifier_item->Value && !m_ModifiersDown[modifier_item->Attributes.Usage]) ||
+             (!modifier_item->Value && m_ModifiersDown[modifier_item->Attributes.Usage]) )
+        {
+            // Change
+            m_ModifiersDown[modifier_item->Attributes.Usage] = modifier_item->Value;
+            bChanged = true;
+        }
+    }
+
+    return bChanged;
 }
