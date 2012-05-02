@@ -147,7 +147,7 @@ std::vector<HIDDevice *> HIDDevices::SearchHIDDevices( bool bPID, unsigned short
 	    ((bProduct && CompareString(dev->Product(), sProduct)) || !bProduct) &&
 	    ((bSN && CompareString(dev->SerialNumber(), sSerialNumber)) || !bSN) &&
             ((bSystemId && CompareString(dev->SystemId(), sSystemId)) || !bSystemId) &&
-            ((bInterfaceNumber && dev->InterfaceNumber() == nInterfaceNumber)) )
+            ((bInterfaceNumber && dev->InterfaceNumber() == nInterfaceNumber) || !bInterfaceNumber) )
 	{
 	    ret.push_back( dev );
 	}

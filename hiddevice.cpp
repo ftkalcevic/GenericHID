@@ -45,7 +45,6 @@
 
 #include <assert.h>
 
-#define GET_REPORT	1
 #define THREAD_WAIT_TIME	25	// msec
 
 
@@ -161,6 +160,7 @@ bool HIDDevice::PreprocessReportData()
     }
     else
     {
+        // Ask for the report descriptor
         for ( int i = 0; i < desc->bNumDescriptors; i++ )
         {
             if ( desc->Descriptor[i].bDescriptorType == USB_DT_REPORT )
@@ -169,7 +169,7 @@ bool HIDDevice::PreprocessReportData()
                 QVector<byte> pReportDesc( nReportLen );
 
                 len = libusb_control_transfer( m_hDev,
-                                               LIBUSB_ENDPOINT_IN+1,
+                                               LIBUSB_ENDPOINT_IN | LIBUSB_REQUEST_TYPE_STANDARD | LIBUSB_RECIPIENT_INTERFACE,
                                                LIBUSB_REQUEST_GET_DESCRIPTOR,
                                                (USB_DT_REPORT << 8) + 0,
                                                m_nInterface,
@@ -360,7 +360,7 @@ bool HIDDevice::Claim()
     m_nClaimed = libusb_claim_interface( m_hDev, m_nInterface );
     if ( m_nClaimed != 0 )
     {
-        LOG_MSG( m_Logger, LogTypes::Warning, QString("Failed to claim interface '%1': '%2'").arg(m_nInterface).arg(m_nClaimed) );
+        LOG_MSG( m_Logger, LogTypes::Warning, QString("Failed to claim interface #%1: Err=%2.  Trying to detach kernel.").arg(m_nInterface).arg(m_nClaimed) );
 
         LOG_MSG( m_Logger, LogTypes::Debug, "Kernel driver active.  Trying to force claim." );
         nError = libusb_detach_kernel_driver(m_hDev, m_nInterface);
@@ -594,7 +594,7 @@ bool HIDDevice::GetReport( byte nReportId, HID_ReportItemTypes_t nReportType, by
     bool bRet = true;
 
     int len = libusb_control_transfer( m_hDev,
-                                       LIBUSB_ENDPOINT_IN + LIBUSB_REQUEST_TYPE_CLASS + LIBUSB_RECIPIENT_INTERFACE,
+                                       LIBUSB_ENDPOINT_IN | LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE,
                                        GET_REPORT,
                                        ((nReportType+1) << 8) + nReportId,
                                        m_nInterface,
@@ -626,10 +626,27 @@ int HIDDevice::InterruptWrite( const byte *buf, int len, int timeout )
             return -1;
     }
 
-    int transferred = 0;
-    int n = libusb_interrupt_transfer( m_hDev, OutputEndpoint(), const_cast<byte *>(buf), len, &transferred, timeout );
-    if ( n == 0 )
-        n = transferred;
+    int n;
+    byte Endpoint, TransferType;
+    if ( !GetOutputEndpoint(Endpoint, TransferType) || TransferType == LIBUSB_TRANSFER_TYPE_CONTROL )
+    {
+        n = libusb_control_transfer( m_hDev, LIBUSB_ENDPOINT_OUT | LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE,
+                                     SET_REPORT, 0x0200, m_nInterface, const_cast<byte *>(buf), len, timeout );
+    }
+    else if ( TransferType == LIBUSB_TRANSFER_TYPE_BULK )
+    {
+        int transferred = 0;
+        n = libusb_bulk_transfer( m_hDev, Endpoint, const_cast<byte *>(buf), len, &transferred, timeout );
+        if ( n == 0 )
+            n = transferred;
+    }
+    else if ( TransferType == LIBUSB_TRANSFER_TYPE_INTERRUPT )
+    {
+        int transferred = 0;
+        n = libusb_interrupt_transfer( m_hDev, Endpoint, const_cast<byte *>(buf), len, &transferred, timeout );
+        if ( n == 0 )
+            n = transferred;
+    }
 
     if ( bOpened )
         Close();
@@ -637,42 +654,59 @@ int HIDDevice::InterruptWrite( const byte *buf, int len, int timeout )
     return n;
 }
 
-
-
-byte HIDDevice::OutputEndpoint()
+bool HIDDevice::GetOutputEndpoint(byte &Endpoint, byte &TransferType)
 {
-    return GetEndpoint(USB_ENDPOINT_OUT, USB_ENDPOINT_TYPE_INTERRUPT);
+    return GetEndpoint(USB_ENDPOINT_OUT, USB_ENDPOINT_TYPE_INTERRUPT, Endpoint, TransferType);
 }
 
 byte HIDDevice::InputEndpoint()
 {
-    return GetEndpoint(USB_ENDPOINT_IN, USB_ENDPOINT_TYPE_INTERRUPT);
+    byte Endpoint, TransferType;
+    GetEndpoint(USB_ENDPOINT_IN, USB_ENDPOINT_TYPE_INTERRUPT,Endpoint, TransferType);
+    return Endpoint;
 }
 
-
-byte HIDDevice::GetEndpoint( byte nDirection, byte nType )
+bool HIDDevice::GetEndpoint( byte nDirection, byte nType, byte &Endpoint, byte &TransferType )
 {
     // search for the correct end-point to output on.
-    byte Endpoint = nDirection;
+    bool bFound = false;
 
     libusb_config_descriptor *config_desc = NULL;
 
     if ( libusb_get_active_config_descriptor( m_dev, &config_desc ) == 0 )
     {
+        // Search for exact match - direction + type
         for ( int e = 0; e <  config_desc->interface[m_nInterface].altsetting[0].bNumEndpoints; e++ )
         {
             if ( (config_desc->interface[m_nInterface].altsetting[0].endpoint[e].bEndpointAddress & LIBUSB_ENDPOINT_DIR_MASK) == nDirection &&
                  (config_desc->interface[m_nInterface].altsetting[0].endpoint[e].bmAttributes & LIBUSB_TRANSFER_TYPE_MASK) == nType )
             {
                 Endpoint =  config_desc->interface[m_nInterface].altsetting[0].endpoint[e].bEndpointAddress;
+                TransferType =  config_desc->interface[m_nInterface].altsetting[0].endpoint[e].bmAttributes & LIBUSB_TRANSFER_TYPE_MASK;
+                bFound = true;
                 break;
+            }
+        }
+
+        if ( !bFound )
+        {
+            // Search for direction only
+            for ( int e = 0; e <  config_desc->interface[m_nInterface].altsetting[0].bNumEndpoints; e++ )
+            {
+                if ( (config_desc->interface[m_nInterface].altsetting[0].endpoint[e].bEndpointAddress & LIBUSB_ENDPOINT_DIR_MASK) == nDirection )
+                {
+                    Endpoint =  config_desc->interface[m_nInterface].altsetting[0].endpoint[e].bEndpointAddress;
+                    TransferType =  config_desc->interface[m_nInterface].altsetting[0].endpoint[e].bmAttributes & LIBUSB_TRANSFER_TYPE_MASK;
+                    bFound = true;
+                    break;
+                }
             }
         }
 
         libusb_free_config_descriptor( config_desc );
     }
 
-    return Endpoint;
+    return bFound;
 }
 
 

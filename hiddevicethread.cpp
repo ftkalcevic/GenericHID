@@ -18,31 +18,15 @@
 
 #include "hiddevice.h"
 #include "hidparser.h"
-#ifdef _WIN32
-#include "usb.h"
-#else
-#ifdef LIBUSB01
-#include "usb.h"
-#else
 #include "libusb.h"
-#endif
 #include <poll.h>
-#endif
+
 #include "hidtypes.h"
 #include "log.h"
 
 #include <assert.h>
 
-#define GET_REPORT	1
-
-#ifdef _WIN32
-    #define TIMEOUT_ERROR	-116
-#else
-    #define TIMEOUT_ERROR	LIBUSB_ERROR_TIMEOUT
-#endif
-
-
-#ifdef HAS_ASYNC
+#define TIMEOUT_ERROR	LIBUSB_ERROR_TIMEOUT
 
 
 HIDDeviceThread::HIDDeviceThread( QMutex &SendBufferMutex, QList<QVector<byte> > &SendBuffer, QMutex &ReceiveBufferMutex, QList<QVector<byte> > &ReceiveBuffer, int nLongestInReport, int nLongestOutReport, HIDDevice *pDevice )
@@ -155,16 +139,37 @@ void HIDDeviceThread::run()
 
 	// We have one send packet that gets sent in the main loop.
 	libusb_transfer *pSendTransfer = libusb_alloc_transfer(0);
+        int send_buffer_offset = 0;
 	if ( pSendTransfer == NULL )
 	{
-	    LOG_MSG( m_Logger, LogTypes::Error, "Failed to allocate interrupt write packet" );
+            LOG_MSG( m_Logger, LogTypes::Error, "Failed to allocate write packet" );
 	    return;
 	}
 	else
 	{
 	    m_TransferBuffers.push_back( pSendTransfer );
-	    byte *send_buf = new byte[m_nLongestOutReport];
-	    libusb_fill_interrupt_transfer( pSendTransfer, m_pDevice->m_hDev, m_pDevice->OutputEndpoint(), send_buf, m_nLongestOutReport, &_WriteCallback, this, 1000 );
+
+            byte Endpoint, TransferType;
+            if ( !m_pDevice->GetOutputEndpoint(Endpoint, TransferType) || TransferType == LIBUSB_TRANSFER_TYPE_CONTROL )
+            {
+                byte *send_buf = new byte[m_nLongestOutReport + 8];
+                send_buffer_offset = 8;
+
+                libusb_fill_control_setup( send_buf, LIBUSB_ENDPOINT_OUT | LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE,
+                                           SET_REPORT, 0x0200, m_pDevice->InterfaceNumber(), m_nLongestOutReport );
+                libusb_fill_control_transfer( pSendTransfer, m_pDevice->m_hDev, send_buf, &_WriteCallback, this, 1000 );
+            }
+            else if ( TransferType == LIBUSB_TRANSFER_TYPE_BULK )
+            {
+                byte *send_buf = new byte[m_nLongestOutReport];
+                libusb_fill_bulk_transfer( pSendTransfer, m_pDevice->m_hDev, Endpoint, send_buf, m_nLongestOutReport, &_WriteCallback, this, 1000 );
+            }
+            else if ( TransferType == LIBUSB_TRANSFER_TYPE_INTERRUPT )
+            {
+                byte *send_buf = new byte[m_nLongestOutReport];
+                libusb_fill_interrupt_transfer( pSendTransfer, m_pDevice->m_hDev, Endpoint, send_buf, m_nLongestOutReport, &_WriteCallback, this, 1000 );
+            }
+
 	}
 	m_bSendBufferFree = true;
 
@@ -264,9 +269,15 @@ void HIDDeviceThread::run()
 		}
 		else
 		{
-		    memcpy( pSendTransfer->buffer, msg.data(), msg.count() );
+                    memcpy( pSendTransfer->buffer + send_buffer_offset, msg.data(), msg.count() );
+                    pSendTransfer->length = msg.count()+send_buffer_offset;
+//                    {
+//                        QString  s = QString("Buffer - ").arg(msg.count()+send_buffer_offset);
+//                        for ( int i = 0; i < msg.count() + send_buffer_offset; i++ )
+//                            s += QString("%1 ").arg(pSendTransfer->buffer[i], 2, 16, QChar('0') );
+//                        LOG_MSG( m_Logger, LogTypes::Debug, s );
+//                    }
 
-		    pSendTransfer->length = msg.count();
 		    m_bSendBufferFree = false;
 		    int n = libusb_submit_transfer( pSendTransfer );
 		    if ( n != 0 )
@@ -333,6 +344,3 @@ void HIDDeviceThread::Stop()
     m_bRunning = false;
     Signal();
 }
-
-
-#endif

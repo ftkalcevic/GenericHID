@@ -39,7 +39,10 @@
     #include "hiddevicethread.h"
 #endif
 
-#define USB_TIMEOUT 1000		// default 1sec timeout
+#define USB_TIMEOUT     1000		// default 1sec timeout
+#define GET_REPORT	1
+#define SET_REPORT      9
+
 
 class HIDDevice: protected QThread
 {
@@ -74,9 +77,9 @@ public:
     int InterruptWrite( const byte *buf, int len, int timeout = USB_TIMEOUT );
     bool GetReport( byte nReportId, HID_ReportItemTypes_t nReportType, byte *buf, int len, int timeout = USB_TIMEOUT );
     int GetConfiguration();
-    byte OutputEndpoint();
+    bool GetOutputEndpoint(byte &Endpoint, byte &TransferType);
     byte InputEndpoint();
-    byte GetEndpoint( byte nDirection, byte nType );
+    bool GetEndpoint( byte nDirection, byte nType, byte &Endpoint, byte &TransferType );
     HID_ReportItem_t *FindReportItem( HID_ReportItemTypes_t type, unsigned short nUsagePage, unsigned short nUsage );
 
 #ifdef HAS_ASYNC
