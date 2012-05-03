@@ -72,13 +72,15 @@ public:
     byte InterfaceNumber();
     HID_ReportInfo_t &ReportInfo() { return m_ReportInfo; }
     bool PreprocessReportData();
+    QVector<byte> GetReportDescriptor();
+    QVector<byte> GetManualHIDReportOverride();
     QString GetDescriptorString( unsigned char index );
     int InterruptRead( byte *buf, int len, int timeout = USB_TIMEOUT );
     int InterruptWrite( const byte *buf, int len, int timeout = USB_TIMEOUT );
     bool GetReport( byte nReportId, HID_ReportItemTypes_t nReportType, byte *buf, int len, int timeout = USB_TIMEOUT );
     int GetConfiguration();
     bool GetOutputEndpoint(byte &Endpoint, byte &TransferType);
-    byte InputEndpoint();
+    bool GetInputEndpoint(byte &Endpoint, byte &TransferType);
     bool GetEndpoint( byte nDirection, byte nType, byte &Endpoint, byte &TransferType );
     HID_ReportItem_t *FindReportItem( HID_ReportItemTypes_t type, unsigned short nUsagePage, unsigned short nUsage );
 

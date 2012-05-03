@@ -16,32 +16,17 @@
 
 #include "common.h"
 
-#ifdef _WIN32
-#pragma warning(push, 1)
-#endif
-
 #include <QDir>
 #include <QFileInfo>
 #include <QTextStream>
 
-#ifdef _WIN32
-#pragma warning(pop)
-#pragma warning(disable:4251)
-#endif
-
 #include "hiddevice.h"
 #include "hidparser.h"
-#ifdef _WIN32
-    #include "usb.h"
-#else
-    #ifdef LIBUSB01
-        #include "usb.h"
-    #else
-        #include "libusb.h"
-    #endif
-#endif
+#include "libusb.h"
 #include "hidtypes.h"
 #include "log.h"
+#include "configxml.h"
+
 
 #include <assert.h>
 
@@ -118,13 +103,47 @@ HIDDevice::~HIDDevice(void)
 
 bool HIDDevice::PreprocessReportData()
 {
+    bool bRet = true;
+
+    QVector<byte> report = GetReportDescriptor();
+    if ( report.size() > 0 )
+    {
+        HIDParser parser;
+        parser.ParseReportData( report.constData(), report.size(), m_ReportInfo );
+    }
+    else
+    {
+        LOG_MSG( m_Logger, LogTypes::Error, QString("Unable to process hid report descriptor") );
+        bRet = false;
+    }
+
+    return bRet;
+}
+
+QVector<byte> HIDDevice::GetManualHIDReportOverride()
+{
+    // Lookup device by VID/PID/Interface in config.xml
+    ConfigXML config;
+    return config.FindReportDescriptor( VID(), PID(), InterfaceNumber() );
+}
+
+QVector<byte> HIDDevice::GetReportDescriptor()
+{
+    QVector<byte> pReportDesc;
+
+    // Check of manual report override
+    pReportDesc = GetManualHIDReportOverride();
+    if ( pReportDesc.size() > 0 )
+        return pReportDesc;
+
+
     bool bOpened = false;
     if ( !m_bOpen )
     {
         // if we open the device, we will close it.
-        bOpened = true;
         if ( !Open() )
-            return false;
+            return pReportDesc;
+        bOpened = true;
         Claim();
     }
 
@@ -166,7 +185,7 @@ bool HIDDevice::PreprocessReportData()
             if ( desc->Descriptor[i].bDescriptorType == USB_DT_REPORT )
             {
                 unsigned short nReportLen = desc->Descriptor[i].wDescriptorLength;
-                QVector<byte> pReportDesc( nReportLen );
+                pReportDesc.resize( nReportLen );
 
                 len = libusb_control_transfer( m_hDev,
                                                LIBUSB_ENDPOINT_IN | LIBUSB_REQUEST_TYPE_STANDARD | LIBUSB_RECIPIENT_INTERFACE,
@@ -180,12 +199,7 @@ bool HIDDevice::PreprocessReportData()
                 if ( len != nReportLen )
                 {
                     LOG_MSG( m_Logger, LogTypes::Error, QString("Error reading HID report descriptor %1.  len != nReportLen (%2!=%3)").arg(i).arg(len).arg(nReportLen) );
-                    bRet = false;
-                }
-                else
-                {
-                    HIDParser parser;
-                    parser.ParseReportData( pReportDesc.constData(), nReportLen, m_ReportInfo );
+                    pReportDesc.clear();
                 }
 
                 // There can only be 1 REPORT DESCRIPTOR
@@ -195,15 +209,13 @@ bool HIDDevice::PreprocessReportData()
     }
     libusb_free_config_descriptor(config);
 
-#ifndef _WIN32
     Unclaim();
-#endif
 
     // Only close the device if we opened it.
     if ( bOpened )
         Close();
 
-    return bRet;
+    return pReportDesc;
 }
 
 
@@ -565,14 +577,29 @@ int HIDDevice::InterruptRead( byte *buf, int len, int timeout )
             return -1;
     }
 
-#if defined(_WIN32) || defined(LIBUSB01)
-    int n = usb_interrupt_read( m_hDev, InputEndpoint(), (char *)buf, len, timeout );
-#else
-    int transferred = 0;
-    int n = libusb_interrupt_transfer( m_hDev, InputEndpoint(), buf, len, &transferred, timeout );
-    if ( n == 0 )
-        n = transferred;
-#endif
+    int n;
+    byte Endpoint, TransferType;
+    if ( !GetInputEndpoint(Endpoint, TransferType) || TransferType == LIBUSB_TRANSFER_TYPE_CONTROL )
+    {
+        Q_ASSERT( "Don't know how or why to read a control endpoint");
+        //n = libusb_control_transfer( m_hDev, LIBUSB_ENDPOINT_INPUT | LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE,
+        //                             GET_REPORT, 0x0200, m_nInterface, const_cast<byte *>(buf), len, timeout );
+    }
+    else if ( TransferType == LIBUSB_TRANSFER_TYPE_BULK )
+    {
+        int transferred = 0;
+        n = libusb_bulk_transfer( m_hDev, Endpoint, const_cast<byte *>(buf), len, &transferred, timeout );
+        if ( n == 0 )
+            n = transferred;
+    }
+    else if ( TransferType == LIBUSB_TRANSFER_TYPE_INTERRUPT )
+    {
+        int transferred = 0;
+        n = libusb_interrupt_transfer( m_hDev, Endpoint, const_cast<byte *>(buf), len, &transferred, timeout );
+        if ( n == 0 )
+            n = transferred;
+    }
+
 
     if ( bOpened )
         Close();
@@ -659,11 +686,9 @@ bool HIDDevice::GetOutputEndpoint(byte &Endpoint, byte &TransferType)
     return GetEndpoint(USB_ENDPOINT_OUT, USB_ENDPOINT_TYPE_INTERRUPT, Endpoint, TransferType);
 }
 
-byte HIDDevice::InputEndpoint()
+bool HIDDevice::GetInputEndpoint(byte &Endpoint, byte &TransferType)
 {
-    byte Endpoint, TransferType;
-    GetEndpoint(USB_ENDPOINT_IN, USB_ENDPOINT_TYPE_INTERRUPT,Endpoint, TransferType);
-    return Endpoint;
+    return GetEndpoint(USB_ENDPOINT_IN, USB_ENDPOINT_TYPE_INTERRUPT,Endpoint, TransferType);
 }
 
 bool HIDDevice::GetEndpoint( byte nDirection, byte nType, byte &Endpoint, byte &TransferType )

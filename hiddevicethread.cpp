@@ -127,13 +127,32 @@ void HIDDeviceThread::run()
 	    else
 	    {
 		m_TransferBuffers.push_back( pTransfer );
-		libusb_fill_interrupt_transfer( pTransfer, m_pDevice->m_hDev, m_pDevice->InputEndpoint(), new byte[m_nLongestInReport], m_nLongestInReport, &_ReadCallback, this, 0x7FFFFFFF );
-		int n = libusb_submit_transfer( pTransfer );
-		if ( n != 0 )
-		{
-		    LOG_MSG( m_Logger, LogTypes::Error, QString("Failed to submit transfer packet %1" ).arg(n) );
-		    return;
-		}
+                byte Endpoint, TransferType;
+                if ( !m_pDevice->GetInputEndpoint(Endpoint, TransferType) ||
+                     TransferType == LIBUSB_TRANSFER_TYPE_CONTROL ||
+                     TransferType == LIBUSB_TRANSFER_TYPE_ISOCHRONOUS )
+                {
+                    LOG_MSG( m_Logger, LogTypes::Error, "Only support bulk and interrupt read transfer types" );
+                    return;
+                }
+                else
+                {
+                    if ( TransferType == LIBUSB_TRANSFER_TYPE_BULK )
+                    {
+                        libusb_fill_bulk_transfer( pTransfer, m_pDevice->m_hDev, Endpoint, new byte[m_nLongestInReport], m_nLongestInReport, &_ReadCallback, this, 0x7FFFFFFF );
+                    }
+                    else // TransferType == LIBUSB_TRANSFER_TYPE_INTERRUPT
+                    {
+                        libusb_fill_interrupt_transfer( pTransfer, m_pDevice->m_hDev, Endpoint, new byte[m_nLongestInReport], m_nLongestInReport, &_ReadCallback, this, 0x7FFFFFFF );
+                    }
+
+                    int n = libusb_submit_transfer( pTransfer );
+                    if ( n != 0 )
+                    {
+                        LOG_MSG( m_Logger, LogTypes::Error, QString("Failed to submit transfer packet %1" ).arg(n) );
+                        return;
+                    }
+                }
 	    }
 	}
 
