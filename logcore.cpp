@@ -26,7 +26,6 @@
 // LogCore statics 
 
 LogCore *LogCore::m_LogCore = NULL;
-QMutex LogCore::m_LogMutex;
 int LogCore::m_nRefCount = 0;
 bool LogCore::m_bLog = false;
 QMap<QThread *,int> LogCore::m_ThreadMap;
@@ -39,9 +38,12 @@ LogCore::LogCore()
 
 void LogCore::Init()
 {
-    QMutexLocker lock( &m_LogMutex );
     if ( m_LogCore == NULL )
-        m_LogCore = new LogCore();
+    {
+        LogCore *core = new LogCore();
+        if ( m_LogCore != NULL )
+            m_LogCore = core;
+    }
 }
 
 
