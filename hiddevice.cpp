@@ -22,7 +22,7 @@
 
 #include "hiddevice.h"
 #include "hidparser.h"
-#include "libusb.h"
+#include <libusb-1.0/libusb.h>
 #include "hidtypes.h"
 #include "log.h"
 #include "configxml.h"
@@ -147,7 +147,6 @@ QVector<byte> HIDDevice::GetReportDescriptor()
         Claim();
     }
 
-    bool bRet = true;
     int len;
 
     // Find the hid descriptor
@@ -175,7 +174,6 @@ QVector<byte> HIDDevice::GetReportDescriptor()
     if ( !desc )
     {
         LOG_MSG( m_Logger, LogTypes::Error, QString("Unable to locate HID descriptor.") );
-        bRet = false;
     }
     else
     {
@@ -577,7 +575,7 @@ int HIDDevice::InterruptRead( byte *buf, int len, int timeout )
             return -1;
     }
 
-    int n;
+    int n = 0;
     byte Endpoint, TransferType;
     if ( !GetInputEndpoint(Endpoint, TransferType) || TransferType == LIBUSB_TRANSFER_TYPE_CONTROL )
     {
@@ -653,7 +651,7 @@ int HIDDevice::InterruptWrite( const byte *buf, int len, int timeout )
             return -1;
     }
 
-    int n;
+    int n = -1;
     byte Endpoint, TransferType;
     if ( !GetOutputEndpoint(Endpoint, TransferType) || TransferType == LIBUSB_TRANSFER_TYPE_CONTROL )
     {

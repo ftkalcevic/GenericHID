@@ -20,7 +20,7 @@
 #if defined(_WIN32) || defined(LIBUSB01)
 #include "usb.h"
 #else
-#include "libusb.h"
+#include <libusb-1.0/libusb.h>
 #endif
 #include "log.h"
 

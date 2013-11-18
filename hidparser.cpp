@@ -576,7 +576,7 @@ bool HIDParser::DecodeReport( byte *pReport, byte nReportLen, std::vector<HID_Re
     byte ReportByte = *pData;
     byte nBitsLeft = 8;
     byte nDataOffset = 0;
-    byte nMask = 0xFF;
+
     pData++;
     for ( it = ReportItems.begin(); it != ReportItems.end(); it++ )
     {
@@ -609,7 +609,6 @@ bool HIDParser::DecodeReport( byte *pReport, byte nReportLen, std::vector<HID_Re
 		    ReportByte = *pData;
 		    pData++;
 		    nBitsLeft = 8;
-		    nMask = 0xFF;
 		}
 	    }
 

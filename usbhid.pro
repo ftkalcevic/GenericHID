@@ -26,7 +26,6 @@ INCLUDEPATH +=  ./generatedfiles/release
 win32:INCLUDEPATH += ../libusb-win32-device-bin-0.1.12.1/include
 unix:INCLUDEPATH += ../utility ../usbhid ../hid ../include
 CONFIG(LIBUSB01) {
-unix:INCLUDEPATH += ../libusb-0.1.12
 } else {
 unix:INCLUDEPATH += ../libusb-1.0.2/libusb
 }

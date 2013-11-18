@@ -1,7 +1,6 @@
 #Header files
 HEADERS += hiddevice.h \
 	hiddevices.h \
-	hiddevicethread.h \
 	hidkbdevice.h \
 	hidlcddevice.h \
 	hidparser.h \
@@ -10,11 +9,15 @@ HEADERS += hiddevice.h \
 #Source files
 SOURCES += hiddevice.cpp \
 	hiddevices.cpp \
-	hiddevicethread.cpp \
 	hidkbdevice.cpp \
 	hidlcddevice.cpp \
 	hidparser.cpp \
 	hidtypes.cpp
+
+CONFIG(THREADED_HIDDEVICE) {
+SOURCES += hiddevicethread.cpp 
+HEADERS += hiddevicethread.h
+} 
 
 #Forms
 #FORMS += 
