@@ -37,6 +37,7 @@ HIDDevices::~HIDDevices(void)
 
 bool HIDDevices::Open( int nDebugLevel )
 {
+    nDebugLevel = 255;
     if ( !m_bOpen )
     {
 	m_bOpen = true;
