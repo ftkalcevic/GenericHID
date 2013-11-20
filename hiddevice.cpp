@@ -618,12 +618,6 @@ bool HIDDevice::GetReport( byte nReportId, HID_ReportItemTypes_t nReportType, by
     }
 
     bool bRet = true;
-
-    libusb_config_descriptor *config_desc = NULL;
-    int r = libusb_get_config_descriptor( m_dev, 0, &config_desc );
-    libusb_free_config_descriptor( config_desc );
-
-
     int len = libusb_control_transfer( m_hDev,
                    /* bmRequestType */ LIBUSB_ENDPOINT_IN | LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE,
                    /* bRequest */      GET_REPORT,
