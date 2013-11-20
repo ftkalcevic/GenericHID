@@ -723,4 +723,9 @@ HID_ReportItem_t *HID_ReportInfo_t::FindReportItem( HID_CollectionPath_t *pCol, 
     return NULL;
 }
 
-
+void HID_ReportInfo_t::clear()
+{
+    ReportItems.clear();
+    Reports.clear();
+    Collections.clear();
+}

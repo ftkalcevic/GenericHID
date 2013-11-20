@@ -108,6 +108,7 @@ bool HIDDevice::PreprocessReportData()
     QVector<byte> report = GetReportDescriptor();
     if ( report.size() > 0 )
     {
+        m_ReportInfo.clear();
         HIDParser parser;
         parser.ParseReportData( report.constData(), report.size(), m_ReportInfo );
     }

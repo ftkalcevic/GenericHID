@@ -169,7 +169,7 @@ public:
     HID_ReportItem_t *FindReportItem( HID_CollectionPath_t *pCol, HID_ReportItemTypes_t type, 
 				      unsigned short nCollectionUsagePage, unsigned short nCollectionUsage, 
 				      unsigned short nUsagePage, unsigned short nUsage );
-
+    void clear();
 } ;
 
 
