@@ -244,6 +244,8 @@ QString HIDDevice::GetDescriptorString( unsigned char index )
     // The length of a USB string, in bytes, is stored in a byte, so 256 is the max len (really (256-2)/2 -> packet header and data is Unicode)
     byte buf[256];
     int n = libusb_get_string_descriptor_ascii( m_hDev, index, buf, sizeof(buf) );
+    if ( n < 0 )
+        n = libusb_get_string_descriptor_ascii( m_hDev, index, buf, sizeof(buf) );  // retry once
 
     if ( n < 0 )
     {
