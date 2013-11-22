@@ -29,11 +29,20 @@
 				<p>Here is an example of a udev rules file.  In my <a class="code">/etc/udev/rules.d/</a> folder I have created the 
 				file <a class="code">99-hid.rules</a>.  The name of the file is not important, as long as it has the extension <a class="code">.rules</a>.
 				</p>
+				<p>For Ubuntu 10.04...</p>
 				<blockquote class="code">
 					# Generic HID device<br>
 					SYSFS{idProduct}=="04d9",  SYSFS{idVendor}=="1c40", MODE="0660", GROUP="plugdev"<br>
 					# Atmel DFU file for at90usb1286, at90usb1287<br>
 					SYSFS{idProduct}=="2ffb", SYSFS{idVendor}=="03eb", MODE="0660", GROUP="plugdev"<br>
+					<br>
+				</blockquote>
+				<p>For Ubuntu 12.04...</p>
+				<blockquote class="code">
+					# Generic HID device<br>
+					ATTRS{idProduct}=="04d9",  ATTRS{idVendor}=="1c40", MODE="0660", GROUP="plugdev"<br>
+					# Atmel DFU file for at90usb1286, at90usb1287<br>
+					ATTRS{idProduct}=="2ffb", ATTRS{idVendor}=="03eb", MODE="0660", GROUP="plugdev"<br>
 					<br>
 				</blockquote>
 				<p>
