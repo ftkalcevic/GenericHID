@@ -1,5 +1,6 @@
 TEMPLATE = app
 TARGET = clprogram
+include(../build.pri)
 CONFIG(debug,debug|release) {
     DESTDIR=debug
 } else {
