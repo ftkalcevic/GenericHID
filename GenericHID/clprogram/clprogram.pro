@@ -22,9 +22,9 @@ OBJECTS_DIR += $(DESTDIR)
 UI_DIR += ./generatedfiles
 RCC_DIR += ./generatedfiles
 CONFIG(debug,debug|release) {
-    unix:LIBS += -L../utility/debug -lutility -L../dfuprogrammer/debug -ldfuprogrammer  -L../programmer/debug -lprogrammer -L../libusb-0.1.12/.libs -l:libusb.a -ldfuprogrammer -lutility -lprogrammer -ldfuprogrammer -lutility -l:libusb.a
+    unix:LIBS += -L../utility/debug -lutility -L../dfuprogrammer/debug -ldfuprogrammer  -L../programmer/debug -lprogrammer -lusb-1.0 -ldfuprogrammer -lutility -lprogrammer -ldfuprogrammer -lutility -lusb-1.0
 } else {
-    unix:LIBS += -L../utility/release -lutility -L../dfuprogrammer/release -ldfuprogrammer  -L../programmer/release -lprogrammer -L../libusb-0.1.12/.libs -l:libusb.a -ldfuprogrammer -lutility -lprogrammer -ldfuprogrammer -lutility -l:libusb.a
+    unix:LIBS += -L../utility/release -lutility -L../dfuprogrammer/release -ldfuprogrammer  -L../programmer/release -lprogrammer -lusb-1.0 -ldfuprogrammer -lutility -lprogrammer -ldfuprogrammer -lutility -lusb-1.0
 }
 
 #Include file(s)

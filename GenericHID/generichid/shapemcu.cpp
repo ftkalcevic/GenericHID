@@ -70,7 +70,7 @@ bool ShapeMCU::Verify( QString &sErrors, const QList<class PinItem *> &pins, con
 	static const char *joystickPins[] = { "PE5", "PE4", "PB7", "PB6", "PB5" };
 
 	int nErrorCount = 0;
-	for ( int i = 0; i < countof(joystickPins); i++ )
+	for ( unsigned int i = 0; i < countof(joystickPins); i++ )
 	{
 	    const char *sPin = joystickPins[i];
 	    if ( (index = findPin( sPin )) >= 0 )
@@ -187,9 +187,9 @@ void ShapeMCU::MakeDeviceXML( QDomElement &elem, int nCurrent, const QString &sP
     XMLUtility::setAttribute( configNode, "SerialDebug", GetPropertyValueInt("Serial-Debug",values,0) );
     XMLUtility::setAttribute( configNode, "HIDDebug", GetPropertyValueBool("HID-Debug",values,false) );
     XMLUtility::setAttribute( configNode, "PowerPort", sTempPowerPin );
-    XMLUtility::setAttribute( configNode, "Timer1", GetPropertyValueString("Timer1",values,false) );
-    XMLUtility::setAttribute( configNode, "Timer2", GetPropertyValueString("Timer2",values,false) );
-    XMLUtility::setAttribute( configNode, "Timer3", GetPropertyValueString("Timer3",values,false) );
+    XMLUtility::setAttribute( configNode, "Timer1", GetPropertyValueString("Timer1",values,"") );
+    XMLUtility::setAttribute( configNode, "Timer2", GetPropertyValueString("Timer2",values,"") );
+    XMLUtility::setAttribute( configNode, "Timer3", GetPropertyValueString("Timer3",values,"") );
     XMLUtility::setAttribute( configNode, "EnableJTAG", GetPropertyValueBool("EnableJTAG",values,false) );
 }
 

@@ -24,10 +24,10 @@ class ControlDirectionalSwitch :    public Control
 {
     enum DirectionType
     {
-	NS,
-	WE,
-	_4way,
-	_8way
+        NS,
+        WE,
+        _4way,
+        _8way
     };
 public:
     ControlDirectionalSwitch(void);
@@ -44,7 +44,7 @@ private:
     ushort m_nUsagePage;
     ushort m_nUsage;
     bool m_bPullup;
-    bool m_bDebounce;
+    byte m_nDebounceMs;
     byte m_nPortNW;
     byte m_nPortNE;
     byte m_nPortSW;

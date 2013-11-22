@@ -19,11 +19,10 @@
 #include <QtGui/QApplication>
 #include <QtPlugin>
 #include <QDir>
-#include "usb.h"
 #include "logcore.h"
 #include "hiddevices.h"
 
-Q_IMPORT_PLUGIN(qjpeg)
+//Q_IMPORT_PLUGIN(qjpeg)
 
 int main(int argc, char *argv[])
 {

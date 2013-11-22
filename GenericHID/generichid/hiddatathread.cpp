@@ -36,7 +36,7 @@ HIDDataThread::HIDDataThread( HIDDevice *pDevice )
 HIDDataThread::~HIDDataThread()
 {
     m_bRunning = false;
-    wait(LOOP_TIMEOUT*2);
+    //wait(LOOP_TIMEOUT*2);
 }
 
 
@@ -48,12 +48,12 @@ void HIDDataThread::stop()
 void HIDDataThread::run()
 {
     if ( !m_pDevice->Open() )
-	return;
+        return;
 
     if ( !m_pDevice->Claim() )
     {
-	m_pDevice->Close();
-	return;
+        m_pDevice->Close();
+        return;
     }
 
     // Find the largest report
@@ -62,15 +62,15 @@ void HIDDataThread::run()
     std::map<byte, HID_ReportDetails_t>::iterator it;
     for ( it = m_pDevice->ReportInfo().Reports.begin(); it != m_pDevice->ReportInfo().Reports.end(); it++ )
     {
-	if ( it->second.InReportLength > nLongestReport )
-	    nLongestReport = it->second.InReportLength;
+        if ( it->second.InReportLength > nLongestReport )
+            nLongestReport = it->second.InReportLength;
     }
 
     // When there is more than one report, the report id is inserted before the packet.
     if ( m_pDevice->ReportInfo().Reports.size() > 1 )
     {
-	nLongestReport++;
-	nMultiReport = 1;
+        nLongestReport++;
+        nMultiReport = 1;
     }
 
     // Request an initial copy of the report(s)
@@ -82,59 +82,59 @@ void HIDDataThread::run()
     bool bInitialising = true;
     while ( m_bRunning )
     {
-	int nRead = 0;
-	memset( buf.data(), 0, buf.size() );
+        int nRead = 0;
+        memset( buf.data(), 0, buf.size() );
 
-	if ( bInitialising )
-	{
-	    while ( itReport != m_pDevice->ReportInfo().Reports.end() && (itReport->second).InReportLength == 0 )
-		itReport++;
+        if ( bInitialising )
+        {
+            while ( itReport != m_pDevice->ReportInfo().Reports.end() && (itReport->second).InReportLength == 0 )
+                itReport++;
 
-	    if ( itReport == m_pDevice->ReportInfo().Reports.end() )
-	    {
-		bInitialising = false;
-		continue;
-	    }
+            if ( itReport == m_pDevice->ReportInfo().Reports.end() )
+            {
+                bInitialising = false;
+                continue;
+            }
 
-	    bool bGotData = m_pDevice->GetReport( (itReport->second).ReportId, REPORT_ITEM_TYPE_In, buf.data(), (byte)((itReport->second).InReportLength + nMultiReport) );
-	    if ( bGotData )
-		nRead = (itReport->second).InReportLength + nMultiReport;
-	    else
-		nRead = -1;
-	    itReport++;
-	}
-	else
-	{
-	    nRead = m_pDevice->InterruptRead( buf.data(), nLongestReport, LOOP_TIMEOUT );
-	}
+            bool bGotData = m_pDevice->GetReport( (itReport->second).ReportId, REPORT_ITEM_TYPE_In, buf.data(), (byte)((itReport->second).InReportLength + nMultiReport) );
+            if ( bGotData )
+                nRead = (itReport->second).InReportLength + nMultiReport;
+            else
+                nRead = -1;
+            itReport++;
+        }
+        else
+        {
+            nRead = m_pDevice->InterruptRead( buf.data(), nLongestReport, LOOP_TIMEOUT );
+        }
 
-	if ( nRead == TIMEOUT_ERROR )
+        if ( nRead == TIMEOUT_ERROR )
         {
             // Nothing to do.
         }
         else if ( nRead < 0 )
-	{
-	}
-	else if ( nRead > 0 )
-	{
-	    {
-		//QWriteLocker lock(&m_queueLock);
-		//m_dataQueue.append( buf.mid(0,n) );
-	    }
-	    emit newData( buf.mid(0,nRead) );
+        {
+        }
+        else if ( nRead > 0 )
+        {
+            {
+                //QWriteLocker lock(&m_queueLock);
+                //m_dataQueue.append( buf.mid(0,n) );
+            }
+            emit newData( buf.mid(0,nRead) );
 
-	    //char s[1280];
-	    //*s=0;
-	    //for ( int i = 0; i < n; i++ )
-	    //{
-	    //	char s1[10];
-	    //	_snprintf( s1, sizeof(s1), "%02X ", buf.data()[i] );
-	    //	strcat( s, s1 );
-	    //}
-	    //LOG_TRACE("%s\n", s);
-	}
+            //char s[1280];
+            //*s=0;
+            //for ( int i = 0; i < n; i++ )
+            //{
+            //	char s1[10];
+            //	_snprintf( s1, sizeof(s1), "%02X ", buf.data()[i] );
+            //	strcat( s, s1 );
+            //}
+            //LOG_TRACE("%s\n", s);
+        }
 
-	//bRun = false;
+        //bRun = false;
     }
 
     m_pDevice->Unclaim();

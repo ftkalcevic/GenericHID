@@ -27,6 +27,18 @@
 #pragma warning(disable:4200)
 #endif
 
+
+#define DEBOUNCE_MIN    0
+#define DEBOUNCE_MAX    127
+
+struct DebounceData
+{
+    uint8_t start_time;
+    uint8_t key_down:1;
+};
+typedef struct DebounceData DebounceData;
+
+
 enum ControlType
 {
     None = 0,
@@ -71,10 +83,12 @@ struct SAnalogEncoderControl
     struct SControlHeader hdr;
     byte PortA;
     byte PortB;
+    byte DebounceMs;
     byte Options;
 	#define AE_PULLUPA     0
 	#define AE_PULLUPB     1
-	#define AE_DEBOUNCE    2
+    DebounceData DebounceA;
+    DebounceData DebounceB;
 };
 
 struct SBicolourLEDControl
@@ -117,12 +131,12 @@ struct SDirSwitchControl
     byte Type;
     byte Ports;
     byte Options;
+    byte DebounceMs;
 	#define DSW_PULLUP      0
-	#define DSW_DEBOUNCE    1
     struct _SDirSwitchData
     {
-	byte Port;
-	byte Debounce;
+        byte Port;
+        DebounceData Debounce;
     } Switches[0];
 };
 
@@ -141,11 +155,10 @@ struct SKeyMatrixControl
     struct SControlHeader hdr;
     byte Rows;
     byte Cols;
-    byte Options;
-	#define KM_DEBOUNCE    0
-    byte Data[0];			// row ports (Rows)
-					// column ports (Cols)
-					// debounce buffer (Cols * Rows)
+    byte DebounceMs;
+    byte Data[0];	// row ports (Rows)
+                    // column ports (Cols)
+                    // debounce buffer (Cols * Rows)
 };
 
 
@@ -226,15 +239,15 @@ struct SRotarySwitchControl
     byte PinCount;
     byte ReportSize;
     byte Options;
+    byte DebounceMs;
 	#define RSW_PULLUP      0
-	#define RSW_DEBOUNCE    1
-	#define RSW_ENCODED     2
+	#define RSW_ENCODED     1
     byte LastValue;
     struct _SRotarySwitchPin
     {
-	byte Port;
-	byte Bit;
-	byte Debounce;
+        byte Port;
+        byte Bit;
+        DebounceData Debounce;
     } Pins[0];
 };
 
@@ -243,10 +256,10 @@ struct SSwitchControl
 {
     struct SControlHeader hdr;
     byte Port;
+    byte DebounceMs;
     byte Options;
 	#define SW_PULLUP      0
-	#define SW_DEBOUNCE    1
-    byte Debounce;
+    DebounceData Debounce;
 };
 
 struct STricolourLEDControl

@@ -20,9 +20,9 @@
 #include "shapeitem.h"
 
 PinItem::PinItem( QRectF rc, const Pin *pPin, Editor *pEditor, QGraphicsItem *parent )
-: QGraphicsRectItem( rc, parent )
-, m_pEditor( pEditor )
-, m_pPin( pPin )
+    : QGraphicsRectItem( rc, parent )
+    , m_pEditor( pEditor )
+    , m_pPin( pPin )
 {
     setAcceptHoverEvents( true );
 
@@ -114,7 +114,7 @@ ShapeItem *PinItem::parentShape() const
     assert( pParent->type() == ShapeItem::Type );
 
     if ( pParent != NULL && pParent->type() == ShapeItem::Type )
-	return 	qgraphicsitem_cast<ShapeItem *>(pParent);
+        return 	qgraphicsitem_cast<ShapeItem *>(pParent);
 
     return NULL;
 }

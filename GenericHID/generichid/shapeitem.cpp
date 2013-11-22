@@ -20,12 +20,12 @@
 #include "shapepwm.h"
 
 ShapeItem::ShapeItem(const Shape *pShape, int id, Editor *pEditor, QGraphicsItem *parent)
-: QGraphicsPixmapItem(QPixmap(pShape->shapeFile()),parent)
-, m_pShape( pShape )
-, m_pEditor( pEditor )
-, m_dRotate(0)
-, m_bMirror(false)
-, m_nId( id )
+    : QGraphicsPixmapItem(QPixmap(pShape->shapeFile()),parent)
+    , m_pShape( pShape )
+    , m_pEditor( pEditor )
+    , m_dRotate(0)
+    , m_bMirror(false)
+    , m_nId( id )
 {
     setAcceptHoverEvents( true );
     CreateProperties();
@@ -39,11 +39,11 @@ ShapeItem::~ShapeItem()
 void ShapeItem::CreateProperties()
 {
     foreach ( PropertyValue *v, m_values )
-	delete v;
+        delete v;
     m_values.clear();
     foreach ( const ShapeProperty *prop, m_pShape->properties().items() )
     {
-	m_values.append( prop->createValue() );
+        m_values.append( prop->createValue() );
     }
 }
 
@@ -61,6 +61,7 @@ bool ShapeItem::CreateGraphics()
     setZValue(-1);
     setFlag( QGraphicsItem::ItemIsMovable);
     setFlag( QGraphicsItem::ItemIsSelectable);
+    setFlag( QGraphicsItem::ItemSendsGeometryChanges);
     setTransformationMode ( Qt::SmoothTransformation  );
     setShapeMode( QGraphicsPixmapItem::HeuristicMaskShape );
 
@@ -69,61 +70,61 @@ bool ShapeItem::CreateGraphics()
     // Create the pins
     foreach (Pin *pPin, m_pShape->pins() )
     {
-	QRectF rc = pPin->geometry();
-	PinItem *pPinItem = new PinItem( rc, pPin, m_pEditor, this );
-	if ( pPin->enabled() )
-	    pPinItem->setBrush( QBrush(Qt::white) );
-	else
-	    pPinItem->setBrush( QBrush(Qt::lightGray) );
-	pPinItem->setZValue(0);
-	QString sToolTip;
-	if ( pPin->enabled() )
-	{
-	    sToolTip = pPin->id();
-	    if ( pPin->pinType() != PinType::None )
-	    {
-		sToolTip += ":";
-		sToolTip += PinType::toString( pPin->pinType() );
-	    }
-	}
-	else 
-	{
-	    sToolTip = pPin->id();
-	    if ( !pPin->otherUse().isEmpty() )
-		sToolTip += QString(", used by: ") + pPin->otherUse();
-	}
-	if ( !sToolTip.isEmpty() )
-	    pPinItem->setToolTip( sToolTip );
-	m_pins.push_back( pPinItem );
+        QRectF rc = pPin->geometry();
+        PinItem *pPinItem = new PinItem( rc, pPin, m_pEditor, this );
+        if ( pPin->enabled() )
+            pPinItem->setBrush( QBrush(Qt::white) );
+        else
+            pPinItem->setBrush( QBrush(Qt::lightGray) );
+        pPinItem->setZValue(0);
+        QString sToolTip;
+        if ( pPin->enabled() )
+        {
+            sToolTip = pPin->id();
+            if ( pPin->pinType() != PinType::None )
+            {
+                sToolTip += ":";
+                sToolTip += PinType::toString( pPin->pinType() );
+            }
+        }
+        else
+        {
+            sToolTip = pPin->id();
+            if ( !pPin->otherUse().isEmpty() )
+                sToolTip += QString(", used by: ") + pPin->otherUse();
+        }
+        if ( !sToolTip.isEmpty() )
+            pPinItem->setToolTip( sToolTip );
+        m_pins.push_back( pPinItem );
 
-	QGraphicsSimpleTextItem *pTextItem = new QGraphicsSimpleTextItem( pPin->id(), this );
-	QSize rawSize = QApplication::fontMetrics().boundingRect(pPin->id()).size();
+        QGraphicsSimpleTextItem *pTextItem = new QGraphicsSimpleTextItem( pPin->id(), this );
+        QSize rawSize = QApplication::fontMetrics().boundingRect(pPin->id()).size();
 
-	QTransform rotateTransform;
-	rotateTransform.rotate( pPin->rotate() );
-	QPointF rotated = rotateTransform.map( QPointF(rawSize.width(),rawSize.height()) );
-	QSize size( (int)rotated.x(), (int)rotated.y() );
+        QTransform rotateTransform;
+        rotateTransform.rotate( pPin->rotate() );
+        QPointF rotated = rotateTransform.map( QPointF(rawSize.width(),rawSize.height()) );
+        QSize size( (int)rotated.x(), (int)rotated.y() );
 
-	QPointF pos;
-	switch ( pPin->hAlign() )
-	{
-	    case PinHAlign::Left:	    pos.setX( rc.left() ); break;
-	    case PinHAlign::Centre:	    pos.setX( rc.center().x() - size.width() / 2.0 ); break;
-	    case PinHAlign::Right:	    pos.setX( rc.right() - size.width() ); break;
-	    case PinHAlign::OutsideLeft:    pos.setX( rc.left() - size.width() ); break;
-	    case PinHAlign::OutsideRight:   pos.setX( rc.right() ); break;
-	}
-	switch ( pPin->vAlign() )
-	{
-	    case PinVAlign::Top:    pos.setY( rc.top() ); break;
-	    case PinVAlign::Centre: pos.setY( rc.center().y() - size.height() / 2.0 ); break;
-	    case PinVAlign::Bottom: pos.setY( rc.bottom() - size.height() ); break;
-	    case PinVAlign::Above:  pos.setY( rc.top() - size.height() ); break;
-	    case PinVAlign::Below:  pos.setY( rc.bottom() ); break;
-	}
-	pTextItem->rotate( pPin->rotate() );
-	pTextItem->setPos( pos );
-	pTextItem->setZValue(1);
+        QPointF pos;
+        switch ( pPin->hAlign() )
+        {
+            case PinHAlign::Left:	    pos.setX( rc.left() ); break;
+            case PinHAlign::Centre:	    pos.setX( rc.center().x() - size.width() / 2.0 ); break;
+            case PinHAlign::Right:	    pos.setX( rc.right() - size.width() ); break;
+            case PinHAlign::OutsideLeft:    pos.setX( rc.left() - size.width() ); break;
+            case PinHAlign::OutsideRight:   pos.setX( rc.right() ); break;
+        }
+        switch ( pPin->vAlign() )
+        {
+            case PinVAlign::Top:    pos.setY( rc.top() ); break;
+            case PinVAlign::Centre: pos.setY( rc.center().y() - size.height() / 2.0 ); break;
+            case PinVAlign::Bottom: pos.setY( rc.bottom() - size.height() ); break;
+            case PinVAlign::Above:  pos.setY( rc.top() - size.height() ); break;
+            case PinVAlign::Below:  pos.setY( rc.bottom() ); break;
+        }
+        pTextItem->rotate( pPin->rotate() );
+        pTextItem->setPos( pos );
+        pTextItem->setZValue(1);
     }
 
     return true;
@@ -175,7 +176,7 @@ void ShapeItem::DoTransform()
     translate( center.x(), center.y() );
     rotate(m_dRotate );
     if ( m_bMirror )
-	scale(-1,1);
+        scale(-1,1);
     translate( -center.x(), -center.y() );
 }
 
@@ -196,7 +197,7 @@ void ShapeItem::WriteXML( QDomElement &node ) const
     XMLUtility::setAttribute( shapeNode, "mirror", m_bMirror );
 
     for ( int i = 0; i < m_pShape->properties().items().count(); i++ )
-	m_pShape->properties().items()[i]->WriteXML( shapeNode, m_values[i] );
+        m_pShape->properties().items()[i]->WriteXML( shapeNode, m_values[i] );
 }
 
 
@@ -213,27 +214,27 @@ ShapeItem *ShapeItem::CreateFromXML( ShapeCollection *pCol, Editor *pEditor, QDo
     const Shape *pShape = pCol->shape( sShapeId );
     if ( pShape != NULL )
     {
-	pShapeItem = new ShapeItem( pShape, nId, pEditor, NULL );
-	pShapeItem->setPos( QPointF(x,y) );
-	pShapeItem->setRotation( dRotate );
-	pShapeItem->setMirror( bMirror );
+        pShapeItem = new ShapeItem( pShape, nId, pEditor, NULL );
+        pShapeItem->setPos( QPointF(x,y) );
+        pShapeItem->setRotation( dRotate );
+        pShapeItem->setMirror( bMirror );
 
-	QDomNodeList propertyNodes = XMLUtility::elementsByTagName( shapeNode, "Property" );
-	for ( int i = 0; i < propertyNodes.count(); i++ )
-	{
-	    QDomElement item = propertyNodes.item(i).toElement();
-	    QString sName = XMLUtility::getAttribute( item, "name", "" );
-    	
-	    for ( int p = 0; p < pShape->properties().items().count(); p++ )
-	    {
-		ShapeProperty *prop = pShape->properties().items()[p];
-		if ( prop->name() == sName )
-		{
-		    prop->getXML( item, pShapeItem->m_values[p] );
-		    break;
-		}
-	    }
-	}
+        QDomNodeList propertyNodes = XMLUtility::elementsByTagName( shapeNode, "Property" );
+        for ( int i = 0; i < propertyNodes.count(); i++ )
+        {
+            QDomElement item = propertyNodes.item(i).toElement();
+            QString sName = XMLUtility::getAttribute( item, "name", "" );
+
+            for ( int p = 0; p < pShape->properties().items().count(); p++ )
+            {
+                ShapeProperty *prop = pShape->properties().items()[p];
+                if ( prop->name() == sName )
+                {
+                    prop->getXML( item, pShapeItem->m_values[p] );
+                    break;
+                }
+            }
+        }
     }
 
     return pShapeItem;
@@ -277,26 +278,26 @@ void ShapeItem::retrieveProperties()
 
     if ( m_pShape->shapeType() == ShapeType::AT90USB128 ) // MCU property change
     {
-	// Update pwm components.  
-	foreach ( PinItem *pPin, m_pins )
-	{
-	    foreach ( WireItem *pWire, pPin->wires() )
-	    {
-		ShapeItem *pShapeItem;
-		if ( pWire->pin1()->parentShape()->shapeData()->shapeType() != ShapeType::AT90USB128 )
-		    pShapeItem = pWire->pin1()->parentShape();
-		else
-		    pShapeItem = pWire->pin2()->parentShape();
+        // Update pwm components.
+        foreach ( PinItem *pPin, m_pins )
+        {
+            foreach ( WireItem *pWire, pPin->wires() )
+            {
+                ShapeItem *pShapeItem;
+                if ( pWire->pin1()->parentShape()->shapeData()->shapeType() != ShapeType::AT90USB128 )
+                    pShapeItem = pWire->pin1()->parentShape();
+                else
+                    pShapeItem = pWire->pin2()->parentShape();
 
-		if ( pShapeItem->shapeData()->shapeType() == ShapeType::PWM )
-		{
-		    const Shape *pShape = pShapeItem->shapeData();
-		    const ShapePWM *pPWM = dynamic_cast<const ShapePWM *>( pShape );
-		    if ( pPWM != NULL )
-			pPWM->UpdateTimerDetails( pShapeItem );
-		}
-	    }
-	}
+                if ( pShapeItem->shapeData()->shapeType() == ShapeType::PWM )
+                {
+                    const Shape *pShape = pShapeItem->shapeData();
+                    const ShapePWM *pPWM = dynamic_cast<const ShapePWM *>( pShape );
+                    if ( pPWM != NULL )
+                        pPWM->UpdateTimerDetails( pShapeItem );
+                }
+            }
+        }
     }
 }
 

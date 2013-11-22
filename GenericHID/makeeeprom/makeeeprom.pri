@@ -32,7 +32,8 @@ HEADERS += \
 	hidreportdescriptorbuilder.h \
 	makeeeprom.h \
 	stdafx.h \
-	stringtable.h
+	stringtable.h \
+    ../include/deviceconfig.h
 
 #Source files
 SOURCES += \

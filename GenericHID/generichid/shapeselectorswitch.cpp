@@ -20,7 +20,7 @@
 const int MAX_SELECTOR_PINS = 12;
 
 ShapeSelectorSwitch::ShapeSelectorSwitch(QDomElement &node, const QString &sShapeName, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, const QString &sIconFile, int nMaxInstances, const QString &sDescription)
-: Shape(node, sShapeName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription)
+    : Shape(node, sShapeName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription)
 {
 }
 
@@ -36,15 +36,15 @@ bool ShapeSelectorSwitch::Verify( QString &sErrors, const QList<class PinItem *>
 
     QSet<QString> pinsToCheck;
     for ( int i = 0; i < nOutputs; i++ )
-	pinsToCheck << QString::number( i+1 );
+        pinsToCheck << QString::number( i+1 );
 
     QSet<QString> notPinsToCheck;
     for ( int i = nOutputs; i < MAX_SELECTOR_PINS; i++ )
-	notPinsToCheck << QString::number( i+1 );
+        notPinsToCheck << QString::number( i+1 );
 
     bSuccess = CheckPins( sErrors, pins, pinsToCheck );
     if ( !CheckNotPins( sErrors, pins, notPinsToCheck ) )
-	bSuccess = false;
+        bSuccess = false;
 
     return bSuccess;
 }
@@ -55,15 +55,15 @@ void ShapeSelectorSwitch::MakeControlsXML( QDomElement &elem, const QList<class 
     int nBits = GetPropertyValueInt("Outputs",values,0);
     QStringList outputs;
     for ( int i = 0; i < nBits; i++ )
-	outputs << GetPort( pins, QString::number( i+1 ) );
+        outputs << GetPort( pins, QString::number( i+1 ) );
 
     MakeRotarySwitchControl( elem, 
-			     GetPropertyValueString("Name",values,""), 
-			     GetPropertyValueUsagePage("Usage",values,1),
-			     GetPropertyValueUsage("Usage",values,1),
-			     GetPropertyValueBool("Pullup",values,true),
-			     GetPropertyValueBool("Debounce",values,true),
-			     false,
-			     nBits,
-			     outputs );
+                             GetPropertyValueString("Name",values,""),
+                             GetPropertyValueUsagePage("Usage",values,1),
+                             GetPropertyValueUsage("Usage",values,1),
+                             GetPropertyValueBool("Pullup",values,true),
+                             GetPropertyValueInt("DebounceMs",values,10),
+                             false,
+                             nBits,
+                             outputs );
 }

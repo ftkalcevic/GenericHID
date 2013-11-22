@@ -24,8 +24,8 @@ class ControlRotarySwitch :    public Control
 {
     struct RotarySwitchPin
     {
-	RotarySwitchPin( byte nPort, byte nBit ) : m_nPort(nPort), m_nBit(nBit) {}
-	byte m_nPort;
+        RotarySwitchPin( byte nPort, byte nBit ) : m_nPort(nPort), m_nBit(nBit) {}
+        byte m_nPort;
         byte m_nBit;
     };
 
@@ -44,7 +44,7 @@ private:
     ushort m_nUsagePage;
     ushort m_nUsage;
     bool m_bPullup;
-    bool m_bDebounce;
+    byte m_nDebounceMs;
     bool m_bEncoded;
     int m_nLogicalMax;
     int m_nReportBits;

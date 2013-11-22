@@ -25,9 +25,15 @@
 
 struct USBDevice
 {
-    struct usb_dev_handle *hDevice;
-    struct usb_device *pDevice;
+    struct libusb_device_handle *hDevice;
+    struct libusb_device *pDevice;
     unsigned char nEndpoint;
+    USBDevice()
+    {
+        hDevice = 0;
+        pDevice = 0;
+        nEndpoint = 0;
+    }
 };
 
 class ProgramDlg : public QDialog

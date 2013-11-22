@@ -35,7 +35,7 @@ bool ControlAnalogEncoder::Load( const QDomElement &elem, QString *sError )
 	return false;
     if ( !XMLUtility::getAttributeBool( elem, "PullupB", m_bPullupB, sError ) )
 	return false;
-    if ( !XMLUtility::getAttributeBool( elem, "Debounce", m_bDebounce, sError ) )
+    if ( !XMLUtility::getAttributeByte( elem, "DebounceMs", m_nDebounceMs, DEBOUNCE_MIN, DEBOUNCE_MAX, sError ) )
 	return false;
     if ( !XMLUtility::getAttributeString( elem, "Name", m_sName, sError ) )
 	return false;
@@ -76,8 +76,8 @@ ByteArray ControlAnalogEncoder::GetControlConfig( byte nReportId ) const
     config.hdr.Length = sizeof(config);
     config.PortA = (byte)m_nPortA;
     config.PortB = (byte)m_nPortB;
-    config.Options = (m_bDebounce ? (1<<AE_DEBOUNCE) : 0 ) |
-		     (m_bPullupA ? (1<<AE_PULLUPA) : 0 ) |
+    config.DebounceMs = (byte)m_nDebounceMs;
+    config.Options = (m_bPullupA ? (1<<AE_PULLUPA) : 0 ) |
 		     (m_bPullupB ? (1<<AE_PULLUPB) : 0 );
     return ByteBuffer((byte *)&config, sizeof(config) );
 }

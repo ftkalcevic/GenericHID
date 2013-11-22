@@ -25,10 +25,10 @@ correctly.</p>
 <p><i>Care must be taken with the current consumption of digital encoders.&nbsp; 
 The larger industrial encoders can draw 100mA, which can overload a USB device.&nbsp; 
 See the section on <a href="hardware.htm#current">USB Power</a> for more information.</i></p>
-<p>There is currently no support for mechanical encoders.&nbsp; Mechanical 
+<p>There is currently limited support for mechanical encoders.&nbsp; Mechanical 
 encoders are a cheaper version of the digital encoders, that generate the A/B 
-signal through mechanical contacts.&nbsp; They need pull-up resistors and 
-debounce code to work correctly.</p>
+signal through mechanical contacts.&nbsp; Pull-up resistors are supported, but to 
+	work correctly, debounce processing should be used process the A/B waveform.</p>
 <h2>Properties</h2><h3 id="Name">Name</h3>
 <p>Components can be given an optional name.&nbsp; This is seen in the Test tab.  Not all applications support the name.&nbsp; 
 Hidcomp/hidconfig supports names.</p>
@@ -42,6 +42,19 @@ Hidcomp/hidconfig supports names.</p>
 numbers meaning they can count from 0 to 2<sup>16</sup>-1 
 (65535).&nbsp; The counter will wrap around the minimum/maximum values.</p>
 <p>Depending on the software reading the values, 8 bits is usually enough.</p>
+
+<h3 id="Output">Output</h3>
+<p>The type of output reported back to the host computer.&nbsp; This can either be Absolute or Relative.&nbsp; Absolute is described above, that is, the 
+microcontroller will keep track of the encoder count, up to "Bits" size.&nbsp;  In relative mode, the number of counts that have changed between packets
+is reported to the host computer.  This will be 0 if the encoder is steady, or a small positive or negative value if it is moving.  It is the host computer's
+responsibility to keep count.</p>
+
+<h3 id="Pullup">Pull Up</h3>
+<p>Selecting this enables the internal pull-up resistor of the microcontroller.  
+This is not required for digital encoders.  It may be used with mechanical encoders
+but may not work correctly because of the lack of debounce processing..  See 
+<a href="mechanicalswitches.htm">Mechanical Switches</a> for more information.</p>
+
 
 <h3 id="Current">Current</h3>
 <p> Defines the amount of electrical current used by the LED in mA.  This is used to estimate the USB power draw.&nbsp; 

@@ -33,7 +33,7 @@
 #include "dfucommon.h"
 #include "inttypes.h"
 #include "teensyprogrammer.h"
-#include <usb.h>
+#include <libusb-1.0/libusb.h>
 
 TeensyProgrammer::TeensyProgrammer(void)
 {
@@ -120,16 +120,16 @@ bool TeensyProgrammer::StartVerify(IntelHexBuffer &)
     return true;    // no verify.
 }
 
-bool TeensyProgrammer::EnterApplicationMode(ResetMode::ResetMode mode, unsigned int)
+bool TeensyProgrammer::EnterApplicationMode(ResetMode::ResetMode /*mode*/, unsigned int)
 {
     unsigned char buf[260];
     int block_size = m_flash_page_size*2;
 
- //   if ( mode == ResetMode::Hard )
- //   {
-	//hard_reboot();
- //   }
- //   else
+    //   if ( mode == ResetMode::Hard )
+    //   {
+    //hard_reboot();
+    //   }
+    //   else
     {
 	buf[0] = 0xFF;
 	buf[1] = 0xFF;
@@ -140,62 +140,60 @@ bool TeensyProgrammer::EnterApplicationMode(ResetMode::ResetMode mode, unsigned 
 }
 
 
-usb_dev_handle * TeensyProgrammer::open_usb_device(int vid, int pid)
+libusb_device_handle * TeensyProgrammer::open_usb_device(int vid, int pid)
 {
-    struct usb_bus *bus;
-    struct usb_device *dev;
-    usb_dev_handle *h;
-    int r;
+    libusb_device_handle *h;
 
-    usb_init();
-    usb_find_busses();
-    usb_find_devices();
+    libusb_init(NULL);
+    libusb_device **devices = NULL;
+    int device_count = libusb_get_device_list( NULL, &devices);
+
     DEBUG_MSG( "nSearching for Teensy USB device:" );
-    for (bus = usb_get_busses(); bus; bus = bus->next) 
+    for ( int i = 0; i < device_count; i++ )
     {
-	for (dev = bus->devices; dev; dev = dev->next) 
-	{
-	    DEBUG_MSG( QString("bus \"%1\", device \"%2\" vid=%3, pid=%4").arg(bus->dirname).arg(dev->filename).arg(dev->descriptor.idVendor,4,16,QChar('0')).arg(dev->descriptor.idProduct,4,16,QChar('0')) );
-	    if (dev->descriptor.idVendor != vid) continue;
-	    if (dev->descriptor.idProduct != pid) continue;
-	    h = usb_open(dev);
-	    if (!h) 
-	    {
-		ERROR_MSG( "Found device but unable to open" );
-		continue;
-	    }
-#ifdef LIBUSB_HAS_GET_DRIVER_NP
-	    {
-	        char buf[260];
-	        r = usb_get_driver_np(h, 0, buf, sizeof(buf));
-	        if (r >= 0) {
-		    r = usb_detach_kernel_driver_np(h, 0);
-		    if (r < 0) {
-		        usb_close(h);
-			ERROR_MSG( QString("Device is in use by \"%1\" driver").arg(buf) );
-		        continue;
-		    }
-	        }
-	    }
-#endif
-            usb_set_configuration(h, 1);
-	    // Mac OS-X - removing this call to usb_claim_interface() might allow
-	    // this to work, even though it is a clear misuse of the libusb API.
-	    // normally Apple's IOKit should be used on Mac OS-X
-	    r = usb_claim_interface(h, 0);
-	    if (r < 0) 
-	    {
-		usb_close(h);
-		ERROR_MSG( "Unable to claim interface, check USB permissions" );
-		continue;
-	    }
-	    return h;
-	}
+        libusb_device *dev = devices[i];
+
+        libusb_device_descriptor desc;
+        int r = libusb_get_device_descriptor(dev, &desc);
+        if (r == 0)
+        {
+            DEBUG_MSG( QString("vid=%1, pid=%2").arg(desc.idVendor,4,16,QChar('0')).arg(desc.idProduct,4,16,QChar('0')) );
+            if (desc.idVendor != vid) continue;
+            if (desc.idProduct != pid) continue;
+            h = NULL;
+            libusb_open(dev, &h);
+            if (!h) 
+            {
+                ERROR_MSG( "Found device but unable to open" );
+                continue;
+            }
+
+            libusb_set_configuration(h, 1);
+            r = libusb_detach_kernel_driver(h, 0);
+            if (r < 0)
+            {
+                libusb_close(h);
+                ERROR_MSG( "Device is in use" );
+                continue;
+            }
+        }
+
+        // Mac OS-X - removing this call to usb_claim_interface() might allow
+        // this to work, even though it is a clear misuse of the libusb API.
+        // normally Apple's IOKit should be used on Mac OS-X
+        r = libusb_claim_interface(h, 0);
+        if (r < 0)
+        {
+            libusb_close(h);
+            ERROR_MSG( "Unable to claim interface, check USB permissions" );
+            continue;
+        }
+        return h;
     }
     return NULL;
 }
 
-static usb_dev_handle *libusb_teensy_handle = NULL;
+static libusb_device_handle *libusb_teensy_handle = NULL;
 
 int TeensyProgrammer::teensy_open(void)
 {
@@ -210,8 +208,8 @@ int TeensyProgrammer::teensy_write(void *buf, int len, double timeout)
     int r;
 
     if (!libusb_teensy_handle) return 0;
-    r = usb_control_msg(libusb_teensy_handle, 0x21, 9, 0x0200, 0, (char *)buf,
-	len, (int)(timeout * 1000.0));
+    r = libusb_control_transfer(libusb_teensy_handle, 0x21, 9, 0x0200, 0, (unsigned char *)buf,
+                                len, (int)(timeout * 1000.0));
     if (r < 0) return 0;
     return 1;
 }
@@ -219,21 +217,21 @@ int TeensyProgrammer::teensy_write(void *buf, int len, double timeout)
 void TeensyProgrammer::teensy_close(void)
 {
     if (!libusb_teensy_handle) return;
-    usb_release_interface(libusb_teensy_handle, 0);
-    usb_close(libusb_teensy_handle);
+    libusb_release_interface(libusb_teensy_handle, 0);
+    libusb_close(libusb_teensy_handle);
     libusb_teensy_handle = NULL;
 }
 
 int TeensyProgrammer::hard_reboot(void)
 {
-    usb_dev_handle *rebootor;
+    libusb_device_handle *rebootor;
     int r;
 
     rebootor = open_usb_device(0x16C0, 0x0477);
     if (!rebootor) return 0;
-    r = usb_control_msg(rebootor, 0x21, 9, 0x0200, 0, "reboot", 6, 100);
-    usb_release_interface(rebootor, 0);
-    usb_close(rebootor);
+    r = libusb_control_transfer(rebootor, 0x21, 9, 0x0200, 0, (unsigned char *)"reboot", 6, 100);
+    libusb_release_interface(rebootor, 0);
+    libusb_close(rebootor);
     if (r < 0) return 0;
     return 1;
 }

@@ -40,7 +40,7 @@
 #include "inttypes.h"
 #include <stddef.h>
 
-#include "usb.h"
+#include <libusb-1.0/libusb.h>
 #include "dfutypes.h"
 #include "dfu-device.h"
 
@@ -102,7 +102,7 @@ int32_t dfu_clear_status( dfu_device_t *device );
 int32_t dfu_get_state( dfu_device_t *device );
 int32_t dfu_abort( dfu_device_t *device );
 
-struct usb_device *dfu_device_init( const uint32_t vendor,
+libusb_device *dfu_device_init( const uint32_t vendor,
                                     const uint32_t product,
                                     dfu_device_t *device,
                                     const bool initial_abort,

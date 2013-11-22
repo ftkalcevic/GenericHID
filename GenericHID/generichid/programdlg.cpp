@@ -16,7 +16,7 @@
 
 #include "stdafx.h"
 #include "programdlg.h"
-#include "usb.h"
+#include <libusb-1.0/libusb.h>
 #include "programmerthread.h"
 
 const int DEVICE_POLL_PERIOD = 500;	// ms
@@ -68,104 +68,117 @@ bool ProgramDlg::FindDevices( int &nGenericHIDs, int &nAt90DFUs, int &nTeensies 
     nAt90DFUs = 0;
     nTeensies = 0;
 
-    usb_find_busses();
-    usb_find_devices();
+    libusb_device **devices = NULL;
+    int device_count = libusb_get_device_list( NULL, &devices);
 
-    /* Walk the tree and find our devices. */
-    for( struct usb_bus *usb_bus = usb_get_busses(); NULL != usb_bus; usb_bus = usb_bus->next ) 
-    {
-        for( struct usb_device *device = usb_bus->devices; NULL != device; device = device->next) 
+    /* Find our devices. */
+    for ( int i = 0; i < device_count; i++ )
 	{
-	    LOG_MSG( m_Logger, LogTypes::Debug, QString("VID=%1 PID=%2").arg(device->descriptor.idVendor,4,16,QChar('0')).arg(device->descriptor.idProduct,4,16,QChar('0')) );
-            if( device->descriptor.idVendor == GenericHID_VID && device->descriptor.idProduct == GenericHID_PID )
-		nGenericHIDs++;
-            else if( device->descriptor.idVendor == TEENSYPP_VID && device->descriptor.idProduct == TEENSYPP_PID )
-		nTeensies++;
-            else if( device->descriptor.idVendor == At90USB1287_VID && device->descriptor.idProduct == At90USB1287_PID )
-		nAt90DFUs++;
+        libusb_device *dev = devices[i];
+
+        libusb_device_descriptor desc;
+        int r = libusb_get_device_descriptor(dev, &desc);
+        if (r == 0)
+        {
+            LOG_MSG( m_Logger, LogTypes::Debug, QString("VID=%1 PID=%2").arg(desc.idVendor,4,16,QChar('0')).arg(desc.idProduct,4,16,QChar('0')) );
+            if( desc.idVendor == GenericHID_VID && desc.idProduct == GenericHID_PID )
+                nGenericHIDs++;
+            else if( desc.idVendor == TEENSYPP_VID && desc.idProduct == TEENSYPP_PID )
+                nTeensies++;
+            else if( desc.idVendor == At90USB1287_VID && desc.idProduct == At90USB1287_PID )
+                nAt90DFUs++;
         }
     }
+    libusb_free_device_list(devices, 1);
+
     return true;
 }
 
 USBDevice ProgramDlg::GetGenericHIDDevice()
 {
     USBDevice retDevice;
-    memset( &retDevice, 0, sizeof(USBDevice) );
 
-    usb_find_busses();
-    usb_find_devices();
+    libusb_device **devices = NULL;
+    int device_count = libusb_get_device_list( NULL, &devices);
 
-    /* Walk the tree and find our device. */
-    for( struct usb_bus *usb_bus = usb_get_busses(); NULL != usb_bus; usb_bus = usb_bus->next ) 
+    /* Find our devices. */
+    for ( int i = 0; i < device_count; i++ )
     {
-        for( struct usb_device *device = usb_bus->devices; NULL != device; device = device->next) 
-	{
-            if( device->descriptor.idVendor == GenericHID_VID && device->descriptor.idProduct == GenericHID_PID )
+        libusb_device *dev = devices[i];
+
+        libusb_device_descriptor desc;
+        int r = libusb_get_device_descriptor(dev, &desc);
+        if (r == 0)
+        {
+            if( desc.idVendor == GenericHID_VID && desc.idProduct == GenericHID_PID )
             {
-		/* Loop through all of the configurations */
-		for( int c = 0; c < device->descriptor.bNumConfigurations; c++ ) 
-		{
-		    struct usb_config_descriptor *config = &(device->config[c]);
+                /* Loop through all of the configurations */
+                for( int c = 0; c < desc.bNumConfigurations; c++ )
+                {
+                    libusb_config_descriptor *config = NULL;
+                    r = libusb_get_config_descriptor( dev, c, &config );
+                    if ( r == 0 )
+                    {
+                        /* Loop through all of the interfaces */
+                        for( int i = 0; i < config->interface->num_altsetting; i++)
+                        {
+                            const libusb_interface_descriptor *interface = &(config->interface->altsetting[i]);
 
-		    /* Loop through all of the interfaces */
-		    for( int i = 0; i < config->interface->num_altsetting; i++) 
-		    {
-			struct usb_interface_descriptor *interface = &(config->interface->altsetting[i]);
+                            /* Check if the interface is a HID interface */
+                            if ( interface->bInterfaceClass == LIBUSB_CLASS_HID )
+                            {
+                                libusb_device_handle *hDevice;
+                                r = libusb_open( dev, &hDevice );
+                                if ( r == 0 )
+                                {
+                                    int current_config;
+                                    r = libusb_get_configuration(hDevice, &current_config);
+                                    if ( ( r == 0 && current_config != config->bConfigurationValue ) ||
+                                         ( r != 0 ) )
+                                    {
+                                        r = libusb_set_configuration(hDevice, config->bConfigurationValue);
+                                    }
 
-			/* Check if the interface is a HID interface */
-			if ( interface->bInterfaceClass == USB_CLASS_HID )
-			{
-			    usb_dev_handle *hDevice = usb_open( device );
-			    if ( hDevice != NULL )
-			    {
-#ifdef _WIN32
-				if( usb_set_configuration(hDevice, config->bConfigurationValue) == 0 ) 
-				{
-				    int nRet = usb_claim_interface(hDevice, interface->bInterfaceNumber);
-#else
-				int nRet = usb_claim_interface(hDevice, interface->bInterfaceNumber);
-				if ( nRet != 0 )
-				{
-				    usb_detach_kernel_driver_np(hDevice, interface->bInterfaceNumber);
-				    nRet = usb_claim_interface(hDevice, interface->bInterfaceNumber);
-				}
-				if ( nRet == 0 )
-				{
-				    nRet = usb_set_configuration(hDevice, config->bConfigurationValue);
-				    nRet = 0;
-#endif
+                                    if ( r == 0 )
+                                    {
+                                        r = libusb_claim_interface(hDevice, interface->bInterfaceNumber);
+                                        if ( r != 0 )
+                                        {
+                                            r = libusb_detach_kernel_driver(hDevice, interface->bInterfaceNumber);
+                                            r = libusb_claim_interface(hDevice, interface->bInterfaceNumber);
+                                        }
+                                        if ( r == 0 )
+                                        {
+                                            // Locate the output endpoint
 
-				    if ( nRet == 0 )
-				    {
-					// Locate the output endpoint
+                                            unsigned char nEndPoint = LIBUSB_ENDPOINT_OUT | LIBUSB_TRANSFER_TYPE_INTERRUPT;
 
-					unsigned char nEndPoint = USB_ENDPOINT_OUT | USB_ENDPOINT_TYPE_INTERRUPT;
-
-					for ( int ep = 0; ep < interface->bNumEndpoints; ep++ )
-					{
-					    if ( (interface->endpoint[ep].bEndpointAddress & USB_ENDPOINT_DIR_MASK) == USB_ENDPOINT_OUT &&
-						(interface->endpoint[ep].bmAttributes & USB_ENDPOINT_TYPE_MASK) == USB_ENDPOINT_TYPE_INTERRUPT )
-					    {
-						nEndPoint = interface->endpoint[ep].bEndpointAddress;
-						break;
-					    }
-					}
-					retDevice.hDevice = hDevice;
-					retDevice.pDevice = device;
-					retDevice.nEndpoint = nEndPoint;
-					return retDevice;
-				    }
-				    else
-				    {
-				    }
-				}
-			    }
-			}
-		    }
-		}
-	    }
-	}
+                                            for ( int ep = 0; ep < interface->bNumEndpoints; ep++ )
+                                            {
+                                                if ( (interface->endpoint[ep].bEndpointAddress & LIBUSB_ENDPOINT_DIR_MASK) == LIBUSB_ENDPOINT_OUT &&
+                                                     (interface->endpoint[ep].bmAttributes & LIBUSB_TRANSFER_TYPE_MASK) == LIBUSB_TRANSFER_TYPE_INTERRUPT )
+                                                {
+                                                    nEndPoint = interface->endpoint[ep].bEndpointAddress;
+                                                    break;
+                                                }
+                                            }
+                                            retDevice.hDevice = hDevice;
+                                            retDevice.pDevice = dev;
+                                            retDevice.nEndpoint = nEndPoint;
+                                            return retDevice;
+                                        }
+                                        else
+                                        {
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        libusb_free_config_descriptor( config );
+                    }
+                }
+            }
+        }
     }
     return retDevice;
 }
@@ -228,21 +241,23 @@ void ProgramDlg::onStartBootloader()
 
     if ( Device.hDevice != NULL )
     {
-	unsigned char BootloaderReport[] = { BOOTLOADER_REPORT_ID, 
-					     B0(MAGIC_BOOTLOADER_CODE), 
-					     B1(MAGIC_BOOTLOADER_CODE), 
-					     B2(MAGIC_BOOTLOADER_CODE), 
-					     B3(MAGIC_BOOTLOADER_CODE) };
-	int result = usb_interrupt_write( Device.hDevice, 
-					  Device.nEndpoint,
-					  (char *)BootloaderReport,
-					  countof(BootloaderReport),
-					  1000 );
-	if ( result != sizeof(BootloaderReport) )
-	{
-	}
+        unsigned char BootloaderReport[] = { BOOTLOADER_REPORT_ID,
+                             B0(MAGIC_BOOTLOADER_CODE),
+                             B1(MAGIC_BOOTLOADER_CODE),
+                             B2(MAGIC_BOOTLOADER_CODE),
+                             B3(MAGIC_BOOTLOADER_CODE) };
+        int transferred;
+        int result = libusb_interrupt_transfer( Device.hDevice,
+                          Device.nEndpoint,
+                          (unsigned char *)BootloaderReport,
+                          countof(BootloaderReport),
+                          &transferred,
+                          1000 );
+        if ( result != sizeof(BootloaderReport) )
+        {
+        }
 
-	usb_close( Device.hDevice );
+        libusb_close( Device.hDevice );
     }
 }
 

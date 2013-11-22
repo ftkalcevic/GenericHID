@@ -34,7 +34,7 @@ public:
 private:
     ushort m_nUsagePage;
     ushort m_nUsageMin;
-    bool m_bDebounce;
+    byte m_nDebounceMs;
     QList<int> m_Rows;
     QList<int> m_Cols;
     QStringList m_Strings;

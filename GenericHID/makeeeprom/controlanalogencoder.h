@@ -35,7 +35,7 @@ private:
     byte m_nPortB;
     bool m_bPullupA;
     bool m_bPullupB;
-    bool m_bDebounce;
+    byte m_nDebounceMs;
     QString m_sName;
     ushort m_nUsagePage;
     ushort m_nUsage;

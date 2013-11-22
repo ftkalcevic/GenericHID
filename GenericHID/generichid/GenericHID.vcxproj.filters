@@ -1,0 +1,1259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;cxx;c;def</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h</Extensions>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\debug">
+      <UniqueIdentifier>{f5299fb1-228f-4bcf-be40-4595fde8f571}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated Files\release">
+      <UniqueIdentifier>{5f57ef9a-6439-4c4a-ab7e-ff58c0685fd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{b4f5b50a-0ac1-4b55-80c4-06178fdfa148}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\help">
+      <UniqueIdentifier>{8b7c2419-2cb2-45b2-9cb3-2de82f016cee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{f021bbf8-f0a2-470c-b152-aec501345572}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="columnlayout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dragtoolbutton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="editor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="eepromdata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="generichid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hiddatathread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="keymatrixeditorfactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="keymatrixeditwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="keymatrixnamedlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="listeditorfactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="listpropertymanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pinitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="programdlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="programmerthread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="programmingstatusdlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapebicolourled.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapecodedselectorswitch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapecollection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapedigitalencoder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapedirectionalswitch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapegraphicsview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapeitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapekeymatrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapelcd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapelcd_spi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapeled.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapemcu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapemimedata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapepotentiometer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapeproperties.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapeproperty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapepropertybool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapepropertybrowser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapepropertyenum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapepropertyint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapepropertyrcnames.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapepropertystring.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapepropertytimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapepropertyusage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapepwm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapergb.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapescene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapeselectorswitch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapeswitch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapetimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapetricolourled.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testinput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testinputbutton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testinputhatswitch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testinputvalue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testoutput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testoutputlcd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testoutputled.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testoutputvalue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="timerconfigdlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="timercounter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="timereditorfactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="timereditwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="usagepropertymanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vector2d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wireitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\qrc_generichid.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_dragtoolbutton.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_generichid.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_hiddatathread.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_keymatrixeditorfactory.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_keymatrixeditwidget.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_keymatrixnamedlg.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_listeditorfactory.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_listpropertymanager.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_pinitem.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_programdlg.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_programmerthread.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_programmingstatusdlg.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_shapegraphicsview.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_shapeitem.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_shapemimedata.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_shapepropertybrowser.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_shapescene.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_testinput.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_testinputbutton.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_testinputhatswitch.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_testinputvalue.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_testitem.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_testoutput.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_testoutputlcd.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_testoutputled.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_testoutputvalue.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_testwidget.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_timerconfigdlg.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_timereditorfactory.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_timereditwidget.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_usagepropertymanager.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\debug\moc_wireitem.cpp">
+      <Filter>Generated Files\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_dragtoolbutton.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_generichid.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_hiddatathread.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_keymatrixeditorfactory.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_keymatrixeditwidget.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_keymatrixnamedlg.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_listeditorfactory.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_listpropertymanager.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_pinitem.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_programdlg.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_programmerthread.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_programmingstatusdlg.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_shapegraphicsview.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_shapeitem.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_shapemimedata.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_shapepropertybrowser.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_shapescene.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_testinput.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_testinputbutton.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_testinputhatswitch.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_testinputvalue.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_testitem.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_testoutput.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_testoutputlcd.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_testoutputled.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_testoutputvalue.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_testwidget.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_timerconfigdlg.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_timereditorfactory.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_timereditwidget.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_usagepropertymanager.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+    <ClCompile Include="generatedfiles\Release\moc_wireitem.cpp">
+      <Filter>Generated Files\release</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="columnlayout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\datatypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\deviceconfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="editor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="eepromdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapebicolourled.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapecodedselectorswitch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapecollection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapedigitalencoder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapedirectionalswitch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapekeymatrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapelcd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapelcd_spi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapeled.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapemcu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapepotentiometer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapeproperties.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapeproperty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapepropertybool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapepropertyenum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapepropertyint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapepropertyrcnames.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapepropertystring.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapepropertytimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapepropertyusage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapepwm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapergb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapeselectorswitch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapeswitch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapetimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapetricolourled.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="timercounter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vector2d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_generichid.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="generatedfiles\ui_keymatrixnamedlg.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="generatedfiles\ui_programdlg.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="generatedfiles\ui_programmingstatusdlg.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="generatedfiles\ui_timerconfigdlg.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\ApplicationIcon.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\AVRUSBKey - Wings and labels.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\AVRUSBKey - Wings.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\AVRUSBKey - Wired Wings.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\AVRUSBKey.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\AVRUSBKeyIcon.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\AVRUSBKeyStripped.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\BiColourLED.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\BiColourLEDIcon.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\CodedRotarySwitch.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\CodedRotarySwitchIcon.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\Cursor.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\DigitalEncoder.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\DigitalEncoderIcon.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\DirectionalSwitch.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\DirectionalSwitchIcon.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\generichid.1.0.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\generichid.1.0icon.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\GreenLight.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\hatarrow.bmp">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\hatarrowhi.bmp">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\hatdot.bmp">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\hatdothi.bmp">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\KeyMatrix.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\KeyMatrixIcon.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\LCD.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\LCDIcon.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\led.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\ledicon.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\Mirror Cursor Off.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\Mirror Cursor.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\Mirror.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\new.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\open.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\Potentiometer.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\PotentiometerIcon.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\pushbutton.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\pushbuttonicon.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\pwm.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\pwmicon.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\RedLight.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\rgbled.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\rgbledicon.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\RotarySwitch.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\RotarySwitchIcon.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\Rotate Cursor Off.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\Rotate Cursor.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\Rotate.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\save.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\Switch.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\SwitchIcon.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\teensypp.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\teensyppicon.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\timer.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\timericon.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\TriColourLED.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\TriColourLEDIcon.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\Wire Cursor Not.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\Wire Cursor Off.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\Wire Cursor.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="resources\Wire.png">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="help\at90usbkey.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\avrusbkeyheader.jpg">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\avrusbkeyicon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\avrusbkeywingsicon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\bicolourled.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\bicolourledicon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\biledcon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\biledsch.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\button.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\buttonbounceDSO.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\buttoninternal.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\buttonsch.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\codedrotaryswitch.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\codedrotaryswitchicon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\codedsch.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\counter.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\cursor.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\digitalencoder.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\digitalencodericon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\directionalswitchicon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\dirswitch.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\duallcd.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\fastpwm.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\fastpwm99.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\flow.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\generichid.1.0.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\generichid.1.0icon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\generichid.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\generichid.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\generichidpendantcapture.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\generichidpendantcapturesmall.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\gettingstarted.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\gplv3-88x31.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\hardware.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\hipower.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\hipowersoftstart.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\hwb.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\index.html">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\keycon1jpg.jpg">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\keycon2jpg.jpg">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\keycon3jpg.jpg">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\keymatrix.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\keymatrixicon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\keymatrixsch.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\lathependant.jpg">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\lcd.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\lcdcontrast.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\lcdicon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\lcdspi.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\led.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\ledicon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\leds.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\ledsch.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\ledsch2.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\ledsourcesink.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\linuxpermissions.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\mcd.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\mechanicalswitches.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\mirror.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\new.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\notes.txt">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\open.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\pendant.jpg">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\pendantsmall.jpg">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\phasecorrectpwm.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\pot.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\potcon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\potentiometericon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\power.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\powericon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\program.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\pushbuttonicon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\pwm.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\pwmicon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\pwmsignal.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\pwmswitch.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\quad.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\removed2.jpg">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\removed5.jpg">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\removediiode.jpg">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\removedivider.jpg">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\removedregulator.jpg">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\removememory.jpg">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\removeregulator.jpg">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\removethermistor.jpg">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\removeuid.jpg">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\removeuvcon.jpg">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\rgbled.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\rgbledcon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\rgbledicon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\rgbledsch.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\rotarysch.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\rotaryswitch.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\rotaryswitchicon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\rotate.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\samples.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\save.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\screen_manual.JPG">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\stockusbkey.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\strippedusbkey.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\teensypp2.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\testlarge.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\testpanel.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\timerconfig.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\timerconfigsimple.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\timericon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\timers.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\tricolourled.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\tricolourledicon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\triledcon.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\triledsch.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\troubleshooting.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\usages.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\usages.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\usbkeywithwings.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\walkthrough1.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\walkthrough2.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\walkthrough3.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\walkthrough4.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\walkthrough5.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\walkthrough6.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\walkthrough7.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\wings1.jpg">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\wings2.jpg">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\wings3.jpg">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\wire cursor not.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\wire cursor.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\wire.png">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="help\wizbangidc.htm">
+      <Filter>Resources\help</Filter>
+    </None>
+    <None Include="config.xml">
+      <Filter>Data</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="dragtoolbutton.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="generichid.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="hiddatathread.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="keymatrixeditorfactory.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="keymatrixeditwidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="keymatrixnamedlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="listeditorfactory.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="listpropertymanager.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="pinitem.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="programdlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="programmerthread.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="programmingstatusdlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="shapegraphicsview.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="shapeitem.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="shapemimedata.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="shapepropertybrowser.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="shapescene.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="testinput.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="testinputbutton.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="testinputhatswitch.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="testinputvalue.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="testitem.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="testoutput.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="testoutputlcd.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="testoutputled.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="testoutputvalue.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="testwidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="timerconfigdlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="timereditorfactory.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="timereditwidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="usagepropertymanager.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="wireitem.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="generichid.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="keymatrixnamedlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="programdlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="programmingstatusdlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="timerconfigdlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="generichid.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

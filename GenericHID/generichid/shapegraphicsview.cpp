@@ -19,8 +19,8 @@
 #include "shapemimedata.h"
 
 ShapeGraphicsView::ShapeGraphicsView(QWidget *parent)
-: QGraphicsView(parent)
-, m_dViewScale( 1.0 )
+    : QGraphicsView(parent)
+    , m_dViewScale( 1.0 )
 {
     setAcceptDrops( true );
 }
@@ -36,8 +36,8 @@ void ShapeGraphicsView::dropEvent ( QDropEvent * event )
     const ShapeMimeData *mimeData = qobject_cast<const ShapeMimeData *>(event->mimeData());
     if ( mimeData != NULL )
     {
-	emit dropShapeEvent( mimeData->shape(), mapToScene(event->pos()) );
-	event->acceptProposedAction();
+        emit dropShapeEvent( mimeData->shape(), mapToScene(event->pos()) );
+        event->acceptProposedAction();
     }
     //else
 	//QGraphicsView::dropEvent( event );
@@ -47,7 +47,7 @@ void ShapeGraphicsView::dragEnterEvent( QDragEnterEvent * event )
 {
     const ShapeMimeData *mimeData = qobject_cast<const ShapeMimeData *>(event->mimeData());
     if ( mimeData != NULL )
-	event->acceptProposedAction();
+        event->acceptProposedAction();
     //else
 	//QGraphicsView::dragEnterEvent( event );
 }
@@ -56,7 +56,7 @@ void ShapeGraphicsView::dragMoveEvent( QDragMoveEvent * event )
 {
     const ShapeMimeData *mimeData = qobject_cast<const ShapeMimeData *>(event->mimeData());
     if ( mimeData != NULL )
-	event->acceptProposedAction();
+        event->acceptProposedAction();
     //else
 	//QGraphicsView::dragMoveEvent( event );
 }
@@ -75,9 +75,9 @@ void ShapeGraphicsView::scaleView( double dScale )
 {
     m_dViewScale = dScale;
     if ( m_dViewScale < 0.1 )
-	m_dViewScale = 0.1;
+        m_dViewScale = 0.1;
     else if ( m_dViewScale > 5 )
-	m_dViewScale = 5;
+        m_dViewScale = 5;
 
     QMatrix m;
     m.scale( m_dViewScale,m_dViewScale );

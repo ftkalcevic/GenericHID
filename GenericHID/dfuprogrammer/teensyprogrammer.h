@@ -3,7 +3,7 @@
 
 #include "deviceprogrammer.h"
 
-struct usb_dev_handle;
+struct libusb_device_handle;
 
 class TeensyProgrammer: public DeviceProgrammer
 {
@@ -19,7 +19,7 @@ public:
     virtual bool EnterApplicationMode(ResetMode::ResetMode mode, unsigned int addr = 0);
 
 protected:
-    usb_dev_handle * open_usb_device(int vid, int pid);
+    libusb_device_handle * open_usb_device(int vid, int pid);
     int teensy_open(void);
     int teensy_write(void *buf, int len, double timeout);
     void teensy_close(void);

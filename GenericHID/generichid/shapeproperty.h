@@ -64,7 +64,7 @@ public:
 
     const QString &name() const { return m_sName; }
     const QString &description() const { return m_sDescription; }
-    const bool enabled() const { return m_bEnabled; }
+    bool enabled() const { return m_bEnabled; }
 
 public:
     static QtGroupPropertyManager *m_groupManager;

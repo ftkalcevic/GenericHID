@@ -690,7 +690,7 @@
       <property name="Name" description=":button.htm#Name" type="string"/>
       <property name="Usage" description=":button.htm#Usage" type="usage" default="9:1"/>
       <property name="Pullup" description=":button.htm#Pullup" type="bool" default="true"/>
-      <property name="Debounce" description=":button.htm#Debounce" type="bool" default="true"/>
+      <property name="Debounce" description=":button.htm#DebounceMs" type="int" min="0" max="250" default="10"/>
       <property name="Current" description=":button.htm#Current" type="int" min="0" max="500" default="0"/>
     </Shape>
 
@@ -715,7 +715,7 @@
       <property name="Rows" description="keymatrix.htm#Rows" type="int" min="1" max="8" default="4"/>
       <property name="Columns" description="keymatrix.htm#Columns" type="int" min="1" max="8" default="4"/>
       <property name="Key Names" description="keymatrix.htm#KeyNames" type="keynames"/>
-      <property name="Debounce" description="keymatrix.htm#Debounce" type="bool" default="true"/>
+      <property name="Debounce" description="keymatrix.htm#DebounceMs" type="int" min="0" max="250" default="10"/>
       <property name="Current" description="keymatrix.htm#Current" type="int" min="0" max="500" default="0"/>
     </Shape>
 
@@ -736,7 +736,7 @@
       <property name="Usage" description=":rotaryswitch.htm#Usage" type="usage" default="9:1"/>
       <property name="Outputs" description=":rotaryswitch.htm#Outputs" type="int" min="2" max="12" default="4"/>
       <property name="Pullup" description=":rotaryswitch.htm#Pullup" type="bool" default="true"/>
-      <property name="Debounce" description=":rotaryswitch.htm#Debounce" type="bool" default="true"/>
+      <property name="Debounce" description=":rotaryswitch.htm#DebounceMs" type="int" min="0" max="250" default="10"/>
       <property name="Current" description=":rotaryswitch.htm#Current" type="int" min="0" max="500" default="0"/>
     </Shape>
 
@@ -749,7 +749,7 @@
       <property name="Usage" description=":codedrotaryswitch.htm#Usage" type="usage" default="9:1"/>
       <property name="Outputs" description=":codedrotaryswitch.htm#Outputs" type="int" min="2" max="16" default="4"/>
       <property name="Pullup" description=":codedrotaryswitch.htm#Pullup" type="bool" default="true"/>
-      <property name="Debounce" description=":codedrotaryswitch.htm#Debounce" type="bool" default="true"/>
+      <property name="Debounce" description=":codedrotaryswitch.htm#DebounceMs" type="int" min="0" max="250" default="10"/>
       <property name="Current" description=":codedrotaryswitch.htm#Current" type="int" min="0" max="500" default="0"/>
     </Shape>
 
@@ -849,7 +849,7 @@
         <enum name="8way"/>
       </property>
       <property name="Pullup" description=":dirswitch.htm#Pullup" type="bool" default="true"/>
-      <property name="Debounce" description=":dirswitch.htm#Debounce" type="bool" default="true"/>
+      <property name="Debounce" description=":dirswitch.htm#DebounceMs" type="int" min="0" max="250" default="10"/>
       <property name="Current" description=":dirswitch.htm#Current" type="int" min="0" max="500" default="0"/>
     </Shape>
 

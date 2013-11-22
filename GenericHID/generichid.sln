@@ -1,48 +1,32 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GenericHID", "generichid\GenericHID.vcproj", "{6838124B-CD4B-4550-8D87-D8336D60E36F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{6CBF5015-45DB-4B20-B5B8-84B98E58CB12} = {6CBF5015-45DB-4B20-B5B8-84B98E58CB12}
-		{EB6451BE-3BF1-4186-A797-4CADCA774441} = {EB6451BE-3BF1-4186-A797-4CADCA774441}
-		{4EACB9D9-454E-4E59-9B2E-A183B5D45E5B} = {4EACB9D9-454E-4E59-9B2E-A183B5D45E5B}
-		{333E3489-24F0-4B97-878C-996053F7DC54} = {333E3489-24F0-4B97-878C-996053F7DC54}
-		{5568EF9B-6032-35AA-8FA0-E1BD593F7930} = {5568EF9B-6032-35AA-8FA0-E1BD593F7930}
-		{18155E2E-09CA-41A7-B103-D5C3F52FFA7C} = {18155E2E-09CA-41A7-B103-D5C3F52FFA7C}
-	EndProjectSection
-EndProject
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C484ED8A-124A-4CF8-96A2-D2F927912051}"
 	ProjectSection(SolutionItems) = preProject
 		GenericHID.vsd = GenericHID.vsd
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Programmer", "programmer\Programmer.vcproj", "{6CBF5015-45DB-4B20-B5B8-84B98E58CB12}"
-	ProjectSection(ProjectDependencies) = postProject
-		{333E3489-24F0-4B97-878C-996053F7DC54} = {333E3489-24F0-4B97-878C-996053F7DC54}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GenericHID", "generichid\GenericHID.vcxproj", "{6838124B-CD4B-4550-8D87-D8336D60E36F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "utility", "utility\utility.vcproj", "{333E3489-24F0-4B97-878C-996053F7DC54}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Programmer", "programmer\Programmer.vcxproj", "{6CBF5015-45DB-4B20-B5B8-84B98E58CB12}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CLProgram", "clprogram\CLProgram.vcproj", "{46F3F38B-F609-497D-9145-E23A5C6617B4}"
-	ProjectSection(ProjectDependencies) = postProject
-		{6CBF5015-45DB-4B20-B5B8-84B98E58CB12} = {6CBF5015-45DB-4B20-B5B8-84B98E58CB12}
-		{5568EF9B-6032-35AA-8FA0-E1BD593F7930} = {5568EF9B-6032-35AA-8FA0-E1BD593F7930}
-		{333E3489-24F0-4B97-878C-996053F7DC54} = {333E3489-24F0-4B97-878C-996053F7DC54}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "utility", "utility\utility.vcxproj", "{333E3489-24F0-4B97-878C-996053F7DC54}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dfuprogrammer", "dfuprogrammer\dfuprogrammer.vcproj", "{5568EF9B-6032-35AA-8FA0-E1BD593F7930}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CLProgram", "clprogram\CLProgram.vcxproj", "{46F3F38B-F609-497D-9145-E23A5C6617B4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "makeeeprom", "makeeeprom\makeeeprom.vcproj", "{4EACB9D9-454E-4E59-9B2E-A183B5D45E5B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dfuprogrammer", "dfuprogrammer\dfuprogrammer.vcxproj", "{5568EF9B-6032-35AA-8FA0-E1BD593F7930}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "usbhid", "usbhid\usbhid.vcproj", "{18155E2E-09CA-41A7-B103-D5C3F52FFA7C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "makeeeprom", "makeeeprom\makeeeprom.vcxproj", "{4EACB9D9-454E-4E59-9B2E-A183B5D45E5B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qtcommon", "qtcommon\qtcommon.vcproj", "{EB6451BE-3BF1-4186-A797-4CADCA774441}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "usbhid", "usbhid\usbhid.vcxproj", "{18155E2E-09CA-41A7-B103-D5C3F52FFA7C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "makehelp", "makehelp\makehelp.vcproj", "{1F62220F-2D1E-4015-8D26-415DFC583F86}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qtcommon", "qtcommon\qtcommon.vcxproj", "{EB6451BE-3BF1-4186-A797-4CADCA774441}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Joystick", "LUFA 100219\Demos\Device\ClassDriver\Joystick\Joystick.vcproj", "{4F8D07F9-DF13-4377-A0AA-E1FDC27A0808}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "makehelp", "makehelp\makehelp.vcxproj", "{1F62220F-2D1E-4015-8D26-415DFC583F86}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QtSolutions_PropertyBrowser-2.5", "qtpropertybrowser-2.5-opensource\buildlib\buildlib.vcproj", "{F5AD622A-443E-3F57-BF8F-D02C0C008DC1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Joystick", "LUFA 100219\Demos\Device\ClassDriver\Joystick\Joystick.vcxproj", "{4F8D07F9-DF13-4377-A0AA-E1FDC27A0808}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QtSolutions_PropertyBrowser-2.5", "qtpropertybrowser-2.5-opensource\buildlib\buildlib.vcxproj", "{F5AD622A-443E-3F57-BF8F-D02C0C008DC1}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution

@@ -100,7 +100,10 @@ void TestWidget::onDevicesIndexChanged( int index )
     if ( index < 0 || index > (int)(m_pDevices->m_Devices.size() -1) )
 	DisplayDevice( NULL );
     else
+    {
+        DisplayDevice( NULL );
 	DisplayDevice( m_pDevices->m_Devices[index] );
+    }
 }
 
 static QString MakeDeviceString( HIDDevice *pDevice )
@@ -195,7 +198,6 @@ void TestWidget::DisplayDevice( HIDDevice *pDevice )
     {
 	if ( !pDevice->PreprocessReportData() )
 	{
-	    assert( false );
 	    return;
 	}
 
@@ -248,7 +250,13 @@ void TestWidget::DisplayDevice( HIDDevice *pDevice )
 
 void TestWidget::StartListening()
 {
-    assert( m_pThread == NULL );
+    if ( m_pThread != NULL )// Clean up the old thread
+    {
+        m_pThread->wait( 250 );
+        delete m_pThread;
+        m_pThread = NULL;
+    }
+
     m_pThread = new HIDDataThread( m_pActiveDevice );
 
     qRegisterMetaType<QVector<byte> >("QVector<byte>");
@@ -263,9 +271,10 @@ void TestWidget::StopListening()
     if ( m_pThread != NULL )
     {
 	m_pThread->stop();
-	m_pThread->wait( 250 );
-	delete m_pThread;
-	m_pThread = NULL;
+        // Don't delete the thread until we need it again.  This gives it time to shutdown.
+        // m_pThread->wait( 250 );
+        // The thread deletes itself // delete m_pThread;
+        //m_pThread = NULL;
     }
 }
 

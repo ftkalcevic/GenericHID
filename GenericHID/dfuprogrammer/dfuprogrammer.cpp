@@ -102,7 +102,8 @@ DFUProgrammer::DFUProgrammer( enum targets_enum target )
 : m_eTargetDevice( target )
 , m_pDevice( NULL )
 {
-    usb_init();
+    libusb_init(NULL);
+    libusb_set_debug(NULL,255);
     m_pDFUDevice = new dfu_device_t;
     memset( m_pDFUDevice, 0, sizeof(dfu_device_t) );
 
@@ -141,13 +142,13 @@ bool DFUProgrammer::ReleaseDevice()
 {
     if ( m_pDevice != NULL )
     {
-	m_pDevice = NULL;
+        m_pDevice = NULL;
         if ( m_pDFUDevice->handle != NULL )
-	{
-	    usb_release_interface( m_pDFUDevice->handle, m_pDFUDevice->interface );
-	    usb_close( m_pDFUDevice->handle );
+        {
+            libusb_release_interface( m_pDFUDevice->handle, m_pDFUDevice->interface );
+            libusb_close( m_pDFUDevice->handle );
         }
-	memset( m_pDFUDevice, 0, sizeof(dfu_device_t) );
+        memset( m_pDFUDevice, 0, sizeof(dfu_device_t) );
     }
     return true;
 }
@@ -163,9 +164,9 @@ bool DFUProgrammer::GetDevice()
 
     // Can we get boot device sizes when we connect to correct flash size for boot loader.
     if( m_pDevice == NULL )
-	return false;
+        return false;
     else
-	return true;
+        return true;
 }
 
 //bool DFUProgrammer::HasDevice()
@@ -275,14 +276,12 @@ bool DFUProgrammer::StartVerify(IntelHexBuffer &memory)
     uint32_t memory_size;
     uint32_t top_memory_address = m_flash_address_top;
     uint32_t bottom_memory_address = m_flash_address_bottom;
-    uint32_t page_size = m_flash_page_size;
     bool bEeprom = memory.memoryType() == MemoryType::EEPROM;
 
     if( bEeprom ) 
     {
         top_memory_address = m_top_eeprom_memory_address;
         bottom_memory_address = 0;
-        page_size = m_eeprom_page_size;
     }
 
     memory_size = top_memory_address - bottom_memory_address;

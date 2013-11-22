@@ -21,7 +21,7 @@ const int MAX_ROWS = 8;
 const int MAX_COLUMNS = 8;
 
 ShapeKeyMatrix::ShapeKeyMatrix(QDomElement &node, const QString &sShapeName, ShapeType::ShapeType eShapeType, const QString &sShapeId, bool bSource, const QString &sImageFile, const QString &sIconFile, int nMaxInstances, const QString &sDescription)
-: Shape(node, sShapeName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription)
+    : Shape(node, sShapeName, eShapeType, sShapeId, bSource, sImageFile, sIconFile, nMaxInstances, sDescription)
 {
 }
 
@@ -40,26 +40,26 @@ bool ShapeKeyMatrix::Verify( QString &sErrors, const QList<class PinItem *> &pin
 
     for ( int i = 0; i < MAX_ROWS; i++ )
     {
-	QString s = QString("R%1").arg(i);
-	if ( i < nRows )
-	    pinsToCheck << s;
-	else
-	    notPinsToCheck << s;
+        QString s = QString("R%1").arg(i);
+        if ( i < nRows )
+            pinsToCheck << s;
+        else
+            notPinsToCheck << s;
     }
 
     for ( int i = 0; i < MAX_COLUMNS; i++ )
     {
-	QString s = QString("C%1").arg(i);
-	if ( i < nColumns )
-	    pinsToCheck << s;
-	else
-	    notPinsToCheck << s;
+        QString s = QString("C%1").arg(i);
+        if ( i < nColumns )
+            pinsToCheck << s;
+        else
+            notPinsToCheck << s;
     }
 
 
     bSuccess = CheckPins( sErrors, pins, pinsToCheck );
     if ( !CheckNotPins( sErrors, pins, notPinsToCheck ) )
-	bSuccess = false;
+        bSuccess = false;
 
     return bSuccess;
 }
@@ -72,18 +72,18 @@ void ShapeKeyMatrix::MakeControlsXML( QDomElement &elem, const QList<class PinIt
 
     QStringList rows, cols;
     for ( int i = 0; i < nRows; i++ )
-	rows << GetPort(pins, QString("R%1").arg(i) );
+        rows << GetPort(pins, QString("R%1").arg(i) );
 
     for ( int i = 0; i < nCols; i++ )
-	cols << GetPort(pins, QString("C%1").arg(i) );
+        cols << GetPort(pins, QString("C%1").arg(i) );
 
     MakeKeyMatrixControl( elem, 
-			  GetPropertyValueString("Key Names",values,""), 
-			  GetPropertyValueUsagePage("Usage",values,1),
-		          GetPropertyValueUsage("Usage",values,1),
-		          GetPropertyValueBool("Debounce",values,true),
-		          rows,
-		          cols );
+                          GetPropertyValueString("Key Names",values,""),
+                          GetPropertyValueUsagePage("Usage",values,1),
+                          GetPropertyValueUsage("Usage",values,1),
+                          GetPropertyValueInt("DebounceMs",values,10),
+                          rows,
+                          cols );
 }
 
 
@@ -94,13 +94,13 @@ void ShapeKeyMatrix::PropertyChanged( QtBrowserItem *item, QList<PropertyValue *
     assert( prop != NULL );
     if ( prop != NULL && prop->propertyName().compare( "Rows", Qt::CaseInsensitive ) == 0 )
     {
-	int nRows = ShapeProperty::m_intManager->value( prop );
-	ShapeProperty::m_keyMatrixNameFactory->setRows( nRows );
+        int nRows = ShapeProperty::m_intManager->value( prop );
+        ShapeProperty::m_keyMatrixNameFactory->setRows( nRows );
     }
     else if ( prop != NULL && prop->propertyName().compare( "Columns", Qt::CaseInsensitive ) == 0 )
     {
-	int nColumns = ShapeProperty::m_intManager->value( prop );
-	ShapeProperty::m_keyMatrixNameFactory->setColumns( nColumns );
+        int nColumns = ShapeProperty::m_intManager->value( prop );
+        ShapeProperty::m_keyMatrixNameFactory->setColumns( nColumns );
     }
 }
 

@@ -63,7 +63,7 @@ void ShapeDirectionalSwitch::MakeControlsXML( QDomElement &elem, const QList<cla
 				  GetPropertyValueUsagePage("Usage",values,1),
 				  GetPropertyValueUsage("Usage",values,1),
 				  GetPropertyValueBool("Pullup",values,true),
-				  GetPropertyValueBool("Debounce",values,true),
+				  GetPropertyValueInt("DebounceMs",values, 10),
 				  sDirections,
 				  GetPort(pins,"N"),
 				  GetPort(pins,"S"),

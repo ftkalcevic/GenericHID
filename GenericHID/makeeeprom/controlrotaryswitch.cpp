@@ -30,32 +30,32 @@ ControlRotarySwitch::~ControlRotarySwitch(void)
 bool ControlRotarySwitch::Load( const QDomElement &elem, QString *sError )
 {
     if ( !XMLUtility::getAttributeString( elem, "Name", m_sName, sError ) )
-	return false;
+        return false;
     if ( !XMLUtility::getAttributeUShort( elem, "UsagePage", m_nUsagePage, 0, 0xFFFF, sError ) )
-	return false;
+        return false;
     if ( !XMLUtility::getAttributeUShort( elem, "Usage", m_nUsage, 0, 0xFFFF, sError ) )
-	return false;
+        return false;
     if ( !XMLUtility::getAttributeBool( elem, "Pullup", m_bPullup, sError ) )
-	return false;
-    if ( !XMLUtility::getAttributeBool( elem, "Debounce", m_bDebounce, sError ) )
-	return false;
+        return false;
+    if ( !XMLUtility::getAttributeByte( elem, "DebounceMs", m_nDebounceMs, DEBOUNCE_MIN, DEBOUNCE_MAX, sError ) )
+        return false;
     if ( !XMLUtility::getAttributeBool( elem, "Encoded", m_bEncoded, sError ) )
-	return false;
+        return false;
     if ( m_bEncoded )
-	if ( !XMLUtility::getAttributeUShort( elem, "Outputs", m_nOutputs, 0, 16, sError ) )
-	    return false;
+        if ( !XMLUtility::getAttributeUShort( elem, "Outputs", m_nOutputs, 0, 16, sError ) )
+            return false;
 
     QDomNodeList pins = XMLUtility::elementsByTagName( elem, "Input" );
     for ( int i = 0; i < pins.count(); i++ )
     {
-	QDomElement pin = pins.item(i).toElement();
-	byte nPort;
-	if ( !GetPort( pin, "Port", nPort, sError ) )
-	    return false;
-	byte nBit;
-	if ( !XMLUtility::getAttributeByte( pin, "Bit", nBit, 0, 255, sError ) )
-	    return false;
-	m_Pins.push_back( RotarySwitchPin(nPort,nBit) );
+        QDomElement pin = pins.item(i).toElement();
+        byte nPort;
+        if ( !GetPort( pin, "Port", nPort, sError ) )
+            return false;
+        byte nBit;
+        if ( !XMLUtility::getAttributeByte( pin, "Bit", nBit, 0, 255, sError ) )
+            return false;
+        m_Pins.push_back( RotarySwitchPin(nPort,nBit) );
     }
 
     m_nLogicalMax = 0;
@@ -96,7 +96,7 @@ ByteArray ControlRotarySwitch::GetHIDReportDescriptor( StringTable &table, int &
     return Desc;
 }
 
-        // returns the micro controller application data
+// returns the micro controller application data
 ByteArray ControlRotarySwitch::GetControlConfig( byte nReportId ) const
 {
     int nBufSize = sizeof(struct SRotarySwitchControl) + sizeof(struct SRotarySwitchControl::_SRotarySwitchPin) * m_Pins.count();
@@ -109,19 +109,18 @@ ByteArray ControlRotarySwitch::GetControlConfig( byte nReportId ) const
     config.hdr.Length = (byte)nBufSize;
     config.PinCount = (byte)m_Pins.count();
     config.ReportSize = (byte)m_nReportBits;
+    config.DebounceMs = m_nDebounceMs;
     config.Options = (m_bPullup ? (1<<RSW_PULLUP) : 0 ) |
-		     (m_bDebounce ? (1<<RSW_DEBOUNCE) : 0 ) |
-		     (m_bEncoded ? (1<<RSW_ENCODED) : 0 );
+                     (m_bEncoded ? (1<<RSW_ENCODED) : 0 );
     config.LastValue = 0;
 
     for ( int i = 0; i < m_Pins.count(); i++ )
     {
-	config.Pins[i].Port = m_Pins[i].m_nPort;
-	if ( m_bEncoded )
-	    config.Pins[i].Bit = m_Pins[i].m_nBit;	    // Data Bit mask
-	else
-	    config.Pins[i].Bit = m_Pins[i].m_nBit-1;
-	config.Pins[i].Debounce = 0;
+        config.Pins[i].Port = m_Pins[i].m_nPort;
+        if ( m_bEncoded )
+            config.Pins[i].Bit = m_Pins[i].m_nBit;	    // Data Bit mask
+        else
+            config.Pins[i].Bit = m_Pins[i].m_nBit-1;
     }
 
     return ByteBuffer((byte *)&config, nBufSize );

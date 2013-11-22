@@ -41,7 +41,7 @@ private:
     enum targets_enum m_eTargetDevice;
     struct target_details *m_pDetails;
     struct dfu_device_t *m_pDFUDevice;
-    struct usb_device *m_pDevice;
+    struct libusb_device *m_pDevice;
 };
 
 #endif

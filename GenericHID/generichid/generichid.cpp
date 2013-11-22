@@ -32,16 +32,16 @@ enum
 {   
     TAB_DESIGN = 0,
     TAB_TEST = 1
-};
+           };
 
 GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
-: QMainWindow(parent, flags)
-, m_Logger(QCoreApplication::applicationName(), "GenericHID" )
-, m_pShapes( NULL )
-, m_pScene( NULL )
-, m_pLastSelectedShape( NULL )
-, m_cboZoom( NULL )
-, m_bInitialised( false )
+    : QMainWindow(parent, flags)
+    , m_Logger(QCoreApplication::applicationName(), "GenericHID" )
+    , m_pShapes( NULL )
+    , m_pScene( NULL )
+    , m_pLastSelectedShape( NULL )
+    , m_cboZoom( NULL )
+    , m_bInitialised( false )
 {
     ui.setupUi(this);
 
@@ -52,19 +52,19 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
     m_pShapes = ShapeCollection::LoadShapeCollection( CONFIGDATA_FILE, sError );
     if ( m_pShapes == NULL )
     {
-	// Serious problem if we can't open the config file.
-	LOG_MSG( m_Logger, LogTypes::Error, QString("Failed to load configuraton file '%1': %2.  Can't continue.").arg(CONFIGDATA_FILE).arg(sError) );
-	QMessageBox::critical( this, "Error", QString("Failed to load configuraton file '%1': %2.  Can't continue.").arg(CONFIGDATA_FILE).arg(sError) );
-	return;
+        // Serious problem if we can't open the config file.
+        LOG_MSG( m_Logger, LogTypes::Error, QString("Failed to load configuraton file '%1': %2.  Can't continue.").arg(CONFIGDATA_FILE).arg(sError) );
+        QMessageBox::critical( this, "Error", QString("Failed to load configuraton file '%1': %2.  Can't continue.").arg(CONFIGDATA_FILE).arg(sError) );
+        return;
     }
 
     // Load the shapes into the tool box
     foreach ( const Shape *pShape, m_pShapes->shapes() )
     {
-	DragToolButton *pButton = new DragToolButton( this, pShape );
-	pButton->setIcon( QIcon(pShape->iconFile()) );
-	pButton->setToolTip( pShape->name() );
-	ui.toolToolBar->addWidget(  pButton );
+        DragToolButton *pButton = new DragToolButton( this, pShape );
+        pButton->setIcon( QIcon(pShape->iconFile()) );
+        pButton->setToolTip( pShape->name() );
+        ui.toolToolBar->addWidget(  pButton );
     }
 
     // Create graphics scene
@@ -113,11 +113,11 @@ GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
 #ifdef DEBUG
     ui.textBrowser->setSearchPaths( QStringList() << "./help" );
 #else
-    #ifdef __linux
+#ifdef __linux
 	ui.textBrowser->setSearchPaths( QStringList() << "/usr/share/generichid/help" );
-    #else
+#else
 	ui.textBrowser->setSearchPaths( QStringList() << (QCoreApplication::applicationDirPath() + "/help") );
-    #endif
+#endif
 #endif
     onPropertiesCurrentItemChanged( NULL );
 
@@ -150,8 +150,8 @@ void GenericHID::writeSettings()
     m_Settings.setValue("window/pos", pos());
 
     for ( int i = 0; i < MAX_MRU; i++ )
-	if ( i < m_MRU.count() )
-	    m_Settings.setValue( QString("application/mru%1").arg(i), m_MRU[i] );
+        if ( i < m_MRU.count() )
+            m_Settings.setValue( QString("application/mru%1").arg(i), m_MRU[i] );
 	else
 	    m_Settings.setValue( QString("application/mru%1").arg(i), "" );
 
@@ -166,13 +166,13 @@ void GenericHID::readSettings()
 
     for ( int i = MAX_MRU-1; i >= 0; i-- )
     {
-	QString sMRU = m_Settings.value(QString("application/mru%1").arg(i), "" ).toString();
-	if ( sMRU.length() > 0 )
-	    m_MRU.append( sMRU );
+        QString sMRU = m_Settings.value(QString("application/mru%1").arg(i), "" ).toString();
+        if ( sMRU.length() > 0 )
+            m_MRU.append( sMRU );
     }
 
     if ( m_Settings.contains( "window/layout" ) )
-	this->restoreState( m_Settings.value( "window/layout", QByteArray()).toByteArray() );
+        this->restoreState( m_Settings.value( "window/layout", QByteArray()).toByteArray() );
     ui.listView->setSplitterPosition( m_Settings.value("window/property-column", ui.listView->splitterPosition()).toInt() );
 }
 
@@ -190,12 +190,12 @@ void GenericHID::Clear()
 void GenericHID::RetrieveProperties()
 {
     if ( ui.tabWidget == NULL )
-	return;
+        return;
 
     ui.tabWidget->setCurrentIndex(TAB_DESIGN);
     if ( m_pLastSelectedShape != NULL )
     {
-	// write back properties if this shape before trying to save
+        // write back properties if this shape before trying to save
         m_pLastSelectedShape->retrieveProperties();
     }
 }
@@ -204,25 +204,25 @@ void GenericHID::RetrieveProperties()
 bool GenericHID::CheckDataChanged()
 {
     if ( ui.tabWidget == NULL || m_pScene == NULL )
-	return true;
+        return true;
 
     ui.tabWidget->setCurrentIndex(TAB_DESIGN);
 
     QString s = m_pScene->makeXML();
     if ( s != m_sLastFileContents )
     {
-	QMessageBox::StandardButton nRet = QMessageBox::warning( this, "Save Changes?", "Do you wish to save changes first?", QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
-	if ( nRet == QMessageBox::No )
-	    return true;
-	else if ( nRet == QMessageBox::Cancel )
-	    return false;
-	else 
-	{
-	    if ( m_sLastFile.isEmpty() )
-		return DoSaveAs();
-	    else
-		return DoSave();
-	}
+        QMessageBox::StandardButton nRet = QMessageBox::warning( this, "Save Changes?", "Do you wish to save changes first?", QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
+        if ( nRet == QMessageBox::No )
+            return true;
+        else if ( nRet == QMessageBox::Cancel )
+            return false;
+        else
+        {
+            if ( m_sLastFile.isEmpty() )
+                return DoSaveAs();
+            else
+                return DoSave();
+        }
     }
     return true;
 }
@@ -246,22 +246,22 @@ void GenericHID::onHelpAbout()
     msg.setTextFormat( Qt::RichText );
     msg.setText( QString("<h1><b>GenericHID version %1.%2</b></h1>").arg(VERSION_MAJOR).arg(VERSION_MINOR) );
     msg.setInformativeText( "<p>DIY HID device builder</p>"
-			    "<p>Copyright (C) 2010 Frank Tkalcevic.</p>"
-			    "<p/>"
-			    "<p>This is free software, and you are welcome to redistribute it under certain conditions.  See the file COPYING, included.</p>"
-			    "<p/>"
-			    "<p>Visit the home of Generic HID: <a href=\"http://www.franksworkshop.com.au/\">http://www.franksworkshop.com.au/</a></p>"
-			    "<p>This application is built using...<p>"
-			    "<blockquote>"
-			    "<ul>"
-			    "<li><a href=\"http://www.fourwalledcubicle.com/LUFA.php\">LUFA</a></li>"
-			    "<li><a href=\"http://dfu-programmer.sourceforge.net/\">dfu-programmer</a></li>"
-			    "<li><a href=\"http://www.libusb.org/\">libusb v0.1.12</a></li>"
-			    "<li><a href=\"http://libusb-win32.sourceforge.net/\">libusb-win32 v0.1.12</a></li>"
-			    "<li><a href=\"http://qt.nokia.com/\">Qt</a></li>"
-			    "<li><a href=\"http://qt.nokia.com/products/appdev/add-on-products/catalog/4/Widgets/qtpropertybrowser/\">QtPropertyBrowser</a></li>"
-			    "</ul>"
-			    "</blockquote>" );
+                            "<p>Copyright (C) 2010 Frank Tkalcevic.</p>"
+                            "<p/>"
+                            "<p>This is free software, and you are welcome to redistribute it under certain conditions.  See the file COPYING, included.</p>"
+                            "<p/>"
+                            "<p>Visit the home of Generic HID: <a href=\"http://www.franksworkshop.com.au/\">http://www.franksworkshop.com.au/</a></p>"
+                            "<p>This application is built using...<p>"
+                            "<blockquote>"
+                            "<ul>"
+                            "<li><a href=\"http://www.fourwalledcubicle.com/LUFA.php\">LUFA</a></li>"
+                            "<li><a href=\"http://dfu-programmer.sourceforge.net/\">dfu-programmer</a></li>"
+                            "<li><a href=\"http://www.libusb.org/\">libusb v0.1.12</a></li>"
+                            "<li><a href=\"http://libusb-win32.sourceforge.net/\">libusb-win32 v0.1.12</a></li>"
+                            "<li><a href=\"http://qt.nokia.com/\">Qt</a></li>"
+                            "<li><a href=\"http://qt.nokia.com/products/appdev/add-on-products/catalog/4/Widgets/qtpropertybrowser/\">QtPropertyBrowser</a></li>"
+                            "</ul>"
+                            "</blockquote>" );
     msg.setIcon( QMessageBox::Information );
     msg.setIconPixmap( QPixmap(":/GenericHID/ApplicationIcon") );
     msg.exec();
@@ -272,7 +272,7 @@ void GenericHID::onFileNew()
 {
     // check for changes
     if ( !CheckDataChanged() )
-	return;
+        return;
 
     // Clear existing 
     Clear();
@@ -286,7 +286,7 @@ void GenericHID::onMRUSelected(const QString &sFile)
 {
     // check for changes
     if ( !CheckDataChanged() )
-	return;
+        return;
 
     // Clear existing 
     Clear();
@@ -298,12 +298,12 @@ void GenericHID::onFileOpen()
 {
     // check for changes
     if ( !CheckDataChanged() )
-	return;
+        return;
 
     // open file
     QString sFile = QFileDialog::getOpenFileName( this, "Open GenericHID device", m_sLastFile, QString("Generic HID device file (*.ghd);;All files (*)") );
     if ( sFile.isNull() || sFile.isEmpty() )
-	return;
+        return;
 
     // Clear existing 
     Clear();
@@ -318,13 +318,13 @@ bool GenericHID::DoOpen( const QString &sFile )
     QFile file( sFile );
     if ( !file.open(QIODevice::ReadOnly) )
     {
-	QMessageBox::critical( this, "Error opening file", QString("Error opening input file: '%1': %2").arg(sFile).arg(file.errorString()) );
-	return false;
+        QMessageBox::critical( this, "Error opening file", QString("Error opening input file: '%1': %2").arg(sFile).arg(file.errorString()) );
+        return false;
     }
     QString sXML;
     {
-	QTextStream in(&file);
-	sXML = in.readAll();
+        QTextStream in(&file);
+        sXML = in.readAll();
     }
     file.close();
 
@@ -335,17 +335,17 @@ bool GenericHID::DoOpen( const QString &sFile )
     bool bOK = doc.setContent( sXML, false, &sError, &nLine, &nCol );
     if ( !bOK )
     {
-	QMessageBox::critical( this, "Error reading file", QString("Error reading input file: '%1', line:%2, col:%3").arg(sError).arg(nLine).arg(nCol) );
-	return false;
+        QMessageBox::critical( this, "Error reading file", QString("Error reading input file: '%1', line:%2, col:%3").arg(sError).arg(nLine).arg(nCol) );
+        return false;
     }
     m_sLastFileContents = sXML;
 
     if ( !m_pScene->loadXML( doc, m_pShapes, sError ) )
     {
-	QMessageBox::critical( this, "Error reading file", QString("Failed to load file '%1': %2").arg(m_sLastFile).arg(sError) );
-	m_sLastFileContents.clear();
-	Clear();
-	return false;
+        QMessageBox::critical( this, "Error reading file", QString("Failed to load file '%1': %2").arg(m_sLastFile).arg(sError) );
+        m_sLastFileContents.clear();
+        Clear();
+        return false;
     }
 
     updateWindowTitle();
@@ -358,9 +358,9 @@ void GenericHID::onFileSave()
     RetrieveProperties();
 
     if ( m_sLastFile.isEmpty() )
-	DoSaveAs();
+        DoSaveAs();
     else
-	DoSave();
+        DoSave();
 }
 
 bool GenericHID::DoSaveAs()
@@ -369,32 +369,32 @@ bool GenericHID::DoSaveAs()
     QString s = m_pScene->makeXML();
     if ( s.length() > 0 )
     {
-	for (;;)
-	{
-	    QString sFilename = QFileDialog::getSaveFileName( this, "Save GenericHID device", m_sLastFile, QString("Generic HID device file (*.ghd);;All files (*)") );
-	    if ( sFilename.isEmpty() || sFilename.isNull() )
-		return false;
+        for (;;)
+        {
+            QString sFilename = QFileDialog::getSaveFileName( this, "Save GenericHID device", m_sLastFile, QString("Generic HID device file (*.ghd);;All files (*)") );
+            if ( sFilename.isEmpty() || sFilename.isNull() )
+                return false;
 
-	    QFileInfo fi(sFilename);
-	    if ( fi.suffix().isEmpty() )
-		sFilename.append( ".ghd" );
+            QFileInfo fi(sFilename);
+            if ( fi.suffix().isEmpty() )
+                sFilename.append( ".ghd" );
 
-	    QFile file(sFilename.toLatin1().constData());
-	    if ( !file.open( QIODevice::WriteOnly | QIODevice::Truncate ) )
-	    {
-		QMessageBox::critical( this, "Can't save", QString("Failed to save file '%1':%2").arg(sFilename).arg(file.errorString()) );
-	    }
-	    else
-	    {
-		m_sLastFile = sFilename;
-		file.write( s.toLatin1() );
-		file.close();
-		break;
-	    }
-	}
-	m_MRU.append( m_sLastFile );
-	m_sLastFileContents = s;
-	updateWindowTitle();
+            QFile file(sFilename.toLatin1().constData());
+            if ( !file.open( QIODevice::WriteOnly | QIODevice::Truncate ) )
+            {
+                QMessageBox::critical( this, "Can't save", QString("Failed to save file '%1':%2").arg(sFilename).arg(file.errorString()) );
+            }
+            else
+            {
+                m_sLastFile = sFilename;
+                file.write( s.toLatin1() );
+                file.close();
+                break;
+            }
+        }
+        m_MRU.append( m_sLastFile );
+        m_sLastFileContents = s;
+        updateWindowTitle();
     }
     return true;
 }
@@ -405,17 +405,17 @@ bool GenericHID::DoSave()
     QString s = m_pScene->makeXML();
     if ( s.length() > 0 )
     {
-	QFile file(m_sLastFile.toLatin1().constData());
-	if ( !file.open( QIODevice::WriteOnly | QIODevice::Truncate ) )
-	{
-	    QMessageBox::critical( this, "Can't save", QString("Failed to save file '%1':%2").arg(m_sLastFile).arg(file.errorString()) );
-	}
-	else
-	{
-	    file.write( s.toLatin1() );
-	    file.close();
-	    m_sLastFileContents = s;
-	}
+        QFile file(m_sLastFile.toLatin1().constData());
+        if ( !file.open( QIODevice::WriteOnly | QIODevice::Truncate ) )
+        {
+            QMessageBox::critical( this, "Can't save", QString("Failed to save file '%1':%2").arg(m_sLastFile).arg(file.errorString()) );
+        }
+        else
+        {
+            file.write( s.toLatin1() );
+            file.close();
+            m_sLastFileContents = s;
+        }
     }
     return true;
 }
@@ -425,8 +425,8 @@ void GenericHID::updateWindowTitle()
     QString s = QCoreApplication::applicationName();
     if ( !m_sLastFile.isEmpty() )
     {
-	s += " - ";
-	s += m_sLastFile;
+        s += " - ";
+        s += m_sLastFile;
     }
     setWindowTitle( s );
 }
@@ -451,8 +451,8 @@ void GenericHID::closeEvent( QCloseEvent * event )
     // check for changes
     if ( !CheckDataChanged() )
     {
-	event->ignore();
-	return;
+        event->ignore();
+        return;
     }
 
     writeSettings();
@@ -463,21 +463,21 @@ void GenericHID::onPropertiesCurrentItemChanged( QtBrowserItem * current )
 {
     // Set the help text
     if ( current == NULL || current->property() == NULL )
-	ui.textBrowser->setSource( QString(":index.html") );
+        ui.textBrowser->setSource( QString(":index.html") );
     else
     {
-	QString sText = current->property()->toolTip();
-	if ( sText.isEmpty() )
-	{
-	    QtBrowserItem * item = current;
-	    while ( (item = item->parent()) != NULL )
-	    {
-		sText = item->property()->toolTip();
-		if ( !sText.isEmpty() )
-		    break;
-	    }
-	}
-	ui.textBrowser->setSource( sText );
+        QString sText = current->property()->toolTip();
+        if ( sText.isEmpty() )
+        {
+            QtBrowserItem * item = current;
+            while ( (item = item->parent()) != NULL )
+            {
+                sText = item->property()->toolTip();
+                if ( !sText.isEmpty() )
+                    break;
+            }
+        }
+        ui.textBrowser->setSource( sText );
     }
 }
 
@@ -486,7 +486,7 @@ void GenericHID::onPropertiesItemDataChanged( QtBrowserItem * current )
     // Changing some properties can effect others, eg Rows,Cols on KeyMatrix, effects the names for each key.
     // Changing timer settings, changes the PWM details
     if ( m_pLastSelectedShape != NULL )
-	m_pLastSelectedShape->PropertyChanged( current );
+        m_pLastSelectedShape->PropertyChanged( current );
 }
 
 void GenericHID::onMicrocontrollerProgram()
@@ -497,33 +497,33 @@ void GenericHID::onMicrocontrollerProgram()
     QString sError;
     if ( !m_pScene->VerifyShapes( sError ) )
     {
-	QMessageBox msg(QMessageBox::Critical, "Errors Found", "Errors were found processing the device configuration", QMessageBox::Ok, this );
-	msg.setDetailedText( sError );
-	msg.exec();
-	return;
+        QMessageBox msg(QMessageBox::Critical, "Errors Found", "Errors were found processing the device configuration", QMessageBox::Ok, this );
+        msg.setDetailedText( sError );
+        msg.exec();
+        return;
     }
     // make xml
     QString s = m_pScene->MakeDeviceXML();
     if ( s.isEmpty() )
     {
-	QMessageBox msg(QMessageBox::Critical, "Errors Found", "Failed to create the device configuration", QMessageBox::Ok, this );
-	msg.exec();
-	return;
+        QMessageBox msg(QMessageBox::Critical, "Errors Found", "Failed to create the device configuration", QMessageBox::Ok, this );
+        msg.exec();
+        return;
     }
 
     // make eeprom
     MakeEEPROM eeprom;
     if ( !eeprom.loadXML( s ) )
     {
-	QMessageBox::critical( this, "Error", eeprom.lastError() );
-	return;
+        QMessageBox::critical( this, "Error", eeprom.lastError() );
+        return;
     }
 
     ByteArray buf = eeprom.makeEEPROM();
     if ( buf.isEmpty() )
     {
-	QMessageBox::critical( this, "Error", eeprom.lastError() );
-	return;
+        QMessageBox::critical( this, "Error", eeprom.lastError() );
+        return;
     }
 
     QString sIntelHex = MakeEEPROM::MakeIntelHexFormat( DYNAMIC_HIDDATA_ADDRESS, buf );
@@ -543,43 +543,43 @@ void GenericHID::onMicrocontrollerExport()
     QString sError;
     if ( !m_pScene->VerifyShapes( sError ) )
     {
-	QMessageBox msg(QMessageBox::Critical, "Errors Found", "Errors were found processing the device configuration", QMessageBox::Ok, this );
-	msg.setDetailedText( sError );
-	msg.exec();
-	return;
+        QMessageBox msg(QMessageBox::Critical, "Errors Found", "Errors were found processing the device configuration", QMessageBox::Ok, this );
+        msg.setDetailedText( sError );
+        msg.exec();
+        return;
     }
     // make xml
     QString s = m_pScene->MakeDeviceXML();
     if ( s.isEmpty() )
     {
-	QMessageBox msg(QMessageBox::Critical, "Errors Found", "Failed to create the device configuration", QMessageBox::Ok, this );
-	msg.exec();
-	return;
+        QMessageBox msg(QMessageBox::Critical, "Errors Found", "Failed to create the device configuration", QMessageBox::Ok, this );
+        msg.exec();
+        return;
     }
 
     // Save
     for (;;)
     {
-	QString sFilename = QFileDialog::getSaveFileName( this, "Save microcontroller configuration description", m_sLastExportFile, QString("Microcontroller Config Description file (*.mcd);;All files (*)") );
-	if ( sFilename.isEmpty() || sFilename.isNull() )
-	    return;
+        QString sFilename = QFileDialog::getSaveFileName( this, "Save microcontroller configuration description", m_sLastExportFile, QString("Microcontroller Config Description file (*.mcd);;All files (*)") );
+        if ( sFilename.isEmpty() || sFilename.isNull() )
+            return;
 
-	QFileInfo fi(sFilename);
-	if ( fi.suffix().isEmpty() )
-	    sFilename.append( ".mcd" );
+        QFileInfo fi(sFilename);
+        if ( fi.suffix().isEmpty() )
+            sFilename.append( ".mcd" );
 
-	QFile file(sFilename.toLatin1().constData());
-	if ( !file.open( QIODevice::WriteOnly | QIODevice::Truncate ) )
-	{
-	    QMessageBox::critical( this, "Can't save", QString("Failed to save file '%1':%2").arg(sFilename).arg(file.errorString()) );
-	}
-	else
-	{
-	    m_sLastExportFile = sFilename;
-	    file.write( s.toLatin1() );
-	    file.close();
-	    break;
-	}
+        QFile file(sFilename.toLatin1().constData());
+        if ( !file.open( QIODevice::WriteOnly | QIODevice::Truncate ) )
+        {
+            QMessageBox::critical( this, "Can't save", QString("Failed to save file '%1':%2").arg(sFilename).arg(file.errorString()) );
+        }
+        else
+        {
+            m_sLastExportFile = sFilename;
+            file.write( s.toLatin1() );
+            file.close();
+            break;
+        }
     }
 }
 
@@ -588,45 +588,45 @@ void GenericHID::onMicrocontrollerImportAndProgram()
     // Get the filename
     QString sFilename = QFileDialog::getOpenFileName( this, "Open GenericHID device", m_sLastExportFile, "Microcontroller Config Description file (*.mcd);;All files (*)" );
     if ( sFilename.isNull() || sFilename.isEmpty() )
-	return;
+        return;
 
     // read the device xml
     QFile file(sFilename.toAscii().constData());
     if ( !file.open( QIODevice::ReadOnly | QIODevice::Text ) )
     {
-	QMessageBox::critical( this, "Can't open", QString("Failed to open file '%1':%2").arg(sFilename).arg(file.errorString()) );
-	return;
+        QMessageBox::critical( this, "Can't open", QString("Failed to open file '%1':%2").arg(sFilename).arg(file.errorString()) );
+        return;
     }
     m_sLastExportFile = sFilename;
 
     QString s;
     {
-	// Unclear on how to close a file when the stream is using it, hence the scope.
-	QTextStream stream(&file);
-	s = stream.readAll();
+        // Unclear on how to close a file when the stream is using it, hence the scope.
+        QTextStream stream(&file);
+        s = stream.readAll();
     }
     file.close();
 
     if ( s.isEmpty() )
     {
-	QMessageBox msg(QMessageBox::Critical, "Errors Found", QString("Data file '%1' is empty, or failed to read file (%2)").arg(sFilename).arg(file.errorString()), QMessageBox::Ok, this );
-	msg.exec();
-	return;
+        QMessageBox msg(QMessageBox::Critical, "Errors Found", QString("Data file '%1' is empty, or failed to read file (%2)").arg(sFilename).arg(file.errorString()), QMessageBox::Ok, this );
+        msg.exec();
+        return;
     }
 
     // make eeprom
     MakeEEPROM eeprom;
     if ( !eeprom.loadXML( s ) )
     {
-	QMessageBox::critical( this, "Error", eeprom.lastError() );
-	return;
+        QMessageBox::critical( this, "Error", eeprom.lastError() );
+        return;
     }
 
     ByteArray buf = eeprom.makeEEPROM();
     if ( buf.isEmpty() )
     {
-	QMessageBox::critical( this, "Error", eeprom.lastError() );
-	return;
+        QMessageBox::critical( this, "Error", eeprom.lastError() );
+        return;
     }
 
     QString sIntelHex = MakeEEPROM::MakeIntelHexFormat( DYNAMIC_HIDDATA_ADDRESS, buf );
@@ -645,17 +645,17 @@ void GenericHID::DoProgram( QString &sEEPROM )
     dlg.setEEPROM( sEEPROM );
 
 #ifdef DEBUG
-    #ifdef _WIN32
-        QString sFirmwarePath = QString("..\\bin\\") + sFirmware;
-    #else
-        QString sFirmwarePath = QString("/home/frankt/svn/generichid/bin/") + sFirmware;
-    #endif
+#ifdef _WIN32
+    QString sFirmwarePath = QString("..\\bin\\") + sFirmware;
 #else
-    #ifdef _WIN32
+    QString sFirmwarePath = QString("../bin/") + sFirmware;
+#endif
+#else
+#ifdef _WIN32
 	QString sFirmwarePath = sFirmware;
-    #else
+#else
 	QString sFirmwarePath = QString("/usr/share/generichid/") + sFirmware;
-    #endif
+#endif
 #endif	
 
     dlg.setFirmwareFile(sFirmwarePath);
@@ -672,8 +672,8 @@ void GenericHID::onDropShapeEvent( const ::Shape *pShape, QPointF pos )
     QString sError;
     if ( !m_pScene->CanAdd(pShape,sError) )
     {
-	QMessageBox::critical( this, "Can't add", sError );
-	return;
+        QMessageBox::critical( this, "Can't add", sError );
+        return;
     }
 
     ShapeItem *pItem = m_pScene->CreateNewShape( pShape, this, pos );
@@ -681,10 +681,10 @@ void GenericHID::onDropShapeEvent( const ::Shape *pShape, QPointF pos )
     ui.listView->clear();
     if ( pItem != NULL )
     {
-	// unselect existing items, and select ours
-	foreach ( QGraphicsItem *item, m_pScene->selectedItems() )
-	    item->setSelected( false );
-	pItem->setSelected( true );
+        // unselect existing items, and select ours
+        foreach ( QGraphicsItem *item, m_pScene->selectedItems() )
+            item->setSelected( false );
+        pItem->setSelected( true );
     }
 }
 
@@ -695,27 +695,27 @@ void GenericHID::onSelectionChanged()
 
     QList<ShapeItem *> selectedShapes;
     foreach ( QGraphicsItem *pItem, m_pScene->selectedItems() )
-	if ( pItem->type() == ShapeItem::Type )
-	    selectedShapes.append( qgraphicsitem_cast<ShapeItem *>(pItem) );
+        if ( pItem->type() == ShapeItem::Type )
+            selectedShapes.append( qgraphicsitem_cast<ShapeItem *>(pItem) );
 
     if ( selectedShapes.count() == 1 )
     {
         ui.listView->clear();
-	if ( m_pLastSelectedShape != selectedShapes[0] )
-	{
-	    m_pLastSelectedShape = selectedShapes[0];
+        if ( m_pLastSelectedShape != selectedShapes[0] )
+        {
+            m_pLastSelectedShape = selectedShapes[0];
 
-	    const ShapeProperties &pProps = m_pLastSelectedShape->shapeData()->properties();
-	    ShapeProperty::SetBrowserFactory( ui.listView, m_pScene->CPUClockFrequency() );
-	    ui.listView->addProperty(pProps.topItem());
-	    m_pLastSelectedShape->populateProperties();
-	    if ( ui.listView->topLevelItems().count() > 0 )
-		ui.listView->setCurrentItem( ui.listView->topLevelItems()[0] );
-	}
+            const ShapeProperties &pProps = m_pLastSelectedShape->shapeData()->properties();
+            ShapeProperty::SetBrowserFactory( ui.listView, m_pScene->CPUClockFrequency() );
+            ui.listView->addProperty(pProps.topItem());
+            m_pLastSelectedShape->populateProperties();
+            if ( ui.listView->topLevelItems().count() > 0 )
+                ui.listView->setCurrentItem( ui.listView->topLevelItems()[0] );
+        }
     }
     else
     {
-	m_pLastSelectedShape = NULL;
+        m_pLastSelectedShape = NULL;
         ui.listView->clear();
     }
 }
@@ -777,14 +777,14 @@ void GenericHID::onTabChanged( int index )
 {
     if ( index == TAB_DESIGN )
     {
-	ui.testPanel->Deactivate();
-	setMenus( true );
+        ui.testPanel->Deactivate();
+        setMenus( true );
     }
     else if ( index == TAB_TEST )
     {
-	m_pScene->clearSelection();
-	setMenus( false );
-	ui.testPanel->Activate();
+        m_pScene->clearSelection();
+        setMenus( false );
+        ui.testPanel->Activate();
     }
 }
 
@@ -801,11 +801,11 @@ void GenericHID::onZoomIndexChanged( const QString & text )
     QString s = text;
     int n = s.indexOf( "%" );
     if ( n >= 0 )
-	s = s.mid(0,n);
+        s = s.mid(0,n);
     bool bOk = false;
     double d = s.toDouble(&bOk);
     if ( bOk )
-	ui.graphicsView->scaleView( d/100.0 );
+        ui.graphicsView->scaleView( d/100.0 );
 }
 
 void GenericHID::onZoomEditTextChanged( const QString & text )

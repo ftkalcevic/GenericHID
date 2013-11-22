@@ -315,11 +315,17 @@ up the build process and remove the binaries.</p>
 	</tr>
 	<tr>
 		<td>1.3</td>
-		<td>6 Apr 2010</td>
+		<td>20 Nov 2011</td>
 		<td>
 		<ul>
+			<li>Linux Source release only.&nbsp; Download the source and read the instructions 
+				in BUILD</li>
+			<li>Move to libusb-1.0.  This means there is only a linux release of 1.3 at the moment.</li>
+			<li>Use shared libraries now.  This simplifies the build, but may cause install issues.</li>
+            <li>Fix bug with Digital Encoders reporting their output as Relative when they were actually Absolute.</li>
             <li>Rename Digital Encoder to Incremental Encoders as it supports both digital and mechanical devices.</li>
-            <li>Encoder support for mechanical incremental encoders.  Added the pullup resistor option on the Incremental Encoder control.</li>
+            <li>Encoder has pullup resistor option, to partly support mechanical incremental encoders.  
+				There is still no debounce.</li>
             <li>New Incremental output mode for encoders.  Absolute mode accumulates an n-bit value then wraps.  Incremental mode reports the small changes since the last report.</li>
             <li>New LCD report to turn on the cursor and the blinking cursor</li>
             <li>Fix bug where directional switches just plain didn't work</li>

@@ -73,7 +73,7 @@ ByteArray ControlLCDSPI::GetHIDReportDescriptor( StringTable &table, byte &nRepo
 
     byte nDefaultReportId = (byte)nReportId;
     byte nCharacterOutputReportId = nDefaultReportId;
-    byte nAttributeFeatureReportId = nDefaultReportId;
+    //byte nAttributeFeatureReportId = nDefaultReportId;
     byte nDisplayControlOutputReportId = nDefaultReportId + LCDSPI_DISPLAY_CONTROL_REPORT_ID;
     byte nFillRectOutputReportId = nDefaultReportId + LCDSPI_DRAW_RECT_REPORT_ID;
 

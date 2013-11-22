@@ -38,7 +38,7 @@
 #include <stdarg.h>
 #include "inttypes.h"
 #include <stddef.h>
-#include <usb.h>
+#include <libusb-1.0/libusb.h>
 #include <errno.h>
 #include "dfucommon.h"
 #include "dfu.h"
@@ -72,7 +72,7 @@ QString h_sLastError;
 
 static uint16_t transaction = 0;
 
-static int32_t dfu_find_interface( const struct usb_device *device,
+static int32_t dfu_find_interface( libusb_device *device,
                                    const bool honor_interfaceclass );
 static int32_t dfu_make_idle( dfu_device_t *device, const bool initial_abort );
 static void dfu_msg_response_output( const char *function, const int32_t result );
@@ -81,7 +81,7 @@ static void dfu_msg_response_output( const char *function, const int32_t result 
 # include <config.h>
 #endif
 #undef malloc
-     
+
 #include <sys/types.h>
 
 //void *malloc();
@@ -93,7 +93,7 @@ void* rpl_malloc( size_t n )
     if( 0 == n ) {
         n = 1;
     }
-
+    
     return malloc( n );
 }
 
@@ -110,26 +110,26 @@ void* rpl_malloc( size_t n )
 int32_t dfu_detach( dfu_device_t *device, const int32_t timeout )
 {
     int32_t result;
-
+    
     DEBUG_MSG( QString("%s( %p, %d )\n").arg(__FUNCTION__).arg((int)device).arg(timeout) );
-
+    
     if( (NULL == device) || (NULL == device->handle) || (timeout < 0) ) 
     {
         ERROR_MSG( "Invalid parameter\n" );
         return -1;
     }
-
-    result = usb_control_msg( device->handle,
-          /* bmRequestType */ USB_ENDPOINT_OUT | USB_TYPE_CLASS | USB_RECIP_INTERFACE,
-          /* bRequest      */ DFU_DETACH,
-          /* wValue        */ timeout,
-          /* wIndex        */ device->interface,
-          /* Data          */ NULL,
-          /* wLength       */ 0,
-                              DFU_TIMEOUT );
-
+    
+    result = libusb_control_transfer( device->handle,
+                                      /* bmRequestType */ LIBUSB_ENDPOINT_OUT | LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE,
+                                      /* bRequest      */ DFU_DETACH,
+                                      /* wValue        */ timeout,
+                                      /* wIndex        */ device->interface,
+                                      /* Data          */ NULL,
+                                      /* wLength       */ 0,
+                                      DFU_TIMEOUT );
+    
     dfu_msg_response_output( __FUNCTION__, result );
-
+    
     return result;
 }
 
@@ -147,44 +147,44 @@ int32_t dfu_detach( dfu_device_t *device, const int32_t timeout )
 int32_t dfu_download( dfu_device_t *device, const size_t length, uint8_t* data )
 {
     int32_t result;
-
+    
     DEBUG_MSG( QString("%1( %2, %3, %4 )\n").arg(__FUNCTION__).arg((int)device).arg(length).arg((int)data) );
-
+    
     /* Sanity checks */
     if( (NULL == device) || (NULL == device->handle) ) {
         ERROR_MSG( "Invalid parameter\n" );
         return -1;
     }
-
+    
     if( (0 != length) && (NULL == data) ) {
         ERROR_MSG( "data was NULL, but length != 0\n" );
         return -2;
     }
-
+    
     if( (0 == length) && (NULL != data) ) {
         ERROR_MSG( "data was not NULL, but length == 0\n" );
         return -3;
     }
-
-
+    
+    
     {
         size_t i;
         for( i = 0; i < length; i++ ) {
             DEBUG_MSG( QString("Message: m[%1] = 0x%2\n").arg(i).arg(data[i],2,16,QChar('0')) );
         }
     }
-
-    result = usb_control_msg( device->handle,
-          /* bmRequestType */ USB_ENDPOINT_OUT | USB_TYPE_CLASS | USB_RECIP_INTERFACE,
-          /* bRequest      */ DFU_DNLOAD,
-          /* wValue        */ transaction++,
-          /* wIndex        */ device->interface,
-          /* Data          */ (char *) data,
-          /* wLength       */ length,
-                              DFU_TIMEOUT );
-
+    
+    result = libusb_control_transfer( device->handle,
+                                      /* bmRequestType */ LIBUSB_ENDPOINT_OUT | LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE,
+                                      /* bRequest      */ DFU_DNLOAD,
+                                      /* wValue        */ transaction++,
+                                      /* wIndex        */ device->interface,
+                                      /* Data          */ (unsigned char *) data,
+                                      /* wLength       */ length,
+                                      DFU_TIMEOUT );
+    
     dfu_msg_response_output( __FUNCTION__, result );
-
+    
     return result;
 }
 
@@ -202,31 +202,31 @@ int32_t dfu_download( dfu_device_t *device, const size_t length, uint8_t* data )
 int32_t dfu_upload( dfu_device_t *device, const size_t length, uint8_t* data )
 {
     int32_t result;
-
+    
     DEBUG_MSG( QString("%1( %2, %3, %4 )\n").arg(__FUNCTION__).arg((int)device).arg(length).arg((int)data) );
-
+    
     /* Sanity checks */
     if( (NULL == device) || (NULL == device->handle) ) {
         ERROR_MSG( "Invalid parameter\n" );
         return -1;
     }
-
+    
     if( (0 == length) || (NULL == data) ) {
         ERROR_MSG( "data was NULL, or length is 0\n" );
         return -2;
     }
-
-    result = usb_control_msg( device->handle,
-          /* bmRequestType */ USB_ENDPOINT_IN | USB_TYPE_CLASS | USB_RECIP_INTERFACE,
-          /* bRequest      */ DFU_UPLOAD,
-          /* wValue        */ transaction++,
-          /* wIndex        */ device->interface,
-          /* Data          */ (char *) data,
-          /* wLength       */ length,
-                              DFU_TIMEOUT );
-
+    
+    result = libusb_control_transfer( device->handle,
+                                      /* bmRequestType */ LIBUSB_ENDPOINT_IN | LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE,
+                                      /* bRequest      */ DFU_UPLOAD,
+                                      /* wValue        */ transaction++,
+                                      /* wIndex        */ device->interface,
+                                      /* Data          */ (unsigned char *) data,
+                                      /* wLength       */ length,
+                                      DFU_TIMEOUT );
+    
     dfu_msg_response_output( __FUNCTION__, result );
-
+    
     return result;
 }
 
@@ -241,42 +241,42 @@ int32_t dfu_upload( dfu_device_t *device, const size_t length, uint8_t* data )
  */
 int32_t dfu_get_status( dfu_device_t *device, dfu_status_t *status )
 {
-    char buffer[6];
+    unsigned char buffer[6];
     int32_t result;
-
+    
     DEBUG_MSG( QString("%1( %2, %3 )\n").arg(__FUNCTION__).arg((int)device).arg((int)status) );
-
+    
     if( (NULL == device) || (NULL == device->handle) ) {
         ERROR_MSG( "Invalid parameter\n" );
         return -1;
     }
-
+    
     /* Initialize the status data structure */
     status->bStatus       = DFU_STATUS_ERROR_UNKNOWN;
     status->bwPollTimeout = 0;
     status->bState        = STATE_DFU_ERROR;
     status->iString       = 0;
-
-    result = usb_control_msg( device->handle,
-          /* bmRequestType */ USB_ENDPOINT_IN | USB_TYPE_CLASS | USB_RECIP_INTERFACE,
-          /* bRequest      */ DFU_GETSTATUS,
-          /* wValue        */ 0,
-          /* wIndex        */ device->interface,
-          /* Data          */ buffer,
-          /* wLength       */ 6,
-                              DFU_TIMEOUT );
-
+    
+    result = libusb_control_transfer( device->handle,
+                                      /* bmRequestType */ LIBUSB_ENDPOINT_IN | LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE,
+                                      /* bRequest      */ DFU_GETSTATUS,
+                                      /* wValue        */ 0,
+                                      /* wIndex        */ device->interface,
+                                      /* Data          */ buffer,
+                                      /* wLength       */ 6,
+                                      DFU_TIMEOUT );
+    
     dfu_msg_response_output( __FUNCTION__, result );
-
+    
     if( 6 == result ) {
         status->bStatus = buffer[0];
         status->bwPollTimeout = ((0xff & buffer[3]) << 16) |
-                                ((0xff & buffer[2]) << 8)  |
-                                (0xff & buffer[1]);
-
+                ((0xff & buffer[2]) << 8)  |
+                (0xff & buffer[1]);
+        
         status->bState  = buffer[4];
         status->iString = buffer[5];
-
+        
         DEBUG_MSG( "==============================\n" );
         DEBUG_MSG( QString("status->bStatus: %1 (0x%2)\n").arg(dfu_status_to_string(status->bStatus)).arg(status->bStatus,2,16,QChar('0')) );
         DEBUG_MSG( QString("status->bwPollTimeout: 0x%1\n").arg(status->bwPollTimeout,4,16,QChar('0')) );
@@ -290,7 +290,7 @@ int32_t dfu_get_status( dfu_device_t *device, dfu_status_t *status )
             return -2;
         }
     }
-
+    
     return 0;
 }
 
@@ -305,25 +305,25 @@ int32_t dfu_get_status( dfu_device_t *device, dfu_status_t *status )
 int32_t dfu_clear_status( dfu_device_t *device )
 {
     int32_t result;
-
+    
     DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((int)device) );
-
+    
     if( (NULL == device) || (NULL == device->handle) ) {
         ERROR_MSG( "Invalid parameter\n" );
         return -1;
     }
-
-    result = usb_control_msg( device->handle,
-          /* bmRequestType */ USB_ENDPOINT_OUT| USB_TYPE_CLASS | USB_RECIP_INTERFACE,
-          /* bRequest      */ DFU_CLRSTATUS,
-          /* wValue        */ 0,
-          /* wIndex        */ device->interface,
-          /* Data          */ NULL,
-          /* wLength       */ 0,
-                              DFU_TIMEOUT );
-
+    
+    result = libusb_control_transfer( device->handle,
+                                      /* bmRequestType */ LIBUSB_ENDPOINT_OUT| LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE,
+                                      /* bRequest      */ DFU_CLRSTATUS,
+                                      /* wValue        */ 0,
+                                      /* wIndex        */ device->interface,
+                                      /* Data          */ NULL,
+                                      /* wLength       */ 0,
+                                      DFU_TIMEOUT );
+    
     dfu_msg_response_output( __FUNCTION__, result );
-
+    
     return result;
 }
 
@@ -338,31 +338,31 @@ int32_t dfu_clear_status( dfu_device_t *device )
 int32_t dfu_get_state( dfu_device_t *device )
 {
     int32_t result;
-    char buffer[1];
-
+    unsigned char buffer[1];
+    
     DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((int)device) );
-
+    
     if( (NULL == device) || (NULL == device->handle) ) {
         ERROR_MSG( "Invalid parameter\n" );
         return -1;
     }
-
-    result = usb_control_msg( device->handle,
-          /* bmRequestType */ USB_ENDPOINT_IN | USB_TYPE_CLASS | USB_RECIP_INTERFACE,
-          /* bRequest      */ DFU_GETSTATE,
-          /* wValue        */ 0,
-          /* wIndex        */ device->interface,
-          /* Data          */ buffer,
-          /* wLength       */ 1,
-                              DFU_TIMEOUT );
-
+    
+    result = libusb_control_transfer( device->handle,
+                                      /* bmRequestType */ LIBUSB_ENDPOINT_IN | LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE,
+                                      /* bRequest      */ DFU_GETSTATE,
+                                      /* wValue        */ 0,
+                                      /* wIndex        */ device->interface,
+                                      /* Data          */ buffer,
+                                      /* wLength       */ 1,
+                                      DFU_TIMEOUT );
+    
     dfu_msg_response_output( __FUNCTION__, result );
-
+    
     /* Return the error if there is one. */
     if( result < 1 ) {
         return result;
     }
-
+    
     /* Return the state. */
     return buffer[0];
 }
@@ -378,25 +378,25 @@ int32_t dfu_get_state( dfu_device_t *device )
 int32_t dfu_abort( dfu_device_t *device )
 {
     int32_t result;
-
+    
     DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((int)device) );
-
+    
     if( (NULL == device) || (NULL == device->handle) ) {
         ERROR_MSG( "Invalid parameter\n" );
         return -1;
     }
-
-    result = usb_control_msg( device->handle,
-          /* bmRequestType */ USB_ENDPOINT_OUT | USB_TYPE_CLASS | USB_RECIP_INTERFACE,
-          /* bRequest      */ DFU_ABORT,
-          /* wValue        */ 0,
-          /* wIndex        */ device->interface,
-          /* Data          */ NULL,
-          /* wLength       */ 0,
-                              DFU_TIMEOUT );
-
+    
+    result = libusb_control_transfer( device->handle,
+                                      /* bmRequestType */ LIBUSB_ENDPOINT_OUT | LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE,
+                                      /* bRequest      */ DFU_ABORT,
+                                      /* wValue        */ 0,
+                                      /* wIndex        */ device->interface,
+                                      /* Data          */ NULL,
+                                      /* wLength       */ 0,
+                                      DFU_TIMEOUT );
+    
     dfu_msg_response_output( __FUNCTION__, result );
-
+    
     return result;
 }
 
@@ -411,78 +411,81 @@ int32_t dfu_abort( dfu_device_t *device )
  *
  *  return a pointer to the usb_device if found, or NULL otherwise
  */
-struct usb_device *dfu_device_init( const uint32_t vendor,
-                                    const uint32_t product,
-                                    dfu_device_t *dfu_device,
-                                    const bool initial_abort,
-                                    const bool honor_interfaceclass )
+libusb_device *dfu_device_init( const uint32_t vendor,
+                                const uint32_t product,
+                                dfu_device_t *dfu_device,
+                                const bool initial_abort,
+                                const bool honor_interfaceclass )
 {
-    struct usb_bus *usb_bus;
-    struct usb_device *device;
     int32_t retries = 4;
-
+    
     DEBUG_MSG( QString("%1( %2, %3, %4, %5, %6 )\n").arg(__FUNCTION__).arg(vendor).arg(product).arg((int)dfu_device).arg(initial_abort ? "true" : "false").arg(honor_interfaceclass ? "true" : "false") );
-
+    
 retry:
-
+    
     if( 0 < retries ) {
-        usb_find_busses();
-        usb_find_devices();
-
+        libusb_device **devices = NULL;
+        int device_count = libusb_get_device_list( NULL, &devices);
+        
         /* Walk the tree and find our device. */
-        for( usb_bus = usb_get_busses(); NULL != usb_bus; usb_bus = usb_bus->next ) {
-            for( device = usb_bus->devices; NULL != device; device = device->next) {
-                if(    (vendor  == device->descriptor.idVendor)
-                    && (product == device->descriptor.idProduct) )
-                {
-                    int32_t tmp;
-                    /* We found a device that looks like it matches...
-                     * let's try to find the DFU interface, open the device
-                     * and claim it. */
-                    tmp = dfu_find_interface( device, honor_interfaceclass );
-                    if( 0 <= tmp ) {
-                        /* The interface is valid. */
-                        dfu_device->interface = tmp;
-                        dfu_device->handle = usb_open( device );
-                        if( NULL != dfu_device->handle ) {
-                            if( 0 == usb_set_configuration(dfu_device->handle, 1) ) {
-                                if( 0 == usb_claim_interface(dfu_device->handle, dfu_device->interface) ) {
-                                    switch( dfu_make_idle(dfu_device, initial_abort) )
-                                    {
-                                        case 0:
-                                            return device;
-                                        case 1:
-                                            retries--;
-                                            goto retry;
-                                    }
-
-                                    ERROR_MSG( "Failed to put the device in dfuIDLE mode.\n" );
-                                    usb_release_interface( dfu_device->handle, dfu_device->interface );
-                                    usb_close( dfu_device->handle );
-                                    retries = 4;
-                                } else {
-                                    ERROR_MSG( "Failed to claim the DFU interface.\n" );
-                                    usb_close( dfu_device->handle );
+        for ( int i = 0; i < device_count; i++ )
+        {
+            libusb_device *device = devices[i];
+            
+            libusb_device_descriptor desc;
+            int r = libusb_get_device_descriptor(device, &desc);
+            if ( r == 0 && 
+                 (vendor  == desc.idVendor) &&
+                 (product == desc.idProduct) )
+            {
+                int32_t tmp;
+                /* We found a device that looks like it matches...
+                 * let's try to find the DFU interface, open the device
+                 * and claim it. */
+                tmp = dfu_find_interface( device, honor_interfaceclass );
+                if( 0 <= tmp ) {
+                    /* The interface is valid. */
+                    dfu_device->interface = tmp;
+                    dfu_device->handle = NULL;
+                    tmp = libusb_open( device, &(dfu_device->handle) );
+                    if( NULL != dfu_device->handle ) {
+                        if( 0 == libusb_set_configuration(dfu_device->handle, 1) ) {
+                            if( 0 == libusb_claim_interface(dfu_device->handle, dfu_device->interface) ) {
+                                switch( dfu_make_idle(dfu_device, initial_abort) )
+                                {
+                                    case 0:
+                                        return device;
+                                    case 1:
+                                        retries--;
+                                        goto retry;
                                 }
+                                
+                                ERROR_MSG( "Failed to put the device in dfuIDLE mode.\n" );
+                                libusb_release_interface( dfu_device->handle, dfu_device->interface );
+                                libusb_close( dfu_device->handle );
+                                retries = 4;
                             } else {
-                                ERROR_MSG( "Failed to set configuration.\n");
-
-                                usb_close( dfu_device->handle );
+                                ERROR_MSG( "Failed to claim the DFU interface.\n" );
+                                libusb_close( dfu_device->handle );
                             }
                         } else {
-                            ERROR_MSG( "Failed to open device.\n" );
+                            ERROR_MSG( "Failed to set configuration.\n");
+                            
+                            libusb_close( dfu_device->handle );
                         }
                     } else {
-                        ERROR_MSG( "Failed to find the DFU interface.\n" );
+                        ERROR_MSG( "Failed to open device.\n" );
                     }
+                } else {
+                    ERROR_MSG( "Failed to find the DFU interface.\n" );
                 }
             }
         }
     }
-
+    
     dfu_device->handle = NULL;
     dfu_device->interface = 0;
-
+    
     return NULL;
 }
 
@@ -497,7 +500,7 @@ retry:
 const char* dfu_state_to_string( const int32_t state )
 {
     const char *message = "unknown state";
-
+    
     switch( state ) {
         case STATE_APP_IDLE:
             message = "appIDLE";
@@ -533,7 +536,7 @@ const char* dfu_state_to_string( const int32_t state )
             message = "dfuERROR";
             break;
     }
-
+    
     return message;
 }
 
@@ -548,59 +551,59 @@ const char* dfu_state_to_string( const int32_t state )
 const char* dfu_status_to_string( const int32_t status )
 {
     const char *message = "unknown status";
-
+    
     switch( status ) {
-        case DFU_STATUS_OK:
-            message = "OK";
-            break;
-        case DFU_STATUS_ERROR_TARGET:
-            message = "errTARGET";
-            break;
-        case DFU_STATUS_ERROR_FILE:
-            message = "errFILE";
-            break;
-        case DFU_STATUS_ERROR_WRITE:
-            message = "errWRITE";
-            break;
-        case DFU_STATUS_ERROR_ERASE:
-            message = "errERASE";
-            break;
-        case DFU_STATUS_ERROR_CHECK_ERASED:
-            message = "errCHECK_ERASED";
-            break;
-        case DFU_STATUS_ERROR_PROG:
-            message = "errPROG";
-            break;
-        case DFU_STATUS_ERROR_VERIFY:
-            message = "errVERIFY";
-            break;
-        case DFU_STATUS_ERROR_ADDRESS:
-            message = "errADDRESS";
-            break;
-        case DFU_STATUS_ERROR_NOTDONE:
-            message = "errNOTDONE";
-            break;
-        case DFU_STATUS_ERROR_FIRMWARE:
-            message = "errFIRMWARE";
-            break;
-        case DFU_STATUS_ERROR_VENDOR:
-            message = "errVENDOR";
-            break;
-        case DFU_STATUS_ERROR_USBR:
-            message = "errUSBR";
-            break;
-        case DFU_STATUS_ERROR_POR:
-            message = "errPOR";
-            break;
-        case DFU_STATUS_ERROR_UNKNOWN:
-            message = "errUNKNOWN";
-            break;
-        case DFU_STATUS_ERROR_STALLEDPKT:
-            message = "errSTALLEDPKT";
-            break;
-
+    case DFU_STATUS_OK:
+        message = "OK";
+        break;
+    case DFU_STATUS_ERROR_TARGET:
+        message = "errTARGET";
+        break;
+    case DFU_STATUS_ERROR_FILE:
+        message = "errFILE";
+        break;
+    case DFU_STATUS_ERROR_WRITE:
+        message = "errWRITE";
+        break;
+    case DFU_STATUS_ERROR_ERASE:
+        message = "errERASE";
+        break;
+    case DFU_STATUS_ERROR_CHECK_ERASED:
+        message = "errCHECK_ERASED";
+        break;
+    case DFU_STATUS_ERROR_PROG:
+        message = "errPROG";
+        break;
+    case DFU_STATUS_ERROR_VERIFY:
+        message = "errVERIFY";
+        break;
+    case DFU_STATUS_ERROR_ADDRESS:
+        message = "errADDRESS";
+        break;
+    case DFU_STATUS_ERROR_NOTDONE:
+        message = "errNOTDONE";
+        break;
+    case DFU_STATUS_ERROR_FIRMWARE:
+        message = "errFIRMWARE";
+        break;
+    case DFU_STATUS_ERROR_VENDOR:
+        message = "errVENDOR";
+        break;
+    case DFU_STATUS_ERROR_USBR:
+        message = "errUSBR";
+        break;
+    case DFU_STATUS_ERROR_POR:
+        message = "errPOR";
+        break;
+    case DFU_STATUS_ERROR_UNKNOWN:
+        message = "errUNKNOWN";
+        break;
+    case DFU_STATUS_ERROR_STALLEDPKT:
+        message = "errSTALLEDPKT";
+        break;
+        
     }
-
+    
     return message;
 }
 
@@ -614,38 +617,42 @@ const char* dfu_status_to_string( const int32_t status )
  *
  *  returns the interface number if found, < 0 otherwise
  */
-static int32_t dfu_find_interface( const struct usb_device *device,
+static int32_t dfu_find_interface( libusb_device *device,
                                    const bool honor_interfaceclass )
 {
     int32_t c, i;
-    struct usb_config_descriptor *config;
-    struct usb_interface_descriptor *interface;
-
+    const libusb_interface_descriptor *interface;
+    libusb_device_descriptor desc;
+    
+    libusb_get_device_descriptor(device, &desc);
+    
     /* Loop through all of the configurations */
-    for( c = 0; c < device->descriptor.bNumConfigurations; c++ ) {
-        config = &(device->config[c]);
-
-        /* Loop through all of the interfaces */
-        for( i = 0; i < config->interface->num_altsetting; i++) {
-            interface = &(config->interface->altsetting[i]);
-
-            if( true == honor_interfaceclass ) {
-                /* Check if the interface is a DFU interface */
-                if(    (USB_CLASS_APP_SPECIFIC == interface->bInterfaceClass)
-                    && (DFU_SUBCLASS == interface->bInterfaceSubClass) )
-                {
+    for( c = 0; c < desc.bNumConfigurations; c++ ) {
+        libusb_config_descriptor *config = NULL;
+        if ( libusb_get_config_descriptor( device, c, &config ) == 0 )
+        {
+            /* Loop through all of the interfaces */
+            for( i = 0; i < config->interface->num_altsetting; i++) {
+                interface = &(config->interface->altsetting[i]);
+                
+                if( true == honor_interfaceclass ) {
+                    /* Check if the interface is a DFU interface */
+                    if(    (USB_CLASS_APP_SPECIFIC == interface->bInterfaceClass)
+                           && (DFU_SUBCLASS == interface->bInterfaceSubClass) )
+                    {
+                        DEBUG_MSG( QString("Found DFU Inteface: %1\n").arg(interface->bInterfaceNumber) );
+                        return interface->bInterfaceNumber;
+                    }
+                } else {
+                    /* If there is a bug in the DFU firmware, return the first
+                     * found interface. */
                     DEBUG_MSG( QString("Found DFU Inteface: %1\n").arg(interface->bInterfaceNumber) );
                     return interface->bInterfaceNumber;
                 }
-            } else {
-                /* If there is a bug in the DFU firmware, return the first
-                 * found interface. */
-                DEBUG_MSG( QString("Found DFU Inteface: %1\n").arg(interface->bInterfaceNumber) );
-                return interface->bInterfaceNumber;
             }
         }
     }
-
+    
     return -1;
 }
 
@@ -662,56 +669,56 @@ static int32_t dfu_make_idle( dfu_device_t *device,
 {
     dfu_status_t status;
     int32_t retries = 4;
-
+    
     if( true == initial_abort ) {
         dfu_abort( device );
     }
-
+    
     while( 0 < retries ) {
         if( 0 != dfu_get_status(device, &status) ) {
             dfu_clear_status( device );
             continue;
         }
-
+        
         DEBUG_MSG( QString("State: %1 (%2)\n").arg(dfu_state_to_string(status.bState)).arg(status.bState) );
-
+        
         switch( status.bState ) {
-            case STATE_DFU_IDLE:
-                if( DFU_STATUS_OK == status.bStatus ) {
-                    return 0;
-                }
-
-                /* We need the device to have the DFU_STATUS_OK status. */
-                dfu_clear_status( device );
-                break;
-
-            case STATE_DFU_DOWNLOAD_SYNC:   /* abort -> idle */
-            case STATE_DFU_DOWNLOAD_IDLE:   /* abort -> idle */
-            case STATE_DFU_MANIFEST_SYNC:   /* abort -> idle */
-            case STATE_DFU_UPLOAD_IDLE:     /* abort -> idle */
-            case STATE_DFU_DOWNLOAD_BUSY:   /* abort -> error */
-            case STATE_DFU_MANIFEST:        /* abort -> error */
-                dfu_abort( device );
-                break;
-
-            case STATE_DFU_ERROR:
-                dfu_clear_status( device );
-                break;
-
-            case STATE_APP_IDLE:
-                dfu_detach( device, DFU_DETACH_TIMEOUT );
-                break;
-
-            case STATE_APP_DETACH:
-            case STATE_DFU_MANIFEST_WAIT_RESET:
-                DEBUG_MSG( "Resetting the device\n" );
-                usb_reset( device->handle );
-                return 1;
+        case STATE_DFU_IDLE:
+            if( DFU_STATUS_OK == status.bStatus ) {
+                return 0;
+            }
+            
+            /* We need the device to have the DFU_STATUS_OK status. */
+            dfu_clear_status( device );
+            break;
+            
+        case STATE_DFU_DOWNLOAD_SYNC:   /* abort -> idle */
+        case STATE_DFU_DOWNLOAD_IDLE:   /* abort -> idle */
+        case STATE_DFU_MANIFEST_SYNC:   /* abort -> idle */
+        case STATE_DFU_UPLOAD_IDLE:     /* abort -> idle */
+        case STATE_DFU_DOWNLOAD_BUSY:   /* abort -> error */
+        case STATE_DFU_MANIFEST:        /* abort -> error */
+            dfu_abort( device );
+            break;
+            
+        case STATE_DFU_ERROR:
+            dfu_clear_status( device );
+            break;
+            
+        case STATE_APP_IDLE:
+            dfu_detach( device, DFU_DETACH_TIMEOUT );
+            break;
+            
+        case STATE_APP_DETACH:
+        case STATE_DFU_MANIFEST_WAIT_RESET:
+            DEBUG_MSG( "Resetting the device\n" );
+            libusb_reset_device( device->handle );
+            return 1;
         }
-
+        
         retries--;
     }
-
+    
     ERROR_MSG( "Not able to transition the device into the dfuIDLE state.\n" );
     return -2;
 }
@@ -727,7 +734,7 @@ static int32_t dfu_make_idle( dfu_device_t *device,
 static void dfu_msg_response_output( const char * function, const int32_t result )
 {
     const char *msg = NULL;
-
+    
     if( 0 <= result ) {
         msg = "No error.";
     } else {
@@ -738,7 +745,7 @@ static void dfu_msg_response_output( const char * function, const int32_t result
 #ifdef EINPROGRESS
             case -EINPROGRESS:
                 msg = "-EINPROGRESS: URB still pending, no results yet "
-                      "(actually no error until now)";
+                        "(actually no error until now)";
                 break;
 #endif
 #ifdef EPROTO
@@ -767,7 +774,7 @@ static void dfu_msg_response_output( const char * function, const int32_t result
 #endif
             case -EXDEV:
                 msg = "-EXDEV: ISO transfer only partially completed look at "
-                      "individual frame status for details";
+                        "individual frame status for details";
                 break;
             case -EINVAL:
                 msg = "-EINVAL: ISO madness, if this happens: Log off and go home";
@@ -776,7 +783,7 @@ static void dfu_msg_response_output( const char * function, const int32_t result
                 msg = "Unknown error";
                 break;
         }
-
-	ERROR_MSG( QString("%1: %2 0x%3 (%4)\n").arg(function).arg(msg).arg(result,8,16,QChar('0')).arg(result) );
+        
+        ERROR_MSG( QString("%1: %2 0x%3 (%4)\n").arg(function).arg(msg).arg(result,8,16,QChar('0')).arg(result) );
     }
 }

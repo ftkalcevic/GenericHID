@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="LUFA">
+      <UniqueIdentifier>{1edb04fd-44a9-4b9e-a140-88f9c7d09124}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Firmware">
+      <UniqueIdentifier>{daaa9ccb-b514-49a1-ab5e-24a5e28ad124}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BicolourLED.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Counter.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Descriptors.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DigitalEncoder.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DirSwitch.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Joystick.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyMatrix.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LCD.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LCD_SPI.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LED.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Potentiometer.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PWM.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RGB.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RotarySwitch.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Serial.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Switch.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TricolourLED.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\ConfigDescriptor.c">
+      <Filter>LUFA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\DevChapter9.c">
+      <Filter>LUFA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Endpoint.c">
+      <Filter>LUFA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\Events.c">
+      <Filter>LUFA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Host.c">
+      <Filter>LUFA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\HostChapter9.c">
+      <Filter>LUFA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\LowLevel.c">
+      <Filter>LUFA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Pipe.c">
+      <Filter>LUFA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Template\Template_Endpoint_Control_R.c">
+      <Filter>LUFA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Template\Template_Endpoint_Control_W.c">
+      <Filter>LUFA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Template\Template_Endpoint_RW.c">
+      <Filter>LUFA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Template\Template_Pipe_RW.c">
+      <Filter>LUFA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\USBInterrupt.c">
+      <Filter>LUFA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\USBTask.c">
+      <Filter>LUFA</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ctoasm.inc">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="macros.inc">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="PortIO.S">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\..\..\..\..\bin\generic16.hex">
+      <Filter>Firmware</Filter>
+    </None>
+    <None Include="..\..\..\..\..\bin\teensypp2.hex">
+      <Filter>Firmware</Filter>
+    </None>
+    <None Include="..\..\..\..\..\bin\usbkey.hex">
+      <Filter>Firmware</Filter>
+    </None>
+    <None Include="buildall.bat">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="makefile.generic16" />
+    <None Include="makefile.teensypp2" />
+    <None Include="makefile.usbkey" />
+    <None Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BicolourLED.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Counter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Descriptors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DigitalEncoder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DirSwitch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\include\displaycommands.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Joystick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyMatrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LCD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LCD_SPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LED.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Potentiometer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PWM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RGB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RotarySwitch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Serial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Switch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TricolourLED.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="USBKey_Bicolour.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Common\BoardTypes.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Common\Common.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\ConfigDescriptor.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\DevChapter9.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Device.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Endpoint.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\Events.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Common\FunctionAttributes.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\Class\Common\HID.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\Class\HID.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\Class\Device\HID.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Host.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\HostChapter9.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\LowLevel.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\OTG.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Pipe.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\StdDescriptors.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\StdRequestType.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\StreamCallbacks.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\USB.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\USBInterrupt.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\USBMode.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\USBTask.h">
+      <Filter>LUFA</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

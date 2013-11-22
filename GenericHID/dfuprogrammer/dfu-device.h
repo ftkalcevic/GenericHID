@@ -18,7 +18,7 @@
 #define __DFU_DEVICE_H__
 
 #include "inttypes.h"
-#include "usb.h"
+#include <libusb-1.0/libusb.h>
 
 enum atmel_device_class_t
 {
@@ -29,7 +29,7 @@ enum atmel_device_class_t
 
 struct dfu_device_t 
 {
-    struct usb_dev_handle *handle;
+    libusb_device_handle *handle;
     int32_t interface;
     atmel_device_class_t type;
 };

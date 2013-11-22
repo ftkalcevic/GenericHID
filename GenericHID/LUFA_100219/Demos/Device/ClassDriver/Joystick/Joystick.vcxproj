@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Generic 16MHz|Win32">
+      <Configuration>Generic 16MHz</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Teensy++ 2.0|Win32">
+      <Configuration>Teensy++ 2.0</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="USB Key|Win32">
+      <Configuration>USB Key</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4F8D07F9-DF13-4377-A0AA-E1FDC27A0808}</ProjectGuid>
+    <Keyword>MakeFileProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Generic 16MHz|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Teensy++ 2.0|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='USB Key|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Generic 16MHz|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Teensy++ 2.0|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='USB Key|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='USB Key|Win32'">$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='USB Key|Win32'">$(Configuration)\</IntDir>
+    <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='USB Key|Win32'">make -f makefile.usbkey all</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='USB Key|Win32'" />
+    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='USB Key|Win32'">make -f makefile.usbkey clean</NMakeCleanCommandLine>
+    <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='USB Key|Win32'">..\..\..\..\..\bin\usbkey.hex</NMakeOutput>
+    <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='USB Key|Win32'">WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='USB Key|Win32'">$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='USB Key|Win32'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
+    <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='USB Key|Win32'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
+    <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='USB Key|Win32'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Teensy++ 2.0|Win32'">$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Teensy++ 2.0|Win32'">$(Configuration)\</IntDir>
+    <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Teensy++ 2.0|Win32'">make -f makefile.teensypp2</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Teensy++ 2.0|Win32'" />
+    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Teensy++ 2.0|Win32'">make -f makefile.teensypp2 clean</NMakeCleanCommandLine>
+    <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='Teensy++ 2.0|Win32'">..\bin\teensypp2.hex</NMakeOutput>
+    <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Teensy++ 2.0|Win32'">WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='Teensy++ 2.0|Win32'">$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='Teensy++ 2.0|Win32'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
+    <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='Teensy++ 2.0|Win32'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
+    <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='Teensy++ 2.0|Win32'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Generic 16MHz|Win32'">$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Generic 16MHz|Win32'">$(Configuration)\</IntDir>
+    <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Generic 16MHz|Win32'">make -f makefile.generic16 all</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Generic 16MHz|Win32'" />
+    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Generic 16MHz|Win32'">make -f makefile.generic16 clean</NMakeCleanCommandLine>
+    <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='Generic 16MHz|Win32'">..\bin\generic16.hex</NMakeOutput>
+    <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Generic 16MHz|Win32'">WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='Generic 16MHz|Win32'">$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='Generic 16MHz|Win32'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
+    <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='Generic 16MHz|Win32'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
+    <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='Generic 16MHz|Win32'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="BicolourLED.c" />
+    <ClCompile Include="Controls.c" />
+    <ClCompile Include="Counter.c" />
+    <ClCompile Include="Descriptors.c" />
+    <ClCompile Include="DigitalEncoder.c" />
+    <ClCompile Include="DirSwitch.c" />
+    <ClCompile Include="Joystick.c" />
+    <ClCompile Include="KeyMatrix.c" />
+    <ClCompile Include="LCD.c" />
+    <ClCompile Include="LCD_SPI.c" />
+    <ClCompile Include="LED.c" />
+    <ClCompile Include="Potentiometer.c" />
+    <ClCompile Include="PWM.c" />
+    <ClCompile Include="RGB.c" />
+    <ClCompile Include="RotarySwitch.c" />
+    <ClCompile Include="Serial.c" />
+    <ClCompile Include="Switch.c" />
+    <ClCompile Include="TricolourLED.c" />
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\ConfigDescriptor.c" />
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\DevChapter9.c" />
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Endpoint.c" />
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\Events.c" />
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Host.c" />
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\HostChapter9.c" />
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\LowLevel.c" />
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Pipe.c" />
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Template\Template_Endpoint_Control_R.c" />
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Template\Template_Endpoint_Control_W.c" />
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Template\Template_Endpoint_RW.c" />
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Template\Template_Pipe_RW.c" />
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\USBInterrupt.c" />
+    <ClCompile Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\USBTask.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ctoasm.inc" />
+    <None Include="macros.inc" />
+    <None Include="PortIO.S" />
+    <None Include="..\..\..\..\..\bin\generic16.hex" />
+    <None Include="..\..\..\..\..\bin\teensypp2.hex" />
+    <None Include="..\..\..\..\..\bin\usbkey.hex" />
+    <None Include="buildall.bat" />
+    <None Include="makefile.generic16" />
+    <None Include="makefile.teensypp2" />
+    <None Include="makefile.usbkey" />
+    <None Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BicolourLED.h" />
+    <ClInclude Include="Common.h" />
+    <ClInclude Include="Controls.h" />
+    <ClInclude Include="Counter.h" />
+    <ClInclude Include="Descriptors.h" />
+    <ClInclude Include="DigitalEncoder.h" />
+    <ClInclude Include="DirSwitch.h" />
+    <ClInclude Include="..\..\..\..\..\include\displaycommands.h" />
+    <ClInclude Include="Joystick.h" />
+    <ClInclude Include="KeyMatrix.h" />
+    <ClInclude Include="LCD.h" />
+    <ClInclude Include="LCD_SPI.h" />
+    <ClInclude Include="LED.h" />
+    <ClInclude Include="Potentiometer.h" />
+    <ClInclude Include="PWM.h" />
+    <ClInclude Include="RGB.h" />
+    <ClInclude Include="RotarySwitch.h" />
+    <ClInclude Include="Serial.h" />
+    <ClInclude Include="Switch.h" />
+    <ClInclude Include="TricolourLED.h" />
+    <ClInclude Include="USBKey_Bicolour.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Common\BoardTypes.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Common\Common.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\ConfigDescriptor.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\DevChapter9.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Device.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Endpoint.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\Events.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Common\FunctionAttributes.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\Class\Common\HID.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\Class\HID.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\Class\Device\HID.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Host.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\HostChapter9.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\LowLevel.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\OTG.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\LowLevel\Pipe.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\StdDescriptors.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\StdRequestType.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\StreamCallbacks.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\USB.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\USBInterrupt.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\USBMode.h" />
+    <ClInclude Include="..\..\..\..\LUFA\Drivers\USB\HighLevel\USBTask.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

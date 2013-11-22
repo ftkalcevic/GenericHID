@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = generichid
+TARGET = generichid.bin
 include(../build.pri)
 CONFIG(debug,debug|release) {
 DESTDIR = debug
@@ -19,7 +19,7 @@ INCLUDEPATH += ./generatedfiles \
     ../utility \
     ../programmer \
     ../dfuprogrammer \
-    ../libusb-0.1.12 \
+    /usr/include/libusb-1.0 \
     ../qtpropertybrowser-2.5-opensource/src \
     ../makeeeprom \
     . \
@@ -33,12 +33,15 @@ INCLUDEPATH += ./generatedfiles/release
 }
 
 CONFIG(debug,debug|release) {
-    unix:LIBS += -L../qtcommon/debug -lqtcommon -L../usbhid/debug -lusbhid -L../makeeeprom/debug -lmakeeeprom -L../utility/debug -lutility -L../dfuprogrammer/debug -ldfuprogrammer  -L../programmer/debug -lprogrammer -L../libusb-0.1.12/.libs -l:libusb.a -ldfuprogrammer -lutility -lprogrammer -ldfuprogrammer -lutility -l:libusb.a -L"../qtpropertybrowser-2.5-opensource/lib" -l:libQtSolutions_PropertyBrowser-2.5.a -lutility -lutility -lutility -L$(QTDIR)/plugins/imageformats -lqjpeg
+    unix:LIBS += -L../qtcommon/debug -lqtcommon -L../usbhid/debug -lusbhid -L../makeeeprom/debug -lmakeeeprom -L../utility/debug -lutility -L../dfuprogrammer/debug -ldfuprogrammer  -L../programmer/debug -lprogrammer -lusb-1.0 -ldfuprogrammer -lutility -lprogrammer -ldfuprogrammer -lutility -lusb-1.0 -L"../qtpropertybrowser-2.5-opensource/lib" -lQtSolutions_PropertyBrowser-2.5 -lutility -lutility -lutility -L$(QTDIR)/plugins/imageformats -lqjpeg
 } else {
-    unix:LIBS += -L../qtcommon/release -lqtcommon -L../usbhid/release -lusbhid -L../makeeeprom/release -lmakeeeprom -L../utility/release -lutility -L../dfuprogrammer/release -ldfuprogrammer  -L../programmer/release -lprogrammer -L../libusb-0.1.12/.libs -l:libusb.a -ldfuprogrammer -lutility -lprogrammer -ldfuprogrammer -lutility -l:libusb.a -L"../qtpropertybrowser-2.5-opensource/lib" -l:libQtSolutions_PropertyBrowser-2.5.a -lutility -lutility -lutility -L$(QTDIR)/plugins/imageformats -lqjpeg -lmakeeeprom
+    unix:LIBS += -L../qtcommon/release -lqtcommon -L../usbhid/release -lusbhid -L../makeeeprom/release -lmakeeeprom -L../utility/release -lutility -L../dfuprogrammer/release -ldfuprogrammer  -L../programmer/release -lprogrammer -lusb-1.0 -ldfuprogrammer -lutility -lprogrammer -ldfuprogrammer -lutility -lusb-1.0 -L"../qtpropertybrowser-2.5-opensource/lib" -lQtSolutions_PropertyBrowser-2.5 -lutility -lutility -lutility -L$(QTDIR)/plugins/imageformats -lqjpeg -lmakeeeprom
 }
-debug:PRE_TARGETDEPS = ../dfuprogrammer/debug/libdfuprogrammer.a ../makeeeprom/debug/libmakeeeprom.a ../programmer/debug/libprogrammer.a ../qtcommon/debug/libqtcommon.a ../usbhid/debug/libusbhid.a ../utility/debug/libutility.a
-release:PRE_TARGETDEPS = ../dfuprogrammer/release/libdfuprogrammer.a ../makeeeprom/release/libmakeeeprom.a ../programmer/release/libprogrammer.a ../qtcommon/release/libqtcommon.a ../usbhid/release/libusbhid.a ../utility/release/libutility.a
+CONFIG(debug,debug|release) {
+    PRE_TARGETDEPS = ../dfuprogrammer/debug/libdfuprogrammer.a ../makeeeprom/debug/libmakeeeprom.a ../programmer/debug/libprogrammer.a ../qtcommon/debug/libqtcommon.a ../utility/debug/libutility.a ../usbhid/debug/libusbhid.a
+} else {
+    PRE_TARGETDEPS = ../dfuprogrammer/release/libdfuprogrammer.a ../makeeeprom/release/libmakeeeprom.a ../programmer/release/libprogrammer.a ../qtcommon/release/libqtcommon.a ../utility/release/libutility.a ../usbhid/release/libusbhid.a
+}
 
 PRECOMPILED_HEADER = stdafx.h
 DEPENDPATH += .
@@ -52,6 +55,13 @@ CONFIG(debug,debug|release) {
 
 UI_DIR += ./generatedfiles
 RCC_DIR += ./generatedfiles
+
+target.path = $$INSTALLDIR_BIN
+help_files.files = help config.xml resources 
+help_files.path = $$INSTALLDIR_RESOURCES
+man_files.files = generichid.1
+man_files.path = $$INSTALLDIR_RESOURCES/man/man1
+INSTALLS += target help_files man_files 
 
 #Include file(s)
 include(generichid.pri)
