@@ -11,6 +11,7 @@
 					<li><a href="#credits">Credits</a></li>
 					<li><a href="#download">Download and Install</a></li>
 					<li><a href="#history">Change History</a></li>
+					<li><a href="#knownissues">Known Issues</a></li>
 				</ul>
 			<li><a href="hardware.htm">USB Hardware</a></li>
 			<li><a href="generichid.htm">Using Generic HID</a></li>
@@ -403,6 +404,14 @@ see permission or access denied errors in the terminal windows.</p>
 		</td>
 	</tr>
 </table>
-
+	<h2 id="knownissues">Known Issues</h2>
+<table cellpadding="5">
+	<tr>
+		<td>There are problems returning the descriptive strings from the USB devices.  Sometimes these don't come back and
+		cause the application to wait and timeout after 1 second.  This can be exacerbated under a VMWare virtual machine.  This
+		can be seen when selecting the "Test" tab and it doesnt switch immediately.
+		</td>
+	</tr>
+</table>
 		</body>
 </html>
