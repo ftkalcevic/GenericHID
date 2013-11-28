@@ -1,7 +1,7 @@
 <html>
 <head>
 		<title>Generic HID - DIY USB HID / Joystick / CNC Pendant</title>
-	</head>
+		</head>
 	<body>
 		<h1>Generic HID - DIY USB HID / Joystick / CNC Pendant</h1>
 		<ol>
@@ -237,6 +237,10 @@ code and demos...</p>
 		</td>
 		</tr>
 		<tr>
+			<td><a href="http://www.libusb.org/wiki/libusb-1.0">libusb-1.0</a></td>
+		<td>The new version 1.0 rewrite of libusb0.1.&nbsp; Linux version.</td>
+	</tr>
+		<tr>
 			<td><a href="http://libusb-win32.sourceforge.net/">libusb-win32 
 			v0.1.12</a></td>
 		<td>This is the Win32 version of the libusb library.</td>
@@ -256,9 +260,13 @@ code and demos...</p>
 		</tr>
 	</table>
 	<h2 id=download>Download and Install</h2>
-		<p>All version can be downloaded from
+		<p>All versions can be downloaded from
 		<a href="https://sourceforge.net/projects/generichid/files/">sourceforge</a>.</p>
 <h3>Windows</h3>
+		<p>Note that the last released Windows version, 1.2, uses libusb 0.1 which is only documented to work with versions of Windows up to XP.  For newer OS versions
+		I recommend you download the <span style="border-bottom-style: double">free</span> <a href="http://www.vmware.com/">VMWare Player</a>, or equivalent, and install the
+		latest free <a href="www.ubuntu.com">Ubuntu</a>	then follow the linux install instructions below.
+		</p>
 		<p>Download the latest Win32 binary,
 		<a href="https://sourceforge.net/projects/generichid/files/">
 		generichid_win32_x.x.zip</a>.</p>
@@ -296,16 +304,40 @@ generichid_x.x_i386.deb</a>.</p>
 						sudo dpkg -r generichid
 					</blockquote>
 					<p><span style="background-color: #FFFFFF">Type generichid 
-					at the command line to run it.</span></p>
+					at the command line to run it.&nbsp; Check the section on <a href="linuxpermissions.htm">linux permissions</a> if you 
+						see permission or access denied errors in the terminal windows.</span></p>
 <h3>Source</h3>
-<p>The source code can be downloaded 
-from 
-<a href="https://sourceforge.net/projects/generichid/files/">sourceforge</a>.&nbsp; 
-It requires Qt 4.5.2 (qtsdk2009.03).&nbsp; The release binaries are built 
-against the static libraries.&nbsp; The file is large, 37MB.&nbsp; This is 
-because it contains the library binaries :(&nbsp; If I get un-lazy, I'll clean 
-up the build process and remove the binaries.</p>
-
+<p>The latest version of GenericHID (version 1.3 and later) is available as source 
+	code only releases.&nbsp; In a terminal, download the tar file, and extract it...
+	</p>
+<tt>
+~> wget &lt;url to tar file&gt;<br />
+		~> tar xf generichid_1.3_src.tgz
+</tt>
+	<p>Change to the source root directory...</p>
+<tt>
+~> cd generichid
+</tt>
+	<p>Check the build requirements in the BUILD text document.</p>
+<tt>
+~/generichid> cat BUILD
+</tt>
+	<p>Install the build requirements listed in the BUILD document.  In version 1.3 they were...</p>
+<tt>
+~/generichid> sudo apt-get install build-essential qt4-qmake libqt4-dev libusb-1.0-0-dev gcc-avr binutils-avr gdb-avr avr-libc avrdude
+</tt>
+	<p>Then run &quot;qmake&quot; to build the makefile, &quot;make&quot; to build the project, then &quot;make install&quot; to install the application...</p>
+<tt>
+~/generichid> qmake<br />
+~/generichid> make<br />
+~/generichid> sudo make install
+</tt>
+	<p>GenericHID can then be run at the commandline...</p>
+<tt>
+~/generichid> generichid
+</tt>
+<p>Check the section on <a href="linuxpermissions.htm">linux permissions</a> if you 
+see permission or access denied errors in the terminal windows.</p>
 	<h2 id=history>Change History</h2>
 <table cellpadding=5>
 	<tr>
@@ -315,23 +347,28 @@ up the build process and remove the binaries.</p>
 	</tr>
 	<tr>
 		<td>1.3</td>
-		<td>20 Nov 2011</td>
+		<td>28 Nov 2011</td>
 		<td>
 		<ul>
 			<li>Linux Source release only.&nbsp; Download the source and read the instructions 
 				in BUILD</li>
 			<li>Move to libusb-1.0.  This means there is only a linux release of 1.3 at the moment.</li>
-			<li>Use shared libraries now.  This simplifies the build, but may cause install issues.</li>
+			<li>Use shared libraries now.  This simplifies the build, but may cause deployment issues 
+				(hence the source only release).</li>
             <li>Fix bug with Digital Encoders reporting their output as Relative when they were actually Absolute.</li>
+			<li>Change debounce property from boolean on/off flag, to a time in milliseconds 
+				(250 maximum).&nbsp; All existing controls that use debounce will default to 
+				10ms.</li>
             <li>Rename Digital Encoder to Incremental Encoders as it supports both digital and mechanical devices.</li>
-            <li>Encoder has pullup resistor option, to partly support mechanical incremental encoders.  
-				There is still no debounce.</li>
+            <li>Encoder now has a pullup resistor property, to partly support mechanical incremental encoders. 
+				This is untested.&nbsp; Encoders are still connected to interrupt pins which is 
+				a no-no for mechanical devices. (debounce can cause a flood of interrupts).</li>
             <li>New Incremental output mode for encoders.  Absolute mode accumulates an n-bit value then wraps.  Incremental mode reports the small changes since the last report.</li>
             <li>New LCD report to turn on the cursor and the blinking cursor</li>
             <li>Fix bug where directional switches just plain didn't work</li>
             <li>Disable JTAG through software.  This is the default.  It enables more pins.</li>
             <li>Fix C3/C2 pin swap on generic board</li>
-            <li>Add 16Mhz generic board.  For custom boards using the AT90USB1287/6 running at 16MHz</li>
+            <li>Add 16Mhz generic board.  This is for custom boards using the AT90USB1287/6 running at 16MHz</li>
 		</ul>
 		</td>
 	</tr>

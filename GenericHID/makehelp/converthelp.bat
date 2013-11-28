@@ -1,14 +1,15 @@
-for %%i in (D:\Projects\GenericHID\generichid\help\*.htm) do (
-D:\Projects\GenericHID\makehelp\release\makehelp D:\SOURCE\Inetpub\generichidsf "%%i"
+set HOMEDIR=.
+for %%i in (%HOMEDIR%\generichid\help\*.htm) do (
+%HOMEDIR%\makehelp\release\makehelp D:\SOURCE\Inetpub\generichidsf "%%i"
 if ERRORLEVEL 1 goto error
 )
 
-for %%i in (D:\Projects\GenericHID\generichid\help\*.png) do (
+for %%i in (%HOMEDIR%\generichid\help\*.png) do (
 copy "%%i" D:\SOURCE\Inetpub\generichidsf
 if ERRORLEVEL 1 goto error
 )
 
-for %%i in (D:\Projects\GenericHID\generichid\help\*.jpg) do (
+for %%i in (%HOMEDIR%\generichid\help\*.jpg) do (
 copy "%%i" D:\SOURCE\Inetpub\generichidsf
 if ERRORLEVEL 1 goto error
 )

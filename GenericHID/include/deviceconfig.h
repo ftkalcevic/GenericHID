@@ -29,7 +29,7 @@
 
 
 #define DEBOUNCE_MIN    0
-#define DEBOUNCE_MAX    127
+#define DEBOUNCE_MAX    250
 
 struct DebounceData
 {
