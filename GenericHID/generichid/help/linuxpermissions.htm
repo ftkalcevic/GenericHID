@@ -10,6 +10,9 @@
 				Note - this information applies to Ubuntu 
 					10.04 and 12.04, and may or may not work for other versions.
 				</p>
+	<p>
+				Note 2 - as of version 1.4, a copy of 99-generichid.rules is now installed in 
+				the /etc/udev/rules.d directory.</p>
 				<p>
 				When you insert a USB device, by default, the device is owned by <a class="code">root</a>.
 				A quick and dirty work-around is to run <b>GenericHID</b> as <a class="code">root</a> but
@@ -27,7 +30,7 @@
 				Permissions must be set for both the Generic HID device, and the 
 				DFU device (the device that appears when in programming mode).</p>
 				<p>Here is an example of a udev rules file.  In my <a class="code">/etc/udev/rules.d/</a> folder I have created the 
-				file <a class="code">99-hid.rules</a>.  The name of the file is not important, as long as it has the extension <a class="code">.rules</a>.
+				file <a class="code">99-generichid.rules</a>.  The name of the file is not important, as long as it has the extension <a class="code">.rules</a>.
 				</p>
 				<p>For Ubuntu 10.04...</p>
 				<blockquote class="code">
