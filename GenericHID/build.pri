@@ -9,4 +9,4 @@ CONFIG += release build_all
 INSTALLDIR_BIN = /usr/bin
 INSTALLDIR_LIB = /usr/lib/generichid
 INSTALLDIR_RESOURCES = /usr/share/generichid
-INSTALLDIR_UDEVRULES = /etc/udev/rules
+INSTALLDIR_UDEVRULES = /etc/udev/rules.d
