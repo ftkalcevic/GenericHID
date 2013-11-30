@@ -1,0 +1,6 @@
+# Generic HID device
+ATTRS{idProduct}=="04d9", ATTRS{idVendor}=="1c40", MODE="0660", GROUP="plugdev"
+# atmel dfu
+ATTRS{idProduct}=="2ffb", ATTRS{idVendor}=="03eb", MODE="0660", GROUP="plugdev"
+# halfkay loader
+ATTRS{idProduct}=="0478", ATTRS{idVendor}=="16c0", MODE="0660", GROUP="plugdev"
