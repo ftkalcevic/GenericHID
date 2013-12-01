@@ -388,8 +388,6 @@ void EVENT_USB_Device_UnhandledControlRequest(void)
         case REQ_GetReport:
             if (RequestType == (REQDIR_DEVICETOHOST | REQTYPE_CLASS | REQREC_INTERFACE))
             {
-                Endpoint_ClearSETUP();
-
                 byte nReportId = USB_ControlRequest.wValue & 0xFF;
                 byte type = (USB_ControlRequest.wValue >> 8) - 1;
                 byte nEndPoint = USB_ControlRequest.wIndex;
@@ -411,90 +409,121 @@ void EVENT_USB_Device_UnhandledControlRequest(void)
                 if ( type == REPORT_ITEM_TYPE_Feature )				    // Feature report requested - this will be for LCD info
                 {
                     // Write Feature report directly to usb port
-                    WriteFeatureReport( nReportId, pApplicationData );
-                    Endpoint_ClearIN();
+                    Endpoint_ClearSETUP();
+    
+                    while (true)
+                    {
+                        if (Endpoint_IsINReady())
+                        {
+                            WriteFeatureReport( nReportId, pApplicationData );
+                            Endpoint_ClearIN();
+                            break;
+                        }
+                    }
+                    //Endpoint_ClearIN();
 
                     while ( !Endpoint_IsOUTReceived() )
                     {
                         if (USB_DeviceState == DEVICE_STATE_Unattached)
                             return;
                     }
+                    //while (!(Endpoint_IsOUTReceived())) 
+                    //    continue;
                     Endpoint_ClearOUT();
                 }
                 else if ( type == REPORT_ITEM_TYPE_In && nReportId == 1 )	    // we only have 1 input report
                 {
                     byte nLen = 0;
                     byte buf[JOYSTICK_IN_EPSIZE];
+                    Endpoint_ClearSETUP();
+    
                     ReadControls( 1, pApplicationData, buf, &nLen );
-                    WriteInputReport(buf, nLen );
-                    Endpoint_ClearIN();
+                    if (Endpoint_IsOUTReceived())
+                        break;
+                    while (true)
+                    {
+                        if (Endpoint_IsINReady())
+                        {
+                            WriteInputReport(buf, nLen );
+                            Endpoint_ClearIN();
+                            break;
+                        }
+                    }                    
+                    while ( !Endpoint_IsOUTReceived() )
+                    {
+                        if (USB_DeviceState == DEVICE_STATE_Unattached)
+                            return;
+                    }
+
+                    Endpoint_ClearOUT();
+                    //Endpoint_ClearIN();
                 }
                 else
                 {
-                    Endpoint_ClearIN();
+                    //Endpoint_ClearIN();
                 }
             }
             break;
 
-        case REQ_SetReport:
-            if (USB_ControlRequest.bmRequestType == (REQDIR_HOSTTODEVICE | REQTYPE_CLASS | REQREC_INTERFACE))
-            {
-                if ( nSerialDebugLevel > 10 )
-                {
-                    UART1_Send_P(PSTR("SET_REPORT"));
-                    UART1_SendCRLF();
-                }
-                //Endpoint_ClearSETUP();
+//        case REQ_SetReport:
+//            if (USB_ControlRequest.bmRequestType == (REQDIR_HOSTTODEVICE | REQTYPE_CLASS | REQREC_INTERFACE))
+//            {
+//                if ( nSerialDebugLevel > 10 )
+//                {
+//                    UART1_Send_P(PSTR("SET_REPORT"));
+//                    UART1_SendCRLF();
+//                }
+//                //Endpoint_ClearSETUP();
 
-                //uint16_t ReportOUTSize = USB_ControlRequest.wLength;
-                //uint8_t  ReportOUTData[ReportOUTSize];
-                //uint8_t  ReportID = (USB_ControlRequest.wValue & 0xFF);
+//                //uint16_t ReportOUTSize = USB_ControlRequest.wLength;
+//                //uint8_t  ReportOUTData[ReportOUTSize];
+//                //uint8_t  ReportID = (USB_ControlRequest.wValue & 0xFF);
 
-                //Endpoint_Read_Control_Stream_LE(ReportOUTData, ReportOUTSize);
-                //Endpoint_ClearIN();
+//                //Endpoint_Read_Control_Stream_LE(ReportOUTData, ReportOUTSize);
+//                //Endpoint_ClearIN();
 
-                //CALLBACK_HID_Device_ProcessHIDReport(HIDInterfaceInfo, ReportID, ReportOUTData, ReportOUTSize);
-            }
+//                //CALLBACK_HID_Device_ProcessHIDReport(HIDInterfaceInfo, ReportID, ReportOUTData, ReportOUTSize);
+//            }
 
-            break;
-        case REQ_GetProtocol:
-            if ( nSerialDebugLevel > 10 )
-            {
-                UART1_Send_P(PSTR("GET_PROTOCOL"));
-                UART1_SendCRLF();
-            }
-            break;
-        case REQ_SetProtocol:
-            if ( nSerialDebugLevel > 10 )
-            {
-                UART1_Send_P(PSTR("SET_PROTOCOL"));
-                UART1_SendCRLF();
-            }
-            break;
-        case REQ_SetIdle:
-            Endpoint_ClearSETUP();
-            Endpoint_ClearStatusStage();
-            if (USB_ControlRequest.bmRequestType == (REQDIR_HOSTTODEVICE | REQTYPE_CLASS | REQREC_INTERFACE))
-            {
-                if ( nSerialDebugLevel > 10 )
-                {
-                    UART1_Send_P(PSTR("SET_IDLE"));
-                    UART1_SendCRLF();
-                }
-            }
+//            break;
+//        case REQ_GetProtocol:
+//            if ( nSerialDebugLevel > 10 )
+//            {
+//                UART1_Send_P(PSTR("GET_PROTOCOL"));
+//                UART1_SendCRLF();
+//            }
+//            break;
+//        case REQ_SetProtocol:
+//            if ( nSerialDebugLevel > 10 )
+//            {
+//                UART1_Send_P(PSTR("SET_PROTOCOL"));
+//                UART1_SendCRLF();
+//            }
+//            break;
+//        case REQ_SetIdle:
+//            Endpoint_ClearSETUP();
+//            Endpoint_ClearStatusStage();
+//            if (USB_ControlRequest.bmRequestType == (REQDIR_HOSTTODEVICE | REQTYPE_CLASS | REQREC_INTERFACE))
+//            {
+//                if ( nSerialDebugLevel > 10 )
+//                {
+//                    UART1_Send_P(PSTR("SET_IDLE"));
+//                    UART1_SendCRLF();
+//                }
+//            }
 
-            break;
-        case REQ_GetIdle:
-            if (USB_ControlRequest.bmRequestType == (REQDIR_DEVICETOHOST | REQTYPE_CLASS | REQREC_INTERFACE))
-            {
-                if ( nSerialDebugLevel > 10 )
-                {
-                    UART1_Send_P(PSTR("GET_IDLE"));
-                    UART1_SendCRLF();
-                }
-            }
+//            break;
+//        case REQ_GetIdle:
+//            if (USB_ControlRequest.bmRequestType == (REQDIR_DEVICETOHOST | REQTYPE_CLASS | REQREC_INTERFACE))
+//            {
+//                if ( nSerialDebugLevel > 10 )
+//                {
+//                    UART1_Send_P(PSTR("GET_IDLE"));
+//                    UART1_SendCRLF();
+//                }
+//            }
 
-            break;
+//            break;
     }
 
 }
