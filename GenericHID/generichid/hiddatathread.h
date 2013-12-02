@@ -22,20 +22,20 @@
 class HIDDataThread : public QThread
 {
     Q_OBJECT
-
+    
 public:
     HIDDataThread(HIDDevice *pDevice);
     ~HIDDataThread();
-
+    
 signals:
     void newData( QVector<byte> data );
-
+    
 public:
     virtual void run ();
     void stop();
     enum 
     {
-	LOOP_TIMEOUT = 1000
+        LOOP_TIMEOUT = 100
     };
 private:
     bool m_bRunning;
