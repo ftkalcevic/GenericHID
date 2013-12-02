@@ -1,0 +1,76 @@
+<!DOCTYPE GenericHID>
+<GenericHID>
+ <Shapes>
+  <Shape x="272" y="-223" shapeId="tricolourled" rotate="0" instanceId="2" mirror="false">
+   <Property value="LED2" name="Name"/>
+   <Property value="8:1001" name="Usage"/>
+   <Property value="Common Cathode" name="Type"/>
+   <Property value="10" name="Current"/>
+  </Shape>
+  <Shape x="274" y="25" shapeId="tricolourled" rotate="0" instanceId="3" mirror="false">
+   <Property value="LED1" name="Name"/>
+   <Property value="8:1000" name="Usage"/>
+   <Property value="Common Cathode" name="Type"/>
+   <Property value="10" name="Current"/>
+  </Shape>
+  <Shape x="-297" y="-308" shapeId="strippedusbkey" rotate="0" instanceId="4" mirror="false">
+   <Property value="Generic HID AT90USBKey Demo" name="Name"/>
+   <Property value="1:8" name="Usage"/>
+   <Property value="3.3" name="Voltage"/>
+   <Property value="Bus-Powered" name="Power-Source"/>
+   <Property value="50" name="Interval"/>
+   <Property value="0" name="Serial-Debug"/>
+   <Property value="false" name="HID-Debug"/>
+   <Property value="20" name="Current"/>
+   <Property value="None" name="Use Status LEDs"/>
+   <Property value="1" name="SerialNo"/>
+   <Property value="1,8,100" name="Timer1"/>
+   <Property value="1,8,100" name="Timer2"/>
+   <Property value="1,8,100" name="Timer3"/>
+   <Property value="false" name="EnableJTAG"/>
+   <Property value="usbkey.hex" name="Firmware"/>
+   <Property value="DFU" name="ProgrammerType"/>
+   <Property value="8000000" name="CPUClock"/>
+  </Shape>
+  <Shape x="-601" y="-273" shapeId="pot" rotate="360" instanceId="5" mirror="true">
+   <Property value="NTC Temperature" name="Name"/>
+   <Property value="6:48" name="Usage"/>
+   <Property value="10" name="Bits"/>
+   <Property value="0" name="Current"/>
+  </Shape>
+  <Shape x="-498" y="-392" shapeId="pot" rotate="180" instanceId="6" mirror="false">
+   <Property value="Voltage" name="Name"/>
+   <Property value="6:48" name="Usage"/>
+   <Property value="10" name="Bits"/>
+   <Property value="0" name="Current"/>
+  </Shape>
+  <Shape x="-610" y="-157" shapeId="dirswitch" rotate="360" instanceId="7" mirror="false">
+   <Property value="" name="Name"/>
+   <Property value="1:57" name="Usage"/>
+   <Property value="4way" name="Directions"/>
+   <Property value="true" name="Pullup"/>
+   <Property value="10" name="Debounce"/>
+   <Property value="0" name="Current"/>
+  </Shape>
+  <Shape x="-587" y="108" shapeId="pushbutton" rotate="180" instanceId="8" mirror="false">
+   <Property value="Joystick Button" name="Name"/>
+   <Property value="9:1" name="Usage"/>
+   <Property value="true" name="Pullup"/>
+   <Property value="10" name="Debounce"/>
+   <Property value="0" name="Current"/>
+  </Shape>
+ </Shapes>
+ <Wires>
+  <Wire startShapeId="4" startPinId="PD4" endShapeId="3" endPinId="1"/>
+  <Wire startShapeId="4" startPinId="PD5" endShapeId="3" endPinId="2"/>
+  <Wire startShapeId="4" startPinId="PD6" endShapeId="2" endPinId="2"/>
+  <Wire startShapeId="2" startPinId="1" endShapeId="4" endPinId="PD7"/>
+  <Wire startShapeId="4" startPinId="PF0" endShapeId="5" endPinId="Out"/>
+  <Wire startShapeId="4" startPinId="PF3" endShapeId="6" endPinId="Out"/>
+  <Wire startShapeId="8" startPinId="In" endShapeId="4" endPinId="PB5"/>
+  <Wire startShapeId="7" startPinId="W" endShapeId="4" endPinId="PB6"/>
+  <Wire startShapeId="7" startPinId="N" endShapeId="4" endPinId="PB7"/>
+  <Wire startShapeId="7" startPinId="E" endShapeId="4" endPinId="PE4"/>
+  <Wire startShapeId="4" startPinId="PE5" endShapeId="7" endPinId="S"/>
+ </Wires>
+</GenericHID>

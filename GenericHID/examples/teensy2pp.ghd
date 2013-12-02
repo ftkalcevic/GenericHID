@@ -1,0 +1,32 @@
+<!DOCTYPE GenericHID>
+<GenericHID>
+ <Shapes>
+  <Shape x="-132" y="-293" shapeId="Teensy++2.0" rotate="0" instanceId="1" mirror="false">
+   <Property value="Generic HID Teensy Demo" name="Name"/>
+   <Property value="1:8" name="Usage"/>
+   <Property value="5" name="Voltage"/>
+   <Property value="Bus-Powered" name="Power-Source"/>
+   <Property value="50" name="Interval"/>
+   <Property value="0" name="Serial-Debug"/>
+   <Property value="20" name="Current"/>
+   <Property value="None" name="Use Status LEDs"/>
+   <Property value="1" name="SerialNo"/>
+   <Property value="0,8,100" name="Timer1"/>
+   <Property value="0,8,100" name="Timer2"/>
+   <Property value="0,8,100" name="Timer3"/>
+   <Property value="false" name="EnableJTAG"/>
+   <Property value="teensypp2.hex" name="Firmware"/>
+   <Property value="HalfKay" name="ProgrammerType"/>
+   <Property value="16000000" name="CPUClock"/>
+  </Shape>
+  <Shape x="-250" y="-164" shapeId="led" rotate="0" instanceId="2" mirror="false">
+   <Property value="On Board LED" name="Name"/>
+   <Property value="8:1000" name="Usage"/>
+   <Property value="true" name="Source"/>
+   <Property value="5" name="Current"/>
+  </Shape>
+ </Shapes>
+ <Wires>
+  <Wire startShapeId="2" startPinId="In" endShapeId="1" endPinId="PD6"/>
+ </Wires>
+</GenericHID>
