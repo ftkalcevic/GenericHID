@@ -347,6 +347,19 @@ see permission or access denied errors in the terminal windows.</p>
 		<th>Description</td>
 	</tr>
 	<tr>
+		<td>1.5</td>
+		<td>2 Dec 2013</td>
+		<td>
+		<ul>
+			<li>Fix firmware bug leaving USB endpoint in unknown state after asking for initial IN report.
+			This caused subsequent requests to fail until the USB endpoint cleared.
+			</li>
+			<li>Tidy switching between Design and Test tabs.</li>
+			<li>Add some example configurations.</li>
+		</ul>
+        </td>
+	</tr>
+	<tr>
 		<td>1.4</td>
 		<td>1 Dec 2013</td>
 		<td>
@@ -417,9 +430,9 @@ see permission or access denied errors in the terminal windows.</p>
 	<h2 id="knownissues">Known Issues</h2>
 <table cellpadding="5">
 	<tr>
-		<td>There are problems returning the descriptive strings from the USB devices.  Sometimes these don't come back and
-		cause the application to wait and timeout after 1 second.  This can be exacerbated under a VMWare virtual machine.  This
-		can be seen when selecting the "Test" tab and it doesnt switch immediately.
+		<td>The device about to be programmed sometimes doesn't respond to the Start Bootloader button.
+		Pressing it a couple of times sometimes works.  Otherwise, use the hardware's method for starting
+		the bootloader.
 		</td>
 	</tr>
 </table>
