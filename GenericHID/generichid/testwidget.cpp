@@ -250,13 +250,6 @@ void TestWidget::DisplayDevice( HIDDevice *pDevice )
 
 void TestWidget::StartListening()
 {
-    if ( m_pThread != NULL )// Clean up the old thread
-    {
-        m_pThread->wait( 250 );
-        delete m_pThread;
-        m_pThread = NULL;
-    }
-    
     m_pThread = new HIDDataThread( m_pActiveDevice );
     
     qRegisterMetaType<QVector<byte> >("QVector<byte>");
@@ -271,10 +264,16 @@ void TestWidget::StopListening()
     if ( m_pThread != NULL )
     {
         m_pThread->stop();
-        // Don't delete the thread until we need it again.  This gives it time to shutdown.
-        // m_pThread->wait( 250 );
-        // The thread deletes itself // delete m_pThread;
-        //m_pThread = NULL;
+        if ( m_pThread->wait( 3*HIDDataThread::LOOP_TIMEOUT ) )
+        {
+            // This is a bit ugly.  We only delete the thread object if it exited.
+            // If it didn't exit after waiting, we just let it die on its
+            // own, leaking memory.  If we delete it while it is still running it
+            // will probably SEGV.  There is also the risk that the USB device hasn't 
+            // been released.
+            delete m_pThread;
+        }
+        m_pThread = NULL;
     }
 }
 
