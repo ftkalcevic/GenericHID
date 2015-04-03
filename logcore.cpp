@@ -41,7 +41,7 @@ void LogCore::Init()
     if ( m_LogCore == NULL )
     {
         LogCore *core = new LogCore();
-        if ( m_LogCore != NULL )
+        if ( m_LogCore == NULL )
             m_LogCore = core;
     }
 }
