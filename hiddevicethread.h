@@ -41,6 +41,7 @@ public:
 private:
     virtual void run();
     void ReadCallback(struct libusb_transfer *transfer);
+    static volatile bool m_bRunning;
     static void _ReadCallback(struct libusb_transfer *transfer);
     static void FDRemoved(int fd, void *user_data);
     static void FDAdded(int fd, short events, void *user_data);
@@ -49,7 +50,6 @@ private:
     QList<QVector<byte> > &m_SendBuffer;
     QMutex &m_ReceiveBufferMutex;
     QList<QVector<byte> > &m_ReceiveBuffer;
-    volatile bool m_bRunning;
     int m_nLongestInReport;
     int m_nLongestOutReport;
     HIDDevice *m_pDevice;

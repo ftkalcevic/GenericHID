@@ -35,6 +35,13 @@ HIDDevices::~HIDDevices(void)
 {
 }
 
+void HIDDevices::Clear()
+{
+    for ( unsigned int i = 0; i < m_Devices.size(); i++ )
+        delete m_Devices[i];
+    m_Devices.clear();
+}
+
 bool HIDDevices::Open( int nDebugLevel )
 {
     if ( !m_bOpen )
@@ -58,9 +65,7 @@ bool HIDDevices::FindHIDDevices()
 	if ( !Open() )
 	    return false;
 
-    for ( unsigned int i = 0; i < m_Devices.size(); i++ )
-	delete m_Devices[i];
-    m_Devices.clear();
+    Clear();
 
 #if defined(_WIN32) || defined(LIBUSB01)
     usb_find_busses();

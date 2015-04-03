@@ -29,6 +29,7 @@ public:
 
 private:
     static bool m_bOpen;
+    void Clear();
 
 public:
     std::vector<HIDDevice *>  m_Devices;

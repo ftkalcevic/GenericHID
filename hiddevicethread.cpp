@@ -20,6 +20,7 @@
 #include "hidparser.h"
 #include <libusb-1.0/libusb.h>
 #include <poll.h>
+#include <unistd.h>
 
 #include "hidtypes.h"
 #include "log.h"
@@ -28,13 +29,15 @@
 
 #define TIMEOUT_ERROR	LIBUSB_ERROR_TIMEOUT
 
+// This is crappy - one global flag for all threads.
+// This was added to stop scribbles on shutdown (from usb callbacks)
+volatile bool HIDDeviceThread::m_bRunning = false;
 
 HIDDeviceThread::HIDDeviceThread( QMutex &SendBufferMutex, QList<QVector<byte> > &SendBuffer, QMutex &ReceiveBufferMutex, QList<QVector<byte> > &ReceiveBuffer, int nLongestInReport, int nLongestOutReport, HIDDevice *pDevice )
 : m_SendBufferMutex( SendBufferMutex )
 , m_SendBuffer( SendBuffer )
 , m_ReceiveBufferMutex( ReceiveBufferMutex )
 , m_ReceiveBuffer( ReceiveBuffer )
-, m_bRunning( false )
 , m_nLongestInReport( nLongestInReport )
 , m_nLongestOutReport( nLongestOutReport )
 , m_pDevice( pDevice )
@@ -42,6 +45,7 @@ HIDDeviceThread::HIDDeviceThread( QMutex &SendBufferMutex, QList<QVector<byte> >
 , m_nReadPipe(0)
 , m_nWritePipe(0)
 {
+    m_bRunning = false;
 }
 
 HIDDeviceThread::~HIDDeviceThread(void)
@@ -50,8 +54,11 @@ HIDDeviceThread::~HIDDeviceThread(void)
 
 void HIDDeviceThread::_ReadCallback(struct libusb_transfer *transfer)
 {
-    HIDDeviceThread *pThis = static_cast<HIDDeviceThread *>( transfer->user_data );
-    pThis->ReadCallback( transfer );
+    if ( m_bRunning )
+    {
+        HIDDeviceThread *pThis = static_cast<HIDDeviceThread *>( transfer->user_data );
+        pThis->ReadCallback( transfer );
+    }
 }
 
 void HIDDeviceThread::ReadCallback(struct libusb_transfer *transfer)
@@ -80,8 +87,11 @@ void HIDDeviceThread::ReadCallback(struct libusb_transfer *transfer)
 
 void HIDDeviceThread::_WriteCallback(struct libusb_transfer *transfer)
 {
-    HIDDeviceThread *pThis = static_cast<HIDDeviceThread *>( transfer->user_data );
-    pThis->WriteCallback( transfer );
+    if ( m_bRunning )
+    {
+        HIDDeviceThread *pThis = static_cast<HIDDeviceThread *>( transfer->user_data );
+        pThis->WriteCallback( transfer );
+    }
 }
 
 void HIDDeviceThread::WriteCallback(struct libusb_transfer *transfer)
@@ -93,14 +103,20 @@ void HIDDeviceThread::WriteCallback(struct libusb_transfer *transfer)
 
 void HIDDeviceThread::FDRemoved(int, void *user_data)
 {
-    HIDDeviceThread *pThis = reinterpret_cast<HIDDeviceThread *>( user_data );
-    pThis->m_bRebuild_fds = true;
+    if ( m_bRunning )
+    {
+        HIDDeviceThread *pThis = reinterpret_cast<HIDDeviceThread *>( user_data );
+        pThis->m_bRebuild_fds = true;
+    }
 }
 
 void HIDDeviceThread::FDAdded(int, short, void *user_data)
 {
-    HIDDeviceThread *pThis = reinterpret_cast<HIDDeviceThread *>( user_data );
-    pThis->m_bRebuild_fds = true;
+    if ( m_bRunning )
+    {
+        HIDDeviceThread *pThis = reinterpret_cast<HIDDeviceThread *>( user_data );
+        pThis->m_bRebuild_fds = true;
+    }
 }
 
 
@@ -252,6 +268,11 @@ void HIDDeviceThread::run()
 
 	    struct timeval tv;
 	    n = libusb_get_next_timeout( NULL, &tv );
+        if ( n == 0 )
+        { 
+            tv.tv_sec = 0;
+            tv.tv_usec = 20000; // default to 20ms if usb has nothing to do.
+        }
 	    fd_set rd = fds_read;
 	    fd_set wr = fds_write;
 	    LOG_MSG( m_Logger, LogTypes::Debug, QString("Select will wait for %1.%2").arg(tv.tv_sec).arg(tv.tv_usec, 6, 10, QChar('0')) );
@@ -338,8 +359,8 @@ void HIDDeviceThread::run()
 	for ( int i = 0; i < m_TransferBuffers.count(); i++ )
 	{
 	    // libusb_cancel_transfer( m_TransferBuffers[i] ); - I don't think this is needed, as we never call libusb_handle_events again
-	    delete m_TransferBuffers[i]->buffer;
-	    libusb_free_transfer( m_TransferBuffers[i] );
+	    //delete m_TransferBuffers[i]->buffer;
+	    //libusb_free_transfer( m_TransferBuffers[i] );
 	}
 	m_TransferBuffers.clear();
     }
