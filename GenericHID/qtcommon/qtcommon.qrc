@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/hatswitch" >
+        <file>resources/hatarrow.bmp</file>
+        <file>resources/hatarrowhi.bmp</file>
+        <file>resources/hatdot.bmp</file>
+        <file>resources/hatdothi.bmp</file>
+    </qresource>
+</RCC>
