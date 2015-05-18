@@ -1,0 +1,23 @@
+**/*.moc
+**/*.o
+**/Makefile
+**/generatedfiles
+**/moc*
+**/release
+
+# Generic HID tool
+scripts/generichid
+
+# LUFA
+LUFA*/**/*.elf
+LUFA*/**/*.lss
+LUFA*/**/*.lst
+LUFA*/**/*.map
+LUFA*/**/*.sym
+LUFA*/**/.dep/
+LUFA*/**/Makefile.firmware
+
+# QtPropertyBrowser
+qtpropertybrowser-2.5-opensource/buildlib/qrc_qtpropertybrowser.cpp
+qtpropertybrowser-2.5-opensource/lib/
+
