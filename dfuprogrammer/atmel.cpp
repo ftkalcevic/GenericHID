@@ -123,7 +123,7 @@ static int32_t atmel_read_command( dfu_device_t *device,
     command[1] = data0;
     command[2] = data1;
 
-    DEBUG_MSG( QString("%1( %2, 0x%3, 0x%4 )\n").arg(__FUNCTION__).arg((int)device).arg(data0,2,16,QChar('0')).arg(data1,2,16,QChar('0')) );
+    DEBUG_MSG( QString("%1( %2, 0x%3, 0x%4 )\n").arg(__FUNCTION__).arg((quintptr)device).arg(data0,2,16,QChar('0')).arg(data1,2,16,QChar('0')) );
 
     if( 3 != dfu_download(device, 3, command) ) {
         ERROR_MSG( "dfu_download failed\n" );
@@ -237,7 +237,7 @@ int32_t atmel_read_config( dfu_device_t *device,
     int32_t result;
     int32_t retVal = 0;
 
-    DEBUG_MSG( QString("%1( %2, %3 )\n").arg(__FUNCTION__).arg((int)device).arg((int)info) );
+    DEBUG_MSG( QString("%1( %2, %3 )\n").arg(__FUNCTION__).arg((quintptr)device).arg((quintptr)info) );
 
     for( unsigned int i = 0; i < sizeof(data)/sizeof(atmel_read_config_t); i++ ) {
         atmel_read_config_t *row = (atmel_read_config_t*) &data[i];
@@ -279,7 +279,7 @@ int32_t atmel_erase_flash( dfu_device_t *device,
     dfu_status_t status;
     int32_t i;
 
-    DEBUG_MSG( QString("%1( %2, %3 )\n").arg(__FUNCTION__).arg((int)device).arg(mode) );
+    DEBUG_MSG( QString("%1( %2, %3 )\n").arg(__FUNCTION__).arg((quintptr)device).arg(mode) );
 
     switch( mode ) {
         case ATMEL_ERASE_BLOCK_0:
@@ -444,7 +444,7 @@ int32_t atmel_set_config( dfu_device_t *device,
     uint8_t command[4] = { 0x04, 0x01, 0x00, 0x00 };
     dfu_status_t status;
 
-    DEBUG_MSG( QString("%1( %2, %3, 0x%4 )\n").arg(__FUNCTION__).arg((int)device).arg(property).arg(value,2,16,QChar('0')) );
+    DEBUG_MSG( QString("%1( %2, %3, 0x%4 )\n").arg(__FUNCTION__).arg((quintptr)device).arg(property).arg(value,2,16,QChar('0')) );
 
     switch( property ) {
         case ATMEL_SET_CONFIG_BSB:
@@ -496,7 +496,7 @@ static int32_t __atmel_read_page( dfu_device_t *device,
     uint32_t mini_page;
     int32_t result;
 
-    DEBUG_MSG( QString("%1( %2, %3, %4, %5, %6 )\n").arg(__FUNCTION__).arg((int)device).arg(start).arg(end).arg((int)buffer).arg(eeprom ? "true" : "false") );
+    DEBUG_MSG( QString("%1( %2, %3, %4, %5, %6 )\n").arg(__FUNCTION__).arg((quintptr)device).arg(start).arg(end).arg((quintptr)buffer).arg(eeprom ? "true" : "false") );
 
     if( true == eeprom ) {
         command[1] = 0x02;
@@ -564,7 +564,7 @@ int32_t atmel_read_flash( dfu_device_t *device,
     uint32_t current_start;
     size_t size;
 
-    DEBUG_MSG( QString("%1( %2, 0x%3, 0x%4, %5, %6, %7 )\n").arg(__FUNCTION__).arg((int)device).arg(start,8,16,QChar('0')).arg(end,8,16,QChar('0')).arg((int)buffer).arg(buffer_len).arg(eeprom ? "true" : "false") );
+    DEBUG_MSG( QString("%1( %2, 0x%3, 0x%4, %5, %6, %7 )\n").arg(__FUNCTION__).arg((quintptr)device).arg(start,8,16,QChar('0')).arg(end,8,16,QChar('0')).arg((quintptr)buffer).arg(buffer_len).arg(eeprom ? "true" : "false") );
 
     if ( callback )
 	(*callback)(user_data, 0 );
@@ -640,7 +640,7 @@ static int32_t __atmel_blank_check_internal( dfu_device_t *device,
 {
     uint8_t command[6] = { 0x03, 0x01, 0x00, 0x00, 0x00, 0x00 };
 
-    DEBUG_MSG( QString("%1( %2, 0x%3, 0x%3 )\n").arg(__FUNCTION__).arg((int)device).arg(start,8,16,QChar('0')).arg(end,8,16,QChar('0')) );
+    DEBUG_MSG( QString("%1( %2, 0x%3, 0x%3 )\n").arg(__FUNCTION__).arg((quintptr)device).arg(start,8,16,QChar('0')).arg(end,8,16,QChar('0')) );
 
     command[2] = (uint8_t)(0xff & (start >> 8));
     command[3] = (uint8_t)(0xff & start);
@@ -666,7 +666,7 @@ int32_t atmel_blank_check( dfu_device_t *device,
     uint32_t current_start;
     size_t size;
 
-    DEBUG_MSG( QString("%1( %2, 0x%3, 0x%4 )\n").arg(__FUNCTION__).arg((int)device).arg(start,8,16,QChar('0')).arg(end,8,16,QChar('0')) );
+    DEBUG_MSG( QString("%1( %2, 0x%3, 0x%4 )\n").arg(__FUNCTION__).arg((quintptr)device).arg(start,8,16,QChar('0')).arg(end,8,16,QChar('0')) );
 
     if ( callback )
 	(*callback)(user_data, 0 );
@@ -754,7 +754,7 @@ int32_t atmel_reset( dfu_device_t *device )
 {
     uint8_t command[3] = { 0x04, 0x03, 0x00 };
 
-    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((int)device) );
+    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((quintptr)device) );
 
     if( 3 != dfu_download(device, 3, command) ) {
         ERROR_MSG( "dfu_download failed.\n" );
@@ -773,7 +773,7 @@ int32_t atmel_start_app( dfu_device_t *device, uint16_t addr )
 {
     uint8_t command[5] = { 0x04, 0x03, 0x01, (uint8_t)((addr >> 8) & 0xFF), (uint8_t)(addr & 0xFF) };
 
-    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((int)device) );
+    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((quintptr)device) );
 
     if( 5 != dfu_download(device, 5, command) ) {
         ERROR_MSG( "dfu_download failed.\n" );
@@ -791,7 +791,7 @@ int32_t atmel_start_app( dfu_device_t *device, uint16_t addr )
 
 static int32_t atmel_select_flash( dfu_device_t *device )
 {
-    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((int)device) );
+    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((quintptr)device) );
 
     if( (NULL != device) && (adc_AVR32 == device->type) ) {
         uint8_t command[4] = { 0x06, 0x03, 0x00, 0x00 };
@@ -808,7 +808,7 @@ static int32_t atmel_select_flash( dfu_device_t *device )
 
 static int32_t atmel_select_fuses( dfu_device_t *device )
 {
-    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((int)device) );
+    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((quintptr)device) );
 
     if( (NULL != device) && (adc_AVR32 == device->type) ) {
         uint8_t command[4] = { 0x06, 0x03, 0x00, 0x03 };
@@ -826,7 +826,7 @@ static int32_t atmel_select_fuses( dfu_device_t *device )
 
 static int32_t atmel_select_user( dfu_device_t *device )
 {
-    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((int)device) );
+    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((quintptr)device) );
 
     if( (NULL != device) && (adc_AVR32 == device->type) ) {
         uint8_t command[4] = { 0x06, 0x03, 0x00, 0x06 };
@@ -844,7 +844,7 @@ static int32_t atmel_select_user( dfu_device_t *device )
 static int32_t atmel_select_page( dfu_device_t *device,
                                   const uint16_t mem_page )
 {
-    DEBUG_MSG( QString("%1( %2, %3 )\n").arg(__FUNCTION__).arg((int)device).arg(mem_page) );
+    DEBUG_MSG( QString("%1( %2, %3 )\n").arg(__FUNCTION__).arg((quintptr)device).arg(mem_page) );
 
     if( NULL != device ) {
         if( adc_AVR32 == device->type ) {
@@ -877,7 +877,7 @@ static void atmel_flash_prepair_buffer( int16_t *buffer, const size_t size,
 {
     int16_t *page;
 
-    DEBUG_MSG( QString("%1( %2, %3, %4 )\n").arg(__FUNCTION__).arg((int)buffer).arg(size).arg(page_size) );
+    DEBUG_MSG( QString("%1( %2, %3, %4 )\n").arg(__FUNCTION__).arg((quintptr)buffer).arg(size).arg(page_size) );
 
     for( page = buffer;
          &page[page_size] < &buffer[size];
@@ -910,7 +910,7 @@ int32_t atmel_user( dfu_device_t *device,
                     const uint32_t end )
 {
     int32_t result = 0;
-    DEBUG_MSG( QString("%1( %2, %3, %4)\n").arg(__FUNCTION__).arg((int)device).arg((int)buffer).arg(end) );
+    DEBUG_MSG( QString("%1( %2, %3, %4)\n").arg(__FUNCTION__).arg((quintptr)device).arg((quintptr)buffer).arg(end) );
 
     if( (NULL == buffer) || (end <= 0) ) {
         ERROR_MSG( "invalid arguments.\n" );
@@ -951,7 +951,7 @@ int32_t atmel_flash( dfu_device_t *device,
     int32_t result = 0;
     size_t size = end - start;
 
-    DEBUG_MSG( QString("%1( %2, %3, %4, %5, %6, %7 )\n").arg(__FUNCTION__).arg((int)device).arg((int)buffer).arg(start).arg(end).arg(page_size).arg(eeprom ? "true" : "false") );
+    DEBUG_MSG( QString("%1( %2, %3, %4, %5, %6, %7 )\n").arg(__FUNCTION__).arg((quintptr)device).arg((quintptr)buffer).arg(start).arg(end).arg(page_size).arg(eeprom ? "true" : "false") );
 
     if ( callback )
 	(*callback)(user_data, 0 );
@@ -1077,7 +1077,7 @@ static void atmel_flash_populate_footer( uint8_t *message, uint8_t *footer,
 {
     int32_t crc;
 
-    DEBUG_MSG( QString("%1( %2, %3, %4, %5, %6 )\n").arg(__FUNCTION__).arg((int)message).arg((int)footer).arg(vendorId).arg(productId).arg(bcdFirmware) );
+    DEBUG_MSG( QString("%1( %2, %3, %4, %5, %6 )\n").arg(__FUNCTION__).arg((quintptr)message).arg((quintptr)footer).arg(vendorId).arg(productId).arg(bcdFirmware) );
 
     if( (NULL == message) || (NULL == footer) ) {
         return;
@@ -1123,7 +1123,7 @@ static void atmel_flash_populate_header( uint8_t *header,
 {
     uint16_t end;
 
-    DEBUG_MSG( QString("%1( %2, %3, %4, %5 )\n").arg(__FUNCTION__).arg((int)header).arg(start_address).arg(length).arg(eeprom ? "true" : "false") );
+    DEBUG_MSG( QString("%1( %2, %3, %4, %5 )\n").arg(__FUNCTION__).arg((quintptr)header).arg(start_address).arg(length).arg(eeprom ? "true" : "false") );
 
     if( NULL == header ) {
         return;
@@ -1164,7 +1164,7 @@ static int32_t atmel_flash_block( dfu_device_t *device,
     size_t control_block_size;  /* USB control block size */
     size_t alignment;
 
-    DEBUG_MSG( QString("%1( %2, %3, %4, %5, %6 )\n").arg(__FUNCTION__).arg((int)device).arg((int)buffer).arg(base_address).arg(length).arg(eeprom ? "true" : "false") );
+    DEBUG_MSG( QString("%1( %2, %3, %4, %5, %6 )\n").arg(__FUNCTION__).arg((quintptr)device).arg((quintptr)buffer).arg(base_address).arg(length).arg(eeprom ? "true" : "false") );
 
     if( (NULL == buffer) || (ATMEL_MAX_TRANSFER_SIZE < length) ) {
         ERROR_MSG( "invalid arguments.\n" );

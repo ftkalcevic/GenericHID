@@ -111,7 +111,7 @@ int32_t dfu_detach( dfu_device_t *device, const int32_t timeout )
 {
     int32_t result;
     
-    DEBUG_MSG( QString("%s( %p, %d )\n").arg(__FUNCTION__).arg((int)device).arg(timeout) );
+    DEBUG_MSG( QString("%s( %p, %d )\n").arg(__FUNCTION__).arg((quintptr)device).arg(timeout) );
     
     if( (NULL == device) || (NULL == device->handle) || (timeout < 0) ) 
     {
@@ -148,7 +148,7 @@ int32_t dfu_download( dfu_device_t *device, const size_t length, uint8_t* data )
 {
     int32_t result;
     
-    DEBUG_MSG( QString("%1( %2, %3, %4 )\n").arg(__FUNCTION__).arg((int)device).arg(length).arg((int)data) );
+    DEBUG_MSG( QString("%1( %2, %3, %4 )\n").arg(__FUNCTION__).arg((quintptr)device).arg(length).arg((quintptr)data) );
     
     /* Sanity checks */
     if( (NULL == device) || (NULL == device->handle) ) {
@@ -203,7 +203,7 @@ int32_t dfu_upload( dfu_device_t *device, const size_t length, uint8_t* data )
 {
     int32_t result;
     
-    DEBUG_MSG( QString("%1( %2, %3, %4 )\n").arg(__FUNCTION__).arg((int)device).arg(length).arg((int)data) );
+    DEBUG_MSG( QString("%1( %2, %3, %4 )\n").arg(__FUNCTION__).arg((quintptr)device).arg(length).arg((quintptr)data) );
     
     /* Sanity checks */
     if( (NULL == device) || (NULL == device->handle) ) {
@@ -244,7 +244,7 @@ int32_t dfu_get_status( dfu_device_t *device, dfu_status_t *status )
     unsigned char buffer[6];
     int32_t result;
     
-    DEBUG_MSG( QString("%1( %2, %3 )\n").arg(__FUNCTION__).arg((int)device).arg((int)status) );
+    DEBUG_MSG( QString("%1( %2, %3 )\n").arg(__FUNCTION__).arg((quintptr)device).arg((quintptr)status) );
     
     if( (NULL == device) || (NULL == device->handle) ) {
         ERROR_MSG( "Invalid parameter\n" );
@@ -306,7 +306,7 @@ int32_t dfu_clear_status( dfu_device_t *device )
 {
     int32_t result;
     
-    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((int)device) );
+    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((quintptr)device) );
     
     if( (NULL == device) || (NULL == device->handle) ) {
         ERROR_MSG( "Invalid parameter\n" );
@@ -340,7 +340,7 @@ int32_t dfu_get_state( dfu_device_t *device )
     int32_t result;
     unsigned char buffer[1];
     
-    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((int)device) );
+    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((quintptr)device) );
     
     if( (NULL == device) || (NULL == device->handle) ) {
         ERROR_MSG( "Invalid parameter\n" );
@@ -379,7 +379,7 @@ int32_t dfu_abort( dfu_device_t *device )
 {
     int32_t result;
     
-    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((int)device) );
+    DEBUG_MSG( QString("%1( %2 )\n").arg(__FUNCTION__).arg((quintptr)device) );
     
     if( (NULL == device) || (NULL == device->handle) ) {
         ERROR_MSG( "Invalid parameter\n" );
@@ -419,7 +419,7 @@ libusb_device *dfu_device_init( const uint32_t vendor,
 {
     int32_t retries = 4;
     
-    DEBUG_MSG( QString("%1( %2, %3, %4, %5, %6 )\n").arg(__FUNCTION__).arg(vendor).arg(product).arg((int)dfu_device).arg(initial_abort ? "true" : "false").arg(honor_interfaceclass ? "true" : "false") );
+    DEBUG_MSG( QString("%1( %2, %3, %4, %5, %6 )\n").arg(__FUNCTION__).arg(vendor).arg(product).arg((quintptr)dfu_device).arg(initial_abort ? "true" : "false").arg(honor_interfaceclass ? "true" : "false") );
     
 retry:
     
