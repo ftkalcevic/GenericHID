@@ -1,6 +1,7 @@
 **/*.moc
 **/*.o
 **/Makefile
+Makefile
 !scripts/Makefile
 **/generatedfiles
 **/moc*
@@ -17,8 +18,13 @@ LUFA*/**/*.map
 LUFA*/**/*.sym
 LUFA*/**/.dep/
 LUFA*/**/Makefile.firmware
+LUFA*/Makefile.firmware
 
 # QtPropertyBrowser
 qtpropertybrowser-2.5-opensource/buildlib/qrc_qtpropertybrowser.cpp
 qtpropertybrowser-2.5-opensource/lib/
+qtpropertybrowser-2.5-opensource/buildlib/*.o
+qtpropertybrowser-2.5-opensource/buildlib/moc_*
+qtpropertybrowser-2.5-opensource/buildlib/*.moc
+qtpropertybrowser-2.5-opensource/buildlib/Makefile
 
