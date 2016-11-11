@@ -1,6 +1,7 @@
 **/*.moc
 **/*.o
 **/Makefile
+!scripts/Makefile
 **/generatedfiles
 **/moc*
 **/release
