@@ -711,7 +711,7 @@
       <pin rect="170,229,20,20" id="C5" type="io" rotate="-90"/>
       <pin rect="195,229,20,20" id="C6" type="io" rotate="-90"/>
       <pin rect="219,229,20,20" id="C7" type="io" rotate="-90"/>
-      <property name="UsageMin" description="keymatrix.htm#UsageMin" type="usage" default="9:1"/>
+      <property name="Usage" description="keymatrix.htm#UsageMin" type="usage" default="9:1"/>
       <property name="Rows" description="keymatrix.htm#Rows" type="int" min="1" max="8" default="4"/>
       <property name="Columns" description="keymatrix.htm#Columns" type="int" min="1" max="8" default="4"/>
       <property name="Key Names" description="keymatrix.htm#KeyNames" type="keynames"/>
