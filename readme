@@ -16,6 +16,8 @@ Building
 linux
 -----
 
+Note - GenericHID still uses qt4.  If you have qt5 installed on your machine run qmake-qt4 instead of qmake below.  If you have already run qmake for qt5, it is easiest to retreive a new clone of the repository and start again.
+
 > qmake
 > make
 > sudo make install
