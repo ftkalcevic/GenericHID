@@ -70,8 +70,13 @@ void WriteRGB( struct SRGBLEDControl *pData, byte **ReportBuffer, byte *nBit )
 {
     byte nOut = ReadPackData16( ReportBuffer, nBit, 3 );
 
+    SetRGB(pData,nOut);
+}
+
+void SetRGB( struct SRGBLEDControl *pData, byte nOut )
+{
     if ( pData->Options & _BV(RGB_SINK) )
-	nOut = ~nOut;
+	    nOut = ~nOut;
 
     SetPortBit( pData->PortR, nOut & RGB_RED );
     SetPortBit( pData->PortG, nOut & RGB_GREEN );

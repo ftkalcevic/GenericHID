@@ -22,5 +22,6 @@
 
 extern void InitRGB( struct SRGBLEDControl *pData );
 extern void WriteRGB( struct SRGBLEDControl *pData, byte **ReportBuffer, byte *nBit );
+extern void SetRGB( struct SRGBLEDControl *pData, byte nOut );
 
 #endif

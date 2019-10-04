@@ -61,27 +61,32 @@ void WriteTricolourLED( struct STricolourLEDControl *pData, byte **ReportBuffer,
     UART1_SendInt( nOut );
     UART1_SendCRLF();
 
+    SetTricolourLED( pData, nOut );
+}
+
+void SetTricolourLED( struct STricolourLEDControl *pData, byte nOut )
+{
     byte nA;
     byte nB;
     if ( nOut == 1 )
     {
-	nA = 1;
-	nB = 0;
+        nA = 1;
+        nB = 0;
     }
     else if ( nOut == 2 )
     {
-	nA = 0;
-	nB = 1;
+        nA = 0;
+        nB = 1;
     }
     else if ( nOut == 3 )
     {
-	nA = 1;
-	nB = 1;
+        nA = 1;
+        nB = 1;
     }
     else
     {
-	nA = 0;
-	nB = 0;
+        nA = 0;
+        nB = 0;
     } 
 
     byte nPortA = GET_PORT_ID(pData->PortA);

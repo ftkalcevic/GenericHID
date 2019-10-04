@@ -23,5 +23,6 @@
 extern void InitPWM( struct SPWMControl *pData );
 extern void WritePWM( struct SPWMControl *pData, byte **ReportBuffer, byte *nBit );
 extern void initialisePWMTimers( struct TimerConfig *pTimers, int nCount );
+extern void SetPWM( struct SPWMControl *pData, uint16_t nValue );
 
 #endif

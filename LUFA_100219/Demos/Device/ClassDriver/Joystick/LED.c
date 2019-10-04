@@ -64,8 +64,13 @@ void WriteLED( struct SLEDControl *pData, byte **ReportBuffer, byte *nBit )
     UART1_SendInt( nOut );
     UART1_SendCRLF();
 
+    SetLED( pData, nOut );
+}
+
+void SetLED( struct SLEDControl *pData, byte nOut )
+{
     if ( pData->Options & _BV(LED_SINK) )
-	nOut = 1 - nOut;
+	    nOut = 1 - nOut;
 
     byte nPort = GET_PORT_ID(pData->Port);
     byte nPin = GET_PORT_PIN(pData->Port);

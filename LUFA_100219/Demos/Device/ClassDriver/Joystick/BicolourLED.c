@@ -59,27 +59,33 @@ void WriteBicolourLED( struct SBicolourLEDControl *pData, byte **ReportBuffer, b
 
     if ( nSerialDebugLevel > 10 )
     {
-	UART1_Send_P(PSTR("Got BicolourLED State "));
-	UART1_SendInt( nOut );
-	UART1_SendCRLF();
+	    UART1_Send_P(PSTR("Got BicolourLED State "));
+	    UART1_SendInt( nOut );
+	    UART1_SendCRLF();
     }
 
+    SetBicolourLED(pData,nOut);
+}
+
+
+void SetBicolourLED( struct SBicolourLEDControl *pData, byte nOut )
+{
     byte nA;
     byte nB;
     if ( nOut == 1 )
     {
-	nA = 1;
-	nB = 0;
+        nA = 1;
+        nB = 0;
     }
     else if ( nOut == 2 )
     {
-	nA = 0;
-	nB = 1;
+        nA = 0;
+        nB = 1;
     }
     else
     {
-	nA = 0;
-	nB = 0;
+        nA = 0;
+        nB = 0;
     }
 
     byte nPortA = GET_PORT_ID(pData->PortA);

@@ -63,52 +63,54 @@ void InitPWM( struct SPWMControl *pData )
 
 void WritePWM( struct SPWMControl *pData, byte **ReportBuffer, byte *nBit )
 {
+    uint16_t nValue = ReadPackData16( ReportBuffer, nBit, pData->Bits ); 
+    SetPWM( pData, nValue );
+}
+
+void SetPWM( struct SPWMControl *pData, uint16_t nValue )
+{
+    if ( nValue > pData->Resolution )
+        nValue = pData->Resolution;
+
     if ( pData->Port == 0 )
     {
-	uint16_t nValue = ReadPackData16( ReportBuffer, nBit, pData->Bits ); 
-	if ( nValue > pData->Resolution )
-	    nValue = pData->Resolution;
-	byte n = pData->Resolution - *(byte *)(&nValue);
+	    byte n = pData->Resolution - *(byte *)(&nValue);
 
-	if ( nSerialDebugLevel > 10 )
-	{
-	    UART1_Send_P( PSTR("PWM Port=") );
-	    UART1_SendHex( pData->Port );
-	    UART1_Send_P( PSTR(", Value=") );
-	    UART1_SendHex( nValue );
-	    UART1_SendCRLF();
-	}
+	    if ( nSerialDebugLevel > 10 )
+	    {
+	        UART1_Send_P( PSTR("PWM Port=") );
+	        UART1_SendHex( pData->Port );
+	        UART1_Send_P( PSTR(", Value=") );
+	        UART1_SendHex( nValue );
+	        UART1_SendCRLF();
+	    }
 
-	if ( pData->Port == 0 )
-	    OCR2B = n;		    /*1 PD1 OC2B*/
+        OCR2B = n;		    /*1 PD1 OC2B*/
     }
     else
     {
-	uint16_t nValue = ReadPackData16( ReportBuffer, nBit, pData->Bits ); 
-	if ( nValue > pData->Resolution )
-	    nValue = pData->Resolution;
-	//if ( nValue >= pData->Resolution - 1)
-	//    nValue = 0xFFFF;
-	nValue = pData->Resolution - nValue;
+	    //if ( nValue >= pData->Resolution - 1)
+	    //    nValue = 0xFFFF;
+	    nValue = pData->Resolution - nValue;
 
-	if ( nSerialDebugLevel > 10 )
-	{
-	    UART1_Send_P( PSTR("PWM Port=") );
-	    UART1_SendHex( pData->Port );
-	    UART1_Send_P( PSTR(", Value=") );
-	    UART1_SendHex( nValue );
-	    UART1_SendCRLF();
-	}
+	    if ( nSerialDebugLevel > 10 )
+	    {
+	        UART1_Send_P( PSTR("PWM Port=") );
+	        UART1_SendHex( pData->Port );
+	        UART1_Send_P( PSTR(", Value=") );
+	        UART1_SendHex( nValue );
+	        UART1_SendCRLF();
+	    }
 
-	switch ( pData->Port )
-	{
-	    case 1: /*2 PB5 OC1A*/ OCR1A = nValue; break;
-	    case 2: /*3 PB6 OC1B*/ OCR1B = nValue; break;
-	    case 3: /*4 PB7 OC1C*/ OCR1C = nValue; break;
-	    case 4: /*5 PC6 OC3A*/ OCR3A = nValue; break;
-	    case 5: /*6 PC5 OC3B*/ OCR3B = nValue; break;
-	    case 6: /*7 PC4 OC3C*/ OCR3C = nValue; break;
-	}
+	    switch ( pData->Port )
+	    {
+	        case 1: /*2 PB5 OC1A*/ OCR1A = nValue; break;
+	        case 2: /*3 PB6 OC1B*/ OCR1B = nValue; break;
+	        case 3: /*4 PB7 OC1C*/ OCR1C = nValue; break;
+	        case 4: /*5 PC6 OC3A*/ OCR3A = nValue; break;
+	        case 5: /*6 PC5 OC3B*/ OCR3B = nValue; break;
+	        case 6: /*7 PC4 OC3C*/ OCR3C = nValue; break;
+	    }
     }
 }
 

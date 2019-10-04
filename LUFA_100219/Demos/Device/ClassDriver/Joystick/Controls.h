@@ -30,6 +30,7 @@ extern uint16_t ReadPackData16( byte **pBuf, byte *nBit, byte nBits );
 extern void ReadControls( byte nReportId, byte *pData, byte *pReportBuffer, byte *nLength );
 extern void WriteControls( byte nReportId, byte *pData, byte *pReportBuffer );
 extern void WriteFeatureReport( byte nReportId, byte *pData );
+extern void ResetControls( byte *pData );
 
 //extern void SetPORTBit( byte nPort, byte nPin, byte n );
 #define DDR_INPUT 0

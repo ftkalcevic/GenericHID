@@ -22,5 +22,6 @@
 
 extern void InitBicolourLED( struct SBicolourLEDControl *pData );
 extern void WriteBicolourLED( struct SBicolourLEDControl *pData, byte **ReportBuffer, byte *nBit );
+extern void SetBicolourLED( struct SBicolourLEDControl *pData, byte nOut );
 
 #endif

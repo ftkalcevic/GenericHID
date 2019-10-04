@@ -76,6 +76,7 @@ uint16_t g_nCounterTop = 0xFFFF;
 uint16_t g_nCounterCount;
 volatile uint16_t g_nCounterCounter;
 uint16_t g_nCounterMask;
+byte cant_write_count = 0;
 
 volatile uint16_t milliseconds;				// use to count 1000ms to clock 1 sec.
 volatile uint8_t seconds_counter;			// second counter - only used for debug at the moment.
@@ -354,7 +355,21 @@ static bool SendInputReport(bool bForcePacket )
             {
                 WriteInputReport( buf, nLen );
                 Endpoint_ClearIN();
-           }
+                cant_write_count = 0;
+            }
+            else
+            {
+                // Can't write to the host.  Assume no software is connected, and reset outputs
+                if ( cant_write_count == 0 )
+                {
+                    cant_write_count = 1;
+                    if ( nSerialDebugLevel > 0 ) 
+                    {
+                        UART1_Send_P(PSTR("Can't write\n"));
+                    }
+                    ResetControls( pApplicationData );
+                }
+            }
         }
     }
 
@@ -615,6 +630,7 @@ static void GenericHIDProcessing(void)
             UART1_Send_P( PSTR("Initialisation Complete\r\n") );
     }
 
+    if ( nSerialDebugLevel > 0 )
     {
         static uint16_t t = 0;
         static uint8_t old = 0;

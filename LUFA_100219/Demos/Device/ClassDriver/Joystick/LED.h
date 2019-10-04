@@ -22,5 +22,6 @@
 
 extern void InitLED( struct SLEDControl *pData );
 extern void WriteLED( struct SLEDControl *pData, byte **ReportBuffer, byte *nBit );
+extern void SetLED( struct SLEDControl *pData, byte nOut );
 
 #endif

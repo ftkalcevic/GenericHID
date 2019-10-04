@@ -23,5 +23,6 @@
 
 extern void InitTricolourLED( struct STricolourLEDControl *pData );
 extern void WriteTricolourLED( struct STricolourLEDControl *pData, byte **ReportBuffer, byte *nBit );
+extern void SetTricolourLED( struct STricolourLEDControl *pData, byte nOut );
 
 #endif

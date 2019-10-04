@@ -205,6 +205,35 @@ void WriteControls( byte nReportId, byte *pData, byte *pReportBuffer )
 }
 
 
+void ResetControls( byte *pData )
+{
+    while ( *pData != 0 )
+    {
+        struct SControlHeader *header = (struct SControlHeader *)pData;
+        switch ( header->Type )
+        {
+            case LED:
+                SetLED( (struct SLEDControl *)pData,  0 );
+                break;
+            case BicolourLED:
+                SetBicolourLED( (struct SBicolourLEDControl *)pData, 0 );
+                break;
+            case TricolourLED:
+                SetTricolourLED( (struct STricolourLEDControl *)pData, 0 );
+                break;
+            case RGBLED:
+                SetRGB( (struct SRGBLEDControl *)pData,  0 );
+                break;
+            case PWMOutput:
+                SetPWM( (struct SPWMControl *)pData, 0 );
+                break;
+        }
+        pData += header->Length;
+    }
+}
+
+
+
 
 
 uint16_t ReadPackData16( byte **_pBuf, byte *_nOutMask, byte nBits )
