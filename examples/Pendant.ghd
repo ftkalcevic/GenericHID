@@ -134,7 +134,7 @@
   <Shape x="-128" y="398" shapeId="pwm" rotate="0" instanceId="18" mirror="false">
    <Property value="" name="Name"/>
    <Property value="62500:1" name="Usage"/>
-   <Property value="10.0kHz" name="Frequency"/>
+   <Property value="0.0Hz" name="Frequency"/>
    <Property value="100" name="Resolution"/>
    <Property value="Timer2" name="Timer"/>
   </Shape>
