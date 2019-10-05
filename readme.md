@@ -44,6 +44,6 @@ GenericHID firmware
 ===================
 
 The firmware is now part of the build.  3 versions are built and put in the bin 
-directory... usbkey.hex (at90usb1287@8MHz), generic16.hex (at90usb1287@16MHz)
+directory: usbkey.hex (at90usb1287@8MHz), generic16.hex (at90usb1287@16MHz)
 and teensypp2 (at90usb1286@16Mhz using the half-kay bootloader).
 
