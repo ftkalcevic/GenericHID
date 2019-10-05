@@ -37,24 +37,36 @@
    <Property value="A" name="Name"/>
    <Property value="1:51" name="Usage"/>
    <Property value="10" name="Bits"/>
+   <Property value="0" name="RangeMin"/>
+   <Property value="0" name="RangeMax"/>
+   <Property value="true" name="Invert"/>
    <Property value="0" name="Current"/>
   </Shape>
   <Shape x="-324" y="-410" shapeId="pot" rotate="270" instanceId="4" mirror="false">
    <Property value="Y" name="Name"/>
    <Property value="1:49" name="Usage"/>
    <Property value="10" name="Bits"/>
+   <Property value="40" name="RangeMin"/>
+   <Property value="940" name="RangeMax"/>
+   <Property value="false" name="Invert"/>
    <Property value="0" name="Current"/>
   </Shape>
   <Shape x="-255" y="-316" shapeId="pot" rotate="270" instanceId="5" mirror="false">
    <Property value="X" name="Name"/>
    <Property value="1:48" name="Usage"/>
    <Property value="10" name="Bits"/>
+   <Property value="250" name="RangeMin"/>
+   <Property value="750" name="RangeMax"/>
+   <Property value="true" name="Invert"/>
    <Property value="0" name="Current"/>
   </Shape>
   <Shape x="-485" y="-302" shapeId="pot" rotate="270" instanceId="6" mirror="false">
    <Property value="Z" name="Name"/>
    <Property value="1:50" name="Usage"/>
    <Property value="10" name="Bits"/>
+   <Property value="0" name="RangeMin"/>
+   <Property value="0" name="RangeMax"/>
+   <Property value="false" name="Invert"/>
    <Property value="0" name="Current"/>
   </Shape>
   <Shape x="-713" y="-140" shapeId="keymatrix" rotate="0" instanceId="7" mirror="false">
@@ -134,7 +146,7 @@
   <Shape x="-128" y="398" shapeId="pwm" rotate="0" instanceId="18" mirror="false">
    <Property value="" name="Name"/>
    <Property value="62500:1" name="Usage"/>
-   <Property value="0.0Hz" name="Frequency"/>
+   <Property value="10.0kHz" name="Frequency"/>
    <Property value="100" name="Resolution"/>
    <Property value="Timer2" name="Timer"/>
   </Shape>

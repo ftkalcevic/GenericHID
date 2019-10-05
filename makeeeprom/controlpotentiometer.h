@@ -37,6 +37,9 @@ private:
     ushort m_nUsagePage;
     ushort m_nUsage;
     byte m_nBits;
+    ushort m_nRangeMin;
+    ushort m_nRangeMax;
+    bool m_bInvert;
 };
 
 #endif

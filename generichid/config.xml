@@ -668,6 +668,9 @@
       <property name="Name" description=":pot.htm#Name" type="string"/>
       <property name="Usage" description=":pot.htm#Usage" type="usage" default="1:48"/>
       <property name="Bits" description=":pot.htm#Bits" type="int" min="1" max="10" default="10"/>
+      <property name="RangeMin" description=":pot.htm#Range" type="int" min="0" max="1023" default="0"/>
+      <property name="RangeMax" description=":pot.htm#Range" type="int" min="0" max="1023" default="0"/>
+      <property name="Invert" description=":pot.htm#Invert" type="bool" default="false"/>
       <property name="Current" description=":pot.htm#Current" type="int" min="0" max="500" default="0"/>
     </Shape>
 

@@ -207,12 +207,12 @@ void ShapeMCU::MakeControlsXML( QDomElement &elem, const QList<class PinItem *> 
     if ( bTempSensor )
     {
 	// make an analog input on 
-	MakePotentiometerControl( elem, "Temperature", 1, 1, 8, "PF0" );
+	MakePotentiometerControl( elem, "Temperature", 1, 1, 8, 0, 0, false, "PF0" );
     }
     if ( bVoltageMonitor )
     {
 	// make an analog input on 
-	MakePotentiometerControl( elem, "Voltage", 1, 1, 8, "PF3" );
+	MakePotentiometerControl( elem, "Voltage", 1, 1, 8, 0, 0, false, "PF3" );
     }
     if ( bUseJoystick )
     {

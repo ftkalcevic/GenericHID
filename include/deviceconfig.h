@@ -207,6 +207,10 @@ struct SPotentiometerControl
     struct SControlHeader hdr;
     byte Port;
     byte Bits;
+    uint16_t RangeMin;
+    uint16_t RangeMax;
+    byte Options;
+	#define POT_INVERT      0
 };
 
 struct SPWMControl

@@ -47,7 +47,19 @@ Hidcomp/hidconfig supports names.</p>
 
 <h3 id="Bits">Bits</h3>
 <p>ADC resolution the Potentiometer voltage is returned as.&nbsp; 8 bits returns 
-a value from 0 - 255.&nbsp; 10 bits returns a value from 0 - 1023.</p>
+a value from 0 - 255.&nbsp; 10 bits returns a value from 0 - 1023.
+Internally the potentiometer is always sampled at 10 bits then converted.</p>
+
+<h3 id="Range">RangeMin/RangeMax</h3>
+<p>When a potentionmeter doesn't report its full range, either because of an electrical configuration (extra resistors), or mechancal (physical stops), use the RangeMin and RangeMax parameters to specify the range that represents the full virtual range of motion of the potentiometer.  This is great for steering wheels or pedals that don't use the full range of the potentiometer travel.</p>
+
+<p>
+The values range from 0-1023, the full sample range of the 10bit ADC.
+</p>
+
+<h3 id="Invert">Invert</h3>
+<p>Changes the direction of the reported movement.  It is easier to toggle this, rather than rewiring the potentiometer.</p>
+
 
 <h3 id="Current">Current</h3>
 <p> Defines the amount of electrical current used by the potentiometer in mA.  This is used to estimate the USB power draw.&nbsp; 

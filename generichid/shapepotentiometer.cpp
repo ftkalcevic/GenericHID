@@ -34,5 +34,8 @@ void ShapePotentiometer::MakeControlsXML( QDomElement &elem, const QList<class P
 			      GetPropertyValueUsagePage("Usage",values,1),
 			      GetPropertyValueUsage("Usage",values,1),
 			      GetPropertyValueInt("Bits",values,8),
+			      GetPropertyValueInt("RangeMin",values,0),
+			      GetPropertyValueInt("RangeMax",values,0),
+			      GetPropertyValueBool("Invert",values,false),
 			      GetPort( pins, "Out") );
 }

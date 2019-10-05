@@ -380,7 +380,7 @@ void Shape::MakeDirectionalSwitchControl( QDomElement &elem, const QString &sNam
     if ( !sSWPort.isEmpty() ) XMLUtility::setAttribute( node, "PortSW", sSWPort );
 }
 
-void Shape::MakePotentiometerControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nBits, const QString &sPort ) const
+void Shape::MakePotentiometerControl( QDomElement &elem, const QString &sName, unsigned short nUsagePage, unsigned short nUsage, int nBits, int nRangeMin, int nRangeMax, bool bInvert, const QString &sPort ) const
 {
     QDomElement node = elem.ownerDocument().createElement( "AnalogIn" );
     elem.appendChild( node );
@@ -389,6 +389,9 @@ void Shape::MakePotentiometerControl( QDomElement &elem, const QString &sName, u
     XMLUtility::setAttribute( node, "UsagePage", nUsagePage );
     XMLUtility::setAttribute( node, "Usage", nUsage );
     XMLUtility::setAttribute( node, "Bits", nBits );
+    XMLUtility::setAttribute( node, "RangeMin", nRangeMin );
+    XMLUtility::setAttribute( node, "RangeMax", nRangeMax );
+    XMLUtility::setAttribute( node, "Invert", bInvert );
     XMLUtility::setAttribute( node, "Port", sPort );
 }
 

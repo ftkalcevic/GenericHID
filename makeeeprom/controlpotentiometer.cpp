@@ -28,15 +28,21 @@ ControlPotentiometer::~ControlPotentiometer(void)
 bool ControlPotentiometer::Load( const QDomElement &elem, QString *sError )
 {
     if ( !GetPort( elem, "Port", m_nPort, sError ) )
-	return false;
+	    return false;
     if ( !XMLUtility::getAttributeString( elem, "Name", m_sName, sError ) )
-	return false;
+	    return false;
     if ( !XMLUtility::getAttributeUShort( elem, "UsagePage", m_nUsagePage, 0, 0xFFFF, sError ) )
-	return false;
+	    return false;
     if ( !XMLUtility::getAttributeUShort( elem, "Usage", m_nUsage, 0, 0xFFFF, sError ) )
-	return false;
+	    return false;
     if ( !XMLUtility::getAttributeByte( elem, "Bits", m_nBits, 1, 10, sError ) )
-	return false;
+	    return false;
+    if ( !XMLUtility::getAttributeUShort( elem, "RangeMin", m_nRangeMin, 0, 1023, sError ) )
+	    return false;
+    if ( !XMLUtility::getAttributeUShort( elem, "RangeMax", m_nRangeMax, 0, 1023, sError ) )
+	    return false;
+    if ( !XMLUtility::getAttributeBool( elem, "Invert", m_bInvert, sError ) )
+	    return false;
     return true;
 }
 
@@ -70,6 +76,9 @@ ByteArray ControlPotentiometer::GetControlConfig( byte nReportId ) const
     config.hdr.Length = sizeof(config);
     config.Port = (byte)m_nPort;
     config.Bits = m_nBits;
+    config.RangeMin = m_nRangeMin;
+    config.RangeMax = m_nRangeMax;
+    config.Options = m_bInvert ? (1<<POT_INVERT) : 0;
 
     return ByteBuffer((byte *)&config, sizeof(config) );
 }
