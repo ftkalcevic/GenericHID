@@ -4,7 +4,7 @@ GenericHID GUI
 Documentation
 -------------
 
-The documentation for GenericHID can be found in [the wiki](GenericHID/wiki).
+The documentation for GenericHID can be found in [the wiki](../../wiki).
 
 How to build GenericHID
 =======================
