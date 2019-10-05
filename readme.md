@@ -15,7 +15,7 @@ Dependencies
 On Ubuntu, this command will installed the required build packages.  There is
 a total of about 200MB on a fresh system.
 
-sudo apt-get install build-essential qt4-qmake libqt4-dev libusb-1.0-0-dev gcc-avr binutils-avr gdb-avr avr-libc avrdude
+ sudo apt-get install build-essential qt4-qmake libqt4-dev libusb-1.0-0-dev gcc-avr binutils-avr gdb-avr avr-libc avrdude
 
 
 Building
@@ -26,9 +26,9 @@ linux
 
 Note - GenericHID still uses qt4.  If you have qt5 installed on your machine run qmake-qt4 instead of qmake below.  If you have already run qmake for qt5, it is easiest to retreive a new clone of the repository and start again.
 
-> qmake
-> make
-> sudo make install
+ > qmake
+ > make
+ > sudo make install
 
 
 Win32
