@@ -261,84 +261,10 @@ code and demos...</p>
 		</tr>
 	</table>
 	<h2 id=download>Download and Install</h2>
-		<p>All versions can be downloaded from
-		<a href="https://sourceforge.net/projects/generichid/files/">sourceforge</a>.</p>
-<h3>Windows</h3>
-		<p>Note that the last released Windows version, 1.2, uses libusb 0.1 which is only documented to work with versions of Windows up to XP.  For newer OS versions
-		I recommend you download the <span style="border-bottom-style: double">free</span> <a href="http://www.vmware.com/">VMWare Player</a>, or equivalent, and install the
-		latest free <a href="www.ubuntu.com">Ubuntu</a>	then follow the linux install instructions below.
-		</p>
-		<p>Download the latest Win32 binary,
-		<a href="https://sourceforge.net/projects/generichid/files/">
-		generichid_win32_x.x.zip</a>.</p>
-		<ol>
-			<li>To install the application, create an empty directory and unzip the 
-		contents of the file into the new directory.</li>
-			<li>Download and install the libusb win32 library,
-			<a href="http://sourceforge.net/projects/libusb-win32/files/">
-libusb-win32-filter-bin-0.1.12.2.exe</a></li>
-	<li>Download and install the latest version of the
-	<a href="http://www.atmel.com/dyn/products/tools_card.asp?tool_id=3886">Atmel Flip application</a> for windows.&nbsp; This is required 
-	to get the drivers for the bootloader mode of the microcontroller.</li>
-	<li>If using the AT90USBKey, plug the board in to the USB port, enter 
-	bootloader mode (press RST button, press HWB button, release RST button, 
-	release HWB button) and install the DFU drivers.&nbsp; These should be in 
-	C:\Program Files\Atmel\Flip3\usb\usb_dfu.inf or wherever you installed flip.</li>
-			<li>If using a Custom Generic HID board, plug in the board and then 
-			install the DFU drivers described in step 3.</li>
-			<li>Run the GenericHID.exe application.</li>
-</ol>
-<h3>Linux</h3>
-<p>Download the latest Linux Debian package,
-<a href="https://sourceforge.net/projects/generichid/files/">
-generichid_x.x_i386.deb</a>.</p>
-		<p>Install <b>GenericHID </b>with your favourite package manager.
-					Or install it from the command line...
-					</p>
-					<blockquote class="code">
-						sudo dpkg -i generichid_1.0_i386.deb
-					</blockquote>
-					
-					<p><b>GenericHID</b> can be uninstalled using ...
-					</p>
-					<blockquote class="code">
-						sudo dpkg -r generichid
-					</blockquote>
-					<p><span style="background-color: #FFFFFF">Type generichid 
-					at the command line to run it.&nbsp; Check the section on <a href="linuxpermissions.htm">linux permissions</a> if you 
-						see permission or access denied errors in the terminal windows.</span></p>
-<h3>Source</h3>
-<p>The latest version of GenericHID (version 1.3 and later) is available as source 
-	code only releases.&nbsp; In a terminal, download the tar file, and extract it...
-	</p>
-<tt>
-~> wget &lt;url to tar file&gt;<br />
-		~> tar xf generichid_1.3_src.tgz
-</tt>
-	<p>Change to the source root directory...</p>
-<tt>
-~> cd generichid
-</tt>
-	<p>Check the build requirements in the BUILD text document.</p>
-<tt>
-~/generichid> cat BUILD
-</tt>
-	<p>Install the build requirements listed in the BUILD document.  In version 1.3 they were...</p>
-<tt>
-~/generichid> sudo apt-get install build-essential qt4-qmake libqt4-dev libusb-1.0-0-dev gcc-avr binutils-avr gdb-avr avr-libc avrdude
-</tt>
-	<p>Then run &quot;qmake&quot; to build the makefile, &quot;make&quot; to build the project, then &quot;make install&quot; to install the application...</p>
-<tt>
-~/generichid> qmake<br />
-~/generichid> make<br />
-~/generichid> sudo make install
-</tt>
-	<p>GenericHID can then be run at the commandline...</p>
-<tt>
-~/generichid> generichid
-</tt>
+		<p>GenericHID can now only be built from source, and only on linux.  See the readme in the source repository, 
+		<a href="https://github.com/ftkalcevic/GenericHID">github.com/ftkalcevic/GenericHID</a>.</p>
 <p>Check the section on <a href="linuxpermissions.htm">linux permissions</a> if you 
-see permission or access denied errors in the terminal windows.</p>
+see permission or access denied errors when running the application.</p>
 	<h2 id=history>Change History</h2>
 <table cellpadding=5>
 	<tr>
