@@ -1,6 +1,14 @@
 GenericHID GUI
 ==============
 
+Documentation
+-------------
+
+The documentation for GenericHID can be found in [the wiki](GenericHID/wiki).
+
+How to build GenericHID
+=======================
+
 Dependencies
 ------------
 
