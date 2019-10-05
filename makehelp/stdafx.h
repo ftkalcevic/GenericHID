@@ -29,6 +29,7 @@
 #include <QTextStream>
 #include <QRegExp>
 #include <QFileInfo>
+#include <QDebug>
 
 #ifdef _WIN32
 #pragma warning(pop)

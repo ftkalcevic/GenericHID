@@ -1,0 +1,7 @@
+
+release/makehelp ../wiki ../generichid/help/*.htm ../generichid/help/*.html
+mv ../wiki/index.md ../wiki/Home.md
+
+cp ../generichid/help/*.png ../wiki
+cp ../generichid/help/*.jpg ../wiki
+cp ../generichid/help/*.JPG ../wiki

@@ -18,33 +18,7 @@
 
 
 const char *webText = \
-"<html>\n" \
-    "<head>\n" \
-	"<title>%1</title>\n" \
-	"<link rel=\"stylesheet\" type=\"text/css\" href=\"/site.css\" />\n" \
-    "</head>\n" \
-    "<body>\n" \
-	"<div id=\"mainContainer\">\n" \
-	    "<div id=\"topBar\">\n" \
-		"<h1 align=\"center\">%2</h1>\n" \
-	    "</div>\n" \
-
-	    "<div id=\"leftColumn\">"
-		"<ul id=\"dhtmlgoodies_listMenu\">"
-		    "<li><a href=\"index.html\">Home</a></li>"
-		    "<li><a href=\"http://www.franksworkshop.com.au\">Return to<br>Franks Workshop</a></li>"
-		    "<li><a href=\"http://sourceforge.net/projects/generichid/\">Return to<br>Sourceforge</a></li>"
-		"</ul>"
-	    "</div>"
-
-
-	    "<div id=\"mainContent\">\n" \
-		"%3\n" \
-	    "</div>\n" \
-	"</div>\n" \
-	"<!-- #include file=\"/analytics.html\" -->\n" \
-    "</body>\n" \
-"</html>\n";
+                          "%1\n";
 
 
 static void ProcessHelp( const QString &sDestDir, const QString &sFile )
@@ -63,8 +37,8 @@ static void ProcessHelp( const QString &sDestDir, const QString &sFile )
     int pos = ex1.indexIn( sWeb, 0 );
     if ( pos == -1 )
     {
-	fputs( "Can't find <body>", stderr );
-	return;
+        qCritical() << "Can't find <body> in file " << sFile;
+        return;
     }
     QString sBody = ex1.cap(1);
 
@@ -73,8 +47,8 @@ static void ProcessHelp( const QString &sDestDir, const QString &sFile )
     pos = ex2.indexIn( sWeb, 0 );
     if ( pos == -1 )
     {
-	fputs( "Can't find <title>", stderr );
-	return;
+        qCritical() << "Can't find <title> in file " << sFile;
+        return;
     }
     QString sTitle = ex2.cap(1);
 
@@ -83,17 +57,37 @@ static void ProcessHelp( const QString &sDestDir, const QString &sFile )
     pos = ex3.indexIn( sBody, 0 );
     if ( pos == -1 )
     {
-	fputs( "Can't find <h1></h1> in body", stderr );
-	return;
+        qCritical() << "Can't find <h1></h1> in body in file " << sFile;
+        return;
     }
     QString sHeading = ex3.cap(1);
     sBody.replace( ex3, "" );
 
-    QString sNewHtml = QString( webText).arg( sTitle ).arg( sHeading ).arg(sBody);
+    //QRegExp rxLinks("\\<a.*href=\"([^/:#]*\\.htm)\"\\>");
+    QRegExp rxLinks( "(^.*\\<a.*href=\"[^/:#]*)(\\.htm)(\"\\>.*)" );
 
- 
+    // Process body
+    QStringList lines = sBody.split("\n");
+    sBody = "";
+    foreach( QString line, lines)
+    {
+        // Remove leading whitespace
+        line = line.trimmed();
+
+        // Convert local links to links to md documents
+        int pos = rxLinks.indexIn(line,0);
+        if ( pos != -1 )
+        {
+            line = rxLinks.cap(1) + rxLinks.cap(3);
+        }
+        sBody.append(line);
+        sBody.append("\n");
+    }
+    QString sNewHtml = QString( webText).arg(sBody);
+
+
     QFileInfo fileInfo( sFile );
-    QString sDestFile = sDestDir + "/" + fileInfo.fileName();
+    QString sDestFile = sDestDir + "/" + fileInfo.baseName() + ".md";
 
     QFile fileOut( sDestFile );
     fileOut.open(QIODevice::WriteOnly);
@@ -110,20 +104,20 @@ int main(int argc, char *argv[])
     QStringList args = a.arguments();
     if ( args.count() > 2 )
     {
-	args.takeFirst();
+        args.takeFirst();
 
-	QString sDestination = args.takeFirst();
-	QFileInfo destInfo( sDestination );
-	if ( !destInfo.isDir() )
-	{
-	    fputs( QString("Argument 1, destination direction, is not a valid directory ('%1')").arg(sDestination).toAscii().constData(), stderr );
-	    return 0;
-	}
+        QString sDestination = args.takeFirst();
+        QFileInfo destInfo( sDestination );
+        if ( !destInfo.isDir() )
+        {
+            qCritical() << "Argument 1, destination direction, is not a valid directory ('" << sDestination << "')";
+            return 0;
+        }
 
-	foreach( QString s, args )
-	    ProcessHelp( sDestination, s );
+        foreach( QString s, args )
+            ProcessHelp( sDestination, s );
     }
     else
-	fputs( "Usage: makehelp destdir files ...", stderr );
+        qCritical() << "Usage: makehelp destdir files ...";
     return 0;
 }
