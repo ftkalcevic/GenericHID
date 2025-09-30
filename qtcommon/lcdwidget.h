@@ -17,7 +17,7 @@
 #ifndef LCDWIDGET_H
 #define LCDWIDGET_H
 
-#include <QWidget>
+#include <QtWidgets/QWidget>
 #include <QPainter>
 #include <QTimer>
 #include "lcdchar.h"

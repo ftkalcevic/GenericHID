@@ -257,7 +257,7 @@ bool DFUProgrammer::StartProgramming(IntelHexBuffer &memory)
         goto error;
     }
 
-    DEBUG_MSG( QString("%1 bytes used (%2%%)\n").arg(memory.usage()).arg(((float)(memory.usage()*100)/(float)(top_memory_address)),0,'f',2,0) );
+    DEBUG_MSG( QString("%1 bytes used (%2%%)\n").arg(memory.usage()).arg(((float)(memory.usage()*100)/(float)(top_memory_address)),0,'f',2) );
 
     retval = 0;
 
@@ -312,7 +312,7 @@ bool DFUProgrammer::StartVerify(IntelHexBuffer &memory)
         }
     }
 
-    DEBUG_MSG( QString("%1 bytes used (%2%%)\n").arg(memory.usage()).arg(((float)(memory.usage()*100)/(float)(top_memory_address)),0,'f',2,0) );
+    DEBUG_MSG( QString("%1 bytes used (%2%%)\n").arg(memory.usage()).arg(((float)(memory.usage()*100)/(float)(top_memory_address)),0,'f',2) );
 
     retval = 0;
 

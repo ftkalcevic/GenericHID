@@ -27,7 +27,7 @@ class GenericHID : public QMainWindow, public Editor
     Q_OBJECT
 
 public:
-    GenericHID(QWidget *parent = 0, Qt::WFlags flags = 0);
+    GenericHID(QWidget *parent = 0, Qt::WindowFlags flags = Qt::WindowFlags());
     ~GenericHID();
     void ProcessCommandline();
     bool initialised() const { return m_bInitialised; }

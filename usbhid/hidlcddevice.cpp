@@ -178,7 +178,7 @@ bool HIDLCDDevice::LCDWrite( int nRow, int nCol, QString sText )
     m_pRowItem->Value = nRow;
     m_pColItem->Value = nCol;
     for ( int i = 0; i < sText.length() && nCol+i < (int)m_nCols && m_nCharacterDataIndex+i < (int)m_pCharacterReportCol->ReportItems.size(); i++ )
-	m_pCharacterReportCol->ReportItems[m_nCharacterDataIndex + i]->Value = sText[i].toAscii();
+	m_pCharacterReportCol->ReportItems[m_nCharacterDataIndex + i]->Value = sText[i].toLatin1();
     if ( sText.length() < m_nCols )
 	m_pCharacterReportCol->ReportItems[m_nCharacterDataIndex + sText.length()]->Value = 0;
 

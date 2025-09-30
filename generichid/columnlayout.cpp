@@ -70,13 +70,13 @@
 ColumnLayout::ColumnLayout(QWidget *parent, int margin, int hSpacing, int vSpacing)
 : QLayout(parent), m_hSpace(hSpacing), m_vSpace(vSpacing)
 {
-    setMargin(margin);
+    setContentsMargins(margin,margin,margin,margin);
 }
 
 ColumnLayout::ColumnLayout(int margin, int hSpacing, int vSpacing)
 : m_hSpace(hSpacing), m_vSpace(vSpacing)
 {
-    setMargin(margin);
+    setContentsMargins(margin,margin,margin,margin);
 }
 
 ColumnLayout::~ColumnLayout()
@@ -134,7 +134,7 @@ QLayoutItem *ColumnLayout::takeAt(int index)
 
 Qt::Orientations ColumnLayout::expandingDirections() const
 {
-    return 0;
+    return (Qt::Orientations)0;
 }
 
 bool ColumnLayout::hasHeightForWidth() const
@@ -166,7 +166,8 @@ QSize ColumnLayout::minimumSize() const
     foreach (item, itemList)
 	size = size.expandedTo(item->minimumSize());
 
-    size += QSize(2*margin(), 2*margin());
+    int margin = contentsMargins().left();
+    size += QSize(2*margin, 2*margin);
     return size;
 }
 

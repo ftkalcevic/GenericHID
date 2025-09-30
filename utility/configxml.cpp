@@ -21,7 +21,7 @@ QVector<byte> ConfigXML::ReadHexData( QDomNode node )
         QDomNode child = node.firstChild();
 
         QString sHex = child.nodeValue();
-        QStringList sData = sHex.split(" ", QString::SkipEmptyParts);
+        QStringList sData = sHex.split(" ", Qt::SkipEmptyParts);
         foreach ( QString s, sData)
             data << s.toInt(0,16);
     }

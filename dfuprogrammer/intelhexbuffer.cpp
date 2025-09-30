@@ -63,7 +63,7 @@ bool IntelHexBuffer::loadFile(MemoryType::MemoryType memory, const QString &sHex
     m_nMaxSize = max_size;
     m_eMemoryType = memory;
     m_nUsage = 0;
-    m_HexBuffer = intel_hex_file_to_buffer( sHexPath.toAscii().constData(), max_size, &m_nUsage );
+    m_HexBuffer = intel_hex_file_to_buffer( sHexPath.toLatin1().constData(), max_size, &m_nUsage );
     if( m_HexBuffer.isEmpty() ) 
 	return false;
     else

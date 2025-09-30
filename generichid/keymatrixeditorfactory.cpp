@@ -23,7 +23,7 @@ QString KeyMatrixStringPropertyManager::MakeValueText(const QString &s)
     QString sDetails = s;
 
     // strip out the [r,c] bits to make it look pretty.
-    sDetails.replace( QRegExp("\\[\\d+,\\d+\\]"), "," );
+    sDetails.replace( QRegularExpression("\\[\\d+,\\d+\\]"), "," );
     while ( sDetails.startsWith(",") )
 	sDetails = sDetails.mid(1);
 

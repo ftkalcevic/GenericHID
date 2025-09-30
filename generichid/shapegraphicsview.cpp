@@ -17,6 +17,7 @@
 #include "stdafx.h"
 #include "shapegraphicsview.h"
 #include "shapemimedata.h"
+#include <QTransform>
 
 ShapeGraphicsView::ShapeGraphicsView(QWidget *parent)
     : QGraphicsView(parent)
@@ -64,7 +65,7 @@ void ShapeGraphicsView::dragMoveEvent( QDragMoveEvent * event )
 
 void ShapeGraphicsView::wheelEvent(QWheelEvent *event)
 {
-    int nDelta = event->delta();
+    int nDelta = event->pixelDelta().y();
     double dScale = pow((double)2, nDelta / 240.0);
     //ATLTRACE( "nDelta=%d, dScale=%f\n", nDelta, dScale );
     scaleView( m_dViewScale * dScale );
@@ -79,8 +80,8 @@ void ShapeGraphicsView::scaleView( double dScale )
     else if ( m_dViewScale > 5 )
         m_dViewScale = 5;
 
-    QMatrix m;
+    QTransform m;
     m.scale( m_dViewScale,m_dViewScale );
-    setMatrix( m );
+    setTransform( m );
     emit sceneScaleChanged( m_dViewScale );
 }

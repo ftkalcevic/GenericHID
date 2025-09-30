@@ -62,7 +62,7 @@ IntelHexBuffer DeviceProgrammer::LoadHexFile(MemoryType::MemoryType memtype, con
     }
 
     IntelHexBuffer buffer;
-    buffer.loadFile( memtype, sPath.toAscii().constData(), top_memory_address );
+    buffer.loadFile( memtype, sPath.toLatin1().constData(), top_memory_address );
 
     return buffer;
 }

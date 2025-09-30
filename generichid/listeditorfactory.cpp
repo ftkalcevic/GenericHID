@@ -15,6 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "stdafx.h"
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QAbstractItemView>
 #include "listeditorfactory.h"
 
 

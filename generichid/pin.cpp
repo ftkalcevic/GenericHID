@@ -39,7 +39,7 @@ namespace PinType
     enum PinType fromString(const QString &sPinType)
     {
         PinType eType = None;
-        QStringList sTypes = sPinType.split( QChar(','), QString::SkipEmptyParts );
+        QStringList sTypes = sPinType.split( QChar(','), Qt::SkipEmptyParts );
 
         foreach (QString s, sTypes)
         {
@@ -163,7 +163,7 @@ Pin *Pin::CreateFromXML( QDomElement node, const Shape *pShape, QString &sError 
     dRotate = XMLUtility::getAttribute( node, "rotate", 0.0 );
     bShared = XMLUtility::getAttribute( node, "shared", false);
 
-    QStringList sCoords = sRect.split( QChar(','), QString::SkipEmptyParts );
+    QStringList sCoords = sRect.split( QChar(','), Qt::SkipEmptyParts );
     int x1 = 0, y1 = 0, width = 0, height = 0;
     if (sCoords.length() == 4)
     {

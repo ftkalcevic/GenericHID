@@ -17,7 +17,7 @@
 #ifndef HATSWITCHWIDGET_H
 #define HATSWITCHWIDGET_H
 
-#include <QWidget>
+#include <QtWidgets/QWidget>
 #include "log.h"
 
 class HatSwitchWidget : public QWidget

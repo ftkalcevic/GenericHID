@@ -25,7 +25,7 @@
 #include <QAction>
 #include <QActionGroup>
 #include <QList>
-#include <QMenu>
+#include <QtWidgets/QMenu>
 #include <QCoreApplication>
 #include <QPainter>
 #include <QKeyEvent>

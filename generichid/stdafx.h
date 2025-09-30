@@ -29,13 +29,24 @@
 #include <QMimeData>
 #include <QVariant>
 #include <QToolButton>
-#include <QtGui/QMainWindow>
+#include <QtWidgets/QMainWindow>
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
 #include <QGraphicsPolygonItem>
 #include <QSettings>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QGraphicsScene>
+#include <QtWidgets/QGraphicsSceneMouseEvent>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QProgressBar>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QPushButton>
 
 #include <QtLineEditFactory>
 #include <QtDoubleSpinBoxFactory>

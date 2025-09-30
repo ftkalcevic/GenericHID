@@ -17,7 +17,10 @@
 #ifndef TESTWIDGET_H
 #define TESTWIDGET_H
 
-#include <QWidget>
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QMessageBox>
 #include "columnlayout.h"
 #include "testitem.h"
 #include "hiddatathread.h"

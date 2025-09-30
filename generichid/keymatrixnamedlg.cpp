@@ -58,7 +58,7 @@ void KeyMatrixNameDlg::setRC( int nRows, int nColumns )
 	for ( int c = 0; c < m_nColumns; c++ )
 	    ui.tableWidget->setItem( r, c, new QTableWidgetItem("") );
 
-    ui.tableWidget->horizontalHeader()->setResizeMode( QHeaderView::Interactive );
+    ui.tableWidget->horizontalHeader()->setSectionResizeMode( QHeaderView::Interactive );
     ui.tableWidget->horizontalHeader()->resizeSections( QHeaderView::Stretch );
     update();
 }
@@ -66,14 +66,14 @@ void KeyMatrixNameDlg::setRC( int nRows, int nColumns )
 void KeyMatrixNameDlg::setValue( const QString &sNames )
 {
     // [r,c]String...
-    QRegExp rx("\\[(\\d+),(\\d+)\\]([^\\[]+)");
-    int pos = 0;
+    QRegularExpression rx("\\[(\\d+),(\\d+)\\]([^\\[]+)");
+    QRegularExpressionMatch match = rx.match(sNames);
 
-    while ((pos = rx.indexIn(sNames, pos)) != -1) 
+    for ( int i = 0; match.hasCaptured(i); i++ )
     {
-	int nRow = rx.cap(1).toInt();
-	int nCol = rx.cap(2).toInt();
-	QString sName = rx.cap(3);
+	int nRow = match.capturedView(1).toInt();
+	int nCol = match.capturedView(2).toInt();
+	QString sName = match.capturedView(3).toString();
 
 	if ( nRow >= 0 && nRow < m_nRows &&
 	     nCol >= 0 && nCol < m_nColumns )
@@ -81,7 +81,6 @@ void KeyMatrixNameDlg::setValue( const QString &sNames )
 	    ui.tableWidget->item(nRow,nCol)->setText( CleanName(sName) );
 	}
 
-	pos += rx.matchedLength();
     }
     ui.tableWidget->horizontalHeader()->resizeSections( QHeaderView::Stretch );
 }

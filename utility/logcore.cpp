@@ -87,7 +87,7 @@ void LogCore::LogMsg( LogTypes::LogTypes type, QDateTime timeStamp, const QStrin
     #ifdef _WIN32
 	OutputDebugStringW( (LPCWSTR)s.utf16() ); 
     #else
-        fputs( s.toAscii().constData(), stderr );
+        fputs( s.toLatin1().constData(), stderr );
         fflush( stderr );
     #endif
 }

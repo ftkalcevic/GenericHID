@@ -167,7 +167,7 @@ void LCDWidget::paintEvent( QPaintEvent *  )
 {
     QImage img = m_imgLCD.scaled( size(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
     QPainter p2( this );
-    p2.setRenderHint( QPainter::HighQualityAntialiasing, true );
+    p2.setRenderHint( QPainter::Antialiasing, true );
     p2.setRenderHint( QPainter::SmoothPixmapTransform, true );
     p2.drawImage( QPoint(0,0), img );
 
@@ -226,11 +226,11 @@ void LCDWidget::Write( int nRow, int nCol, const QString &str, bool bHighlight )
     for ( int c = 0; c < s.length(); c++ )
     {
         QChar data = s[c];
-        if ( m_chars.contains(data.toAscii()) )
+        if ( m_chars.contains(data.toLatin1()) )
         {
             QRect rc = CellQRect( nRow, nCol + c );
             p.fillRect( rc, m_bkgBrush ); 
-            m_chars[data.toAscii()]->Draw(p, rc, bHighlight);
+            m_chars[data.toLatin1()]->Draw(p, rc, bHighlight);
         }
     }
     InvalidateCells( nRow, nCol, s.length() );

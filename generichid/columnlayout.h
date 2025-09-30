@@ -47,9 +47,10 @@
 #ifndef _COLUMNLAYOUT_H
 #define _COLUMNLAYOUT_H
 
-#include <QLayout>
+#include <QtWidgets/QLayout>
 #include <QRect>
-#include <QWidgetItem>
+#include <QtWidgets/QWidgetItem>
+#include <QtWidgets/QStyle>
 
 class ColumnLayout : public QLayout
 {

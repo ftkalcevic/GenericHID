@@ -461,14 +461,14 @@ void Shape::MakeKeyMatrixControl( QDomElement &elem, const QString &sNames, unsi
     }
 
     // Names = [r,c]String[r,c]String...
-    QRegExp rx("\\[(\\d+),(\\d+)\\]([^\\[]+)");
-    int pos = 0;
+    QRegularExpression rx("\\[(\\d+),(\\d+)\\]([^\\[]+)");
 
-    while ((pos = rx.indexIn(sNames, pos)) != -1) 
+    QRegularExpressionMatch match = rx.match(sNames);
+    for ( int i = 0; match.hasCaptured(i); i++ )
     {
-        int nRow = rx.cap(1).toInt();
-        int nCol = rx.cap(2).toInt();
-        QString sName = rx.cap(3);
+        int nRow = match.capturedView(1).toInt();
+        int nCol = match.capturedView(2).toInt();
+        QString sName = match.capturedView(3).toString();
 
         if ( nRow >= 0 && nRow < rows.count() &&
              nCol >= 0 && nCol < cols.count() )
@@ -479,8 +479,6 @@ void Shape::MakeKeyMatrixControl( QDomElement &elem, const QString &sNames, unsi
             XMLUtility::setAttribute( key, "Col", nCol );
             XMLUtility::setAttribute( key, "Name", sName );
         }
-
-        pos += rx.matchedLength();
     }
 }
 

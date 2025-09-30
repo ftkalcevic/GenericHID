@@ -32,7 +32,7 @@ bool Configuration::MakePort( const QString &sPort, byte &nRet, QString *sError 
     
     if ( s.length() == 3 && s[0].toUpper() == QChar('P') )
     {
-        char port = s[1].toUpper().toAscii();
+        char port = s[1].toUpper().toLatin1();
         int nPin = s[2].digitValue();
         
         if ( port >= 'A' && port <= 'F' )

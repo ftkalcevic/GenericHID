@@ -18,6 +18,8 @@
 #include "programdlg.h"
 #include <libusb-1.0/libusb.h>
 #include "programmerthread.h"
+#include <QtWidgets/QMessageBox>
+
 
 const int DEVICE_POLL_PERIOD = 500;	// ms
 

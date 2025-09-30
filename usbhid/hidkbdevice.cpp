@@ -16,6 +16,9 @@
 
 #include "hidkbdevice.h"
 #include "usages.h"
+#include <algorithm>
+
+
 
 HIDKBDevice::HIDKBDevice(HID_CollectionPath_t *pCol)
 : m_Logger(QCoreApplication::applicationName(), "HIDKBDevice" )
@@ -99,7 +102,7 @@ bool HIDKBDevice::ProcessKeyboardData()
             keysdown.append( key_item->Value );
         }
     }
-    qSort( keysdown );
+    std::sort( keysdown.begin(), keysdown.end() );
 
     if ( keysdown.count() != m_KeysDown.count() )
         bChanged = true;

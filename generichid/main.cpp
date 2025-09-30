@@ -16,7 +16,7 @@
 
 #include "stdafx.h"
 #include "generichid.h"
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 #include <QtPlugin>
 #include <QDir>
 #include "logcore.h"

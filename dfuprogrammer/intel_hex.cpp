@@ -320,7 +320,7 @@ error:
 
 QVector<int16_t> intel_hex_string_to_buffer( const QString &s, unsigned int max_size, unsigned int *usage )
 {
-    QByteArray b = s.toAscii();
+    QByteArray b = s.toLatin1();
     QBuffer buffer( &b );
     buffer.open(QIODevice::ReadOnly );
     return intel_hex_to_buffer( buffer, max_size, usage );
@@ -329,7 +329,7 @@ QVector<int16_t> intel_hex_string_to_buffer( const QString &s, unsigned int max_
 
 void intel_hex_string_to_buffer_append( QVector<int16_t> &memory, const QString &s, unsigned int max_size, unsigned int *usage )
 {
-    QByteArray b = s.toAscii();
+    QByteArray b = s.toLatin1();
     QBuffer buffer( &b );
     buffer.open(QIODevice::ReadOnly );
     intel_hex_to_buffer_append( memory, buffer, max_size, usage );

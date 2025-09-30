@@ -122,7 +122,7 @@ bool ShapeItem::CreateGraphics()
             case PinVAlign::Above:  pos.setY( rc.top() - size.height() ); break;
             case PinVAlign::Below:  pos.setY( rc.bottom() ); break;
         }
-        pTextItem->rotate( pPin->rotate() );
+        pTextItem->setRotation( pPin->rotate() );
         pTextItem->setPos( pos );
         pTextItem->setZValue(1);
     }
@@ -171,13 +171,16 @@ bool ShapeItem::CreateGraphics()
 
 void ShapeItem::DoTransform()
 {
-    resetTransform();
+    QTransform t;
+
     QPointF center = boundingRect().center();
-    translate( center.x(), center.y() );
-    rotate(m_dRotate );
+    t.translate( center.x(), center.y() );
+    t.rotate(m_dRotate );
     if ( m_bMirror )
-        scale(-1,1);
-    translate( -center.x(), -center.y() );
+        t.scale(-1,1);
+    t.translate( -center.x(), -center.y() );
+
+    setTransform(t);
 }
 
 

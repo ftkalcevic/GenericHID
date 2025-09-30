@@ -19,7 +19,7 @@
 
 HatSwitchWidget::HatSwitchWidget(QWidget *parent)
 : QWidget(parent)
-, m_Logger( QCoreApplication::applicationName().toAscii().constData(), "HatSwitchWidget" )
+, m_Logger( QCoreApplication::applicationName().toLatin1().constData(), "HatSwitchWidget" )
 {
 #ifdef _WIN32
 #pragma warning(push)

@@ -23,7 +23,7 @@
 #include "hiddevices.h"
 #include "deviceconfig.h"
 #include "programdlg.h"
-
+#include <QtWidgets/QFileDialog>
 
 const char * const CONFIGDATA_FILE = "config:config.xml";
 const int HELP_WINDOW_HEIGHT = 30;
@@ -34,7 +34,7 @@ enum
     TAB_TEST = 1
            };
 
-GenericHID::GenericHID(QWidget *parent, Qt::WFlags flags)
+GenericHID::GenericHID(QWidget *parent, Qt::WindowFlags flags)
     : QMainWindow(parent, flags)
     , m_Logger(QCoreApplication::applicationName(), "GenericHID" )
     , m_pShapes( NULL )
@@ -591,7 +591,7 @@ void GenericHID::onMicrocontrollerImportAndProgram()
         return;
 
     // read the device xml
-    QFile file(sFilename.toAscii().constData());
+    QFile file(sFilename.toLatin1().constData());
     if ( !file.open( QIODevice::ReadOnly | QIODevice::Text ) )
     {
         QMessageBox::critical( this, "Can't open", QString("Failed to open file '%1':%2").arg(sFilename).arg(file.errorString()) );
