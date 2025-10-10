@@ -3,7 +3,7 @@ SRCS=BicolourLED.c BicolourLED.h Common.h Controls.c Controls.h Counter.c Counte
 .PHONY : all
 .PHONY : clean
 
-all:	../../../../../bin/usbkey.hex ../../../../../bin/generic16.hex ../../../../../bin/teensypp2.hex
+all:	../../../../../bin/usbkey.hex ../../../../../bin/generic16.hex ../../../../../bin/teensypp2.hex ../../../../../bin/generic8.hex
 
 ../../../../../bin/usbkey.hex:	$(SRCS)
 	make -f makefile.usbkey clean
@@ -13,6 +13,10 @@ all:	../../../../../bin/usbkey.hex ../../../../../bin/generic16.hex ../../../../
 	make -f makefile.generic16 clean
 	make -f makefile.generic16
 
+../../../../../bin/generic8.hex:	$(SRCS)
+	make -f makefile.generic8 clean
+	make -f makefile.generic16
+
 ../../../../../bin/teensypp2.hex:	$(SRCS)
 	make -f makefile.teensypp2 clean
 	make -f makefile.teensypp2
@@ -20,6 +24,7 @@ all:	../../../../../bin/usbkey.hex ../../../../../bin/generic16.hex ../../../../
 clean:
 	make -f makefile.usbkey clean
 	make -f makefile.generic16 clean
+	make -f makefile.generic8 clean
 	make -f makefile.teensypp2 clean
 
 

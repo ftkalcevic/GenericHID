@@ -15,8 +15,7 @@ Dependencies
 On Ubuntu, this command will installed the required build packages.  There is
 a total of about 200MB on a fresh system.
 
-```sudo apt-get install build-essential qt4-qmake libqt4-dev libusb-1.0-0-dev gcc-avr binutils-avr gdb-avr avr-libc avrdude```
-libqt6svg6-dev 
+```sudo apt-get install build-essential qt6-base-dev libqt6svg6-dev libusb-1.0-0-dev gcc-avr binutils-avr gdb-avr avr-libc avrdude```
 
 Building
 ========
@@ -27,7 +26,7 @@ linux
 Note - GenericHID uses qt6. 
 
 ```
- > qmake
+ > qmake6
  > make
  > sudo make install
 ```

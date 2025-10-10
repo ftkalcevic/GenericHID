@@ -10,6 +10,6 @@ PRE_TARGETDEPS += mytarget
 
 INSTALLS += bin_files
 bin_files.path = $$INSTALLDIR_RESOURCES
-bin_files.files = ../bin/generic16.hex ../bin/teensypp2.hex ../bin/usbkey.hex
+bin_files.files = ../bin/generic8.hex ../bin/generic16.hex ../bin/teensypp2.hex ../bin/usbkey.hex
 bin_files.CONFIG = no_check_exist
 
