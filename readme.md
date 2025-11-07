@@ -15,7 +15,7 @@ Dependencies
 On Ubuntu, this command will installed the required build packages.  There is
 a total of about 200MB on a fresh system.
 
-```sudo apt-get install build-essential qt6-base-dev libqt6svg6-dev libusb-1.0-0-dev gcc-avr binutils-avr gdb-avr avr-libc avrdude```
+```sudo apt-get install build-essential qt6-base-dev libqt6svg6-dev libusb-1.0-0-dev gcc-avr binutils-avr gdb-avr avr-libc avrdude libjpeg-dev```
 
 Building
 ========

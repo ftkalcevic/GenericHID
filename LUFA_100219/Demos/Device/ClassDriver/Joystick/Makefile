@@ -15,7 +15,7 @@ all:	../../../../../bin/usbkey.hex ../../../../../bin/generic16.hex ../../../../
 
 ../../../../../bin/generic8.hex:	$(SRCS)
 	make -f makefile.generic8 clean
-	make -f makefile.generic16
+	make -f makefile.generic8
 
 ../../../../../bin/teensypp2.hex:	$(SRCS)
 	make -f makefile.teensypp2 clean

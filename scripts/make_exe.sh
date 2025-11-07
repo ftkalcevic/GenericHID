@@ -2,7 +2,7 @@
 
 BIN_DIR=$1
 LIB_DIR=$2
-QT_PLUGINS_DIR=$(QT_SELECT=4 qmake -query QT_INSTALL_PLUGINS)
+QT_PLUGINS_DIR=$(QT_SELECT=4 qmake6 -query QT_INSTALL_PLUGINS)
 
 echo "#!/bin/bash"
 echo ""
