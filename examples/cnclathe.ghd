@@ -1,91 +1,112 @@
 <!DOCTYPE GenericHID>
 <GenericHID>
  <Shapes>
-  <Shape shapeId="generichid1.0 - 16MHz" mirror="false" instanceId="1" rotate="0" x="-109.26633165829148" y="-278.34170854271355">
-   <Property value="Generic HID Device" name="Name"/>
-   <Property value="1:8" name="Usage"/>
-   <Property value="5" name="Voltage"/>
-   <Property value="Bus-Powered" name="Power-Source"/>
-   <Property value="50" name="Interval"/>
-   <Property value="0" name="Serial-Debug"/>
-   <Property value="false" name="HID-Debug"/>
-   <Property value="20" name="Current"/>
-   <Property value="LED2" name="Use Status LEDs"/>
-   <Property value="PD7" name="PowerSwitch"/>
-   <Property value="1" name="SerialNo"/>
-   <Property value="1,8,100" name="Timer1"/>
-   <Property value="1,8,100" name="Timer2"/>
-   <Property value="1,8,100" name="Timer3"/>
-   <Property value="false" name="EnableJTAG"/>
-   <Property value="generic16.hex" name="Firmware"/>
-   <Property value="DFU" name="ProgrammerType"/>
-   <Property value="16000000" name="CPUClock"/>
+  <Shape mirror="false" instanceId="1" x="-109.26633165829148" y="-278.34170854271355" rotate="0" shapeId="generichid1.0 - 16MHz">
+   <Property name="Name" value="CNCLathe Control Panel"/>
+   <Property name="Usage" value="1:8"/>
+   <Property name="Voltage" value="5"/>
+   <Property name="Power-Source" value="Bus-Powered"/>
+   <Property name="Interval" value="50"/>
+   <Property name="Serial-Debug" value="0"/>
+   <Property name="HID-Debug" value="false"/>
+   <Property name="Current" value="20"/>
+   <Property name="Use Status LEDs" value="LED2"/>
+   <Property name="PowerSwitch" value="PD7"/>
+   <Property name="SerialNo" value="1"/>
+   <Property name="Timer1" value="1,8,100"/>
+   <Property name="Timer2" value="1,8,100"/>
+   <Property name="Timer3" value="1,8,100"/>
+   <Property name="EnableJTAG" value="false"/>
+   <Property name="Firmware" value="generic16.hex"/>
+   <Property name="ProgrammerType" value="DFU"/>
+   <Property name="CPUClock" value="16000000"/>
   </Shape>
-  <Shape shapeId="pushbutton" mirror="true" instanceId="2" rotate="0" x="-364.5033679033466" y="-477.3976264300224">
-   <Property value="" name="Name"/>
-   <Property value="9:1" name="Usage"/>
-   <Property value="true" name="Pullup"/>
-   <Property value="10" name="Debounce"/>
-   <Property value="0" name="Current"/>
+  <Shape mirror="true" instanceId="2" x="-364.5033679033466" y="-477.3976264300224" rotate="0" shapeId="pushbutton">
+   <Property name="Name" value="Pause"/>
+   <Property name="Usage" value="9:2"/>
+   <Property name="Pullup" value="true"/>
+   <Property name="Debounce" value="10"/>
+   <Property name="Current" value="0"/>
   </Shape>
-  <Shape shapeId="led" mirror="false" instanceId="3" rotate="0" x="-424.74072490110132" y="-477.3477315656296">
-   <Property value="" name="Name"/>
-   <Property value="8:1000" name="Usage"/>
-   <Property value="true" name="Source"/>
-   <Property value="5" name="Current"/>
+  <Shape mirror="false" instanceId="3" x="-424.74072490110132" y="-477.3477315656296" rotate="0" shapeId="led">
+   <Property name="Name" value="Pause-Light"/>
+   <Property name="Usage" value="8:1001"/>
+   <Property name="Source" value="true"/>
+   <Property name="Current" value="5"/>
   </Shape>
-  <Shape shapeId="pushbutton" mirror="true" instanceId="4" rotate="0" x="-362.96375494493748" y="-351.70889910545645">
-   <Property value="" name="Name"/>
-   <Property value="9:1" name="Usage"/>
-   <Property value="true" name="Pullup"/>
-   <Property value="10" name="Debounce"/>
-   <Property value="0" name="Current"/>
+  <Shape mirror="true" instanceId="4" x="-361.96375494493748" y="-351.70889910545645" rotate="0" shapeId="pushbutton">
+   <Property name="Name" value="Run"/>
+   <Property name="Usage" value="9:1"/>
+   <Property name="Pullup" value="true"/>
+   <Property name="Debounce" value="10"/>
+   <Property name="Current" value="0"/>
   </Shape>
-  <Shape shapeId="pushbutton" mirror="true" instanceId="5" rotate="0" x="-361.51323995865857" y="-227.87340960119752">
-   <Property value="" name="Name"/>
-   <Property value="9:1" name="Usage"/>
-   <Property value="true" name="Pullup"/>
-   <Property value="10" name="Debounce"/>
-   <Property value="0" name="Current"/>
+  <Shape mirror="true" instanceId="5" x="-361.51323995865857" y="-227.87340960119752" rotate="0" shapeId="pushbutton">
+   <Property name="Name" value="Stop"/>
+   <Property name="Usage" value="9:3"/>
+   <Property name="Pullup" value="true"/>
+   <Property name="Debounce" value="10"/>
+   <Property name="Current" value="0"/>
   </Shape>
-  <Shape shapeId="led" mirror="false" instanceId="6" rotate="0" x="-428.40799743397832" y="-345.99593713247089">
-   <Property value="" name="Name"/>
-   <Property value="8:1000" name="Usage"/>
-   <Property value="true" name="Source"/>
-   <Property value="5" name="Current"/>
+  <Shape mirror="false" instanceId="6" x="-428.40799743397832" y="-345.99593713247089" rotate="0" shapeId="led">
+   <Property name="Name" value="Run-Light"/>
+   <Property name="Usage" value="8:1000"/>
+   <Property name="Source" value="true"/>
+   <Property name="Current" value="5"/>
   </Shape>
-  <Shape shapeId="led" mirror="false" instanceId="7" rotate="0" x="-436.65134181546028" y="-201.85680173919246">
-   <Property value="" name="Name"/>
-   <Property value="8:1000" name="Usage"/>
-   <Property value="true" name="Source"/>
-   <Property value="5" name="Current"/>
+  <Shape mirror="false" instanceId="7" x="-436.65134181546028" y="-201.85680173919246" rotate="0" shapeId="led">
+   <Property name="Name" value="Stop-Light"/>
+   <Property name="Usage" value="8:1002"/>
+   <Property name="Source" value="true"/>
+   <Property name="Current" value="5"/>
   </Shape>
-  <Shape shapeId="digitalencoder" mirror="false" instanceId="8" rotate="270" x="-421.27659574468078" y="-70.212765957446805">
-   <Property value="" name="Name"/>
-   <Property value="1:55" name="Usage"/>
-   <Property value="8" name="Bits"/>
-   <Property value="Absolute" name="Output"/>
-   <Property value="false" name="Pullup"/>
-   <Property value="100" name="Current"/>
+  <Shape mirror="false" instanceId="8" x="-421.27659574468078" y="-70.212765957446805" rotate="270" shapeId="digitalencoder">
+   <Property name="Name" value=""/>
+   <Property name="Usage" value="1:55"/>
+   <Property name="Bits" value="8"/>
+   <Property name="Output" value="Absolute"/>
+   <Property name="Pullup" value="false"/>
+   <Property name="Current" value="100"/>
   </Shape>
-  <Shape shapeId="rgbled" mirror="false" instanceId="9" rotate="270" x="-407.0921985815603" y="200">
-   <Property value="" name="Name"/>
-   <Property value="8:1" name="Usage"/>
-   <Property value="Common Cathode" name="Type"/>
-   <Property value="10" name="Current"/>
+  <Shape mirror="false" instanceId="12" x="-87" y="438" rotate="0" shapeId="counter">
+   <Property name="Name" value="WatchDogCounter"/>
+   <Property name="Usage" value="62500:1"/>
+   <Property name="Period" value="500"/>
+   <Property name="Counter Bits" value="16"/>
+  </Shape>
+  <Shape mirror="false" instanceId="13" x="-734" y="96" rotate="0" shapeId="pwm">
+   <Property name="Name" value="R"/>
+   <Property name="Usage" value="62500:1"/>
+   <Property name="Frequency" value="0.0Hz"/>
+   <Property name="Resolution" value="100"/>
+   <Property name="Timer" value="Timer3"/>
+  </Shape>
+  <Shape mirror="false" instanceId="14" x="-743" y="279" rotate="0" shapeId="pwm">
+   <Property name="Name" value="G"/>
+   <Property name="Usage" value="62500:2"/>
+   <Property name="Frequency" value="0.0Hz"/>
+   <Property name="Resolution" value="100"/>
+   <Property name="Timer" value="Timer3"/>
+  </Shape>
+  <Shape mirror="false" instanceId="15" x="-729" y="445" rotate="0" shapeId="pwm">
+   <Property name="Name" value="B"/>
+   <Property name="Usage" value="62500:3"/>
+   <Property name="Frequency" value="0.0Hz"/>
+   <Property name="Resolution" value="100"/>
+   <Property name="Timer" value="Timer3"/>
   </Shape>
  </Shapes>
  <Wires>
-  <Wire startShapeId="1" endShapeId="2" startPinId="PB0" endPinId="In"/>
-  <Wire startShapeId="1" endShapeId="3" startPinId="PB1" endPinId="In"/>
-  <Wire startShapeId="1" endShapeId="4" startPinId="PB2" endPinId="In"/>
-  <Wire startShapeId="1" endShapeId="6" startPinId="PB3" endPinId="In"/>
-  <Wire startShapeId="1" endShapeId="5" startPinId="PB4" endPinId="In"/>
-  <Wire startShapeId="1" endShapeId="7" startPinId="PB5" endPinId="In"/>
-  <Wire startShapeId="1" endShapeId="8" startPinId="PD0" endPinId="B"/>
-  <Wire startShapeId="8" endShapeId="1" startPinId="A" endPinId="PD1"/>
-  <Wire startShapeId="9" endShapeId="1" startPinId="G" endPinId="PC6"/>
-  <Wire startShapeId="1" endShapeId="9" startPinId="PC5" endPinId="B"/>
-  <Wire startShapeId="9" endShapeId="1" startPinId="R" endPinId="PC4"/>
+  <Wire startShapeId="1" endShapeId="2" endPinId="In" startPinId="PB0"/>
+  <Wire startShapeId="1" endShapeId="3" endPinId="In" startPinId="PB1"/>
+  <Wire startShapeId="1" endShapeId="4" endPinId="In" startPinId="PB2"/>
+  <Wire startShapeId="1" endShapeId="6" endPinId="In" startPinId="PB3"/>
+  <Wire startShapeId="1" endShapeId="5" endPinId="In" startPinId="PB4"/>
+  <Wire startShapeId="1" endShapeId="7" endPinId="In" startPinId="PB5"/>
+  <Wire startShapeId="1" endShapeId="8" endPinId="B" startPinId="PD0"/>
+  <Wire startShapeId="8" endShapeId="1" endPinId="PD1" startPinId="A"/>
+  <Wire startShapeId="13" endShapeId="1" endPinId="PC5" startPinId="PWM"/>
+  <Wire startShapeId="14" endShapeId="1" endPinId="PC6" startPinId="PWM"/>
+  <Wire startShapeId="15" endShapeId="1" endPinId="PC4" startPinId="PWM"/>
  </Wires>
 </GenericHID>
